@@ -1,0 +1,23 @@
+An error occurred in test.beforeEach: TypeError: signinPage.waitForMyAccountDashboardLoad is not a function
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_sb_myaccount_creditcards_standardwithsavedcards.spec.js:40:30
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/fixtureRunner.js:254:7
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/testInfo.js:297:11
+    at TimeoutManager.withRunnable (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/timeoutManager.js:53:14)
+    at TestInfoImpl._runAsStage (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/testInfo.js:295:7)
+    at FixtureRunner.resolveParametersAndRunFunction (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/fixtureRunner.js:250:5)
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/workerMain.js:588:11
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/testInfo.js:297:11
+    at TimeoutManager.withRunnable (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/timeoutManager.js:41:27)
+    at TestInfoImpl._runAsStage (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/testInfo.js:295:7)
+    at WorkerMain._runEachHooksForSuites (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/workerMain.js:576:9)
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/workerMain.js:317:9
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/testInfo.js:297:11
+    at TimeoutManager.withRunnable (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/timeoutManager.js:41:27)
+    at TestInfoImpl._runAsStage (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/testInfo.js:295:7)
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/workerMain.js:306:7
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/testInfo.js:297:11
+    at TimeoutManager.withRunnable (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/timeoutManager.js:41:27)
+    at TestInfoImpl._runAsStage (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/testInfo.js:295:7)
+    at WorkerMain._runTest (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/workerMain.js:278:5)
+    at WorkerMain.runTestGroup (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/workerMain.js:202:11)
+    at process.<anonymous> (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/common/process.js:94:22)

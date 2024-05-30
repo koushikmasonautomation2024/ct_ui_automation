@@ -10,4 +10,3 @@ Card Number Text: ***1236
 Expiry Date Text: Expires  12/34
 Card Number Value: 
 Card Security Code Value: 
-Card Expiry Date Value: 12/34
