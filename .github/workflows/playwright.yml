@@ -41,7 +41,7 @@ jobs:
         
     - name: Publish Allure report
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: allure-report
         path: allure-report
@@ -74,3 +74,4 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: allure-report
+        publish_branch: main
