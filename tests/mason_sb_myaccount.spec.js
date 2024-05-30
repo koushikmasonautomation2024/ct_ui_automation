@@ -458,7 +458,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     })
 
     //Account - My Stoneberry Credit - Account Information Section-SB-MyA312
-  test("Account - Credit Cards - Standard With Saved Cards - Verify clicking on Edit button, application expands the edit card form with pre-populated data- Expiry date- Billing address.",async({page},testInfo)=>{ 
+  test.only("Account - Credit Cards - Standard With Saved Cards - Verify clicking on Edit button, application expands the edit card form with pre-populated data- Expiry date- Billing address.",async({page},testInfo)=>{ 
     //test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountSavedCCLink();
@@ -485,7 +485,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     })
 
     //Account - My Stoneberry Credit - Account Information Section-SB-MyA312
-  test.only("Account - Credit Cards - Standard With Saved Cards - Verify user is able to edit the credit card details with any other saved address from the account.",async({page},testInfo)=>{ 
+  test("Account - Credit Cards - Standard With Saved Cards - Verify user is able to edit the credit card details with any other saved address from the account.",async({page},testInfo)=>{ 
     //test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountSavedCCLink();
