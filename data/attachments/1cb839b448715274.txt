@@ -17,7 +17,7 @@ Call log:
     category: 'expect',
     title: 'expect.toBeVisible',
     params: undefined,
-    wallTime: 1717066238671,
+    wallTime: 1717066414714,
     infectParentStepsWithError: undefined,
     boxedStack: undefined,
     location: {
@@ -28,7 +28,7 @@ Call log:
     },
     steps: [],
     complete: [Function: complete],
-    endWallTime: 1717066238760,
+    endWallTime: 1717066414795,
     error: {
       message: "Error: expect.toBeVisible: Error: strict mode violation: getByRole('button') resolved to 5 elements:\n" +
         `    1) <button class="inline-flex items-center justify-center w…>Sign In </button> aka getByRole('button', { name: 'Sign In' })\n` +
