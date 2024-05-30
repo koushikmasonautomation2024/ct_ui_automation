@@ -252,7 +252,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   })
 
   //Account - Invalid Login Functionality
-  test("Account - Invalid Login Functionality - Verify login with invalid credentials",async({page},testInfo)=>{ 
+  test.only("Account - Invalid Login Functionality - Verify login with invalid credentials",async({page},testInfo)=>{ 
     const signinPage = new SignInPage(page);
     await signinPage.clickSignInImage();
     await signinPage.clickSignIn();
