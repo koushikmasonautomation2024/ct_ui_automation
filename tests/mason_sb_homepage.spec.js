@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');
 import {test,expect } from '@playwright/test';
-import {HomePage} from '../pages/mason_home_page';
-import {SignInPage} from '../pages/mason_signin_page';
+import {HomePageNew} from '../pages/mason_home_page1';
+import {SignInPageNew} from '../pages/mason_signin_page1';
 import {MyAccountPage} from '../pages/mason_myaccount_page';
 import { allure } from 'allure-playwright';
 
@@ -28,7 +28,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   //Global Persistent Header (Guest) - Promotional Banner Management-SB-GPH010
   test("GPH-Promotional Banner Managment - Verify the promotional banner should be displayed On Homepage",async({page},testInfo)=>{ 
     test.slow();
-    const homePage = new HomePage(page);
+    const homePage = new HomePageNew(page);
     try {
         await homePage.displayHeroBanner(homepage_data.homepage_first_herobanner_name);
         await homePage.displayHeroBanner(homepage_data.homepage_second_herobanner_name);
@@ -45,7 +45,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   //Global Persistent Header (Guest) - Stoneberry Logo Redirect-SB-GPH012
   test("GPH-Stoneberry Logo Redirect - Verify the appearance and accesibility of the Stoneberry logo at the lefthand side",async({page},testInfo)=>{ 
     test.slow();
-    const homePage = new HomePage(page);
+    const homePage = new HomePageNew(page);
     await homePage.displaySiteLogo(homepage_data.homepage_sitename_logo);
     await homePage.staticPageNavigation(homepage_data.staticPageUrl);
     await homePage.clickSiteLogo(homepage_data.homepage_sitename_logo);
@@ -57,7 +57,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   //Global Persistent Header (Guest) - Sticky Header-SB-GPH002
   test("GPH-Sticky Header- Verify the header is sticky through the following pages: PDP",async({page},testInfo)=>{ 
     test.slow();
-    const homePage = new HomePage(page);
+    const homePage = new HomePageNew(page);
     await homePage.staticPageNavigation(homepage_data.pdpURL);
     await homePage.pageScrollBy(homepage_data.scrollXAxis,homepage_data.scrollYAxis);
     await homePage.displayPDPStickyAddtoCartButton();
@@ -68,7 +68,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   //Global Persistent Header (Guest) - Mega Menu Navigation-SB-GPH002
   test("GPH-Mega Menu Navigation - Verify Mega Menu Navigation opens on hovering within the CTA",async({page},testInfo)=>{ 
     test.slow();
-    const homePage = new HomePage(page);
+    const homePage = new HomePageNew(page);
     await homePage.displayCategory();
     await homePage.mouseHoverMegaMenu(homepage_data.categoryNameL1);
     await homePage.clickOnMegaMenuL2Category(homepage_data.l2CategoryName);
@@ -80,7 +80,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   //Global Persistent Header (Guest) - Search Bar-SB-GPH015/SB-GPH016/SB-GPH017
   test("GPH-Search Bar - Verify the search field appearance, help text display, and functionality",async({page},testInfo)=>{ 
     test.slow();
-    const homePage = new HomePage(page);
+    const homePage = new HomePageNew(page);
     await homePage.displaySearchBar();
     await homePage.enterSearchTerm(homepage_data.searchterm);
     await homePage.hiddenSearchPlaceholderText();
@@ -91,9 +91,9 @@ test.describe("Mason Commerce Tool Site", ()=>{
   //Global Persistent Header (Guest) - Account Drawer-SB-GPH019
   test("GPH-Account Drawer - Verify generation of the account drawer upon clicking the Account icon",async({page},testInfo)=>{ 
     test.slow();
-    const homePage = new HomePage(page);
+    const homePage = new HomePageNew(page);
     await homePage.clickOnHomePageSignIn();
-    const signinPage = new SignInPage(page);
+    const signinPage = new SignInPageNew(page);
     await signinPage.validateSignInAccountDrawer();
     console.log(testInfo.status);
           
@@ -102,7 +102,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   //Global Persistent Header (Guest) - Cart Icon and Drawer-SB-GPH020
   test("GPH-Cart Icon and Drawer - Verify display and functionality of the Cart icon and drawer",async({page},testInfo)=>{ 
     test.slow();
-    const homePage = new HomePage(page);
+    const homePage = new HomePageNew(page);
     await homePage.displayMiniCartIcon();
     await homePage.clickMiniCartIcon();
     await homePage.validatedEmptyMiniCartDrawer();
@@ -114,7 +114,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   //Global Persistent Footer (Guest) - Newsletter Mailing List Widget-SB-GPF001/SB-GPF002
   test("GPF-Newsletter Mailing List Widget - Verify the display of the newsletter widget, text, textbox, form field label, help text, and CTA functionality",async({page},testInfo)=>{ 
     test.slow();
-    const homePage = new HomePage(page);
+    const homePage = new HomePageNew(page);
     await homePage.validateFooterNewsLetterSignUpContent(homepage_data.footer_newsletterSignUpContent);
     await homePage.validateFooterNewsLetterSignUpEmailContent(homepage_data.footer_newsletterSignUpEmailContent);
     await homePage.displayFooterSignUpButton();
@@ -126,7 +126,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   //Global Persistent Footer (Guest) - Static Links-SB-GPF025
   test("GPF-Static Links - Verify Test the display and functionality of static links and associated URLs",async({page},testInfo)=>{ 
     test.slow();
-    const homePage = new HomePage(page);
+    const homePage = new HomePageNew(page);
     await homePage.displayFooter(homepage_data.homepage_footer1_name);
     await homePage.displayFooter(homepage_data.homepage_footer2_name);
     await homePage.displayFooter(homepage_data.homepage_footer3_name);
@@ -146,7 +146,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   //Global Persistent Footer (Guest) - Social Icons-SB-GPF017/SB-GPF018
   test("GPF-Social Icons - Verify the display and functionality of social icons and their respective hyperlinks",async({page},testInfo)=>{ 
     test.slow();
-    const homePage = new HomePage(page);
+    const homePage = new HomePageNew(page);
     await homePage.displayFooter(homepage_data.homepage_footer5_connectus_name);
     await homePage.displayFooterLinks(homepage_data.homepage_footer_sociallink1);
     await homePage.displayFooterLinks(homepage_data.homepage_footer_sociallink2);
@@ -158,7 +158,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   //Global Persistent Footer (Guest) - Additional Site Logos-SB-GPF020
   test("GPF-Additional Site Logos - Verify the display and functionality of additional site logos and their redirection",async({page},testInfo)=>{ 
     test.slow();
-    const homePage = new HomePage(page);
+    const homePage = new HomePageNew(page);
     await homePage.validateOtherSitesLinks(homepage_data.footer_otherSitesLinkName1);
     await homePage.validateOtherSitesLinks(homepage_data.footer_otherSitesLinkName2);
     await homePage.validateOtherSitesSection(homepage_data.footer_otherSitesSectionLabelName);
@@ -169,7 +169,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   //Global Persistent Footer (Guest) - Copyright and Legal Text Links-SB-GPF024/SB-GPF026
   test("GPF-Copyright and Legal Text Links - Verify the display and functionality of copyright and legal text links",async({page},testInfo)=>{ 
     test.slow();
-    const homePage = new HomePage(page);
+    const homePage = new HomePageNew(page);
     await homePage.validateCopyRightSection(homepage_data.footer_copyrightText,homepage_data.footer_contactNumber,homepage_data.footer_contactUsLinkName);
     await homePage.validateCopyrightLegalText(homepage_data.footer_copyrightLegalText1);
     await homePage.validateCopyrightLegalText(homepage_data.footer_copyrightLegalText2);
@@ -181,7 +181,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   //Home Page (Guest) - Category Image Tiles-SB-HMP010/SB-HMP011/SB-HMP012/SB-HMP013
   test("HP-Category Image Tiles - Verify the display and functionality of category image tiles, including image, title, and hyperlinks",async({page},testInfo)=>{ 
     test.slow();
-    const homePage = new HomePage(page);
+    const homePage = new HomePageNew(page);
     await homePage.getCategoryImageTilesCount();
     await homePage.categoryImageDisplayValidation(homepage_data.category_image1_alttext);
     await homePage.categoryImageDisplayValidation(homepage_data.category_image2_alttext);
@@ -198,7 +198,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   //Home Page (Guest) - Full Width Banner-SB-HMP015/SB-HMP016
   test("HP-Full Width Banner - Verify the display and functionality of full-width banners, including image/video content and redirection upon click",async({page},testInfo)=>{ 
     test.slow();
-    const homePage = new HomePage(page);
+    const homePage = new HomePageNew(page);
     await homePage.displayHeroBanner(homepage_data.homepage_second_herobanner_name);
     console.log(testInfo.status);
           
@@ -207,7 +207,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   //Home Page (Guest) - Category Grid-SB-HMP017/SB-HMP018
   test("HP-Category Grid - Verify the display and functionality of the 6x3 category grid, including image/icon, title, and hyperlinks",async({page},testInfo)=>{ 
     test.slow();
-    const homePage = new HomePage(page);
+    const homePage = new HomePageNew(page);
     await homePage.getTopCategoryImageTilesCount();
     await homePage.topCategoriesImageDisplayValidation();
     console.log(testInfo.status);
@@ -217,7 +217,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   //Home Page (Guest) - Top Brands Image Tiles-SB-HMP020/SB-HMP021/SB-HMP012/SB-HMP022
   test("HP-Top Brands Image Tiles - Verify the display and functionality of the top brands image tiles, including image, title, and hyperlinks",async({page},testInfo)=>{ 
     test.slow();
-    const homePage = new HomePage(page);
+    const homePage = new HomePageNew(page);
     await homePage.getTopBrandsImageTilesCount();
     await homePage.categoryImageDisplayValidation(homepage_data.topbrand_image1_alttext);
     await homePage.categoryImageDisplayValidation(homepage_data.topbrand_image2_alttext);
@@ -234,7 +234,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   //Home Page (Guest) Brand Logos-SB-HMP023
   test("HP-Brand Logos - Verify the display and functionality of brand logos, including image, title, and hyperlinks",async({page},testInfo)=>{ 
     test.slow();
-    const homePage = new HomePage(page);
+    const homePage = new HomePageNew(page);
     await homePage.getBrandsImageTilesCount();
     await homePage.brandsImageDisplayValidation();
     console.log(testInfo.status);
@@ -244,7 +244,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   //Home Page (Guest) Seasonal Savings Widget-SB-HMP026/SB-HMP027
   test("HP-Seasonal Savings Widget - Verify the display and functionality of the Seasonal Savings widget, including product image content cards, navigation arrows, and View All link",async({page},testInfo)=>{ 
     test.slow();
-    const homePage = new HomePage(page);
+    const homePage = new HomePageNew(page);
     await homePage.seasonalSavingsAndViewAlllink();
     await homePage.displayHeroBanner(homepage_data.homepage_third_herobanner_name);
     console.log(testInfo.status);
@@ -252,8 +252,8 @@ test.describe("Mason Commerce Tool Site", ()=>{
   })
 
   //Account - Invalid Login Functionality
-  test.only("Account - Invalid Login Functionality - Verify login with invalid credentials",async({page},testInfo)=>{ 
-    const signinPage = new SignInPage(page);
+  test("Account - Invalid Login Functionality - Verify login with invalid credentials",async({page},testInfo)=>{ 
+    const signinPage = new SignInPageNew(page);
     await signinPage.clickSignInImage();
     await signinPage.clickSignIn();
     await signinPage.validateSignInDialog();

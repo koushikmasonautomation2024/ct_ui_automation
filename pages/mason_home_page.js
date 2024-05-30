@@ -6,10 +6,15 @@ exports.HomePage = class HomePage{
         this.page=page;
         this.homepage_searchbarplaceholder=page.getByPlaceholder(homepage_locator.homepage_searchbarplaceholder);
         this.homepage_searchbutton=page.getByLabel(homepage_locator.homepage_searchbutton, { exact: true });
-        
         this.homepage_signin=page.locator(homepage_locator.homepage_signin);   
         this.homepage_cart=page.getByRole('button', { name: homepage_locator.homepage_cart }); 
         this.homepage_category=page.getByRole('button', { name: homepage_locator.homepage_category }); 
+        this.minicart_drawer_heading=page.getByRole('button', { name: homepage_locator.minicart_drawer_heading });
+        this.minicart_drawer_subtotalsection=page.getByText(homepage_locator.minicart_drawer_subtotalsection);
+        this.minicart_drawer_viewcart_button=page.getByRole('button', { name: homepage_locator.minicart_drawer_viewcart_button });
+        this.minicart_drawer_checkout_button=page.getByRole('button', { name: homepage_locator.minicart_drawer_checkout_button });
+        this.footer_signupemail_textbox=page.getByPlaceholder(homepage_locator.footer_signupemail_textbox);
+        this.footer_signup_button=page.getByRole('button', { name: homepage_locator.footer_signup_button });
         
     }
 
@@ -30,12 +35,25 @@ exports.HomePage = class HomePage{
         await expect(this.homepage_cart).toBeVisible();
     }
 
+    async clickMiniCartIcon(){
+        await this.homepage_cart.waitFor({ state: 'visible' });
+        await this.homepage_cart.click();
+    }
+
     async displayCategory(){
         await this.homepage_category.waitFor({ state: 'visible' });
         await expect(this.homepage_category).toBeVisible();
     }
     async displaySiteLogo(brandLogoName){
-        await expect(this.page.getByRole('link', { name: brandLogoName })).toBeVisible();
+        await expect(this.page.getByRole('link', { name: brandLogoName, exact: true })).toBeVisible();
+    }
+    async clickSiteLogo(brandLogoName){
+        await this.page.getByRole('link', { name: brandLogoName, exact: true }).click();
+        
+    }
+
+    async homePageRedirectionValidation(homePageUrl){
+        await expect(this.page).toHaveURL(homePageUrl);
     }
     async displayHeroBanner(bannerName){
         await expect(this.page.getByRole('link', { name: bannerName })).toBeVisible();

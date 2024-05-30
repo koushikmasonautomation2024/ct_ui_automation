@@ -11,6 +11,13 @@
     "l3categoryText":"//*[@id='mainMenu']/ul/li[${index + 1}]/div/ul/li/ul/li/a",
     "l3category":"//*[@id='mainMenu']/ul/li[${index + 1}]/div/ul/li/ul/li",
     "l1breadcrumb":"nav[aria-label='Breadcrumb']",
-    "page_underneath":"//body/div[1]/div[2]"
+    "page_underneath":"//body/div[1]/div[2]",
+    "stickyheader_pdp" : "//section[@class='fixed inset-x-0 top-0 z-30 flex justify-center bg-white py-5 shadow-md']",
+    "minicart_drawer_heading" : "My Cart",
+    "minicart_drawer_subtotalsection" : "Subtotal0 Items$",
+    "minicart_drawer_viewcart_button" : "View Cart",
+    "minicart_drawer_checkout_button" : "Check Out",
+    "footer_signupemail_textbox" : "Email Address",
+    "footer_signup_button" : "Sign Up"
 
 }
