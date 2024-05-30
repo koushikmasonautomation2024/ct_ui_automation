@@ -1687,6 +1687,7 @@ exports.MyAccountPage = class MyAccountPage{
     }
 
     async updateCreditCardSuccessMessage(){
+        await this.verifyAddressSuggestionModal();
         await this.page.getByText('Card details have been updated successfully').waitFor({state:'visible'});
         await expect(this.page.getByText('Card details have been updated successfully')).toBeVisible();
     }
