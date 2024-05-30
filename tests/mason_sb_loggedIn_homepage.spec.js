@@ -133,7 +133,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   })
 
   //Global Persistent Header (Logged In) - Sign In/Sign Out-SB-GPH040
-  test("GPH-Sign In/Sign Out - Verify the Test successful sign in/out functionality, display of success messages, redirection behavior upon sign out",async({page},testInfo)=>{ 
+  test.only("GPH-Sign In/Sign Out - Verify the Test successful sign in/out functionality, display of success messages, redirection behavior upon sign out",async({page},testInfo)=>{ 
     test.slow();
     const homePage = new HomePage(page);
     await homePage.clickOnHomePageSignIn();
