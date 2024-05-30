@@ -117,8 +117,8 @@ test.describe("Mason Commerce Tool Site", ()=>{
     const homePage = new HomePage(page);
     await homePage.validateFooterNewsLetterSignUpContent(homepage_data.footer_newsletterSignUpContent);
     await homePage.validateFooterNewsLetterSignUpEmailContent(homepage_data.footer_newsletterSignUpEmailContent);
-    await homePage.displayFooterEmailNewsLetter();
     await homePage.displayFooterSignUpButton();
+    await homePage.signUpModalDisplayValidation(homepage_data.signup_email);
     console.log(testInfo.status);
           
   })

@@ -1687,9 +1687,17 @@ exports.MyAccountPage = class MyAccountPage{
     }
 
     async updateCreditCardSuccessMessage(){
-        await this.verifyAddressSuggestionModal();
-        await this.page.getByText('Card details have been updated successfully').waitFor({state:'visible'});
-        await expect(this.page.getByText('Card details have been updated successfully')).toBeVisible();
+        const addressModalVisible = await this.page.isVisible('role=heading[name="Verify Your Address"]',{ timeout: 10000 });
+        if (addressModalVisible) {
+            await this.page.getByLabel('Use Original Address').click();
+            await this.page.getByRole('button', { name: 'Continue' }).click();
+            await this.page.getByText('Card details have been updated successfully').waitFor({ state: 'visible' });
+            await expect(this.page.getByText('Card details have been updated successfully')).toBeVisible();          
+        } else {
+            // Address suggestion modal is not visible, verify the success message and then proceed
+            await this.page.getByText('Card details have been updated successfully').waitFor({ state: 'visible' });
+            await expect(this.page.getByText('Card details have been updated successfully')).toBeVisible();
+        }
     }
 
     async verifyAddressSuggestionModal(){

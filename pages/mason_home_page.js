@@ -296,7 +296,17 @@ exports.HomePage = class HomePage{
 
     async seasonalSavingsAndViewAlllink(){
         await expect(this.page.getByText('Seasonal Savings')).toBeVisible();
-        await expect(this.page.locator('div').filter({ hasText: /^Seasonal SavingsView All$/ }).getByRole('link')).toBeVisible();
+        await expect(this.page.locator('section').filter({ hasText: /^Seasonal SavingsView All$/ }).getByRole('link')).toBeVisible();
+    }
+
+    async signUpModalDisplayValidation(enterEmail){
+        await this.page.getByRole('button', { name: 'Sign Up' }).click();
+        await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByPlaceholder('Enter your email address')).toBeVisible();
+        await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Close Modal')).toBeVisible();
+        await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Submit Modal Form')).toBeVisible();
+        await this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByPlaceholder('Enter your email address').fill(enterEmail);
+        await this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Submit Modal Form').click();
+        await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByText(/^.*$/).first()).toBeHidden();
     }
 
 }

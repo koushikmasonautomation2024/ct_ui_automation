@@ -50,7 +50,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
            console.error("An error occurred in test.beforeEach:", error);
        }   
   })
-  //Account - My Account- Longstanding Customer - Left-hand Navigation-SB-MyA005
+  //Account - My Account - New Customer - Test Cases ID-SB-MyA005
   test("New User Account - My Account-Left-hand Navigation - Verify all navigation links are clickable",async({page},testInfo)=>{ 
     test.slow();
     const myaccountPage = new MyAccountPage(page);
@@ -58,7 +58,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     await myaccountPage.verifyAllLinksAreClickable();
   })
 
-  //Account - My Account- Longstanding Customer - Left-hand Navigation-SB-MyA005
+  //Account - My Account - New Customer - Test Cases ID-SB-MyA005
   test("New User Account - My Account-Left-hand Navigation - Verify navigation link highlights current section",async({page},testInfo)=>{ 
     test.slow();
     const myaccountPage = new MyAccountPage(page);
@@ -66,7 +66,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
           
   })
 
-  //Account - My Account- Longstanding Customer - My Stoneberry Credit-SB-MyA043/SB-MyA044/SB-MyA045/SB-MyA046
+  //Account - My Account - New Customer - Test Cases ID-SB-MyA043/SB-MyA044/SB-MyA045/SB-MyA046
   test("New User Account - My Stoneberry Credit - Verify display of Get Pre Qualified and Learn More links and redirection to the corresponding pages",async({page},testInfo)=>{ 
     test.slow();
     const newuser_myaccountPage = new NewUserMyAccountPage(page);
@@ -74,7 +74,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
           
   })
 
-  //Account - My Account- Longstanding Customer - Payments-
+  //Account - My Account - New Customer
   test("New User Account - Payments - Verify display of Credit Account Verification when user click on the Make a payment link for new user.",async({page},testInfo)=>{ 
     test.slow();
     const myaccountPage = new MyAccountPage(page);
@@ -85,7 +85,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
           
   })
 
-  //Account - My Account- Longstanding Customer - Payments-
+  //Account - My Account - New Customer
   test("New User Account - Payments - Verify correct display of help icon tooltip.",async({page},testInfo)=>{ 
     test.slow();
     const myaccountPage = new MyAccountPage(page);
@@ -96,7 +96,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
           
   })
 
-  //Account - My Account- Longstanding Customer - Orders-SB-MyA185
+  //Account - My Account - New Customer - Test Cases ID-SB-MyA185
   test("New User Account - Orders - Verify display of message There are no recent orders in your account.",async({page},testInfo)=>{ 
     test.slow();
     const myaccountPage = new MyAccountPage(page);
@@ -106,7 +106,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
           
   })
 
-  //Account - My Account- Longstanding Customer - Address-SB-MyA048/SB-MyA049/SB-MyA050
+  //Account - My Account - New Customer - Test Cases ID-SB-MyA048/SB-MyA049/SB-MyA050
   test("New User Account - Addresses - Verify display of message There are currently no addresses saved to your account.",async({page},testInfo)=>{ 
     test.slow();
     const myaccountPage = new MyAccountPage(page);
@@ -116,7 +116,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
           
   })
 
-  //Account - My Account- Longstanding Customer - Saved Credit Cards-SB-MyA051/SB-MyA052/SB-MyA053/SB-MyA054
+  //Account - My Account - New Customer - Test Cases ID-SB-MyA051/SB-MyA052/SB-MyA053/SB-MyA054
   test("New User Account - Saved Credit Cards - Verify display of message There are currently no credit cards saved to your account.",async({page},testInfo)=>{ 
     test.slow();
     const myaccountPage = new MyAccountPage(page);
@@ -126,7 +126,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
           
   })
 
-  //Account - My Account- Longstanding Customer - Saved Credit Cards-SB-MyA051/SB-MyA052/SB-MyA053/SB-MyA054
+  //Account - My Account - New Customer - Test Cases ID-SB-MyA051/SB-MyA052/SB-MyA053/SB-MyA054
   test("New User Account - Saved Credit Cards - Verify application expands and focuses the user to the Add New Credit/Debit Card fields when navigated to Saved cards page.",async({page},testInfo)=>{ 
     test.slow();
     const myaccountPage = new MyAccountPage(page);
@@ -139,7 +139,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
       
   })
 
-  //Account - My Account- Longstanding Customer - Wishlist-SB-MyA055
+  //Account - My Account - New Customer - Test Cases ID-SB-MyA055
   test("New User Account - Wishlist - Verify display of message There are currently no items saved to your wish list.",async({page},testInfo)=>{ 
     test.slow();
     const myaccountPage = new MyAccountPage(page);
