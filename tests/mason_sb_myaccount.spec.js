@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');
 import {test,expect } from '@playwright/test';
-import {HomePage} from '../pages/mason_home_page';
-import {SignInPage} from '../pages/mason_signin_page';
+import {HomePageNew} from '../pages/mason_home_page1';
+import {SignInPageNew} from '../pages/mason_signin_page1';
 import {MyAccountPage} from '../pages/mason_myaccount_page';
 import { allure } from 'allure-playwright';
 
@@ -20,7 +20,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
            await page.goto(process.env.WEB_URL);
            await page.waitForLoadState('networkidle');
            if(isMobile==true){
-            const signinPage = new SignInPage(page);  
+            const signinPage = new SignInPageNew(page);  
             await signinPage.clickSignInImage();
             await signinPage.clickSignIn();
             await signinPage.validateSignInDialog();
@@ -28,9 +28,9 @@ test.describe("Mason Commerce Tool Site", ()=>{
             await signinPage.clickSignIn();
             await page.waitForLoadState('networkidle');
           } else {
-            const homePage = new HomePage(page);
+            const homePage = new HomePageNew(page);
             await homePage.clickOnHomePageSignIn();
-            const signinPage = new SignInPage(page);
+            const signinPage = new SignInPageNew(page);
             await signinPage.validateWelcomeTextSignInDialog(signinpage_data.signin_dailog_text);
             await signinPage.validateWelcomeSignInDialog();
             await signinPage.clickSignIn();
