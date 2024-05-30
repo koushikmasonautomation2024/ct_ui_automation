@@ -71,7 +71,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   })
 
   //SB-MyA259
-  test.only("Validate message -There are currently no addresses saved to your account - when no addresses are available",async({page},testInfo)=>{ 
+  test("Validate message -There are currently no addresses saved to your account - when no addresses are available",async({page},testInfo)=>{ 
     const myAccountAddressPage = new MyAccountAddressPage(page);
     const myAccountPage = new MyAccountPage(page);
     await myAccountPage.clickOnMyAccountLink();

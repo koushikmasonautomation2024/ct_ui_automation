@@ -242,7 +242,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   })
 
   //Home Page (Guest) Seasonal Savings Widget-SB-HMP026/SB-HMP027
-  test("HP-Seasonal Savings Widget - Verify the display and functionality of the Seasonal Savings widget, including product image content cards, navigation arrows, and View All link",async({page},testInfo)=>{ 
+  test.only("HP-Seasonal Savings Widget - Verify the display and functionality of the Seasonal Savings widget, including product image content cards, navigation arrows, and View All link",async({page},testInfo)=>{ 
     test.slow();
     const homePage = new HomePage(page);
     await homePage.seasonalSavingsAndViewAlllink();

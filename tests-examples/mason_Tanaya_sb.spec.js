@@ -616,7 +616,7 @@ test("Account - Reset/Forgot Password - Validate the Invalid Password Reset Mess
 })
 
 //SB-LOGREG009
-test.only("Account - SignIn - Validate the Loader icon when user tries to sign-in",async({page})=>{ 
+test("Account - SignIn - Validate the Loader icon when user tries to sign-in",async({page})=>{ 
   const signinPage = new SignInPage(page);
   await signinPage.clickSignIn();
   //await signinPage.validateSignInDialog();

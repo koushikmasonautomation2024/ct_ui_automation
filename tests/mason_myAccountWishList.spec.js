@@ -138,7 +138,7 @@ test("Validate Alignment of WishListed item in WishList Page",async({page},testI
 })
 
 //SB-MyA339
-test.only("Validate Pricing of WishListed item in WishList Page is in the expected format",async({page},testInfo)=>{ 
+test("Validate Pricing of WishListed item in WishList Page is in the expected format",async({page},testInfo)=>{ 
   //test.slow();
   const signinPage = new SignInPage(page);
   await signinPage.login(process.env.PAYMENT_USERNAME,process.env.PAYMENT_PASSWORD);
