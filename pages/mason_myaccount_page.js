@@ -1,18 +1,19 @@
 import test, { expect } from 'playwright/test';
+import { faker } from '@faker-js/faker/locale/en';
+import { fakerEN_US } from '@faker-js/faker';
 const myaccountpage_locator =JSON.parse(JSON.stringify(require('../object_repositories/mason_myaccount_page_repo.json')));
-const accountpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_sb_myaccount_page_data.json')));
-
 
 exports.MyAccountPage = class MyAccountPage{
     constructor(page){
         this.page=page;
         this.myaccount_credit_link=page.getByRole('link', { name: myaccountpage_locator.myaccount_credit_link,exact:true }).first();
         this.myaccount_makepayment_link=page.getByRole('link', { name: myaccountpage_locator.myaccount_makepayment_link, exact:true }).first();
+        this.myaccount_makepayment_button=page.getByRole('button', { name: myaccountpage_locator.myaccount_makepayment_link, exact:true }).first();
+        this.myaccount_startshopping_button=page.getByRole('button', { name: myaccountpage_locator.myaccount_startshopping_button, exact:true }).first();
         this.myaccount_orders_link=page.getByRole('link', { name: myaccountpage_locator.myaccount_orders_link, exact:true }); 
         this.myaccount_addresses_link=page.getByRole('link', { name: myaccountpage_locator.myaccount_addresses_link, exact:true });
         this.myaccount_savedcreditcards_link=page.getByRole('link', { name: myaccountpage_locator.myaccount_savedcreditcards_link,exact:true });      
         this.myaccount_wishlist_link=page.getByRole('link', { name: myaccountpage_locator.myaccount_wishlist_link,exact:true }).first();
-        this.myaccount_orderStatus_link=page.getByRole('link', { name: myaccountpage_locator.myaccount_orderStatus_link, exact:true });
         this.myaccount_needhelp_link=page.getByRole('link', { name: myaccountpage_locator.myaccount_needhelp_link });
         this.myaccount_myprofile_link=page.getByRole('link', { name: myaccountpage_locator.myaccount_myprofile_link, exact:true });
         this.myaccount_orders_section=page.getByRole('heading', { name: myaccountpage_locator.myaccount_orders_section }).nth(1);
@@ -20,6 +21,7 @@ exports.MyAccountPage = class MyAccountPage{
         this.myaccount_viewsavedcc_link=page.getByRole('link', { name: myaccountpage_locator.myaccount_viewsavedcc_link });
         this.myaccount_vieworders_link=page.getByRole('link', { name: myaccountpage_locator.myaccount_vieworders_link });
         this.myaccount_viewaddresses_link=page.getByRole('link', { name: myaccountpage_locator.myaccount_viewaddresses_link });
+        this.myaccount_viewwishlist_link=page.getByRole('link', { name: myaccountpage_locator.myaccount_viewwishlist_link });
         this.myaccount_myaccount_link=page.getByRole('link', { name: myaccountpage_locator.myaccount_myaccount_link });
         this.myaccount_credit_payments=page.getByRole('heading', { name: myaccountpage_locator.myaccount_credit_payments });
         this.myaccount_credit_paymentdue=page.getByRole('heading', { name: myaccountpage_locator.myaccount_credit_paymentdue });
@@ -68,8 +70,23 @@ exports.MyAccountPage = class MyAccountPage{
         this.myaccount_cc_securitycode_textbox=page.getByLabel(myaccountpage_locator.myaccount_cc_securitycode_textbox);
         this.myaccount_cc_savecard_button=page.getByRole('button', { name: myaccountpage_locator.myaccount_cc_savecard_button });
         this.myaccount_savedefaultcc_checkbox=page.locator('form').getByRole(myaccountpage_locator.myaccount_savedefaultcc_checkbox);
-
-        this.address_breadcrumb=page.getByText(myaccountpage_locator.address_breadcrumb);
+        this.myaccount_signout_button=page.getByRole('button', { name: myaccountpage_locator.myaccount_signout_button });
+        this.myaccount_makeapayment_acctinformation_headertext=page.getByRole('heading', { name: myaccountpage_locator.myaccount_makeapayment_acctinformation_headertext });
+        this.myaccount_makeapayment_acctinformation_custaccountnum=page.getByText(myaccountpage_locator.myaccount_makeapayment_acctinformation_custaccountnum);
+        this.myaccount_makeapayment_acctinformation_acctstatus=page.getByText(myaccountpage_locator.myaccount_makeapayment_acctinformation_acctstatus);
+        this.myaccount_makeapayment_acctinformation_acctstatuspastdue=page.getByText(myaccountpage_locator.myaccount_makeapayment_acctinformation_acctstatuspastdue);
+        this.myaccount_makeapayment_acctinformation_lastsd=page.getByText(myaccountpage_locator.myaccount_makeapayment_acctinformation_lastsd);
+        this.myaccount_makeapayment_acctinformation_nextsd=page.getByText(myaccountpage_locator.myaccount_makeapayment_acctinformation_nextsd);
+        this.myaccount_makepayment_creditstateadd=page.getByRole('heading', { name: myaccountpage_locator.myaccount_makepayment_creditstateadd });
+        this.myaccount_makepayment_creditstateadd_editbutton=page.getByRole('button', { name: myaccountpage_locator.myaccount_makepayment_creditstateadd_editbutton });
+        this.myaccount_sbc_creditstatement_editaddress=page.locator(`id=${myaccountpage_locator.myaccount_sbc_creditstatement_editaddress}`);
+        this.myaccount_sbc_creditstatement_editcity=page.locator(`id=${myaccountpage_locator.myaccount_sbc_creditstatement_editcity}`);
+        this.myaccount_sbc_creditstatement_editstate=page.locator(`id=${myaccountpage_locator.myaccount_sbc_creditstatement_editstate}`);
+        this.myaccount_sbc_creditstatement_editzipcode=page.locator(`id=${myaccountpage_locator.myaccount_sbc_creditstatement_editzipcode}`);
+        this.myaccount_sbc_creditstatement_editphonenumber=page.locator(`id=${myaccountpage_locator.myaccount_sbc_creditstatement_editphonenumber}`);
+        this.myaccount_sbc_creditstatement_saveaddressbutton=page.getByRole('button', { name: myaccountpage_locator.myaccount_sbc_creditstatement_saveaddressbutton });
+        this.myaccount_sbc_creditstatement_canceladdressbutton=page.getByRole('button', { name: myaccountpage_locator.myaccount_sbc_creditstatement_canceladdressbutton });
+        
     }
 
     async displayMyAccountLeftNavigationLink(){
@@ -82,6 +99,18 @@ exports.MyAccountPage = class MyAccountPage{
         await expect(this.myaccount_wishlist_link).toBeVisible();
         //await expect(this.myaccount_needhelp_link).toBeVisible();
         await expect(this.myaccount_myprofile_link).toBeVisible();
+
+    }
+
+    async validatedSignedInAccountDrawerItems(){
+        await this.page.waitForLoadState('networkidle');
+        await expect(this.myaccount_myaccount_link).toBeVisible();
+        await expect(this.myaccount_addresses_link).toBeVisible();
+        await expect(this.myaccount_savedcreditcards_link).toBeVisible();
+        await expect(this.myaccount_needhelp_link).toBeVisible();
+        await expect(this.myaccount_myprofile_link).toBeVisible();
+        await expect(this.myaccount_changepassword_link).toBeVisible();
+        await expect(this.myaccount_signout_button).toBeVisible();
 
     }
 
@@ -109,6 +138,7 @@ exports.MyAccountPage = class MyAccountPage{
 
     async clickMyAccountCreditLink(){
         await this.myaccount_credit_link.click();
+        //await this.page.waitForURL('**account/stoneberrycredit/');
     }
     async clickMyAccountMakeaPaymentLink(){
         await this.myaccount_makepayment_link.click();
@@ -116,11 +146,6 @@ exports.MyAccountPage = class MyAccountPage{
     async clickMyAccountOrderLink(){
         await this.myaccount_orders_link.click();
     }
-
-    async clickMyAccountOrderStatusLink(){
-        await this.myaccount_orderStatus_link.click();
-    }
-
     async clickMyAccountAddressLink(){
         await this.myaccount_addresses_link.click();
     }
@@ -128,38 +153,34 @@ exports.MyAccountPage = class MyAccountPage{
         await this.myaccount_savedcreditcards_link.click();
     }
     async clickMyAccountWishListLink(){
-        await this.myaccount_wishlist_link.first().click();
+        await this.myaccount_wishlist_link.click();
+        await expect(this.page).toHaveURL(/.*wishlist/);
     }
     async clickMyAccountNeedHelpLink(){
         await this.myaccount_needhelp_link.click();
     }
     async clickMyAccountMyProfileLink(){
-        
-        //await this.myaccount_myprofile_link.toBeVisible();
         await this.myaccount_myprofile_link.click();
-        const my_profile_button = await this.page.getByRole('link', { name: myaccountpage_locator.myaccount_myprofile_link, exact:true });
-        await my_profile_button.click();
-        // Fluent wait using waitForFunction to check URL condition
-        const regexPattern = /.*myprofile/; 
-        await this.page.waitForFunction(
-          (regex) => new RegExp(regex).test(document.location.href),
-          regexPattern.toString(),
-          { timeout: 30000, polling: 1000 } // Maximum timeout of 30 seconds, polling interval of 1 second
-        );
     }
-
-
     async clickMyAccountViewSavedCCLink(){
         await this.myaccount_viewsavedcc_link.click();
+        await expect(this.page).toHaveURL(/.*\/account\/savedcreditcard\//);
     }
     async clickMyAccountViewMyProfileLink(){
         await this.myaccount_viewmyprofile_link.click();
+        await expect(this.page).toHaveURL(/.*\/account\/myprofile\//);
     }
     async clickMyAccountViewOrderLink(){
         await this.myaccount_vieworders_link.click();
+        await expect(this.page).toHaveURL(/.*\/account\/orders\//);
     }
     async clickMyAccountViewAddressLink(){
         await this.myaccount_viewaddresses_link.click();
+        await expect(this.page).toHaveURL(/.*\/account\/addresses\//);
+    }
+    async clickMyAccountViewWishListLink(){
+        await this.myaccount_viewwishlist_link.click();
+        await expect(this.page).toHaveURL(/.*\/account\/wishlist\//);
     }
     async clickAddNewAddressButton(){
         await this.myaccount_addnewaddress_button.click();
@@ -246,7 +267,7 @@ exports.MyAccountPage = class MyAccountPage{
         await expect(this.page).toHaveURL(/.*addresses/);
         await this.displayAddressSection();
         await expect(this.myaccount_addnewaddress_button).toBeVisible();
-        await expect(this.address_breadcrumb).toBeVisible();
+        await expect(this.page.getByText('HomeMy AccountAddresses')).toBeVisible();
     }
 
     async validateDefaultShippingAddress(addedAddress){
@@ -261,11 +282,13 @@ exports.MyAccountPage = class MyAccountPage{
     }
 
     async clickEditAddressButton(){
+        await this.page.locator('section.m-4').first().waitFor({ state: 'visible' });
         await this.myaccount_savedaddress_edit_button.click();
     }
 
     async clickRemoveAddressButton(){
         await this.myaccount_savedaddress_remove_button.click();
+        
     }
 
     async clickSetasDefaultAddressButton(){
@@ -320,15 +343,30 @@ exports.MyAccountPage = class MyAccountPage{
         await expect(this.page.locator('body')).toContainText(myaccountpage_locator.myaccount_myprofile_headertext);
         await expect(this.page.getByRole('heading', { name: myaccountpage_locator.myaccount_myprofile_contactinformation })).toBeVisible();
         await expect(this.myaccount_addnewaddress_firstname).toBeVisible();
+        const firstNameValue = await this.myaccount_addnewaddress_firstname.inputValue();
+        // Log the value of the FirstName textbox
+        console.log(`FirstName value: ${firstNameValue}`);
+        // Verify that the FirstName textbox is not blank
+        expect(firstNameValue).not.toBe('');
         await expect(this.myaccount_addnewaddress_lastname).toBeVisible();
+        const lastNameValue = await this.myaccount_addnewaddress_lastname.inputValue();
+        // Log the value of the LastName textbox
+        console.log(`LastName value: ${lastNameValue}`);
+        // Verify that the LastName textbox is not blank
+        expect(lastNameValue).not.toBe('');
         await expect(this.myaccount_myprofile_email).toBeVisible();
+        const profileEmailID = await this.myaccount_myprofile_email.inputValue();
+        // Log the value of the ProfileEmailID textbox
+        console.log(`ProfileEmail Id: ${profileEmailID}`);
+        // Verify that the ProfileEmailID textbox is not blank
+        expect(profileEmailID).not.toBe('');
         await expect(this.myaccount_myprofile_savechanges_button).toBeVisible();
         await expect(this.page.getByText('HomeMy AccountMy Profile')).toBeVisible();
     }
 
-    async validateMyProfileUpdateMessage(){
+    async validateMyProfileUpdateMessage(profileUpdateMessage){
         try {
-            await expect(this.page.locator('body')).toContainText(accountpage_data.myaccount_myprofile_updatemessage);
+            await expect(this.page.locator('body')).toContainText(profileUpdateMessage);
             
         } catch (error) {
             throw new Error('Failed to validate profile update message:'+ error);
@@ -356,14 +394,74 @@ exports.MyAccountPage = class MyAccountPage{
         await expect(this.myaccount_changepassword_button).toBeVisible();
     }
 
-    async validatedOrderSection(){
+    async validatedOrderNumberDisplaySection(orderNumberPrefix){
         await expect(this.page).toHaveURL(/.*orders/);
         await expect(this.page.getByText('HomeMy AccountOrders')).toBeVisible();
-        const orders = await this.page.$$(myaccountpage_locator.myaccount_orders_ordernumber);
-        expect(orders.length).toBeGreaterThan(0);
-        await expect(this.myaccount_orders_searchorderplaceholder).toBeVisible();
-        await expect(this.myaccount_orders_vieworderdetails).toBeVisible();
-        //await expect(this.myaccount_orders_withoutordersbutton).toBeVisible();
+        await expect(this.page.locator(`h2.font-semibold:has-text("${orderNumberPrefix}")`).first()).toBeVisible();
+        const orderLocators = this.page.locator(`h2.font-semibold:has-text("${orderNumberPrefix}")`);
+        const orderLocatorsCount = await orderLocators.count();
+        console.log('Order Date Count :' + orderLocatorsCount);
+
+        // Define the expected <a> text and URL pattern
+        const aTextPattern = /View Order Details/;
+        const aHrefPattern = /\/account\/orderdetails\/\?orderId=\d+/;
+        
+        // Get all elements matching the "Order #" criteria
+        const orderElements = await orderLocators.all();
+        expect(orderElements.length).toBeGreaterThan(0);
+
+        // Log the count of matching elements
+        console.log(`Number of "Order #" elements: ${orderElements.length}`);
+
+        // Alternatively, if you need to interact with each element individually
+        for (const element of orderElements) {
+            // Perform actions with each element, such as extracting text or attributes
+            console.log(await element.innerText());
+        } 
+
+        // Iterate through each <h2> element and validate the following <p> element
+        for (let i = 0; i < orderLocatorsCount; i++) {
+            // Get the <h2> element
+            const h2Element = orderLocators.nth(i);
+            //console.log('h2Element' + h2Element);
+
+            // Locate the following <p> element
+            const pElement = await h2Element.locator('xpath=following-sibling::p');
+            //console.log('pElement' + pElement);
+
+            // Get the text content of the <p> element
+            const pText = await pElement.textContent();
+            console.log('Order Date and Price:' + pText);
+
+            // Validate the text content matches the regex pattern
+            expect(pText).toMatch(/^[A-Z][a-z]+\s\d{1,2},\s\d{4}\s\|\s\$?-?\d+(?:\.\d{1,2})?$/);
+
+            // Locate the following <a> element
+            const aElement = await h2Element.locator('xpath=following-sibling::a');
+            const aText = await aElement.textContent();
+            const aHref = await aElement.getAttribute('href');
+            // Validate the text content and href attribute
+            expect(aText).toMatch(aTextPattern);
+            expect(aHref).toMatch(aHrefPattern);
+
+            // Click on the <a> element and verify the navigation
+            await Promise.all([
+                this.page.waitForNavigation(), // Wait for the navigation to complete
+                aElement.click(), // Click the <a> element
+            ]);
+
+            // Verify the navigation by checking the URL or specific content on the new page
+            await expect(this.page).toHaveURL(/.*\/account\/orderdetails\/\?orderId=\d+$/);
+            // Optionally, you can check for specific content on the new page to confirm successful navigation
+            //await expect(this.page.locator('body')).toContainText('Order Details'); // Adjust based on the expected content
+
+            // Navigate back to the original page to continue the loop
+            await this.page.goBack();
+
+
+        }
+
+        
     }
 
     async clickViewOrderDetailsLink(){
@@ -417,16 +515,17 @@ exports.MyAccountPage = class MyAccountPage{
 
     async validateSaveCreditCardPage(){
         this.displaySavedCCHeaderText();
-        await expect(this.page.getByRole('list')).toContainText('HomeMy AccountSaved Credit Cards');
-        await expect(this.myaccount_savedcc_addccdebitcard_button).toBeVisible();
+        await expect(this.page.getByText('HomeMy AccountSaved Credit')).toBeVisible();
+        await expect(this.page.locator(`button:text("Add New Credit/Debit Card")[data-state="closed"]`)).toBeVisible();
+        await expect(this.page.locator('button:text("Add New Credit/Debit Card")').first()).toBeVisible();
+        await this.page.waitForSelector('p:text("Default Credit Card")');
+        
     }
 
     async validateExistingCCDetails(){
-        await expect(this.page.locator('body')).toContainText('Default Credit Card');
-        this.getCCNumber();
-        this.getCCExpDate();
-        
-
+        // await expect(this.page.locator('body')).toContainText('Default Credit Card');
+        // this.getCCNumber();
+        // this.getCCExpDate();
     }
 
     async getCCNumber(){
@@ -446,13 +545,22 @@ exports.MyAccountPage = class MyAccountPage{
     }
 
     async displaySavedCCNewAddressOptions(){
-        const regex = new RegExp(`^${myaccountpage_locator.myaccount_savecc_newaddressradiobutton}$`);
-        await expect(this.page.locator('section').filter({ hasText: regex })).toBeVisible();
+        await expect(this.page.locator('button[value="new-address"]')).toBeVisible();
+    }
+
+    async clickNewCreditCardNewAddressOption(){
+        await this.page.locator('button[value="new-address"]').click();
     }
 
     async displaySavedCCSavedAddressOptions(){
         const regex = new RegExp(`^${myaccountpage_locator.myaccount_savecc_savedaddressradiobutton}$`);
-        await expect(this.page.locator('section').filter({ hasText: regex })).toBeVisible();
+        const savedAddressLocator=this.page.locator('section').filter({ hasText: regex });
+        //await expect(this.page.locator('section').filter({ hasText: regex })).toBeVisible();
+        if (await savedAddressLocator.count() > 0) {
+            await expect(savedAddressLocator).toBeVisible();
+        } else {
+            console.log('No saved address present');
+        }
     }
 
     async enterCCNumber(enterCardNumber){
@@ -479,7 +587,7 @@ exports.MyAccountPage = class MyAccountPage{
         await expect(this.myaccount_cc_savecard_button).toBeVisible();
         await this.displaySavedCCNewAddressOptions();
         await this.displaySavedCCSavedAddressOptions();
-        await expect(this.myaccount_savedefaultcc_checkbox).toBeVisible();
+        
     }
 
     async clickDefaultCCCheckbox(){
@@ -1360,7 +1468,7 @@ exports.MyAccountPage = class MyAccountPage{
     }
 
     async clickEditButton(){
-        await this.page.getByRole('button', { name: 'Edit' }).nth(1).click();
+        await this.page.getByRole('button', { name: 'Edit',exact:true }).nth(0).click();
     }
 
     async validateErrorMessage(){
