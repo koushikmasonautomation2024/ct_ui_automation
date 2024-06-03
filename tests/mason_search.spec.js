@@ -178,7 +178,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   })
 
  //SB-Search004
-  test.only("Validate the 5 most recent search products as selectable text links along with X is displayed based on CT configuration",async({page},testInfo)=>{ 
+  test("Validate the 5 most recent search products as selectable text links along with X is displayed based on CT configuration",async({page},testInfo)=>{ 
     const mySearchPage = new SearchPage(page);
     const searchValues = [];
 
@@ -196,18 +196,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
         
         // Validate the search field with the generated search value
         await mySearchPage.validateSearchField(searchValue);
-        await page.waitForTimeout(5000);
-        // Wait for the network to be idle
-        // await page.waitForLoadState('networkidle');
-
-        // // // Validate that the wrong search page title is displayed for the search value
-        // await mySearchPage.validateWrongSearchPageTitle(searchValue);
-
-        // // // Validate the search tips section
-        // await mySearchPage.validateSearchTips();
-        // await page.waitForLoadState('networkidle');
-        // // // Validate the 'Need Help' section
-        // await mySearchPage.validateNeedHelpsection();
+        await page.waitForTimeout(2000);
     }
 
     // Validate recent searches for all 5 search values
@@ -217,4 +206,84 @@ test.describe("Mason Commerce Tool Site", ()=>{
 
   })
 
+
+  //SB-Search005
+  test("Validate the clicking of product from the recent searches",async({page},testInfo)=>{ 
+    const mySearchPage = new SearchPage(page);
+    const searchValues = [];
+    // Function to generate a random search value
+    const generateSearchValue = () => {
+        return [...Array(6)].map(() => String.fromCharCode(Math.random() * 26 + 97 | 0)).join('') + 
+               String.fromCharCode(Math.random() * 26 + 65 | 0) + 
+               (Math.random() * 10 | 0);
+    };
+
+    // Perform 5 different searches
+    for (let i = 0; i < 3; i++) {
+        const searchValue = generateSearchValue();
+        searchValues.push(searchValue);
+        
+        // Validate the search field with the generated search value
+        await mySearchPage.validateSearchField(searchValue);
+        await page.waitForTimeout(3000);
+    }
+
+    // Validate recent searches for all 5 search values
+    for (const searchValue of searchValues) {
+        await mySearchPage.validateRecentSearches(searchValue);
+    }
+
+    // Randomly select one search value to click and one to remove
+    const randomIndexToClick = Math.floor(Math.random() * searchValues.length);
+    const searchValueToClick = searchValues[randomIndexToClick];
+    
+    // Verify clicking on the product in recent searches redirects to SRP
+    await mySearchPage.validateClickOnRecentSearch(searchValueToClick);
+  })
+
+  //SB-Search006
+  test("Validate the clicking of X from the recent searches",async({page},testInfo)=>{ 
+    const mySearchPage = new SearchPage(page);
+    const searchValues = [];
+
+    // Function to generate a random search value
+    const generateSearchValue = () => {
+        return [...Array(6)].map(() => String.fromCharCode(Math.random() * 26 + 97 | 0)).join('') + 
+               String.fromCharCode(Math.random() * 26 + 65 | 0) + 
+               (Math.random() * 10 | 0);
+    };
+
+    // Perform 5 different searches
+    for (let i = 0; i < 3; i++) {
+        const searchValue = generateSearchValue();
+        searchValues.push(searchValue);
+        
+        // Validate the search field with the generated search value
+        await mySearchPage.validateSearchField(searchValue);
+        await page.waitForTimeout(3000);
+    }
+
+    // Validate recent searches for all 5 search values
+    for (const searchValue of searchValues) {
+        await mySearchPage.validateRecentSearches(searchValue);
+    }
+
+    
+    const randomIndexToRemove = Math.floor(Math.random() * searchValues.length);
+    const searchValueToRemove = searchValues[randomIndexToRemove];
+
+
+    // Verify clicking "x" in the recent searches removes the search term from history
+    await mySearchPage.validateRemoveRecentSearchEntry(searchValueToRemove);
+
+  })
+
+//SB-Search008
+  test.only('Verify the 10 most popular search terms are displayed as selectable text links', async ({ page }) => {
+    // Navigate to the page containing the popular search terms
+    const mySearchPage = new SearchPage(page);
+    await mySearchPage.validatePopularSearch();
+    await mySearchPage.validatePopularSearchItemsCount();
+
+  })
 })

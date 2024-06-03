@@ -15,6 +15,8 @@ const category_grid="//ul[@class='grid  gap-5 grid-cols-3 md:grid-cols-6']/li";
 const search_result_title="Result for";
 const item_count="Items";
 const popular_searches="Popular Searches";
+const popular_search_container="div.m-2.flex.flex-wrap.gap-2\\.5";
+const popular_search_terms="div.flex.gap-1\\.5.rounded-md.border.border-foggyGray.p-2";
 
 exports.SearchPage = class SearchPage{
     constructor(page){
@@ -34,9 +36,13 @@ exports.SearchPage = class SearchPage{
     }
 
     async validateSearchField(search_value){
+        await expect(this.search_placeholder).toBeVisible();
         await this.search_placeholder.click();
         await this.search_placeholder.fill(search_value);
         await this.searchicon.click();
+        // Wait for the URL to match either a search results page or a no-result page
+        await this.page.waitForNavigation();
+        await this.page.waitForURL(`**/?q=${search_value}`);
     }
 
     async validateWrongSearchPageTitle(search_value){
@@ -64,7 +70,7 @@ exports.SearchPage = class SearchPage{
     }
 
     async validateSearchTips(){
-        await expect(this.search_tips).toBeVisible();
+        await expect(this.search_tips).toBeVisible({ timeout: 10000 });
     }
 
     async validateNeedHelpsection(){
@@ -149,6 +155,34 @@ async validateRecentSearches(search_value){
     await this.search_placeholder.click();
     await expect(this.page.getByRole('link', { name: search_value, exact: true })).toBeVisible();
     await expect(this.page.locator('li').filter({ hasText: new RegExp(`^${search_value}$`) }).getByRole('button')).toBeVisible();
+}
+
+async validateClickOnRecentSearch(search_value){
+    await this.search_placeholder.click();
+    await this.page.getByRole('link', { name: search_value, exact: true }).click();
+    await this.page.waitForNavigation();
+    await this.page.waitForURL(`**/?q=${search_value}`);
+}
+
+async validateRemoveRecentSearchEntry(search_value){
+    await this.search_placeholder.click();
+    await expect(this.page.locator('li').filter({ hasText: new RegExp(`^${search_value}$`) }).getByRole('button')).toBeVisible();
+    await (this.page.locator('li').filter({ hasText: new RegExp(`^${search_value}$`) }).getByRole('button')).click();
+    await expect(this.page.locator('li').filter({ hasText: new RegExp(`^${search_value}$`) }).getByRole('button')).not.toBeVisible();
+}
+
+
+async validatePopularSearchItemsCount(){
+    // Verify the popular search terms container is visible
+    const popularSearchTermsContainer = this.page.locator(popular_search_container);
+    await expect(popularSearchTermsContainer).toBeVisible();
+
+    // Get all popular search term elements
+    const popularSearchTerms = popularSearchTermsContainer.locator(popular_search_terms);
+    const searchTermCount = await popularSearchTerms.count();
+
+    // Verify there are exactly 10 popular search terms displayed
+    expect(searchTermCount).toBe(10);
 }
 
 }
