@@ -111,7 +111,7 @@ test("Account - Sign In (Drawer)/Sign In Page - Validate the Error message for n
 })
 
 
-test.only("Account - SignIn - Validate the Password Hide/Show in Sign-In ",async({page})=>{ 
+test("Account - SignIn - Validate the Password Hide/Show in Sign-In ",async({page})=>{ 
   const signinPage = new SignInPage(page);
   //const createAccountPage = new CreateAccountPage(page);
   //await signinPage.clickCreateAnAccount();

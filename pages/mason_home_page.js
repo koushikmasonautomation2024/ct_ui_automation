@@ -6,10 +6,15 @@ exports.HomePage = class HomePage{
         this.page=page;
         this.homepage_searchbarplaceholder=page.getByPlaceholder(homepage_locator.homepage_searchbarplaceholder);
         this.homepage_searchbutton=page.getByLabel(homepage_locator.homepage_searchbutton, { exact: true });
-        
         this.homepage_signin=page.locator(homepage_locator.homepage_signin);   
         this.homepage_cart=page.getByRole('button', { name: homepage_locator.homepage_cart }); 
         this.homepage_category=page.getByRole('button', { name: homepage_locator.homepage_category }); 
+        this.minicart_drawer_heading=page.getByRole('button', { name: homepage_locator.minicart_drawer_heading });
+        this.minicart_drawer_subtotalsection=page.getByText(homepage_locator.minicart_drawer_subtotalsection);
+        this.minicart_drawer_viewcart_button=page.getByRole('button', { name: homepage_locator.minicart_drawer_viewcart_button });
+        this.minicart_drawer_checkout_button=page.getByRole('button', { name: homepage_locator.minicart_drawer_checkout_button });
+        this.footer_signupemail_textbox=page.getByPlaceholder(homepage_locator.footer_signupemail_textbox);
+        this.footer_signup_button=page.getByRole('button', { name: homepage_locator.footer_signup_button });
         
     }
 
@@ -30,12 +35,25 @@ exports.HomePage = class HomePage{
         await expect(this.homepage_cart).toBeVisible();
     }
 
+    async clickMiniCartIcon(){
+        await this.homepage_cart.waitFor({ state: 'visible' });
+        await this.homepage_cart.click();
+    }
+
     async displayCategory(){
         await this.homepage_category.waitFor({ state: 'visible' });
         await expect(this.homepage_category).toBeVisible();
     }
     async displaySiteLogo(brandLogoName){
-        await expect(this.page.getByRole('link', { name: brandLogoName })).toBeVisible();
+        await expect(this.page.getByRole('link', { name: brandLogoName, exact: true })).toBeVisible();
+    }
+    async clickSiteLogo(brandLogoName){
+        await this.page.getByRole('link', { name: brandLogoName, exact: true }).click();
+        
+    }
+
+    async homePageRedirectionValidation(homePageUrl){
+        await expect(this.page).toHaveURL(homePageUrl);
     }
     async displayHeroBanner(bannerName){
         await expect(this.page.getByRole('link', { name: bannerName })).toBeVisible();
@@ -158,6 +176,32 @@ async ensureGreyOverlayOnCategoryHover()
 //   return isOverlayAdded && (elementRect.top >= window.innerHeight || elementRect.bottom <= 0);
 // }, isOverlayAdded); // Pass isOverlayAdded as an argument
 
+                    //console.log('Link:', await linkElement.getAttribute('href'));
+                    //console.log('Image source:', srcAttribute);
+                    console.log('Alt text:', altAttribute);
+                } else {
+                    console.log('Link element not found for logo item.');
+                }
+            } catch (error) {
+                console.error('Error processing logo item:', error);
+            }
+        }
+    }
+
+    async seasonalSavingsAndViewAlllink(){
+        await expect(this.page.getByText('Seasonal Savings')).toBeVisible();
+        await expect(this.page.locator('section').filter({ hasText: /^Seasonal SavingsView All$/ }).getByRole('link')).toBeVisible();
+    }
+
+    async signUpModalDisplayValidation(enterEmail){
+        await this.page.getByRole('button', { name: 'Sign Up' }).click();
+        await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByPlaceholder('Enter your email address')).toBeVisible();
+        await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Close Modal')).toBeVisible();
+        await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Submit Modal Form')).toBeVisible();
+        await this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByPlaceholder('Enter your email address').fill(enterEmail);
+        await this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Submit Modal Form').click();
+        await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByText(/^.*$/).first()).toBeHidden();
+    }
 // // Step 4: Assertion
 // expect(isPageDisabled).toBe(true);*/
 

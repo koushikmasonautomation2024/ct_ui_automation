@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');
 import {test,expect } from '@playwright/test';
-import {HomePage} from '../pages/mason_home_page';
-import {SignInPage} from '../pages/mason_signin_page';
+import {HomePageNew} from '../pages/mason_home_page1';
+import {SignInPageNew} from '../pages/mason_signin_page1';
 import {MyAccountPage} from '../pages/mason_myaccount_page';
 import { allure } from 'allure-playwright';
 
@@ -20,7 +20,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
            await page.goto(process.env.WEB_URL);
            await page.waitForLoadState('networkidle');
            if(isMobile==true){
-            const signinPage = new SignInPage(page);  
+            const signinPage = new SignInPageNew(page);  
             await signinPage.clickSignInImage();
             await signinPage.clickSignIn();
             await signinPage.validateSignInDialog();
@@ -28,9 +28,9 @@ test.describe("Mason Commerce Tool Site", ()=>{
             await signinPage.clickSignIn();
             await page.waitForLoadState('networkidle');
           } else {
-            const homePage = new HomePage(page);
+            const homePage = new HomePageNew(page);
             await homePage.clickOnHomePageSignIn();
-            const signinPage = new SignInPage(page);
+            const signinPage = new SignInPageNew(page);
             await signinPage.validateWelcomeTextSignInDialog(signinpage_data.signin_dailog_text);
             await signinPage.validateWelcomeSignInDialog();
             await signinPage.clickSignIn();
@@ -49,9 +49,9 @@ test.describe("Mason Commerce Tool Site", ()=>{
        }   
   })
   //Global Persistent Header (Logged In) - Promotional Banner Management-SB-GPH010
-  test("GPH-Promotional Banner Managment - Verify the promotional banner should be displayed On Homepage",async({page},testInfo)=>{ 
-    test.slow();
-    const homePage = new HomePage(page);
+  test.only("GPH-Promotional Banner Managment - Verify the promotional banner should be displayed On Homepage",async({page},testInfo)=>{ 
+    //test.slow();
+    const homePage = new HomePageNew(page);
     try {
         await homePage.displayHeroBanner(homepage_data.homepage_first_herobanner_name);
         await homePage.displayHeroBanner(homepage_data.homepage_second_herobanner_name);
@@ -67,8 +67,8 @@ test.describe("Mason Commerce Tool Site", ()=>{
 
   //Global Persistent Header (Logged In) - Stoneberry Logo Redirect-SB-GPH012
   test("GPH-Stoneberry Logo Redirect - Verify the appearance and accesibility of the Stoneberry logo at the lefthand side",async({page},testInfo)=>{ 
-    test.slow();
-    const homePage = new HomePage(page);
+    //test.slow();
+    const homePage = new HomePageNew(page);
     await homePage.displaySiteLogo(homepage_data.homepage_sitename_logo);
     await homePage.staticPageNavigation(homepage_data.staticPageUrl);
     await homePage.clickSiteLogo(homepage_data.homePageUrl,homepage_data.homepage_sitename_logo);
@@ -78,8 +78,8 @@ test.describe("Mason Commerce Tool Site", ()=>{
 
   //Global Persistent Header (Logged In) - Sticky Header-SB-GPH002
   test("GPH-Sticky Header- Verify the header is sticky through the following pages: PDP",async({page},testInfo)=>{ 
-    test.slow();
-    const homePage = new HomePage(page);
+    //test.slow();
+    const homePage = new HomePageNew(page);
     await homePage.staticPageNavigation(homepage_data.pdpURL);
     await homePage.pageScrollBy(homepage_data.scrollXAxis,homepage_data.scrollYAxis);
     await homePage.displayPDPStickyAddtoCartButton();
@@ -89,8 +89,8 @@ test.describe("Mason Commerce Tool Site", ()=>{
 
   //Global Persistent Header (Logged In) - Mega Menu Navigation-SB-GPH002
   test("GPH-Mega Menu Navigation - Verify Mega Menu Navigation opens on hovering within the CTA",async({page},testInfo)=>{ 
-    test.slow();
-    const homePage = new HomePage(page);
+    //test.slow();
+    const homePage = new HomePageNew(page);
     await homePage.displayCategory();
     await homePage.mouseHoverMegaMenu(homepage_data.categoryNameL1);
     await homePage.clickOnMegaMenuL2Category(homepage_data.l2CategoryName);
@@ -101,8 +101,8 @@ test.describe("Mason Commerce Tool Site", ()=>{
 
   //Global Persistent Header (Logged In) - Search Bar-SB-GPH015/SB-GPH016/SB-GPH017
   test("GPH-Search Bar - Verify the search field appearance, help text display, and functionality",async({page},testInfo)=>{ 
-    test.slow();
-    const homePage = new HomePage(page);
+    //test.slow();
+    const homePage = new HomePageNew(page);
     await homePage.displaySearchBar();
     await homePage.enterSearchTerm(homepage_data.searchterm);
     await homePage.hiddenSearchPlaceholderText();
@@ -112,10 +112,10 @@ test.describe("Mason Commerce Tool Site", ()=>{
 
   //Global Persistent Header (Logged In) - Account Drawer-SB-GPH039
   test("GPH-Account Drawer - Verify generation of the account drawer upon clicking the Account icon",async({page},testInfo)=>{ 
-    test.slow();
-    const homePage = new HomePage(page);
+    //test.slow();
+    const homePage = new HomePageNew(page);
     await homePage.clickOnHomePageSignIn();
-    const signinPage = new SignInPage(page);
+    const signinPage = new SignInPageNew(page);
     await signinPage.validateSignedInAccountDrawer();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.validatedSignedInAccountDrawerItems();
@@ -125,7 +125,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
 
   //Global Persistent Header (Logged In) - Account State Update-SB-GPH038
   test("GPH-Account State Update - Verify the header update to display the logged-in user state, display of user's first name under the Account icon",async({page},testInfo)=>{ 
-    test.slow();
+    //test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.validateAccountStatusUpdateText();
     console.log(testInfo.status);
@@ -133,13 +133,13 @@ test.describe("Mason Commerce Tool Site", ()=>{
   })
 
   //Global Persistent Header (Logged In) - Sign In/Sign Out-SB-GPH040
-  test.only("GPH-Sign In/Sign Out - Verify the Test successful sign in/out functionality, display of success messages, redirection behavior upon sign out",async({page},testInfo)=>{ 
-    test.slow();
-    const homePage = new HomePage(page);
+  test("GPH-Sign In/Sign Out - Verify the Test successful sign in/out functionality, display of success messages, redirection behavior upon sign out",async({page},testInfo)=>{ 
+    //test.slow();
+    const homePage = new HomePageNew(page);
     await homePage.clickOnHomePageSignIn();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickSignOutButton();
-    const signinPage = new SignInPage(page);
+    const signinPage = new SignInPageNew(page);
     await signinPage.validateSignOutMessage(signinpage_data.signout_success_text);
     await signinPage.signoutPageHeaderTextValidation(signoutpage_data.signout_pageheadertext);
     await signinPage.pageTextValidation(signoutpage_data.signout_pagetext1);
@@ -153,8 +153,8 @@ test.describe("Mason Commerce Tool Site", ()=>{
 
   //Global Persistent Header (Logged In) - Cart Icon and Drawer-SB-GPH020
   test("GPH-Cart Icon and Drawer - Verify display and functionality of the Cart icon and drawer",async({page},testInfo)=>{ 
-    test.slow();
-    const homePage = new HomePage(page);
+    //test.slow();
+    const homePage = new HomePageNew(page);
     await homePage.displayMiniCartIcon();
     await homePage.clickMiniCartIcon();
     await homePage.validatedEmptyMiniCartDrawer();
