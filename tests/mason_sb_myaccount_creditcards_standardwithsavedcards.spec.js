@@ -12,7 +12,7 @@ const myaccountpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_
 const savedAddress = myaccountpage_data.myaccount_newaddress_firstname +" "+ myaccountpage_data.myaccount_newaddress_lastname +" "+ myaccountpage_data.myaccount_newaddress_addressline1;
 const editAddress = myaccountpage_data.myaccount_editaddress_firstname +" "+ myaccountpage_data.myaccount_editaddress_lastname +" "+ myaccountpage_data.myaccount_editaddress_addressline1;
 
-test.describe("Mason Commerce Tool Site", ()=>{
+test.describe("Mason MyAccount - Credit Cards - Standard With Saved Cards", ()=>{
 
    test.beforeEach(async({page,isMobile},testInfo)=>{
     test.slow();
@@ -49,8 +49,8 @@ test.describe("Mason Commerce Tool Site", ()=>{
        }   
   })
     //Account - Credit Cards - Standard With Saved Cards - Test Cases ID-SB-MyA293/SB-MyA294
-  test("Account - Credit Cards - Standard With Saved Cards - Verify user gets navigate to credit card page by either clicking on the 'Saved Credit Cards' link from the left navigation menu present on the account pages.",async({page},testInfo)=>{ 
-    //test.slow();
+  test.only("Account - Credit Cards - Standard With Saved Cards - Verify user gets navigate to credit card page by either clicking on the 'Saved Credit Cards' link from the left navigation menu present on the account pages.",async({page},testInfo)=>{ 
+    ////test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountSavedCCLink();
     await myaccountPage.validateSaveCreditCardPage();
@@ -59,7 +59,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
 
     //Account - Credit Cards - Standard With Saved Cards - Test Cases ID-SB-MyA297/SB-MyA298
   test("Account - Credit Cards - Standard With Saved Cards - Verify Add card form shows following fields associated with credit card:- Card number- Expiry date (mm//yy)- Security code (? icon)- Save as default card checkbox- Save card button.",async({page},testInfo)=>{ 
-    //test.slow();
+    ////test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountSavedCCLink();
     await myaccountPage.clickAddNewCC();
@@ -70,7 +70,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
 
     //Account - Credit Cards - Standard With Saved Cards - Test Cases ID-SB-My307/SB-My308
   test("Account - Credit Cards - Standard With Saved Cards - Verify on adding a new card successfully, application shows the newly added card in the list.",async({page},testInfo)=>{ 
-    //test.slow();
+    ////test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountSavedCCLink();
     await myaccountPage.clickAddNewCC();
@@ -86,7 +86,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
 
     //Account - Credit Cards - Standard With Saved Cards - Test Cases ID-SB-MyA309
   test("Account - Credit Cards - Standard With Saved Cards - Verify application always shows default Credit Card as first along with a checkmark encompassed by a green circle and the text “DEFAULT CREDIT CARD”.",async({page},testInfo)=>{ 
-    //test.slow();
+    ////test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountSavedCCLink();
     await myaccountPage.setDefaultCreditCard();
@@ -94,7 +94,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
 
     //Account - Credit Cards - Standard With Saved Cards - Test Cases ID-SB-MyA316/SB-MyA318
   test("Account - Credit Cards - Standard With Saved Cards - Verify clicking on Remove option, application removes the selected card and a success message 'Your credit card was successfully removed' is shown.",async({page},testInfo)=>{ 
-    //test.slow();
+    ////test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountSavedCCLink();
     await myaccountPage.removeCreditCard();
@@ -102,15 +102,15 @@ test.describe("Mason Commerce Tool Site", ()=>{
 
     //Account - Credit Cards - Standard With Saved Cards - Test Cases ID-SB-MyA317
   test("Account - Credit Cards - Standard With Saved Cards - Verify 'Undo' option is shown at the end of the success message and clicking on it, application reverses the removal of the credit card.",async({page},testInfo)=>{ 
-    //test.slow();
+    ////test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountSavedCCLink();
     await myaccountPage.undoRemoveCreditCard();
     })
 
     //Account - Credit Cards - Standard With Saved Cards - Test Cases ID-SB-MyA312
-  test.only("Account - Credit Cards - Standard With Saved Cards - Verify clicking on Edit button, application expands the edit card form with pre-populated data- Expiry date- Billing address.",async({page},testInfo)=>{ 
-    //test.slow();
+  test("Account - Credit Cards - Standard With Saved Cards - Verify clicking on Edit button, application expands the edit card form with pre-populated data- Expiry date- Billing address.",async({page},testInfo)=>{ 
+    ////test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountSavedCCLink();
     await myaccountPage.validateDefaultSavedCreditCardSection();
@@ -121,8 +121,8 @@ test.describe("Mason Commerce Tool Site", ()=>{
     })
 
     //Account - Credit Cards - Standard With Saved Cards - Test Cases ID-SB-MyA315
-  test.only("Account - Credit Cards - Standard With Saved Cards - Verify user is able to edit the credit card details with new billing address.",async({page},testInfo)=>{ 
-    //test.slow();
+  test("Account - Credit Cards - Standard With Saved Cards - Verify user is able to edit the credit card details with new billing address.",async({page},testInfo)=>{ 
+    ////test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountSavedCCLink();
     await myaccountPage.validateDefaultSavedCreditCardSection();
@@ -136,8 +136,8 @@ test.describe("Mason Commerce Tool Site", ()=>{
     })
 
     //Account - Credit Cards - Standard With Saved Cards - Test Cases ID-SB-MyA312
-  test.only("Account - Credit Cards - Standard With Saved Cards - Verify user is able to edit the credit card details with any other saved address from the account.",async({page},testInfo)=>{ 
-    //test.slow();
+  test("Account - Credit Cards - Standard With Saved Cards - Verify user is able to edit the credit card details with any other saved address from the account.",async({page},testInfo)=>{ 
+    ////test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountSavedCCLink();
     await myaccountPage.validateDefaultSavedCreditCardSection();

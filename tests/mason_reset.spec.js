@@ -144,7 +144,7 @@ test("Account - Reset/Forgot Password - Validate the Show/Hide of Password on Re
 
 
 //SB-LOGREG030
-test.only("Account - Reset/Forgot Password - Validate the Password Info Icon on Reset Password page",async({page})=>{ 
+test("Account - Reset/Forgot Password - Validate the Password Info Icon on Reset Password page",async({page})=>{ 
   //test.slow();
   // const homePage = new HomePage(page);
   // await homePage.clickOnHomePageSignIn();

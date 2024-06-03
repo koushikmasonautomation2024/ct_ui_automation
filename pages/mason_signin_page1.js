@@ -15,7 +15,8 @@ exports.SignInPageNew = class SignInPageNew{
         this.signin_img_button=page.locator(signinpage_locator.signin_img_button);
         this.signin_stoneberrycredit_button=page.getByRole('button', { name: signinpage_locator.signin_stoneberrycredit_button }); 
         this.signin_makeapayment_button=page.getByRole('button', { name: signinpage_locator.signin_makeapayment_button }); 
-        this.signin_orders_link=page.getByRole('link', { name: signinpage_locator.signin_orders_link });   
+        this.signin_orders_link=page.getByRole('link', { name: signinpage_locator.signin_orders_link }); 
+        this.signin_orders_link_guest=page.getByRole('link', { name: signinpage_locator.signin_orders_link_guest });   
         this.signin_wishlist_link=page.getByRole('link', { name: signinpage_locator.signin_wishlist_link });
         this.signin_needhelp_link=page.getByRole('link', { name: signinpage_locator.signin_needhelp_link });
         this.forgot_password_link=page.getByRole('button', { name: signinpage_locator.forgot_password_link });     
@@ -71,7 +72,7 @@ exports.SignInPageNew = class SignInPageNew{
         await expect(this.create_account_button_name).toBeVisible();
         await expect(this.signin_stoneberrycredit_button).toBeVisible();
         await expect(this.signin_makeapayment_button).toBeVisible();
-        await expect(this.signin_orders_link).toBeVisible();
+        await expect(this.signin_orders_link_guest).toBeVisible();
         await expect(this.signin_wishlist_link).toBeVisible();
         await expect(this.signin_needhelp_link).toBeVisible();
 
@@ -89,6 +90,11 @@ exports.SignInPageNew = class SignInPageNew{
     async validateSignInMessage(signInSuccessMessage){
         await this.page.getByText(signInSuccessMessage).waitFor({ state: 'visible' });
         await expect(this.page.getByText(signInSuccessMessage)).toBeVisible();
+        //await this.page.locator('div.h-16.w-16.animate-spin').waitFor({state:'hidden'});
+    }
+
+    async waitForLoaderComplete(){
+        await this.page.locator('div.h-16.w-16.animate-spin').waitFor({state:'hidden'});
     }
 
     async validateSignOutMessage(signOutMessage){

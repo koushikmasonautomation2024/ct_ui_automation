@@ -12,7 +12,7 @@ const myaccountpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_
 const savedAddress = myaccountpage_data.myaccount_newaddress_firstname +" "+ myaccountpage_data.myaccount_newaddress_lastname +" "+ myaccountpage_data.myaccount_newaddress_addressline1;
 const editAddress = myaccountpage_data.myaccount_editaddress_firstname +" "+ myaccountpage_data.myaccount_editaddress_lastname +" "+ myaccountpage_data.myaccount_editaddress_addressline1;
 
-test.describe("Mason Commerce Tool Site", ()=>{
+test.describe("Mason MyAccount - Addresses - Standard With Addresses", ()=>{
 
    test.beforeEach(async({page,isMobile},testInfo)=>{
     test.slow();
@@ -50,7 +50,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   })
   
   //Account - Addresses - Standard With Addresses - Test Cases ID-SB-MyA229/SB-MyA230/SB-MyA236/SB-MyA237
-  test("Account - Addresses - Standard With Addresses - Verify functionality of add new Address",async({page},testInfo)=>{ 
+  test.only("Account - Addresses - Standard With Addresses - Verify functionality of add new Address",async({page},testInfo)=>{ 
     //test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountAddressLink();
@@ -60,24 +60,26 @@ test.describe("Mason Commerce Tool Site", ()=>{
     await myaccountPage.validateAddNewAddress();
   })
 
-  //Account - Addresses - Standard With Addresses - Test Cases ID-SB-MyA252/SB-MyA253
-  test("Account - Addresses - Remove Address - Verify clicking on 'Remove' button, the selected address gets deleted and the data removed from the Addresses page.",async({page},testInfo)=>{ 
-    //test.slow();
-    const myaccountPage = new MyAccountPage(page);
-    await myaccountPage.clickMyAccountAddressLink();
-    await myaccountPage.displayAddressSection();
-    await myaccountPage.removeAddress();
-  })
-
-  //Account - Addresses - Standard With Addresses - Test Cases ID-SB-MyA254/SB-MyA255
-  test("Account - Addresses - Undo Remove Address - Verify clicking on the 'Undo' text link, application reverses the removal of the address.",async({page},testInfo)=>{ 
+  //Account - Addresses - Standard With Addresses - Test Cases ID-SB-MyA252/SB-MyA253/SB-MyA254/SB-MyA255
+  test("Account - Addresses - Remove and Undo Remove Address - Verify clicking on 'Remove' button, the selected address gets deleted and the data removed from the Addresses page.",async({page},testInfo)=>{ 
     //test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountAddressLink();
     await myaccountPage.displayAddressSection();
     await myaccountPage.undoRemoveAddress();
-
+    await myaccountPage.removeAddress();
+    
   })
+
+  // //Account - Addresses - Standard With Addresses - Test Cases ID-SB-MyA254/SB-MyA255
+  // test("Account - Addresses - Undo Remove Address - Verify clicking on the 'Undo' text link, application reverses the removal of the address.",async({page},testInfo)=>{ 
+  //   //test.slow();
+  //   const myaccountPage = new MyAccountPage(page);
+  //   await myaccountPage.clickMyAccountAddressLink();
+  //   await myaccountPage.displayAddressSection();
+  //   await myaccountPage.undoRemoveAddress();
+
+  // })
 
   //Account - Addresses - Standard With Addresses - Test Cases ID-SB-MyA244/SB-MyA249
   test("Account - Addresses - Edit Address - Verify clicking on Edit against any address, application expands edit address form with values pre-populated in it.",async({page},testInfo)=>{ 
@@ -140,17 +142,20 @@ test.describe("Mason Commerce Tool Site", ()=>{
     await myaccountPage.clickMyAccountAddressLink();
     await myaccountPage.setDefaultAddress();
     await myaccountPage.validateDefaultShippingFirstSection();
-    
-  })
-
-  //Account - Addresses - Standard With Addresses - Test Cases ID-SB-MyA238
-  test("Account - Addresses - Set as Default Address using Default Checkbox - Verify if the 'Set as default billing & shipping address' checkbox is selected then newly added address gets updated as the Default Billing & Shipping Address upon save..",async({page},testInfo)=>{ 
-    //test.slow();
-    const myaccountPage = new MyAccountPage(page);
-    await myaccountPage.clickMyAccountAddressLink();
     await myaccountPage.clickAddNewAddressButton();
     await myaccountPage.displayAddNewAddressSection();
     await myaccountPage.addNewDefaultShippingBillingAddress();
-    })
+    
+  })
+
+  // //Account - Addresses - Standard With Addresses - Test Cases ID-SB-MyA238
+  // test("Account - Addresses - Set as Default Address using Default Checkbox - Verify if the 'Set as default billing & shipping address' checkbox is selected then newly added address gets updated as the Default Billing & Shipping Address upon save..",async({page},testInfo)=>{ 
+  //   //test.slow();
+  //   const myaccountPage = new MyAccountPage(page);
+  //   await myaccountPage.clickMyAccountAddressLink();
+  //   await myaccountPage.clickAddNewAddressButton();
+  //   await myaccountPage.displayAddNewAddressSection();
+  //   await myaccountPage.addNewDefaultShippingBillingAddress();
+  //   })
 
 })

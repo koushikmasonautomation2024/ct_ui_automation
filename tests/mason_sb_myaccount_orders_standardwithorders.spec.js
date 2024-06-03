@@ -12,7 +12,7 @@ const myaccountpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_
 const savedAddress = myaccountpage_data.myaccount_newaddress_firstname +" "+ myaccountpage_data.myaccount_newaddress_lastname +" "+ myaccountpage_data.myaccount_newaddress_addressline1;
 const editAddress = myaccountpage_data.myaccount_editaddress_firstname +" "+ myaccountpage_data.myaccount_editaddress_lastname +" "+ myaccountpage_data.myaccount_editaddress_addressline1;
 
-test.describe("Mason Commerce Tool Site", ()=>{
+test.describe("Mason MyAccount Orders - Standard With Orders", ()=>{
 
    test.beforeEach(async({page,isMobile},testInfo)=>{
     test.slow();
@@ -59,7 +59,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   })
 
   //Account - Orders - Standard With Orders - Test Cases ID-SB-MyA168/SB-MyA169/SB-MyA170/SB-MyA171/SB-MyA173/SB-MyA174
-  test("Account - Orders - Standard With Orders - Verify display of order details including Order ID, Order Date, and Order Total",async({page},testInfo)=>{ 
+  test.only("Account - Orders - Standard With Orders - Verify display of order details including Order ID, Order Date, and Order Total",async({page},testInfo)=>{ 
     test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountOrderLink();

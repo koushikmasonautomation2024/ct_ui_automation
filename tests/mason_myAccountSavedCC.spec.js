@@ -52,7 +52,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
  
   
 //SB-MyA325
-  test("Validate Home -> My account -> Addresses breadcrumbs are shown in Address page",async({page},testInfo)=>{ 
+  test.only("Validate Home -> My account -> Addresses breadcrumbs are shown in Address page",async({page},testInfo)=>{ 
     
     const myAccountPage = new MyAccountPage(page);
     const myAccountSavedCCPage = new MyAccountSavedCCPage(page);

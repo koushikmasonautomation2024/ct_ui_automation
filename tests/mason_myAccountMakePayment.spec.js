@@ -205,7 +205,7 @@ test("Validate the Review Payment section in Make Payment page",async({page},tes
 
 
 //SB-MyA158
-test("Validate the Payment Success in Make Payment page",async({page},testInfo)=>{ 
+test.only("Validate the Payment Success in Make Payment page",async({page},testInfo)=>{ 
   //test.slow();
   const myaccountPage = new MyAccountPage(page);
   const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);

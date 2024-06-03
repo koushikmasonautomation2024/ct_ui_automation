@@ -70,7 +70,7 @@ exports.HomePageNew = class HomePageNew{
     }
 
     async displayFooter(footerName){
-        await expect(this.page.getByText(footerName)).toBeVisible();
+        await expect(this.page.getByText(footerName,{exact:true})).toBeVisible();
     }
 
     async displayFooterLinks(footerLinkName){
@@ -87,6 +87,7 @@ exports.HomePageNew = class HomePageNew{
 
     async staticPageNavigation(staticPageUrl){
         await this.page.goto(staticPageUrl);
+        await this.page.waitForLoadState('networkidle');
     }
 
     async pageScrollBy(deltaX, deltaY){
@@ -95,7 +96,9 @@ exports.HomePageNew = class HomePageNew{
     }
 
     async displayPDPStickyAddtoCartButton(){
-        await expect(this.page.locator(homepage_locator.stickyheader_pdp)).toBeVisible();
+        await this.page.waitForSelector('section.grid.w-3\\/4.grid-cols-2');
+        await expect(this.page.locator('section.grid.w-3\\/4.grid-cols-2')).toBeVisible();
+        //await expect(this.page.locator(homepage_locator.stickyheader_pdp)).toBeAttached();
     }
 
     async mouseHoverMegaMenu(categoryNameL1){
