@@ -156,7 +156,7 @@ async  validateProductDetails() {
     expect(productName).toBeTruthy(); // Ensure product name is not empty
     expect(reviewsText).toMatch(/\(\d+ Reviews\)/); // Ensure reviews text matches the expected pattern
     expect(linkText).toBe('Shop All ' + linkTextName ); // Ensure link text matches expected value
-    expect(linkHref).toBe('#'); // Ensure link href matches expected values
+    expect(linkHref).toBe('#'); // Ensure link href matches expected value
   }
 
 
