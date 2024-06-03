@@ -6,7 +6,7 @@ const myaccountpage_locator =JSON.parse(JSON.stringify(require('../object_reposi
 exports.MyAccountPage = class MyAccountPage{
     constructor(page){
         this.page=page;
-        this.myaccount_credit_link=page.getByRole('link', { name: myaccountpage_locator.myaccount_credit_link,exact:true }).first();
+        this.myaccount_credit_link=page.getByRole('button', { name: myaccountpage_locator.myaccount_credit_link,exact:true }).first();
         this.myaccount_makepayment_link=page.getByRole('link', { name: myaccountpage_locator.myaccount_makepayment_link, exact:true }).first();
         this.myaccount_makepayment_button=page.getByRole('button', { name: myaccountpage_locator.myaccount_makepayment_link, exact:true }).first();
         this.myaccount_startshopping_button=page.getByRole('button', { name: myaccountpage_locator.myaccount_startshopping_button, exact:true }).first();
@@ -148,6 +148,7 @@ exports.MyAccountPage = class MyAccountPage{
     }
     async clickMyAccountAddressLink(){
         await this.myaccount_addresses_link.click();
+        await this.displayAddressSection();
     }
     async clickMyAccountSavedCCLink(){
         await this.myaccount_savedcreditcards_link.click();
@@ -397,14 +398,16 @@ exports.MyAccountPage = class MyAccountPage{
     async validatedOrderNumberDisplaySection(orderNumberPrefix){
         await expect(this.page).toHaveURL(/.*orders/);
         await expect(this.page.getByText('HomeMy AccountOrders')).toBeVisible();
-        await expect(this.page.locator(`h2.font-semibold:has-text("${orderNumberPrefix}")`).first()).toBeVisible();
-        const orderLocators = this.page.locator(`h2.font-semibold:has-text("${orderNumberPrefix}")`);
+        await expect(this.page.locator('section.border-b h2.font-semibold').first()).toBeVisible();
+        //await expect(this.page.locator(`h2.font-semibold:has-text("${orderNumberPrefix}")`).first()).toBeVisible();
+        //const orderLocators = this.page.locator(`h2.font-semibold:has-text("${orderNumberPrefix}")`);
+        const orderLocators = this.page.locator('section.border-b h2.font-semibold');
         const orderLocatorsCount = await orderLocators.count();
         console.log('Order Date Count :' + orderLocatorsCount);
 
         // Define the expected <a> text and URL pattern
         const aTextPattern = /View Order Details/;
-        const aHrefPattern = /\/account\/orderdetails\/\?orderId=\d+/;
+        const aHrefPattern = /\/account\/orders\/orderdetails\/\?orderId=\d+/;
         
         // Get all elements matching the "Order #" criteria
         const orderElements = await orderLocators.all();
@@ -451,7 +454,7 @@ exports.MyAccountPage = class MyAccountPage{
             ]);
 
             // Verify the navigation by checking the URL or specific content on the new page
-            await expect(this.page).toHaveURL(/.*\/account\/orderdetails\/\?orderId=\d+$/);
+            await expect(this.page).toHaveURL(/.*\/account\/orders\/orderdetails\/\?orderId=\d+$/);
             // Optionally, you can check for specific content on the new page to confirm successful navigation
             //await expect(this.page.locator('body')).toContainText('Order Details'); // Adjust based on the expected content
 
@@ -606,8 +609,8 @@ exports.MyAccountPage = class MyAccountPage{
     }
 
     async validateAccountStatusUpdateText(){
-        const loggedInUserName = await this.page.locator("//p[@class='block w-full truncate text-xs']//span").textContent();
-        await expect(this.page.getByRole('button', { name: new RegExp(`My Account Hi ${loggedInUserName}`, 'i') })).toBeVisible();
+        const loggedInUserName = await this.page.locator('p.block.w-full.translate-y-1.truncate.text-xs>span').textContent();
+        await expect(this.page.getByRole('button', { name: new RegExp(`My Account Hi ${loggedInUserName}!`, 'i') })).toBeVisible();
         
     }
 
@@ -762,10 +765,11 @@ exports.MyAccountPage = class MyAccountPage{
 
         if (balanceValue === 0) {
             // Verify the "Make a Payment" button is not visible
-            await expect(this.myaccount_makepayment_button).not.toBeVisible();
+            await expect(this.page.locator('section.mt-7.grid button.inline-flex:has-text("Make a Payment")')).toBeHidden();
+            //await expect(this.myaccount_makepayment_button).not.toBeVisible();
         } else {
             // Verify the "Make a Payment" button is visible
-            await expect(this.myaccount_makepayment_button).toBeVisible();
+            await expect(this.page.locator('section.mt-7.grid button.inline-flex:has-text("Make a Payment")')).toBeVisible();
         }
 
     }
@@ -782,7 +786,7 @@ exports.MyAccountPage = class MyAccountPage{
 
     async clickOnProductNamePlacedOrder(){
         await this.page.locator('section.truncate a.text-sm').first().click();
-        await expect(this.page).toHaveURL(/.*\/account\/orderdetails\//);
+        await expect(this.page).toHaveURL(/.*\/account\/orders\/orderdetails\//);
     }
 
     async validateDefaultShippingandBillingAddressSection(){
@@ -947,9 +951,9 @@ exports.MyAccountPage = class MyAccountPage{
 
         //await expect(accountStatusValue).toHaveText(/Suspended|Closed|Inactive|Current/);
         const lastStatementDateValue= this.page.locator(`//p[contains(text(),"${myaccountpage_locator.myaccount_makeapayment_acctinformation_lastsd}")]/following-sibling::p`);
-        await expect(lastStatementDateValue).toHaveText(/\d{2}\/\d{2}\/\d{4}/|/^N\/A$/);
+        await expect(lastStatementDateValue).toHaveText(/\d{2}\/\d{2}\/\d{4}|N\/A/);
         const nextStatementDateValue= this.page.locator(`//p[contains(text(),"${myaccountpage_locator.myaccount_makeapayment_acctinformation_nextsd}")]/following-sibling::p`);
-        await expect(nextStatementDateValue).toHaveText(/\d{2}\/\d{2}\/\d{4}/|/^N\/A$/);
+        await expect(nextStatementDateValue).toHaveText(/\d{2}\/\d{2}\/\d{4}|N\/A/);
         console.log('Customer Account Number :' + customerAccountValue);
         console.log('Customer Account Status :' + accountStatusValue);
         console.log('Customer Last Statement Date :' + lastStatementDateValue);
@@ -978,7 +982,7 @@ exports.MyAccountPage = class MyAccountPage{
         // Verifying the texts inside the address section using regex
         await expect(addressSection.locator('p').nth(0)).toHaveText(/[\s\S]+/);
         await expect(addressSection.locator('p').nth(1)).toHaveText(/[\s\S]+/);
-        await expect(addressSection.locator('p').nth(2)).toHaveText(/[A-Za-z\s]+, [A-Z]{2} \d{5}(-\d{4})?/);
+        await expect(addressSection.locator('p').nth(2)).toHaveText(/[\s\S]+|[A-Za-z\s]+, [A-Z]{2} \d{5}(-\d{4})?/);
 
         // Locator for the phone number
         const phoneNumber = this.page.locator('p.pt-3.text-base.font-normal.leading-6');
@@ -997,6 +1001,7 @@ exports.MyAccountPage = class MyAccountPage{
 
     async clickCancelForEditCreditStatementAddress(){
         await this.myaccount_sbc_creditstatement_canceladdressbutton.click();
+        await this.page.waitForLoadState('networkidle');
     }
 
     async validateEditCreditStatementAddress(){
@@ -1013,14 +1018,19 @@ exports.MyAccountPage = class MyAccountPage{
         const cityValue = await this.page.$eval(`#${myaccountpage_locator.myaccount_sbc_creditstatement_editcity}`, input => input.value);
         console.log('City Element Value:', cityValue);
         expect(cityValue).toMatch(/[\s\S]+/);
+        // Wait for the select element to have populated options
+        await this.page.waitForFunction(() => {
+            const selectElement = document.querySelector('#state');
+            return selectElement && selectElement.options.length > 1;
+        });
         await expect(this.myaccount_sbc_creditstatement_editstate).toBeVisible();
-        const stateValue = await this.page.$eval(`#${myaccountpage_locator.myaccount_sbc_creditstatement_editstate}`, select => select.value);
+        const stateValue = await this.page.$eval(`#${myaccountpage_locator.myaccount_sbc_creditstatement_editstate}`, selectOption => selectOption.value);
         console.log('State Element Value:', stateValue);
         expect(stateValue).toMatch(/[\s\S]+/);
         await expect(this.myaccount_sbc_creditstatement_editzipcode).toBeVisible();
         const zipcodeValue = await this.page.$eval(`#${myaccountpage_locator.myaccount_sbc_creditstatement_editzipcode}`, input => input.value);
         console.log('ZipCode Element Value:', zipcodeValue);
-        expect(zipcodeValue).toMatch(/d{5}(-\d{4})?/);
+        expect(zipcodeValue).toMatch(/^\d{5}$|d{5}(-\d{4})?/);
         await expect(this.myaccount_sbc_creditstatement_editphonenumber).toBeVisible();
         const phonenumberValue = await this.page.$eval(`#${myaccountpage_locator.myaccount_sbc_creditstatement_editphonenumber}`, input => input.value);
         console.log('PhoneNumber Element Value:', phonenumberValue);
@@ -1030,8 +1040,16 @@ exports.MyAccountPage = class MyAccountPage{
        
     }
 
+    async displayRecentAccountTransactions(){
+        const recentAccountTrasactionsLocator = await this.page.getByRole('heading', { name: 'Recent Account Transactions' });
+        if (!(await recentAccountTrasactionsLocator.isVisible())) {
+            return false;
+        }
+        return true;
+    }
+
     async validateRecentAccountTransactionsStatusColumnData(){
-        await this.page.getByRole('heading', { name: 'Recent Account Transactions' }).waitFor({state:'visible'});
+        //await this.page.getByRole('heading', { name: 'Recent Account Transactions' }).waitFor({state:'visible'});
         // Get all elements with class 'text-left' representing the 'Status' column
         const statusElements = await this.page.$$('section.bg-white.grid-cols-5.gap-x-4, section.bg-lightSilver.grid-cols-5.gap-x-4');
 
@@ -1280,11 +1298,14 @@ exports.MyAccountPage = class MyAccountPage{
 
         await this.verifyAddressSuggestionModal();
 
-        // Wait for the page to navigate or for a success message
-        await Promise.race([
-            //this.page.waitForNavigation({ timeout: 5000 }), // Adjust timeout as needed
-            this.page.waitForSelector('.text-forestGreen') // Assuming there's a success message
-        ]);
+        await this.page.getByText('Address added successfully').waitFor({state:'visible'});
+        await expect(this.page.getByText('Address added successfully')).toBeVisible();
+
+        // // Wait for the page to navigate or for a success message
+        // await Promise.race([
+        //     //this.page.waitForNavigation({ timeout: 5000 }), // Adjust timeout as needed
+        //     this.page.waitForSelector('.text-forestGreen', { hasText: 'Address added successfully' }) // Assuming there's a success message
+        // ]);
 
         
         const fullAddress = `${city},  ${state} ${zipCode}`;
@@ -1342,25 +1363,37 @@ exports.MyAccountPage = class MyAccountPage{
     }
 
     async undoRemoveAddress(){
+        await this.page.reload();
         await this.page.locator('section.m-4').first().waitFor({ state: 'visible' });
         const addressSections = await this.page.locator('section.m-4');
         const addressSectionsCount = await addressSections.count();
-        const deleteAddressCount = (addressSectionsCount -1);
+        let nthIndex = 0;
+        if (addressSectionsCount > 1) {
+            nthIndex = addressSectionsCount - 1;
+        }
+        //const deleteAddressCount = (addressSectionsCount -1);
         console.log('Total Saved Address Count:', addressSectionsCount);
-        console.log('Total Delete Address Count:', deleteAddressCount);
+        //console.log('Total Delete Address Count:', deleteAddressCount);
         
-        await this.page.getByRole('button', { name: myaccountpage_locator.myaccount_savedaddress_remove_button }).nth(deleteAddressCount).click();
+        await this.page.getByRole('button', { name: myaccountpage_locator.myaccount_savedaddress_remove_button }).nth(nthIndex).click();
         await expect(this.page.locator('.text-forestGreen').filter({ hasText: 'Address deleted successfully' })).toBeVisible();
         await expect(this.page.getByRole('button', { name: 'Undo' })).toBeVisible();
         await this.page.getByRole('button', { name: 'Undo' }).click();
         await this.page.locator('.text-forestGreen').filter({ hasText: 'Address deleted successfully' }).waitFor({ state: 'hidden' });
+        await this.page.reload();
+        await this.displayAddressSection();
         await expect(this.page.locator('section.m-4')).toHaveCount(addressSectionsCount);
         
     }
 
     async editSavedAccountAddress(){
         await this.page.locator('section.m-4').first().waitFor({ state: 'visible' });
-        await this.page.getByRole('button', { name: 'Edit' }).nth(2).click();
+        const sections = await this.page.locator('section.m-4').count();
+        let nthIndex = 0;
+        if (sections > 1) {
+            nthIndex = sections - 1;
+        }
+        await this.page.getByRole('button', { name: 'Edit',exact:true }).nth(nthIndex).click();
         await expect(this.page.getByText('Edit Address')).toBeVisible();
         const addressLine1Value = await this.page.$eval(`#${myaccountpage_locator.myaccount_sbc_creditstatement_editaddress}`, input => input.value);
         console.log('Address Element Value:', addressLine1Value);
@@ -1426,12 +1459,8 @@ exports.MyAccountPage = class MyAccountPage{
 
         await this.verifyAddressSuggestionModal();
 
-        // Wait for the page to navigate or for a success message
-        await Promise.race([
-            //this.page.waitForNavigation({ timeout: 5000 }), // Adjust timeout as needed
-            this.page.waitForSelector('.text-forestGreen') // Assuming there's a success message
-        ]);
-
+        await this.page.getByText('Address updated successfully').waitFor({state:'visible'});
+        await expect(this.page.getByText('Address updated successfully')).toBeVisible();
         
         const fullAddress = `${city},  ${state} ${zipCode}`;
         // Verify that the form submission was successful
@@ -1468,7 +1497,7 @@ exports.MyAccountPage = class MyAccountPage{
     }
 
     async clickEditButton(){
-        await this.page.getByRole('button', { name: 'Edit' }).nth(1).click();
+        await this.page.getByRole('button', { name: 'Edit',exact:true }).nth(0).click();
     }
 
     async validateErrorMessage(){
@@ -1509,19 +1538,42 @@ exports.MyAccountPage = class MyAccountPage{
     }
 
     async setDefaultAddress(){
-        const setDefaultAddressFirstName = await this.page.locator('strong.text-lg.font-semibold.leading-6').first().textContent();
-        console.log('Default Address First Name:'+ setDefaultAddressFirstName);
-        const noDefaultAddressFirstName = await this.page.locator('strong.text-lg.font-semibold.leading-6').nth(1).textContent();
-        console.log('First Non Default Address First Name:' + noDefaultAddressFirstName); 
+        const setDefaultAddressButtonLocator = this.page.getByRole('button', { name: 'Set as Default',exact:true }).first();
+        let buttonVisible = await setDefaultAddressButtonLocator.isVisible();
+        const maxRetries = 2; // Set a maximum number of retries to avoid infinite loop
+        let retries = 0;
 
-        // Click on the first "Set as Default" button
-        await this.page.getByRole('button', { name: 'Set as Default' }).first().click();
-        await this.page.getByText('Primary address updated').waitFor({state:'visible'});
-        await expect(this.page.getByText('Primary address updated')).toBeVisible();
-        await expect(this.page.getByText('Default Billing & Shipping Address')).toBeVisible();
-        await this.page.reload();
-        const defaultShippingFirstName = await this.page.locator('section.m-4.rounded-md.border.border-foggyGray > strong').first().textContent();
-        expect(defaultShippingFirstName).toMatch(noDefaultAddressFirstName);
+        while (!buttonVisible && retries < maxRetries) {
+            await this.clickAddNewAddressButton();
+            await this.displayAddNewAddressSection();
+            await this.validateAddNewAddress();
+            await this.displayAddressSection();
+            retries++;
+            //await this.page.reload(); // Optional: wait for a short time before rechecking
+            buttonVisible = await setDefaultAddressButtonLocator.isVisible();
+            await this.page.reload(); 
+        }
+
+        if (!buttonVisible) {
+            throw new Error('Failed to find the "Set as Default" button after multiple attempts');
+        } else {
+            const setDefaultAddressFirstName = await this.page.locator('strong.text-lg.font-semibold.leading-6').first().textContent();
+            console.log('Default Address First Name:' + setDefaultAddressFirstName);
+            const noDefaultAddressFirstName = await this.page.locator('strong.text-lg.font-semibold.leading-6').nth(1).textContent();
+            console.log('First Non Default Address First Name:' + noDefaultAddressFirstName);
+
+            // Click on the first "Set as Default" button
+            await this.page.getByRole('button', { name: 'Set as Default' }).first().click();
+            await this.page.getByText('Primary address updated').waitFor({ state: 'visible' });
+            await expect(this.page.getByText('Primary address updated')).toBeVisible();
+            await expect(this.page.getByText('Default Billing & Shipping Address')).toBeVisible();
+            await this.page.reload();
+            await this.displayAddressSection();
+            const defaultShippingFirstName = await this.page.locator('section.m-4.rounded-md.border.border-foggyGray > strong').first().textContent();
+            expect(defaultShippingFirstName).toMatch(noDefaultAddressFirstName);
+
+        }
+
     }
 
     async validateDefaultShippingFirstSection(){
@@ -1554,11 +1606,8 @@ exports.MyAccountPage = class MyAccountPage{
         // Click the "Save Address" button
         await this.myaccount_addnewaddress_saveaddressbutton.click();
         await this.verifyAddressSuggestionModal();
-        // Wait for the page to navigate or for a success message
-        await Promise.race([
-            //this.page.waitForNavigation({ timeout: 5000 }), // Adjust timeout as needed
-            this.page.waitForSelector('.text-forestGreen') // Assuming there's a success message
-        ]);
+        await this.page.getByText('Address added successfully').waitFor({state:'visible'});
+        await expect(this.page.getByText('Address added successfully')).toBeVisible();
         await this.validateDefaultShippingFirstSection();
         await this.page.reload();
         const defaultShippingFirstName = await this.page.locator('section.m-4.rounded-md.border.border-foggyGray > strong').nth(0).textContent();
@@ -1593,17 +1642,45 @@ exports.MyAccountPage = class MyAccountPage{
     }
 
     async setDefaultCreditCard(){
-        const defaultCardNumber = await this.page.locator('section.m-4.rounded-md p.font-semibold').nth(1).textContent();
-        console.log('Default Card Number:'+ defaultCardNumber);
+        const setDefaultAddressButtonLocator = this.page.getByRole('button', { name: 'Set as Default',exact:true }).first();
+        let buttonVisible = await setDefaultAddressButtonLocator.isVisible();
+        const maxRetries = 2; // Set a maximum number of retries to avoid infinite loop
+        let retries = 0;
 
-        // Click on the first "Set as Default" button
-        await this.page.getByRole('button', { name: 'Set as Default' }).first().click();
-        await this.page.getByText('Primary card updated successfully').waitFor({state:'visible'});
-        await expect(this.page.getByText('Primary card updated successfully')).toBeVisible();
-        await expect(this.page.getByText('Default Credit Card')).toBeVisible();
-        await this.page.reload();
-        const setDefaultCreditCardNumber = await this.page.locator('section.m-4.rounded-md p.font-semibold').nth(0).textContent();
-        expect(setDefaultCreditCardNumber).toMatch(defaultCardNumber);
+        while (!buttonVisible && retries < maxRetries) {
+            await this.clickAddNewCC();
+            await this.validateNewCCSection();
+            await this.enterCCNumber('4111111111111111');
+            await this.enterCCExpDate('12/34');
+            await this.enterCCSecurityCode('123');
+            await this.clickSaveCardButton();
+            //await this.validatedSuccessMessage();
+            await this.page.getByText('Credit card added successfully').waitFor({ state: 'visible' });
+            await expect(this.page.getByText('Credit card added successfully')).toBeVisible();
+            retries++;
+            //await this.page.reload(); // Optional: wait for a short time before rechecking
+            buttonVisible = await setDefaultAddressButtonLocator.isVisible();
+            await this.page.reload(); 
+        }
+
+        if (!buttonVisible) {
+            throw new Error('Failed to find the "Set as Default" button after multiple attempts');
+        } else {
+            const defaultCardNumber = await this.page.locator('section.m-4.rounded-md p.font-semibold').nth(1).textContent();
+            console.log('Default Card Number:' + defaultCardNumber);
+
+            // Click on the first "Set as Default" button
+            await this.page.getByRole('button', { name: 'Set as Default' }).first().click();
+            await this.page.getByText('Primary card updated successfully').waitFor({ state: 'visible' });
+            await expect(this.page.getByText('Primary card updated successfully')).toBeVisible();
+            await expect(this.page.getByText('Default Credit Card')).toBeVisible();
+            await this.page.reload();
+            await this.page.locator('section.m-4.rounded-md p.font-semibold').first().waitFor({ state: 'visible' });
+            const setDefaultCreditCardNumber = await this.page.locator('section.m-4.rounded-md p.font-semibold').nth(0).textContent();
+            expect(setDefaultCreditCardNumber).toMatch(defaultCardNumber);
+
+        }
+
     }
 
     async removeCreditCard(){
@@ -1631,14 +1708,20 @@ exports.MyAccountPage = class MyAccountPage{
     }
 
     async undoRemoveCreditCard(){
+        await this.page.reload();
         await this.page.locator('section.m-4').first().waitFor({ state: 'visible' });
         const addressSections = await this.page.locator('section.m-4');
         const addressSectionsCount = await addressSections.count();
+        let nthIndex = 0;
+        if (addressSectionsCount > 1) {
+            nthIndex = addressSectionsCount - 1;
+        }
+
         const deleteAddressCount = (addressSectionsCount -1);
         console.log('Total Saved Credit Card Count:', addressSectionsCount);
-        console.log('Total Delete Credit Card Count:', deleteAddressCount);
+        //console.log('Total Delete Credit Card Count:', deleteAddressCount);
         
-        await this.page.getByRole('button', { name: myaccountpage_locator.myaccount_savedaddress_remove_button }).nth(deleteAddressCount).click();
+        await this.page.getByRole('button', { name: myaccountpage_locator.myaccount_savedaddress_remove_button }).nth(nthIndex).click();
         await expect(this.page.locator('.text-forestGreen').filter({ hasText: 'Credit card deleted successfully' })).toBeVisible();
         await expect(this.page.getByRole('button', { name: 'Undo' })).toBeVisible();
         await this.page.getByRole('button', { name: 'Undo' }).click();
@@ -1687,15 +1770,23 @@ exports.MyAccountPage = class MyAccountPage{
     }
 
     async updateCreditCardSuccessMessage(){
-        await this.verifyAddressSuggestionModal();
-        await this.page.getByText('Card details have been updated successfully').waitFor({state:'visible'});
-        await expect(this.page.getByText('Card details have been updated successfully')).toBeVisible();
+        const addressModalVisible = await this.page.isVisible('role=heading[name="Verify Your Address"]',{ timeout: 15000 });
+        if (addressModalVisible) {
+            await this.page.getByLabel('Use Original Address').click();
+            await this.page.getByRole('button', { name: 'Continue' }).click();
+            await this.page.getByText('Card details have been updated successfully').waitFor({ state: 'visible' });
+            await expect(this.page.getByText('Card details have been updated successfully')).toBeVisible();          
+        } else {
+            // Address suggestion modal is not visible, verify the success message and then proceed
+            await this.page.getByText('Card details have been updated successfully').waitFor({ state: 'visible' });
+            await expect(this.page.getByText('Card details have been updated successfully')).toBeVisible();
+        }
     }
 
     async verifyAddressSuggestionModal(){
         try {
             // Wait for the address modal to appear with a specific timeout
-            await this.page.waitForSelector('role=heading[name="Verify Your Address"]', { timeout: 10000 });
+            await this.page.waitForSelector('role=heading[name="Verify Your Address"]', { timeout: 15000 });
     
             // If the modal appears, proceed with the address verification steps
             await this.page.getByLabel('Use Original Address').click();

@@ -19,7 +19,7 @@
     "homepage_footer_sociallink3" : "Pinterest",
     "staticPageUrl":"https://dev--stoneberry-masoncompanies.netlify.app/categories/womensclothing-c245401/",
     "homePageUrl" : "https://dev--stoneberry-masoncompanies.netlify.app/",
-    "pdpURL" : "https://stage--stoneberry-masoncompanies.netlify.app/product/navy-array-women-s-charlie-pump/1011530-6/",
+    "pdpURL" : "https://dev--stoneberry-masoncompanies.netlify.app/product/navy-array-women-s-charlie-pump/1011530-6/",
     "scrollXAxis" : 0,
     "scrollYAxis" : 1500,
     "categoryNameL1" : "Clothing, Shoes + Bags Womens",
@@ -44,6 +44,7 @@
     "topbrand_image1_alttext" : "Top Brand1",
     "topbrand_image2_alttext" : "Top Brand2",
     "topbrand_image3_alttext" : "Brand3",
-    "topbrand_image4_alttext" : "Brand4"
+    "topbrand_image4_alttext" : "Brand4",
+    "signup_email" : "signup12@gmail.com"
 
 }

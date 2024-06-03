@@ -1,31 +1,36 @@
 import test, { expect } from 'playwright/test';
 const signinpage_locator =JSON.parse(JSON.stringify(require('../object_repositories/mason_signin_page_repo.json')));
+const signinpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_signin_page_data.json')));
 
 exports.SignInPage = class SignInPage{
     constructor(page){
         this.page=page;
-        this.signin_button_name=page.getByRole('button', { name: signinpage_locator.signin_button_name,exact: true });
-        this.create_account_button_name=page.getByRole('button', { name: signinpage_locator.create_account_button_name });
-        this.create_account_link_name=page.getByRole('link', { name: signinpage_locator.create_account_button_name });
+        this.create_an_account_button=page.getByRole('button',{name:'Create an Account'});
+        this.signin_button_name=page.getByRole('button', { name: signinpage_locator.signin_button_name });
+        //this.create_account_button_name=page.getByRole('button', { name: signinpage_locator.create_account_button_name });
         this.myaccount_img_icon_name=page.getByRole('img', { name: signinpage_locator.myaccount_img_icon_name });
         // this.signin_emailaddress_textbox=page.locator(signinpage_locator.signin_emailaddress_textbox);
         // this.signin_password_textbox=page.locator(signinpage_locator.signin_password_textbox);
         this.signin_emailaddress_textbox=page.getByLabel(signinpage_locator.signin_emailaddress_textbox);
         this.signin_password_textbox=page.getByLabel(signinpage_locator.signin_password_textbox);
-        this.signin_img_button=page.locator(signinpage_locator.signin_img_button);
-        this.signin_stoneberrycredit_button=page.getByRole('button', { name: signinpage_locator.signin_stoneberrycredit_button }); 
-        this.signin_makeapayment_button=page.getByRole('button', { name: signinpage_locator.signin_makeapayment_button }); 
-        this.signin_orders_link=page.getByRole('link', { name: signinpage_locator.signin_orders_link });   
-        this.signin_wishlist_link=page.getByRole('link', { name: signinpage_locator.signin_wishlist_link });
-        this.signin_needhelp_link=page.getByRole('link', { name: signinpage_locator.signin_needhelp_link });
-        this.forgot_password_link=page.getByRole('button', { name: signinpage_locator.forgot_password_link });     
-         
+        this.signin_img_button=page.locator(signinpage_locator.signin_img_button);  
+        this.forgot_password_button= page.getByRole('button', { name:signinpage_locator.forgot_password_button});
+        this.submit_forgot_password=page.getByRole('button', { name:signinpage_locator.submit_forgot_password});
+        //this.forgot_password_text = page.getByRole('heading', {hasText:signinpage_locator.forgot_password_text});
+        this.forgot_emailaddress_textbox=page.locator(signinpage_locator.forgot_emailaddress_textbox);
+        this.submit_forgot_password=page.getByRole('button',{name: signinpage_locator.submit_forgot_password});
+        this.sign_out_button=page.getByRole('button',{name: signinpage_locator.sign_out_button});
+       // this.create_an_account_button=page.getByRole('button',{name: signinpage_locator.create_an_account_button});
+
+       this.failed_message=page.locator(signinpage_locator.failed_message);
+       this.signin_password_show_link=page.getByRole('link', { name: signinpage_locator.signin_password_show_link });
+       this.signin_password_hide_link=page.getByRole('link', { name: signinpage_locator.signin_password_hide_link });
     }
 
     async validateWelcomeSignInDialog(){
         await expect(this.myaccount_img_icon_name).toBeVisible();
         await expect(this.signin_button_name).toBeVisible();
-        await expect(this.create_account_button_name).toBeVisible();
+        await expect(this.create_an_account_button).toBeVisible();
     }
 
     async validateSignInDialog(){
@@ -40,17 +45,13 @@ exports.SignInPage = class SignInPage{
     }
 
     async login(enterUserName,enterPassword){
+        //await
         await this.signin_emailaddress_textbox.fill(enterUserName);
         await this.signin_password_textbox.fill(enterPassword);
     }
 
     async clickSignIn(){
         await this.signin_button_name.click();
-        
-    }
-
-    async waitForMyAccountDashboardLoad(){
-        await this.page.waitForURL('**/account/dashboard/');
     }
 
     async clickSignInImage(){
@@ -66,57 +67,136 @@ exports.SignInPage = class SignInPage{
         //await expect(page.getByText('You have been successfully signed in to your account✕')).toBe();
     }
 
-    async validateSignInAccountDrawer(){
-        await expect(this.signin_button_name).toBeVisible();
-        await expect(this.create_account_button_name).toBeVisible();
-        await expect(this.signin_stoneberrycredit_button).toBeVisible();
-        await expect(this.signin_makeapayment_button).toBeVisible();
-        await expect(this.signin_orders_link).toBeVisible();
-        await expect(this.signin_wishlist_link).toBeVisible();
-        await expect(this.signin_needhelp_link).toBeVisible();
+    async checkLoaderwhileSignIn(){
+        await this.page.waitForSelector(signinpage_locator.sign_in_loader);
+        const loader = await this.page.isVisible(signinpage_locator.sign_in_loader);
+        //expect(loader).not.toBeNull();
+        //console.log(loader);
+    }
+
+    async closeSignIsSuccessMessage(){
+        await this.page.getByRole('button', { name: '✕' }).click();
+    }
+
+    async loginFailMessage(){
+        await expect(this.failed_message).toContainText(signinpage_data.login_fail_message);
+    }
+
+    //Account - Reset/Forgot Password : SB-LOGREG024
+    async clickOnForgotPassword(){
+        await expect(this.forgot_password_button).toBeVisible();
+        await this.forgot_password_button.click();
+    }
+
+    //Account - Reset/Forgot Password : SB-LOGREG024
+    async validateForgotPasswordModal(forgot_password_text,forgot_password_paragraph){
+        await expect(this.page.getByRole('heading')).toContainText(forgot_password_text);
+        await expect(this.page.getByRole('paragraph')).toContainText(forgot_password_paragraph);
+    }
+
+    //Account - Reset/Forgot Password : SB-LOGREG024
+    async fillEmailAddressForgotPassword(email) {
+        await this.forgot_emailaddress_textbox.click();
+        await this.forgot_emailaddress_textbox.fill(email);
+    }
+
+    async validateNullEmailAddressOnForgotPassword() {
+        // await this.forgot_emailaddress_textbox.click();
+        // await this.forgot_emailaddress_textbox.fill(  );
+        await (this.submit_forgot_password).click();
+        await expect(this.page.getByText(signinpage_data.invalid_email)).toBeVisible(); 
+    }
+
+    async validateInvalidEmailAddressOnForgotPassword() {
+        await this.forgot_emailaddress_textbox.click();
+        await this.forgot_emailaddress_textbox.fill(signinpage_data.signin_dailog_text);
+        await (this.submit_forgot_password).click();
+        await expect(this.page.getByText(signinpage_data.invalid_email)).toBeVisible(); 
+    }
+
+    //Account - Reset/Forgot Password : SB-LOGREG024
+    async submitForgotPasswordForm() {
+        await (this.submit_forgot_password).click();
+    }
+
+    async waitForSuccessMessage(forgot_password_submission_text) {
+        await expect(this.page.getByText(forgot_password_submission_text)).toBeVisible();
 
     }
 
-    async validateSignedInAccountDrawer(){
-        await expect(this.signin_stoneberrycredit_button).toBeVisible();
-        await expect(this.signin_makeapayment_button).toBeVisible();
-        await expect(this.signin_orders_link).toBeVisible();
-        await expect(this.signin_wishlist_link).toBeVisible();
-        await expect(this.signin_needhelp_link).toBeVisible();
-
+    async logout(){
+        await expect(this.sign_out_button).toBeVisible();
+        await (this.sign_out_button).click();
     }
 
-    async validateSignInMessage(signInSuccessMessage){
-        await this.page.getByText(signInSuccessMessage).waitFor({ state: 'visible' });
-        await expect(this.page.getByText(signInSuccessMessage)).toBeVisible();
+    async clickCreateAnAccount(){
+        await expect(this.create_an_account_button).toBeVisible();
+        await this.create_an_account_button.click();
     }
 
-    async validateSignOutMessage(signOutMessage){
-        await expect(this.page.getByText(signOutMessage)).toBeVisible();
+    async validatePasswordShowLinkIsVisible(){
+        await expect(this.signin_password_show_link).toBeVisible();
     }
 
-    async pageTextValidation(enterPageText){
-        await expect(this.page.getByText(enterPageText)).toBeVisible();
+    async validatePasswordHideLinkIsVisible(){
+        await expect(this.signin_password_hide_link).toBeVisible();
     }
 
-    async signoutPageHeaderTextValidation(signoutPageHeaderText){
-        await expect(this.page.getByRole('heading', { name: signoutPageHeaderText })).toBeVisible();
+    async clickOnShowPassword(){
+        await this.signin_password_show_link.click();
     }
 
-    async keepmeSignInCheckbox(checkboxLabelName){
-        await expect(this.page.getByLabel(checkboxLabelName)).toBeVisible();
+    async clickOnHidePassword(){
+        await this.signin_password_hide_link.click();
     }
 
-    async validateSignOutPageFormFields(){
-        await expect(this.signin_button_name).toBeVisible();
-        await expect(this.create_account_link_name).toBeVisible();
-        await expect(this.signin_emailaddress_textbox).toBeVisible();
-        await expect(this.signin_password_textbox).toBeVisible();
-        await expect(this.forgot_password_link).toBeVisible();
-        
+    async validatePasswordIsHidden(){
+        const passwordTextbox=this.signin_password_textbox;
+        const hidden_password = await passwordTextbox.getAttribute('type') === 'password';
+        expect(hidden_password).toBe(true);
     }
 
-    async invalidUserLoginValidation(invalidLoginErrorMessage){
-        await expect(this.page.getByText(invalidLoginErrorMessage)).toBeVisible();
+    async validatePasswordIsShown(){
+        const passwordTextbox=this.signin_password_textbox;
+        const shown_password = await passwordTextbox.getAttribute('type') === 'text';
+        // console.log(shown_password);
+        // console.log(passwordTextbox.getAttribute('type'));
+        expect(shown_password).toBe(true);
     }
+
+
+
 }
+// Code to read the reset link from Console
+/*
+try {
+
+            let resetPasswordURL = '';
+        await expect(this.page.getByText(forgot_password_submission_text)).toBeVisible();
+        console.log('Submission message is displayed')
+            this.page.on('console', async(msg) => {
+                console.log('inside page.on')
+                console.log(msg)
+        if (msg.text().includes('Reset')) {
+                resetPasswordURL = msg.text().replace('URL for Reset Password:', '').trim();
+             }
+             else {
+                 console.log('No Reset URL');
+             }
+             });
+         
+             await this.page.waitForFunction(() => !!window.resetPasswordURL, { pollingInterval: 100 });
+
+        // Extracted reset password URL
+        const extractedResetPasswordURL = await this.page.evaluate(() => window.resetPasswordURL);
+        console.log('Reset Password URL:', extractedResetPasswordURL);
+
+          } catch (error) {
+             console.error('Error:', error);
+           } finally {
+            
+            //await browser.close();
+        } 
+        }*/
+
+    
