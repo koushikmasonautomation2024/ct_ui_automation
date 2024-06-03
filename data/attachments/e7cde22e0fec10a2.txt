@@ -1,0 +1,12 @@
+Order Date Count :5
+Number of "Order #" elements: 5
+Order #ZX5368183327
+Order #ZX5367987107
+Order #ZX5367979222
+Order #93932928
+Order #92977992
+Order Date and Price:April 12, 2024 | $297.2
+Order Date and Price:April 12, 2024 | $350.12
+Order Date and Price:April 12, 2023 | $190.5
+Order Date and Price:October 6, 2023 | $519.67
+Order Date and Price:September 30, 2021 | $784.92
