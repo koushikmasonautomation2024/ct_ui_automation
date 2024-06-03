@@ -1,6 +1,0 @@
-Address suggestion modal did not appear, continuing with the next steps.
-Address added successfully!
-First Name: Rosina Funk
-Last Name: Rosina Funk
-Address:  83135 York Street 
-City: East Eva,  OR 49744
