@@ -1,0 +1,4 @@
+Initial Image URL: https://images.contentstack.io/v3/assets/blt6fecf8e2048edaa1/bltf0ebbc0612bc1c61/1011530-16-A0.jpg?branch=ccx_dev&quality=75&width=750&auto=webp&format=png
+Clicked the right arrow button
+Clicked the left arrow button
+New Image URL: https://images.contentstack.io/v3/assets/blt6fecf8e2048edaa1/bltf3ad263773211c80/1011530-16-A2.jpg?branch=ccx_dev&quality=75&width=750&auto=webp&format=png
