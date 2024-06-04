@@ -17,6 +17,7 @@ const item_count="Items";
 const popular_searches="Popular Searches";
 const popular_search_container="div.m-2.flex.flex-wrap.gap-2\\.5";
 const popular_search_terms="div.flex.gap-1\\.5.rounded-md.border.border-foggyGray.p-2";
+const auto_suggestion_container="ul.m-2\\.5 li"
 
 exports.SearchPage = class SearchPage{
     constructor(page){
@@ -43,6 +44,15 @@ exports.SearchPage = class SearchPage{
         // Wait for the URL to match either a search results page or a no-result page
         await this.page.waitForNavigation();
         await this.page.waitForURL(`**/?q=${search_value}`);
+    }
+
+    async validateWrongInputError(search_value){
+        await expect(this.search_placeholder).toBeVisible();
+        await this.search_placeholder.click();
+        await this.search_placeholder.fill(search_value);
+        await this.page.waitForTimeout(1000);
+        this.validateWrongSearchPageTitle(search_value);
+        this.validateSearchTips();
     }
 
     async validateWrongSearchPageTitle(search_value){
@@ -183,6 +193,20 @@ async validatePopularSearchItemsCount(){
 
     // Verify there are exactly 10 popular search terms displayed
     expect(searchTermCount).toBe(10);
+}
+
+async validateAutoSuggestion(){
+    await this.search_placeholder.click();
+    await this.search_placeholder.fill('pink');
+    // Wait for the autocomplete suggestions to appear
+    await this.page.waitForSelector(auto_suggestion_container); // replace with the appropriate selector for your suggestion list
+
+  // Get the count of suggestions
+    const suggestions = await this.page.$$(auto_suggestion_container); // replace with the appropriate selector for your suggestion list
+
+  // Use expect to ensure the count is 10
+     expect(suggestions).toHaveLength(10);
+
 }
 
 }

@@ -241,7 +241,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     await mySearchPage.validateClickOnRecentSearch(searchValueToClick);
   })
 
-  //SB-Search006
+  //SB-Search006 //SB-Search012
   test("Validate the clicking of X from the recent searches",async({page},testInfo)=>{ 
     const mySearchPage = new SearchPage(page);
     const searchValues = [];
@@ -279,11 +279,28 @@ test.describe("Mason Commerce Tool Site", ()=>{
   })
 
 //SB-Search008
-  test.only('Verify the 10 most popular search terms are displayed as selectable text links', async ({ page }) => {
+  test('Verify the 10 most popular search terms are displayed as selectable text links', async ({ page }) => {
     // Navigate to the page containing the popular search terms
     const mySearchPage = new SearchPage(page);
     await mySearchPage.validatePopularSearch();
     await mySearchPage.validatePopularSearchItemsCount();
 
   })
+
+//SB-Search011
+test('Verify the 10 autocomplete suggestions for the search terms are displayed as selectable text links', async ({ page }) => {
+  // Navigate to the page containing the popular search terms
+  const mySearchPage = new SearchPage(page);
+  await mySearchPage.validateAutoSuggestion();
+})
+
+//SB-Search032
+test.only('Verify the the user gets error messages on entering invalid inputs', async ({ page }) => {
+  // Navigate to the page containing the popular search terms
+  const search_value = [...Array(6)].map(() => String.fromCharCode(Math.random() * 26 + 97 | 0)).join('') + String.fromCharCode(Math.random() * 26 + 65 | 0) + (Math.random() * 10 | 0);
+  const mySearchPage = new SearchPage(page);
+  await mySearchPage.validateWrongInputError(search_value);
+})
+
+
 })

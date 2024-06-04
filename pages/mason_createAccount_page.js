@@ -36,11 +36,14 @@ exports.CreateAccountPage = class CreateAccountPage{
         this.account_drawer_make_payment_button=page.getByRole('button', { name: createAccount_locator.account_drawer_make_payment_button }); 
 
         this.account_drawer_order_link=page.getByRole('link', { name: createAccount_locator.account_drawer_order_link }); 
+         
         this.account_drawer_wishlist_link=page.getByRole('link', { name: createAccount_locator.account_drawer_wishlist_link }); 
         this.account_drawer_needHelp_link=page.getByRole('link', { name: createAccount_locator.account_drawer_needHelp_link });
              
         this.account_drawer_create_an_account_button=page.getByRole('button', { name: createAccount_locator.account_drawer_sign_in_button});
         this.account_drawer_sign_in_button=page.getByRole('button', { name: createAccount_locator.account_drawer_sign_in_button,exact:true });
+
+        //this.myaccount_orderStatus_link=page.getByRole('link', { name: 'Order Status' });
     
     }
 
