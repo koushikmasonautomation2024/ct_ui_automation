@@ -75,22 +75,21 @@ test("Validate the brands logos present below the full width banner",async({page
   await bipPage.validateTopBrandsSection();   
 })
 
-//SB-BIP006
-test.only("Validate the row of alphabet links below the top brands present",async({page},testInfo)=>{ 
+//SB-BIP006 
+test("Validate the row of alphabet links below the top brands present",async({page},testInfo)=>{ 
   const bipPage = new MasonBIPPage(page);
   await bipPage.validateBrandPageTitle();
   await bipPage.validateAlphabetLinks();
   const randomAlphabet=await bipPage.validateAlphabetHeader();
-  await bipPage.validateBrandsUnderRandomAlphabet(randomAlphabet);
- 
-      
+        
 })
 
 //SB-BIP007
 test("Validate under each alphabets the brand name starting with that letter is present",async({page},testInfo)=>{ 
   const bipPage = new MasonBIPPage(page);
   await bipPage.validateBrandPageTitle();
-  await bipPage.validateAlphabetHeader();
+  const randomAlphabet=await bipPage.validateAlphabetHeader();
+  await bipPage.validateBrandsUnderRandomAlphabet(randomAlphabet);
       
 })
 

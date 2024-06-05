@@ -161,7 +161,7 @@ async validateBrandsUnderRandomAlphabet(randomAlphabet) {
 
         // Verify alphabetical order
        // const sortedBrands = brandsStartingWithRandomAlphabet.slice().sort();
-       const sortedBrands = [...brandsStartingWithRandomAlphabet].sort();
+       const sortedBrands = [...brandsStartingWithRandomAlphabet].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
         expect(brandsStartingWithRandomAlphabet).toEqual(sortedBrands);
 
     } catch (error) {
