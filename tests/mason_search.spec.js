@@ -295,7 +295,7 @@ test('Verify the 10 autocomplete suggestions for the search terms are displayed 
 })
 
 //SB-Search032
-test.only('Verify the the user gets error messages on entering invalid inputs', async ({ page }) => {
+test('Verify the the user gets error messages on entering invalid inputs', async ({ page }) => {
   // Navigate to the page containing the popular search terms
   const search_value = [...Array(6)].map(() => String.fromCharCode(Math.random() * 26 + 97 | 0)).join('') + String.fromCharCode(Math.random() * 26 + 65 | 0) + (Math.random() * 10 | 0);
   const mySearchPage = new SearchPage(page);

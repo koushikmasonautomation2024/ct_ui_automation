@@ -37,7 +37,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
       await signinPage.validateWelcomeSignInDialog();
       await signinPage.clickSignIn();
       await signinPage.validateSignInDialog();
-      await signinPage.login(process.env.USERNAME,process.env.PASSWORD);
+      await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
       await signinPage.clickSignIn();
     }
     const masonHomePageScreenshot = await page.screenshot();
