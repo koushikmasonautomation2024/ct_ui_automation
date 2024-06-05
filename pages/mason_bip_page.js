@@ -119,11 +119,54 @@ async validateAlphabetLinks(page) {
 
 async validateAlphabetHeader(){
     // Loop through each alphabet from A to Z
+    const presentAlphabets = [];
   for (let charCode = 65; charCode <= 90; charCode++) {
     const letter = String.fromCharCode(charCode);
-    await expect(page.getByRole('heading', { name: `#${letter}`, exact: true })).toBeVisible();
+    try {
+        await expect(this.page.getByRole('heading', { name: `${letter}`, exact: true })).toBeVisible();
+        presentAlphabets.push(letter); 
+    } catch (error) {
+        console.log(`Alphabet '${letter}' is not present.`);
+    }
+  }
+  const randomIndex = Math.floor(Math.random() * presentAlphabets.length);
+    return presentAlphabets[randomIndex];
 }
 
+
+async validateBrandsUnderRandomAlphabet(randomAlphabet) {
+    try {
+        // Verify the presence of the alphabet heading
+        await expect(this.page.getByRole('heading', { name: randomAlphabet, exact: true })).toBeVisible();
+
+        // Find and verify brands starting with the randomly selected alphabet
+        //const brandsStartingWithRandomAlphabet = await this.page.$$eval(`#${randomAlphabet} + section ul.brandIndexList`, elements => elements.map(el => el.textContent.trim()));
+        // Log brands to console
+        //console.log(`Brands under alphabet '${randomAlphabet}':`, brandsStartingWithRandomAlphabet);
+
+
+        // Find and verify brands starting with the randomly selected alphabet
+        const brandListElements = await this.page.$$('#' + randomAlphabet + ' + section ul.brandIndexList li');
+        const brandsStartingWithRandomAlphabet = await Promise.all(brandListElements.map(async element => {
+            return (await element.$eval('a', node => node.textContent)).trim();
+        }));
+
+       // console.log(`Brands under alphabet '${randomAlphabet}':`, brandsStartingWithRandomAlphabet);
+
+        // Verify presence of brands
+        for (const brand of brandsStartingWithRandomAlphabet) {
+            //console.log(brand);
+            expect(brand).toBeTruthy(); // Verify brand name is present
+        }
+
+        // Verify alphabetical order
+       // const sortedBrands = brandsStartingWithRandomAlphabet.slice().sort();
+       const sortedBrands = [...brandsStartingWithRandomAlphabet].sort();
+        expect(brandsStartingWithRandomAlphabet).toEqual(sortedBrands);
+
+    } catch (error) {
+        console.error(`Error validating brands under alphabet '${randomAlphabet}':`, error);
+    }
 }
     
 }

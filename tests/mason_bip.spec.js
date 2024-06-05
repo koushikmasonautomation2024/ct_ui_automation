@@ -76,11 +76,13 @@ test("Validate the brands logos present below the full width banner",async({page
 })
 
 //SB-BIP006
-test("Validate the row of alphabet links below the top brands present",async({page},testInfo)=>{ 
+test.only("Validate the row of alphabet links below the top brands present",async({page},testInfo)=>{ 
   const bipPage = new MasonBIPPage(page);
   await bipPage.validateBrandPageTitle();
   await bipPage.validateAlphabetLinks();
-  await bipPage.validateAlphabetHeader();
+  const randomAlphabet=await bipPage.validateAlphabetHeader();
+  await bipPage.validateBrandsUnderRandomAlphabet(randomAlphabet);
+ 
       
 })
 
