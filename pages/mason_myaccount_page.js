@@ -86,7 +86,8 @@ exports.MyAccountPage = class MyAccountPage{
         this.myaccount_sbc_creditstatement_editphonenumber=page.locator(`id=${myaccountpage_locator.myaccount_sbc_creditstatement_editphonenumber}`);
         this.myaccount_sbc_creditstatement_saveaddressbutton=page.getByRole('button', { name: myaccountpage_locator.myaccount_sbc_creditstatement_saveaddressbutton });
         this.myaccount_sbc_creditstatement_canceladdressbutton=page.getByRole('button', { name: myaccountpage_locator.myaccount_sbc_creditstatement_canceladdressbutton });
-        
+        this.address_breadcrumb=page.getByText(myaccountpage_locator.address_breadcrumb);
+        this.myaccount_orderStatus_link=page.getByRole('link', { name: myaccountpage_locator.myaccount_orderStatus_link, exact:true });
     }
 
     async displayMyAccountLeftNavigationLink(){
@@ -161,12 +162,27 @@ exports.MyAccountPage = class MyAccountPage{
         await this.myaccount_needhelp_link.click();
     }
     async clickMyAccountMyProfileLink(){
+        //await this.myaccount_myprofile_link.toBeVisible();
         await this.myaccount_myprofile_link.click();
+        const my_profile_button = await this.page.getByRole('link', { name: myaccountpage_locator.myaccount_myprofile_link, exact:true });
+        await my_profile_button.click();
+        // Fluent wait using waitForFunction to check URL condition
+        const regexPattern = /.*myprofile/; 
+        await this.page.waitForFunction(
+          (regex) => new RegExp(regex).test(document.location.href),
+          regexPattern.toString(),
+          { timeout: 30000, polling: 1000 } // Maximum timeout of 30 seconds, polling interval of 1 second
+        );
     }
     async clickMyAccountViewSavedCCLink(){
         await this.myaccount_viewsavedcc_link.click();
         await expect(this.page).toHaveURL(/.*\/account\/savedcreditcard\//);
     }
+
+    async clickMyAccountOrderStatusLink(){
+        await this.myaccount_orderStatus_link.click();
+    }
+
     async clickMyAccountViewMyProfileLink(){
         await this.myaccount_viewmyprofile_link.click();
         await expect(this.page).toHaveURL(/.*\/account\/myprofile\//);
