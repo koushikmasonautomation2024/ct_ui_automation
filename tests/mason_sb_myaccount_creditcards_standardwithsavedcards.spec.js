@@ -49,7 +49,7 @@ test.describe("Mason MyAccount - Credit Cards - Standard With Saved Cards", ()=>
        }   
   })
     //Account - Credit Cards - Standard With Saved Cards - Test Cases ID-SB-MyA293/SB-MyA294
-  test.only("Account - Credit Cards - Standard With Saved Cards - Verify user gets navigate to credit card page by either clicking on the 'Saved Credit Cards' link from the left navigation menu present on the account pages.",async({page},testInfo)=>{ 
+  test("Account - Credit Cards - Standard With Saved Cards - Verify user gets navigate to credit card page by either clicking on the 'Saved Credit Cards' link from the left navigation menu present on the account pages.",async({page},testInfo)=>{ 
     ////test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountSavedCCLink();

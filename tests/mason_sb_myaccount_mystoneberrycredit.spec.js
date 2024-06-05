@@ -97,7 +97,7 @@ test.describe("Mason MyAccount My Stoneberry Credit", ()=>{
   })
 
   //Account - My Stoneberry Credit - Test Cases ID-SB-MyA087/SB-MyA088/SB-MyA089/SB-MyA090/SB-MyA091
-  test.only("Account-My Stoneberry Credit-Recent Account Transactions Section - Verify display of transaction date, status, and description",async({page},testInfo)=>{ 
+  test("Account-My Stoneberry Credit-Recent Account Transactions Section - Verify display of transaction date, status, and description",async({page},testInfo)=>{ 
     //test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountCreditLink();

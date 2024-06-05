@@ -78,7 +78,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   })
 
   //Global Persistent Header (Guest) - Search Bar-SB-GPH015/SB-GPH016/SB-GPH017
-  test.only("GPH-Search Bar - Verify the search field appearance, help text display, and functionality",async({page},testInfo)=>{ 
+  test("GPH-Search Bar - Verify the search field appearance, help text display, and functionality",async({page},testInfo)=>{ 
     //test.slow();
     const homePage = new HomePageNew(page);
     await homePage.displaySearchBar();

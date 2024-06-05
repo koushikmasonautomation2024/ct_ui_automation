@@ -201,7 +201,7 @@ test.describe("Mason MyAccount Longstanding Customer", ()=>{
   })
 
   //Account - My Account- Longstanding Customer - Test Cases ID-SB-MyA034/SB-MyA033
-  test.only("Account - Wish List - Verify navigation Wish list page when click on wish list link and Wishlist section shows:- Product image thumbnails)",async({page},testInfo)=>{ 
+  test("Account - Wish List - Verify navigation Wish list page when click on wish list link and Wishlist section shows:- Product image thumbnails)",async({page},testInfo)=>{ 
     //test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountWishListLink();
