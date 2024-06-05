@@ -1,0 +1,37 @@
+An error occurred in test.beforeEach: page.waitForURL: Test timeout of 90000ms exceeded.
+=========================== logs ===========================
+waiting for navigation to "**/account/dashboard/" until "load"
+============================================================
+    at SignInPageNew.waitForMyAccountDashboardLoad (/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_signin_page1.js:54:25)
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_sb_myaccount_longstanding_customer.spec.js:40:30 {
+  [Symbol(step)]: {
+    stepId: 'pw:api@23',
+    location: {
+      file: '/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_signin_page1.js',
+      line: 54,
+      column: 25,
+      function: 'SignInPageNew.waitForMyAccountDashboardLoad'
+    },
+    category: 'pw:api',
+    title: 'page.waitForURL',
+    apiName: 'page.waitForURL',
+    params: { info: [Object] },
+    wallTime: 1717574631903,
+    boxedStack: undefined,
+    steps: [],
+    complete: [Function: complete],
+    endWallTime: 1717574711088,
+    error: {
+      message: 'Error: page.waitForURL: Test timeout of 90000ms exceeded.\n' +
+        '=========================== logs ===========================\n' +
+        'waiting for navigation to "**/account/dashboard/" until "load"\n' +
+        '============================================================',
+      stack: 'Error: page.waitForURL: Test timeout of 90000ms exceeded.\n' +
+        '=========================== logs ===========================\n' +
+        'waiting for navigation to "**/account/dashboard/" until "load"\n' +
+        '============================================================\n' +
+        '    at SignInPageNew.waitForMyAccountDashboardLoad (/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_signin_page1.js:54:25)\n' +
+        '    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_sb_myaccount_longstanding_customer.spec.js:40:30'
+    }
+  }
+}
