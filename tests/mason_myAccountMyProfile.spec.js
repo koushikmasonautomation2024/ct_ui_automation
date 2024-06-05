@@ -330,7 +330,7 @@ test("Validate Incorrect Password Message on entring wrong password in My Profil
 })
 
 //SB-MyA283
-test.only("My Profile - Validate the Password Hide/Show in My Profile Page",async({page})=>{ 
+test("My Profile - Validate the Password Hide/Show in My Profile Page",async({page})=>{ 
   const myaccountPage = new MyAccountPage(page);
   const myAccountMyProfilePage = new MyAccountMyProfilePage(page);
   const firstname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');

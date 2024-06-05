@@ -102,7 +102,7 @@ test("Validate proper Error Message when entered order number and zip code are w
 
 
   //SB-MyA190
-test.only("Validate navigation to the Contact Us page when user clicks on ContactUs link",async({page},testInfo)=>{ 
+test("Validate navigation to the Contact Us page when user clicks on ContactUs link",async({page},testInfo)=>{ 
   //test.slow();
   const myaccountPage = new MyAccountPage(page);
   const myaccountOrderPage = new MyAccountOrderPage(page);

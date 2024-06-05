@@ -50,7 +50,7 @@ test.describe("Mason MyAccount - Addresses - Standard With Addresses", ()=>{
   })
   
   //Account - Addresses - Standard With Addresses - Test Cases ID-SB-MyA229/SB-MyA230/SB-MyA236/SB-MyA237
-  test.only("Account - Addresses - Standard With Addresses - Verify functionality of add new Address",async({page},testInfo)=>{ 
+  test("Account - Addresses - Standard With Addresses - Verify functionality of add new Address",async({page},testInfo)=>{ 
     //test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountAddressLink();

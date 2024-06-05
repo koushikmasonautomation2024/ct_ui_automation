@@ -51,7 +51,7 @@ test.describe("Mason MyAccount Orders - Standard With Orders", ()=>{
   
   //Account - Orders - Standard With Orders - Test Cases ID-SB-MyA168/SB-MyA169/SB-MyA170/SB-MyA171
   test("Account - Orders - Standard With Orders - Verify display and functionality of the dynamic sort option dropdown",async({page},testInfo)=>{ 
-    test.slow();
+    //test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountOrderLink();
     await myaccountPage.validateOrdersSortDropdown();
@@ -59,8 +59,8 @@ test.describe("Mason MyAccount Orders - Standard With Orders", ()=>{
   })
 
   //Account - Orders - Standard With Orders - Test Cases ID-SB-MyA168/SB-MyA169/SB-MyA170/SB-MyA171/SB-MyA173/SB-MyA174
-  test.only("Account - Orders - Standard With Orders - Verify display of order details including Order ID, Order Date, and Order Total",async({page},testInfo)=>{ 
-    test.slow();
+  test("Account - Orders - Standard With Orders - Verify display of order details including Order ID, Order Date, and Order Total",async({page},testInfo)=>{ 
+    //test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountOrderLink();
     await myaccountPage.validatedOrderNumberDisplaySection(myaccountpage_data.myaccount_orders_ordernumberprefix);
@@ -68,7 +68,7 @@ test.describe("Mason MyAccount Orders - Standard With Orders", ()=>{
 
   //Account - Orders - Standard With Orders - Test Cases ID-SB-MyA177/SB-MyA181
   test("Account - Orders Requiring Down Payment - Verify functionality of Make a Down Payment CTA and its redirection to the Make a Down Payment Drawer",async({page},testInfo)=>{ 
-    test.slow();
+    //test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountOrderLink();
     await myaccountPage.validateMakeADownPayment();

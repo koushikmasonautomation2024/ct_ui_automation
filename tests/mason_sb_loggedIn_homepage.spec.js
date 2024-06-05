@@ -49,7 +49,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
        }   
   })
   //Global Persistent Header (Logged In) - Promotional Banner Management-SB-GPH010
-  test.only("GPH-Promotional Banner Managment - Verify the promotional banner should be displayed On Homepage",async({page},testInfo)=>{ 
+  test("GPH-Promotional Banner Managment - Verify the promotional banner should be displayed On Homepage",async({page},testInfo)=>{ 
     //test.slow();
     const homePage = new HomePageNew(page);
     try {
