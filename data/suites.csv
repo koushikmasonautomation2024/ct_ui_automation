@@ -1,2 +1,3 @@
 "Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"failed","Wed Jun 05 12:13:22 UTC 2024","Wed Jun 05 12:13:41 UTC 2024","19652","Mason Commerce Tool Site - Chrome Browser","mason_myAccountMyProfile.spec.js","Mason Commerce Tool Site","","","Validate user should be able to navigate to My Profile page in My account",""
+"failed","Wed Jun 05 16:17:16 UTC 2024","Wed Jun 05 16:17:33 UTC 2024","16671","Mason Commerce Tool Site - Chrome Browser","mason_myAccountMyProfile.spec.js","Mason Commerce Tool Site","","","Validate user should be able to navigate to My Profile page in My account",""
+"passed","Wed Jun 05 16:17:16 UTC 2024","Wed Jun 05 16:17:33 UTC 2024","16320","Mason Commerce Tool Site - Chrome Browser","mason_bip.spec.js","Mason Commerce Tool Site","","","Validate the row of alphabet links below the top brands present",""
