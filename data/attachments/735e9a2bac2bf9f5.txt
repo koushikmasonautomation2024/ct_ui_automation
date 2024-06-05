@@ -1,0 +1,17 @@
+Link: https://dev--stoneberry-masoncompanies.netlify.app/account/orders/ is clickable: true
+Link: https://dev--stoneberry-masoncompanies.netlify.app/account/addresses/ is clickable: true
+Link: https://dev--stoneberry-masoncompanies.netlify.app/account/myprofile/ is clickable: true
+Link: https://dev--stoneberry-masoncompanies.netlify.app/account/savedcreditcard/ is clickable: true
+Link: https://dev--stoneberry-masoncompanies.netlify.app/account/wishlist/ is clickable: true
+Link: https://dev--stoneberry-masoncompanies.netlify.app/account/myprofile/#changePassword is clickable: true
+Clicked on link 0
+Current URL after clicking: https://dev--stoneberry-masoncompanies.netlify.app/account/orders/
+Clicked on link 1
+Current URL after clicking: https://dev--stoneberry-masoncompanies.netlify.app/account/addresses/
+Clicked on link 2
+Current URL after clicking: https://dev--stoneberry-masoncompanies.netlify.app/account/myprofile/
+Clicked on link 3
+Current URL after clicking: https://dev--stoneberry-masoncompanies.netlify.app/account/savedcreditcard/
+Clicked on link 4
+Current URL after clicking: https://dev--stoneberry-masoncompanies.netlify.app/account/wishlist/
+Clicked on link 5
