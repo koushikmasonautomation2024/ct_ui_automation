@@ -71,7 +71,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   })
 
   //SB-MyA266
-  test("Validate user should be able to navigate to My Profile page in My account",async({page},testInfo)=>{ 
+  test.only("Validate user should be able to navigate to My Profile page in My account",async({page},testInfo)=>{ 
     //test.slow();
     const myaccountPage = new MyAccountPage(page);
     const myAccountMyProfilePage = new MyAccountMyProfilePage(page);
