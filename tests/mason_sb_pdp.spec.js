@@ -51,42 +51,42 @@ test.describe("Mason PDP", ()=>{
   })
   
   //PDP - Display of Selected Variant Image - Test Cases ID-SB-PDP017/SB-PDP019
-  test.only("PDP - Display of Selected Variant Image - Verify that selected variant’s image is displayed  as full sized to the left",async({page},testInfo)=>{ 
+  test("PDP - Display of Selected Variant Image - Verify that selected variant’s image is displayed  as full sized to the left",async({page},testInfo)=>{ 
     const pdpPage = new PDPPage(page);
     await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
     await pdpPage.verifyImageChangesOnVariantSelection();
   })
 
   //PDP - Image Navigation with Left and Right Arrows - Test Cases ID-SB-PDP026
-  test.only("PDP - Image Navigation with Left and Right Arrows - Verify left and right navigation arrows on the main image displayed",async({page},testInfo)=>{ 
+  test("PDP - Image Navigation with Left and Right Arrows - Verify left and right navigation arrows on the main image displayed",async({page},testInfo)=>{ 
     const pdpPage = new PDPPage(page);
     await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
     await pdpPage.clickLeftRightCarouselButton();
   })
 
   //PDP - Display of Additional Images as Thumbnails - Test Cases ID-SB-PDP028
-  test.only("PDP - Display of Additional Images as Thumbnails - Verify additional images associated with variants thumbnail images,variant has more than 5 image associated with it, system shall display left and right navigation arrows.",async({page},testInfo)=>{ 
+  test("PDP - Display of Additional Images as Thumbnails - Verify additional images associated with variants thumbnail images,variant has more than 5 image associated with it, system shall display left and right navigation arrows.",async({page},testInfo)=>{ 
     const pdpPage = new PDPPage(page);
     await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
     await pdpPage.thumbnailImageLeftRightArrowDisplay();
   })
 
   //PDP - Highlighting Selected Thumbnail Image - Test Cases ID-SB-PDP029
-  test.only("PDP - Highlighting Selected Thumbnail Image - Verify that system can highlight with a black outline the thumbnail image that corresponds to the image currently being viewed as full sized.",async({page},testInfo)=>{ 
+  test("PDP - Highlighting Selected Thumbnail Image - Verify that system can highlight with a black outline the thumbnail image that corresponds to the image currently being viewed as full sized.",async({page},testInfo)=>{ 
     const pdpPage = new PDPPage(page);
     await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
     await pdpPage.validateThumbnailImageSelection();
   })
 
   //PDP - Product Data Display (Name, Item #, Reviews, Shop All Link, Color, Size, Size Chart Link, Pricing) - Test Cases ID-SB-PDP009/SB-PDP010/SB-PDP011/SB-PDP016
-  test.only("PDP - Product Data Display (Name, Item #, Reviews, Shop All Link, Color, Size, Size Chart Link, Pricing) - Verify Display of various product data.",async({page},testInfo)=>{ 
+  test("PDP - Product Data Display (Name, Item #, Reviews, Shop All Link, Color, Size, Size Chart Link, Pricing) - Verify Display of various product data.",async({page},testInfo)=>{ 
     const pdpPage = new PDPPage(page);
     await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
     await pdpPage.validateProductDetails();
   })
 
   //PDP - Product Data Display (Name, Item #, Reviews, Shop All Link, Color, Size, Size Chart Link, Pricing) - Test Cases ID-SB-PDP012/SB-PDP013/SB-PDP014/SB-PDP015
-  test.only("PDP - Product Data Display - Verify selection of size & color variants.",async({page},testInfo)=>{ 
+  test("PDP - Product Data Display - Verify selection of size & color variants.",async({page},testInfo)=>{ 
     const pdpPage = new PDPPage(page);
     await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
     await pdpPage.validateSelectSizeValue();
@@ -94,21 +94,21 @@ test.describe("Mason PDP", ()=>{
   })
 
   //PDP - Display Sale Pricing and Percentage Saved - Test Cases ID-SB-PDP043
-  test.only("PDP - Display Sale Pricing and Percentage Saved - Verify Sitewide sale pricing shall be displayed bolded in red if the product is on sale followed by the regular retail price.",async({page},testInfo)=>{ 
+  test("PDP - Display Sale Pricing and Percentage Saved - Verify Sitewide sale pricing shall be displayed bolded in red if the product is on sale followed by the regular retail price.",async({page},testInfo)=>{ 
     const pdpPage = new PDPPage(page);
     await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
     await pdpPage.validatePricingSection();  
   })
 
   //PDP - Display Dynamic Credit Messaging and Promotional Text - Test Cases ID-SB-PDP048
-  test.only("PDP - Display Dynamic Credit Messaging and Promotional Text - Verify Dynamic Credit Specific Messaging and/or Promotional Text:",async({page},testInfo)=>{ 
+  test("PDP - Display Dynamic Credit Messaging and Promotional Text - Verify Dynamic Credit Specific Messaging and/or Promotional Text:",async({page},testInfo)=>{ 
     const pdpPage = new PDPPage(page);
     await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
     await pdpPage.validateCreditMessageSection();  
   })
 
   //PDP - Description and Specifications Display - Test Cases ID-SB-PDP048
-  test.only("PDP - Description,Specifications and Shipping Display - Verify the Display of description,specifications and shipping section:",async({page},testInfo)=>{ 
+  test("PDP - Description,Specifications and Shipping Display - Verify the Display of description,specifications and shipping section:",async({page},testInfo)=>{ 
     const pdpPage = new PDPPage(page);
     await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
     await pdpPage.validateDescription();
@@ -117,14 +117,14 @@ test.describe("Mason PDP", ()=>{
   })
 
   //PDP - Ways to Wear It Section - Test Cases ID-SB-PDP067
-  test.only("PDP - Ways to Wear It Section - Verify Ways to wear content:",async({page},testInfo)=>{ 
+  test("PDP - Ways to Wear It Section - Verify Ways to wear content:",async({page},testInfo)=>{ 
     const pdpPage = new PDPPage(page);
     await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
     await pdpPage.validateWaysToWearIt();  
   })
 
   //PDP - Reviews and Questions & Answers Display - Test Cases ID-SB-PDP084/SB-PDP085
-  test.only("PDP - Reviews and Questions & Answers Display - Verify Power review and Q&A content:",async({page},testInfo)=>{ 
+  test("PDP - Reviews and Questions & Answers Display - Verify Power review and Q&A content:",async({page},testInfo)=>{ 
     const pdpPage = new PDPPage(page);
     await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
     await pdpPage.validateReviews();

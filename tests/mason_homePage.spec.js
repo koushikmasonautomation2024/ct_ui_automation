@@ -131,7 +131,7 @@ test("MegaNav - Validate User is redirected to L3 when clicked on the hyperlink"
 })
 
 //Ensure that clicking any area outside of the Mega Menu collapses it.
-test.only("MegaNav - Validate no overlay when User clicks on any area outside of the Mega Menu",async({page})=>{ 
+test("MegaNav - Validate no overlay when User clicks on any area outside of the Mega Menu",async({page})=>{ 
   //test.slow();
   const homePage = new HomePage(page);
   // await homePage.clickOnHomePageSignIn();

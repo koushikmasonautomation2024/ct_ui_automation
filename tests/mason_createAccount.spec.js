@@ -153,7 +153,7 @@ test("Account - Create Account - Validate the User is redirected to Account Dash
 })
 
 //SB-MYACCTD001
-test.only("Account - Sign In (Drawer)/Sign In Page - Validate the Account Drawer for Guest User ",async({page})=>{ 
+test("Account - Sign In (Drawer)/Sign In Page - Validate the Account Drawer for Guest User ",async({page})=>{ 
   //const signinPage = new SignInPage(page);
   const createAccountPage = new CreateAccountPage(page);
   await createAccountPage.validateAccountDrawer();

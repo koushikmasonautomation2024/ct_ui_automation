@@ -59,7 +59,7 @@ test.describe("Mason MyAccount Orders - Standard With Orders", ()=>{
   })
 
   //Account - Orders - Standard With Orders - Test Cases ID-SB-MyA168/SB-MyA169/SB-MyA170/SB-MyA171/SB-MyA173/SB-MyA174
-  test.only("Account - Orders - Standard With Orders - Verify display of order details including Order ID, Order Date, and Order Total",async({page},testInfo)=>{ 
+  test("Account - Orders - Standard With Orders - Verify display of order details including Order ID, Order Date, and Order Total",async({page},testInfo)=>{ 
     //test.slow();
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.clickMyAccountOrderLink();
