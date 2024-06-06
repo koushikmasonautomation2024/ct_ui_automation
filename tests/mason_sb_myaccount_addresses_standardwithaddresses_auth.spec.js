@@ -56,7 +56,7 @@ test.describe("Mason MyAccount - Addresses - Standard With Addresses", () => {
   })
 
   //Account - Addresses - Standard With Addresses - Test Cases ID-SB-MyA252/SB-MyA253/SB-MyA254/SB-MyA255
-  test("Account - Addresses - Remove and Undo Remove Address - Verify clicking on 'Remove' button, the selected address gets deleted and the data removed from the Addresses page.", async ({ page }, testInfo) => {
+  test.only("Account - Addresses - Remove and Undo Remove Address - Verify clicking on 'Remove' button, the selected address gets deleted and the data removed from the Addresses page.", async ({ page }, testInfo) => {
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -81,7 +81,7 @@ test.describe("Mason MyAccount - Addresses - Standard With Addresses", () => {
   // })
 
   //Account - Addresses - Standard With Addresses - Test Cases ID-SB-MyA244/SB-MyA249
-  test("Account - Addresses - Edit Address - Verify clicking on Edit against any address, application expands edit address form with values pre-populated in it.", async ({ page }, testInfo) => {
+  test.only("Account - Addresses - Edit Address - Verify clicking on Edit against any address, application expands edit address form with values pre-populated in it.", async ({ page }, testInfo) => {
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -95,7 +95,7 @@ test.describe("Mason MyAccount - Addresses - Standard With Addresses", () => {
   })
 
   //Account - Addresses - Standard With Addresses - Test Cases ID-SB-MyA245/SB-MyA246
-  test("Account - Addresses - Edit Address - Verify Address Line 2 (optional) field is collapsed upon load when data is not present.", async ({ page }, testInfo) => {
+  test.only("Account - Addresses - Edit Address - Verify Address Line 2 (optional) field is collapsed upon load when data is not present.", async ({ page }, testInfo) => {
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -109,7 +109,7 @@ test.describe("Mason MyAccount - Addresses - Standard With Addresses", () => {
   })
 
   //Account - Addresses - Standard With Addresses - Test Cases ID-SB-MyA247/SB-MyA248
-  test("Account - Addresses - Edit Address - Verify clicking on Save button, application validates (missing required field, invalid field) and shows an error message to user.", async ({ page }, testInfo) => {
+  test.only("Account - Addresses - Edit Address - Verify clicking on Save button, application validates (missing required field, invalid field) and shows an error message to user.", async ({ page }, testInfo) => {
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -124,7 +124,7 @@ test.describe("Mason MyAccount - Addresses - Standard With Addresses", () => {
   })
 
   //Account - Addresses - Standard With Addresses - Test Cases ID-SB-MyA234/SB-MyA235
-  test("Account - Addresses - Add Address - Verify clicking on Save button, application validates (missing required field, invalid field) and shows an error message to user.", async ({ page }, testInfo) => {
+  test.only("Account - Addresses - Add Address - Verify clicking on Save button, application validates (missing required field, invalid field) and shows an error message to user.", async ({ page }, testInfo) => {
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -140,7 +140,7 @@ test.describe("Mason MyAccount - Addresses - Standard With Addresses", () => {
   })
 
   //Account - Addresses - Standard With Addresses - Test Cases ID-SB-MyA251
-  test("Account - Addresses - Cancel Edit Address - Verify Cancel link is shown below the Save button and clicking on it, application collapses the Edit address form.", async ({ page }, testInfo) => {
+  test.only("Account - Addresses - Cancel Edit Address - Verify Cancel link is shown below the Save button and clicking on it, application collapses the Edit address form.", async ({ page }, testInfo) => {
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -155,7 +155,7 @@ test.describe("Mason MyAccount - Addresses - Standard With Addresses", () => {
   })
 
   //Account - Addresses - Standard With Addresses - Test Cases ID-SB-MyA239/SB-MyA240
-  test("Account - Addresses - Set as Default Address - Verify if the 'Set as default billing & shipping address' checkbox is selected then newly added address gets updated as the Default Billing & Shipping Address upon save..", async ({ page }, testInfo) => {
+  test.only("Account - Addresses - Set as Default Address - Verify if the 'Set as default billing & shipping address' checkbox is selected then newly added address gets updated as the Default Billing & Shipping Address upon save..", async ({ page }, testInfo) => {
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
