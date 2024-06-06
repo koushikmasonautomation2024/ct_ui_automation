@@ -1792,15 +1792,14 @@ exports.MyAccountPage = class MyAccountPage {
     }
 
     async verifyAddressSuggestionModal() {
-        try {
-            // Wait for the address modal to appear with a specific timeout
-            await this.page.waitForSelector('role=heading[name="Verify Your Address"]', { timeout: 15000 });
+        await this.page.waitForSelector('div[role="dialog"]', { timeout: 15000 });
+        const addressModalVisible = await this.page.locator('div[role="dialog"][data-state="open"]').isVisible();
 
-            // If the modal appears, proceed with the address verification steps
+        if (addressModalVisible) {
             await this.page.getByLabel('Use Original Address').click();
             await this.page.getByRole('button', { name: 'Continue' }).click();
-        } catch (error) {
-            // If the modal does not appear within the timeout, log the error (optional) and continue
+        } else {
+            // Address suggestion modal is not visible, verify the success message and then proceed
             console.log('Address suggestion modal did not appear, continuing with the next steps.');
         }
     }

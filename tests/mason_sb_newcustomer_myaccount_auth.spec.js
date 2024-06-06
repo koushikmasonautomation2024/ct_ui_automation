@@ -72,8 +72,7 @@ test.describe("Mason MyAccount New User", ()=>{
       test.skip('Skipping test due to failed login');
     }
     const newuser_myaccountPage = new NewUserMyAccountPage(page);
-    const myaccountPage = new MyAccountPage(page);
-    await myaccountPage.redirectToMyAccount();
+    await newuser_myaccountPage.redirectToMyAccount();
     await newuser_myaccountPage.validateNewUserStoneBerryCreditSection(newuser_myaccountpage_data.myaccount_sb_newuser_prequalifiedlinkname,newuser_myaccountpage_data.myaccount_sb_newuser_learnmorelinkname);
           
   })
