@@ -1364,7 +1364,7 @@ exports.MyAccountPage = class MyAccountPage {
     }
 
     async undoRemoveAddress() {
-        await this.page.reload();
+        //await this.page.reload();
         await this.page.locator('section.m-4').first().waitFor({ state: 'visible' });
         const addressSections = await this.page.locator('section.m-4');
         const addressSectionsCount = await addressSections.count();
@@ -1381,7 +1381,7 @@ exports.MyAccountPage = class MyAccountPage {
         await expect(this.page.getByRole('button', { name: 'Undo' })).toBeVisible();
         await this.page.getByRole('button', { name: 'Undo' }).click();
         await this.page.locator('.text-forestGreen').filter({ hasText: 'Address deleted successfully' }).waitFor({ state: 'hidden' });
-        await this.page.reload();
+        //await this.page.reload();
         await this.displayAddressSection();
         //await expect(this.page.locator('section.m-4')).toHaveCount(addressSectionsCount);
 
