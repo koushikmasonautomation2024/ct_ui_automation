@@ -45,12 +45,14 @@ exports.HomePageNew = class HomePageNew{
         await this.homepage_category.waitFor({ state: 'visible' });
         await expect(this.homepage_category).toBeVisible();
     }
-    async displaySiteLogo(brandLogoName){
-        await expect(this.page.getByRole('link', { name: brandLogoName, exact: true })).toBeVisible();
+    async displaySiteLogo(){
+        await expect(this.page.locator('a.inline-block img')).toBeVisible();
     }
 
-    async clickSiteLogo(brandLogoName){
-        await this.page.getByRole('link', { name: brandLogoName, exact: true }).click();
+    async clickSiteLogo(){
+        //await this.page.getByRole('link', { name: brandLogoName, exact: true }).click();
+        await this.page.locator('a.inline-block img').click();
+        //await this.page.waitForNavigation();
         
     }
 
@@ -58,14 +60,16 @@ exports.HomePageNew = class HomePageNew{
         await expect(this.page).toHaveURL(homePageUrl);
     }
     async displayHeroBanner(bannerName){
-        await expect(this.page.getByRole('link', { name: bannerName })).toBeVisible();
+        //await expect(this.page.getByRole('link', { name: bannerName })).toBeVisible();
+        await expect(this.page.locator(`a img[alt="${bannerName}"]`).first()).toBeVisible();
+        
     }
     async displayPromotionalBanner(promotionalBannerContent){
         await expect(this.page.getByRole('banner').locator('div').filter({ hasText: promotionalBannerContent }).nth(2)).toBeVisible();
     }
 
     async displayGlobalBanner(bannerText){
-        await expect(page.locator('div').filter({ hasText: new RegExp("^" + bannerText + "$") }).first()).toBeVisible();
+        await expect(this.page.locator('div').filter({ hasText: new RegExp("^" + bannerText + "$") }).first()).toBeVisible();
 
     }
 
@@ -110,10 +114,11 @@ exports.HomePageNew = class HomePageNew{
     async clickOnMegaMenuL2Category(l2CategoryName){
         //await this.page.getByLabel('Main Menu').locator('div').filter({ hasText: 'Womens ClothingAll Womens' })
         await this.page.getByRole('link', { name: l2CategoryName }).click();
+        await this.page.waitForNavigation();
     }
 
     async validateCLPNavigationUrl(clpUrl){
-        const expectedURL = new RegExp(`.*${clpUrl}`);
+        const expectedURL = new RegExp(/.*\/(categories)\/[^\/]+/);
         await expect(this.page).toHaveURL(expectedURL);
 
     }

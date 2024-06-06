@@ -17,37 +17,45 @@ test.describe("Mason PDP", ()=>{
 
    test.beforeEach(async({page,isMobile},testInfo)=>{
     test.slow();
-       try {
-           await page.goto(process.env.WEB_URL);
-           await page.waitForLoadState('networkidle');
-           if(isMobile==true){
-            const signinPage = new SignInPageNew(page);  
-            await signinPage.clickSignInImage();
-            await signinPage.clickSignIn();
-            await signinPage.validateSignInDialog();
-            await signinPage.login(process.env.USERNAME,process.env.PASSWORD);
-            await signinPage.clickSignIn();
-            await page.waitForLoadState('networkidle');
-          } else {
-            const homePage = new HomePageNew(page);
-            await homePage.clickOnHomePageSignIn();
-            const signinPage = new SignInPageNew(page);
-            await signinPage.validateWelcomeTextSignInDialog(signinpage_data.signin_dailog_text);
-            await signinPage.validateWelcomeSignInDialog();
-            await signinPage.clickSignIn();
-            await signinPage.validateSignInDialog();
-            await signinPage.login(process.env.USERNAME,process.env.PASSWORD);
-            await signinPage.clickSignIn();
-            await signinPage.waitForMyAccountDashboardLoad();
-            await signinPage.validateSignInMessage(signinpage_data.signin_success_text);
-            await page.waitForLoadState('networkidle');
-          }
-           const masonHomePageScreenshot = await page.screenshot();
-           await testInfo.attach('screenshot', { body: masonHomePageScreenshot, contentType: 'image/png' });
-       } catch (error) {
-           // Handle the error here
-           console.error("An error occurred in test.beforeEach:", error);
-       }   
+    try {
+      await page.goto(process.env.WEB_URL);
+      await page.waitForLoadState('networkidle');
+      if (isMobile == true) {
+        const signinPage = new SignInPageNew(page);
+        await signinPage.clickSignInImage();
+        await signinPage.clickSignIn();
+        await signinPage.validateSignInDialog();
+        await signinPage.login(process.env.NEW_USER, process.env.PASSWORD);
+        await signinPage.clickSignIn();
+        await page.waitForLoadState('networkidle');
+      } else {
+        const homePage = new HomePageNew(page);
+        await homePage.clickOnHomePageSignIn();
+        const signinPage = new SignInPageNew(page);
+        await signinPage.validateWelcomeTextSignInDialog(signinpage_data.signin_dailog_text);
+        await signinPage.validateWelcomeSignInDialog();
+        await signinPage.clickSignIn();
+        await signinPage.validateSignInDialog();
+        await signinPage.login(process.env.NEW_USER, process.env.PASSWORD);
+        await signinPage.clickSignIn();
+        const signinError = await signinPage.validateLoginError();
+        //console.log('signinerror' + signinError);
+        if (signinError) {
+          console.error("Login failed:");
+          loginSuccessful = false;
+        } else {
+          await signinPage.waitForMyAccountDashboardLoad();
+          await signinPage.validateSignInMessage(signinpage_data.signin_success_text);
+          await page.waitForLoadState('networkidle');
+          loginSuccessful = true;
+        }
+
+      }
+    } catch (error) {
+      // Handle the error here
+      console.error("Login failed:", error);
+      loginSuccessful = false;
+    } 
   })
   
   //PDP - Display of Selected Variant Image - Test Cases ID-SB-PDP017/SB-PDP019
