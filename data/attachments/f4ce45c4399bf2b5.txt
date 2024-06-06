@@ -1,2 +1,0 @@
-Clicked button with index: 4
-Clicked button with index: 0
