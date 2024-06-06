@@ -1,9 +1,0 @@
-Address added successfully!
-First Name: Emiliano Ratke
-Last Name: Emiliano Ratke
-Address:  7131 Lee Street 
-City: Jamarmouth,  ME 57658
-Default Address First Name:Jevon Johnson
-First Non Default Address First Name:James Bond
-Is displayed: true
-Is displayed: true
