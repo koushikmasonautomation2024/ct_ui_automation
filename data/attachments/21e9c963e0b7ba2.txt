@@ -1,9 +1,0 @@
-Address added successfully!
-First Name: Obie Senger
-Last Name: Obie Senger
-Address:  3488 Stanley Road 
-City: Waukesha,  WY 99978
-Default Address First Name:Jaden Littel
-First Non Default Address First Name:James Bond
-Is displayed: true
-Is displayed: true
