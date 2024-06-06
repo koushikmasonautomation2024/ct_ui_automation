@@ -1,0 +1,3 @@
+Initial Image URL: https://images.contentstack.io/v3/assets/blt6fecf8e2048edaa1/blt2a01288e82ed868a/65eac02cf283f712992859b7/Facebook.svg?branch=ccx_dev
+Clicked button with index: 4
+New Image URL: https://images.contentstack.io/v3/assets/blt6fecf8e2048edaa1/bltf0ebbc0612bc1c61/1011530-16-A0.jpg?branch=ccx_dev&quality=75&width=750&auto=webp&format=png
