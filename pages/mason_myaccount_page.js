@@ -1811,4 +1811,6 @@ exports.MyAccountPage = class MyAccountPage {
         await expect(this.page.getByRole('heading', { name: 'My Account' })).toBeVisible();
     }
 
+   
+
 }
