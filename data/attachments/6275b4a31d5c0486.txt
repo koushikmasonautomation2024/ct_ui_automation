@@ -1,5 +1,0 @@
-Address added successfully!
-First Name: Johnathan Brekke
-Last Name: Johnathan Brekke
-Address:  935 Khalil Fork 
-City: Elyria,  IA 33635
