@@ -1807,7 +1807,7 @@ exports.MyAccountPage = class MyAccountPage {
 
     async redirectToMyAccount() {
         await this.page.locator("//img[@alt='My Account']").click();
-        await this.page.getByRole('link', { name: 'My Account' }).click();
+        await this.page.getByRole('link', { name: 'My Account' }).click({});
         await expect(this.page.getByRole('heading', { name: 'My Account' })).toBeVisible();
     }
 
