@@ -46,12 +46,12 @@ exports.HomePageNew = class HomePageNew{
         await expect(this.homepage_category).toBeVisible();
     }
     async displaySiteLogo(){
-        await expect(this.page.locator('a.inline-block img')).toBeVisible();
+        await expect(this.page.locator('a.flex img.max-w-full')).toBeVisible();
     }
 
     async clickSiteLogo(){
         //await this.page.getByRole('link', { name: brandLogoName, exact: true }).click();
-        await this.page.locator('a.inline-block img').click();
+        await this.page.locator('a.flex img.max-w-full').click();
         //await this.page.waitForNavigation();
         
     }
