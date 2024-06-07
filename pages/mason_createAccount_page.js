@@ -182,12 +182,16 @@ exports.CreateAccountPage = class CreateAccountPage{
   }
 
   async validateDashboardNavigation(firstName, dashboard_url){
-    await expect(this.page.getByText(`Hi, ${firstName}!`)).toBeVisible();
+    //await expect(this.page).toHaveURL(/.*dashboard/);
+    await new Promise(resolve => setTimeout(resolve, 3000)).then(() => expect(this.page).toHaveURL(/.*dashboard/));
 
+    await expect(this.page.getByText(`Hi, ${firstName}!`)).toBeVisible();
     const currentURL = await this.page.url();
+    expect(currentURL).toContain(dashboard_url);
+    
     // console.log(currentURL);
     // console.log(dashboard_url);
-    expect(currentURL).toContain(dashboard_url);
+    
   }
 
   async validateAccountDrawer(){

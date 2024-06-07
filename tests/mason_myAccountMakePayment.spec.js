@@ -38,6 +38,7 @@ test.describe("Mason MakePayment Scenarios", ()=>{
       await signinPage.validateSignInDialog();
       await signinPage.login(process.env.PAYMENT_USERNAME,process.env.PAYMENT_PASSWORD);
       await signinPage.clickSignIn();
+      await page.waitForLoadState('networkidle');
       
     }
     const masonHomePageScreenshot = await page.screenshot();
@@ -57,6 +58,7 @@ test.describe("Mason MakePayment Scenarios", ()=>{
     const myaccountPage = new MyAccountPage(page);
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
     await myaccountPage.clickMyAccountMakeaPaymentLink();
+    await page.waitForLoadState('networkidle');
     await myaccountMakePaymentpage.validateMakeaPaymentPage();  
     await myaccountMakePaymentpage.validateNewCreditCardRadioButton();
     await myaccountMakePaymentpage.validateSavedCreditCardRadioButton();
@@ -220,7 +222,7 @@ test("Validate the Payment Success in Make Payment page",async({page},testInfo)=
 })
 
 //SB-MyA160
-test("Validate the Edit Option from Review Payment in Make Payment page",async({page},testInfo)=>{ 
+test.only("Validate the Edit Option from Review Payment in Make Payment page",async({page},testInfo)=>{ 
   //test.slow();
   const myaccountPage = new MyAccountPage(page);
   const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);

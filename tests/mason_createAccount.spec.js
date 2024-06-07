@@ -7,6 +7,7 @@ import {CreateAccountPage} from '../pages/mason_createAccount_page';
 import {MyAccountPage} from '../pages/mason_myaccount_page';
 import { allure } from 'allure-playwright';
 import { sign } from 'crypto';
+import {MyAccountWishListPage} from '../pages/mason_myAccountWishList_page';
 
 const homepage_data =JSON.parse(JSON.stringify(require('../test_data/mason_sb_home_page_data.json')));
 const resetpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_reset_page_data.json')));
@@ -135,7 +136,7 @@ test("Account - Create Account - Validate the account Creation in Create Account
 })
 
 //SB-LOGREG066 //SB-LOGREG056
-test("Account - Create Account - Validate the User is redirected to Account Dashboard after account creation from Create Account Page ",async({page})=>{ 
+test.only("Account - Create Account - Validate the User is redirected to Account Dashboard after account creation from Create Account Page ",async({page})=>{ 
   const signinPage = new SignInPage(page);
   const createAccountPage = new CreateAccountPage(page);
   const firstname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
@@ -160,5 +161,6 @@ test("Account - Sign In (Drawer)/Sign In Page - Validate the Account Drawer for 
   
 
 })
+
 
 })

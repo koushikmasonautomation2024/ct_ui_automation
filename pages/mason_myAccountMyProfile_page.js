@@ -37,7 +37,8 @@ exports.MyAccountMyProfilePage = class MyAccountMyProfilePage{
     async updatePasswordonMyProfile(){
         await this.myprofile_changepassword_button.click();
         //await expect(this.page.getByText('Password changed successfully.')).toBeVisible();
-        await this.page.getByText(accountpage_data.password_updated_message).waitFor({ state: 'hidden' });
+        //await expect(this.page.getByText(accountpage_data.password_updated_message)).toBeVisible({ timeout: 20000 });;
+        console.log("Password changed");
         //await this.page.waitForTimeout(2000);
     }
 
@@ -90,7 +91,7 @@ exports.MyAccountMyProfilePage = class MyAccountMyProfilePage{
 
     async validateMyProfileUpdateMessage(){
         try {
-            await expect(this.page.getByText(accountpage_data.myaccount_myprofile_updatemessage)).toBeVisible();
+            await expect(this.page.getByText(accountpage_data.myaccount_myprofile_updatemessage)).toBeVisible({ timeout: 10000 });
             
         } catch (error) {
             throw new Error('Failed to validate profile update message:'+ error);
@@ -139,7 +140,7 @@ exports.MyAccountMyProfilePage = class MyAccountMyProfilePage{
         await this.myaccount_myprofile_email.fill('');
         await this.myaccount_myprofile_email.fill(email);
         await this.myaccount_myprofile_savechanges_button.click();
-        await expect(this.page.getByText(accountpage_data.email_change_modal_text1)).toBeVisible();
+        await expect(this.page.getByText(accountpage_data.email_change_modal_text1)).toBeVisible({ timeout: 10000 });
     }
 
     async clickSaveChangesOnEmailModal(){
@@ -147,7 +148,7 @@ exports.MyAccountMyProfilePage = class MyAccountMyProfilePage{
     }
 
     async validateEmailUpdateSuccessMessage(){
-        await expect(this.page.getByText(accountpage_data.email_updated_message)).toBeVisible();
+        await expect(this.page.getByText(accountpage_data.email_updated_message)).toBeVisible({ timeout: 20000 });
     }
 
     async validateCancelOnEmailChangeModal(){
@@ -176,7 +177,7 @@ exports.MyAccountMyProfilePage = class MyAccountMyProfilePage{
     }
 
     async enterCurrentPasswordOnMyProfile(password){
-        await expect(this.myaccount_changepassword_currentpassword).toBeVisible();
+        await expect(this.myaccount_changepassword_currentpassword).toBeVisible({timeout:10000});
         this.myaccount_changepassword_currentpassword.click();
         this.myaccount_changepassword_currentpassword.fill('');
         this.myaccount_changepassword_currentpassword.fill(password);

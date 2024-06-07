@@ -28,7 +28,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
       await signinPage.clickSignInImage();
       await signinPage.clickSignIn();
       await signinPage.validateSignInDialog();
-      await signinPage.login(process.env.USERNAME,process.env.PASSWORD);
+      await signinPage.login(process.env.MY_PROFILE_USER,process.env.PROFILE_PASSWORD);
       await signinPage.clickSignIn();
     } else {
       const homePage = new HomePage(page);
@@ -38,7 +38,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
       await signinPage.validateWelcomeSignInDialog();
       await signinPage.clickSignIn();
       await signinPage.validateSignInDialog();
-      await signinPage.login(process.env.USERNAME,process.env.PASSWORD);
+      await signinPage.login(process.env.MY_PROFILE_USER,process.env.PROFILE_PASSWORD);
       await signinPage.clickSignIn();
       // await page.waitForLoadState('networkidle');
       // await signinPage.validateSignedInMessage(myaccountpage_data.signedin_message);
@@ -71,7 +71,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
   })
 
   //SB-MyA266
-  test.only("Validate user should be able to navigate to My Profile page in My account",async({page},testInfo)=>{ 
+  test("Validate user should be able to navigate to My Profile page in My account",async({page},testInfo)=>{ 
     //test.slow();
     const myaccountPage = new MyAccountPage(page);
     const myAccountMyProfilePage = new MyAccountMyProfilePage(page);
@@ -196,7 +196,7 @@ test("Validate Cancel Email Address modal in My Profile page",async({page},testI
 })
 
 //SB-MyA277 //SB-My287 //SB-MyA290
-test("Validate Change Password Button is enabled on meeting the New Password criteria", async ({ page }, testInfo) => {
+test.only("Validate Change Password Button is enabled on meeting the New Password criteria", async ({ page }, testInfo) => {
   const generateRandomString = (length) => {
     const getRandomChar = (base, range) => String.fromCharCode(base + Math.floor(Math.random() * range));
     return getRandomChar(65, 26) + Array.from({ length: length - 1 }, () => getRandomChar(97, 26)).join('');
@@ -214,7 +214,7 @@ test("Validate Change Password Button is enabled on meeting the New Password cri
   const lastname = generateRandomString(10);
   const email = `${firstname.toLowerCase()}.${lastname.toLowerCase()}@automation.com`;
   const password = generateRandomPassword();
-
+  
   const myaccountPage = new MyAccountPage(page);
   const myAccountMyProfilePage = new MyAccountMyProfilePage(page);
 
@@ -222,21 +222,27 @@ test("Validate Change Password Button is enabled on meeting the New Password cri
   await myaccountPage.clickMyAccountMyProfileLink();
 
   const changePassword = async (currentPassword, newPassword) => {
-    await myAccountMyProfilePage.enterCurrentPasswordOnMyProfile(currentPassword);
     await myAccountMyProfilePage.enterNewPasswordOnMyProfile(newPassword);
+    await myAccountMyProfilePage.enterCurrentPasswordOnMyProfile(currentPassword);
     await myAccountMyProfilePage.validateThePasswordCriteria();
     await myAccountMyProfilePage.updatePasswordonMyProfile();
   };
 
-  await changePassword(process.env.PASSWORD, password);
-
+  await changePassword(process.env.PROFILE_PASSWORD, password);
+  await page.waitForTimeout(1000);
   await myAccountMyProfilePage.enterFirstName(firstname);
   await myAccountMyProfilePage.enterLastName(myaccountpage_data.myaccount_myprofile_updatedlastname);
   await myAccountMyProfilePage.clickMyProfileSaveChangesButton();
   await myAccountMyProfilePage.validateFirstName(firstname);
-
-  await changePassword(password, process.env.PASSWORD);
-
+ // console.log(`Temporary password used for testing: ${password}`);
+  await page.waitForTimeout(1000);
+  await changePassword(password, process.env.PROFILE_PASSWORD);
+  await page.waitForTimeout(2000);
+  await myAccountMyProfilePage.enterFirstName(firstname);
+  await myAccountMyProfilePage.enterLastName(myaccountpage_data.myaccount_myprofile_updatedlastname);
+  await myAccountMyProfilePage.clickMyProfileSaveChangesButton();
+  await myAccountMyProfilePage.validateFirstName(firstname);
+  await page.waitForTimeout(1000);
   console.log(`Temporary password used for testing: ${password}`);
 })
 
@@ -257,7 +263,7 @@ test("Validate Change of email in Email Address modal in My Profile page", async
 
   const changeEmail = async (newEmail) => {
     await myAccountMyProfilePage.enterEmailtoChange(newEmail);
-    await myAccountMyProfilePage.enterPasswordOnEmailModal(process.env.PASSWORD);
+    await myAccountMyProfilePage.enterPasswordOnEmailModal(process.env.PROFILE_PASSWORD);
     await myAccountMyProfilePage.clickSaveChangesOnEmailModal();
     await myAccountMyProfilePage.validateEmailUpdateSuccessMessage();
     await page.waitForTimeout(2000);
@@ -269,7 +275,7 @@ test("Validate Change of email in Email Address modal in My Profile page", async
   await changeEmail(email);
   //await myAccountMyProfilePage.validateChangeEmailModal(process.env.USERNAME);
 
-  await changeEmail(process.env.USERNAME);
+  await changeEmail(process.env.MY_PROFILE_USER);
 
   console.log(`Temporary email used for testing: ${email}`);
 })
@@ -308,7 +314,7 @@ test("Validate Incorrect Password Message in Email Address modal in My Profile p
 })
 
 //SB-MyA279
-test("Validate Incorrect Password Message on entring wrong password in My Profile page",async({page},testInfo)=>{ 
+test("Validate Incorrect Password Message on entering wrong password in My Profile page",async({page},testInfo)=>{ 
   //test.slow();  
   const myaccountPage = new MyAccountPage(page);
   const myAccountMyProfilePage = new MyAccountMyProfilePage(page);

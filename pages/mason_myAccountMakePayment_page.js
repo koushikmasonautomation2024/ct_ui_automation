@@ -54,7 +54,7 @@ exports.MyAccountMakePaymentPage = class MyAccountMakePaymentPage{
     }
 
     async validateSecurityCodeTooltiphover(){
-        await this.securitycodetooltip.hover();
+        await this.securitycodetooltip.click();
         await expect(this.page.getByText(accountpage_data.makepayment_securitycode_text1, { exact: true }).first()).toBeVisible();
         await expect(this.page.getByText(accountpage_data.makepayment_securitycode_text2).first()).toBeVisible();
         await expect(this.page.getByText(accountpage_data.makepayment_securitycode_text3).first()).toBeVisible();
@@ -96,7 +96,7 @@ exports.MyAccountMakePaymentPage = class MyAccountMakePaymentPage{
         await expect(this.makepayment_combobox).toBeVisible();
         await this.makepayment_combobox.click();
         // Click on the first visible option in the dropdown
-        const firstOption = await this.page.locator('div:has-text("Milan")').first();
+        const firstOption = await this.page.locator('div:has-text("BlackBox")').first();
         //Use JavaScript to click the element if direct clicking fails
         await this.page.evaluate(element => element.click(), await firstOption.elementHandle());
     }
@@ -201,6 +201,7 @@ exports.MyAccountMakePaymentPage = class MyAccountMakePaymentPage{
 
     async validateSubmitPayment(){
         await this.page.getByRole('button', { name: myaccountpage_locator.makepayment_submitPayment }).click();
+        await this.page.waitForLoadState('networkidle');
         await expect(this.page).toHaveURL(/.*thankyou/);
         // await this.page.goto('https://dev--stoneberry-masoncompanies.netlify.app/account/makepayment/thankyou/');
     }

@@ -2,9 +2,9 @@ const { chromium } = require('playwright');
 import {test,expect } from '@playwright/test';
 import {HomePage} from '../pages/mason_home_page';
 import {SignInPage} from '../pages/mason_signin_page';
-import {ResetPage} from '../pages/mason_reset_page';
+import {MasonPLPPage} from '../pages/mason_plp_page';
 import {MyAccountPage} from '../pages/mason_myaccount_page';
-import {MyAccountSavedCCPage} from '../pages/mason_myAccountSavedCC_page';
+import {MyAccountAddressPage} from '../pages/mason_myAccountAddress_page';
 import { allure } from 'allure-playwright';
 import { sign } from 'crypto';
 
@@ -15,30 +15,18 @@ const myaccountpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_
 const savedAddress = myaccountpage_data.myaccount_newaddress_firstname +" "+ myaccountpage_data.myaccount_newaddress_lastname +" "+ myaccountpage_data.myaccount_newaddress_addressline1;
 const editAddress = myaccountpage_data.myaccount_editaddress_firstname +" "+ myaccountpage_data.myaccount_editaddress_lastname +" "+ myaccountpage_data.myaccount_editaddress_addressline1;
 
-test.describe("Mason Commerce Tool Site", ()=>{
+test.describe("Mason PLP Scenarios", ()=>{
 
    test.beforeEach(async({page,isMobile},testInfo)=>{
     test.slow();
     try{  
+    //await page.goto(process.env.WEB_URL);
     await page.goto(process.env.WEB_URL);
     await page.waitForLoadState('networkidle');
     if(isMobile==true){
-      const signinPage = new SignInPage(page);  
-      await signinPage.clickSignInImage();
-      await signinPage.clickSignIn();
-      await signinPage.validateSignInDialog();
-      await signinPage.login(process.env.USERNAME,process.env.PASSWORD);
-      await signinPage.clickSignIn();
+      
     } else {
-      const homePage = new HomePage(page);
-      await homePage.clickOnHomePageSignIn();
-      const signinPage = new SignInPage(page);
-      await signinPage.validateWelcomeTextSignInDialog(signinpage_data.signin_dailog_text);
-      await signinPage.validateWelcomeSignInDialog();
-      await signinPage.clickSignIn();
-      await signinPage.validateSignInDialog();
-      await signinPage.login(process.env.MY_PROFILE_USER,process.env.PROFILE_PASSWORD);
-      await signinPage.clickSignIn();
+      
     }
     const masonHomePageScreenshot = await page.screenshot();
     await testInfo.attach('screenshot', { body: masonHomePageScreenshot, contentType: 'image/png' });
@@ -51,17 +39,37 @@ test.describe("Mason Commerce Tool Site", ()=>{
   })
  
   
-//SB-MyA325
-  test("Validate No Saved Card Message for new user",async({page},testInfo)=>{ 
-    
-    //const myAccountPage = new MyAccountPage(page);
-    const myAccountSavedCCPage = new MyAccountSavedCCPage(page);
-    await myAccountSavedCCPage.clickSavedCreditCard();
-    await myAccountSavedCCPage.noCardMessageForNewUser();    
-        
-  })
+//SB-BIP002
+  //SB-MM008
+test.only("Validate User is redirected to L3 when clicked on the hyperlink and check the breadcrumb",async({page})=>{ 
+  //test.slow();
+  const homePage = new HomePage(page);
+  const l2_index=1;
+  const l2category="Clothing, Shoes + Bags";
+  await homePage.categoryL1ToBeVisibleOnDepartmentHover();
+  //const [l2category,l2_index] = await homePage.getRandomL1CategoryText();
+  await homePage.checkIfcategoryL1isBold(l2category);
+  const [l2Text, l3Text]=await homePage.getRandomL2L3CategoryText(l2_index);
+  console.log(l2Text);
+  console.log(l3Text);
+  await homePage.navigateToCategoryL1(l3Text);
 
-  
-  
+})
 
-  })
+//SB-MM007
+test("Validate User is redirected to L2 when clicked on the hyperlink and check the breadcrumb",async({page})=>{ 
+  //test.slow();
+  const homePage = new HomePage(page);
+  const l2_index=2;
+  const l2category="Toys";
+  await homePage.categoryL1ToBeVisibleOnDepartmentHover();
+  //const [l2category,l2_index] = await homePage.getRandomL1CategoryText();
+  await homePage.checkIfcategoryL1isBold(l2category);
+  const [l2Text, l3Text]=await homePage.getRandomL2L3CategoryText(l2_index);
+  console.log(l2Text);
+  console.log(l3Text);
+  await homePage.navigateToCategoryL1(l2Text);
+
+})
+
+})

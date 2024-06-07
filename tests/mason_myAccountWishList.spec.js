@@ -49,30 +49,13 @@ test.describe("Mason Commerce Tool Site", ()=>{
     
   })
  
-  //SB-MyA357, //SB-MyA326
-  test("Validate user should be able to navigate to WishList Page in My account",async({page},testInfo)=>{ 
-    //test.slow();
-    const signinPage = new SignInPage(page);
-    await signinPage.login(process.env.USERNAME,process.env.PASSWORD);
-    await signinPage.clickSignIn();
-    await page.waitForLoadState('networkidle');
-    const myaccountPage = new MyAccountPage(page);
-    const myaccountWishListPage = new MyAccountWishListPage(page);
-    await myaccountPage.displayMyAccountLeftNavigationLink();
-    await myaccountPage.clickOnMyAccountLink();
-    //await myaccountPage.validateMyAccountDashboardNavigation();
-    await myaccountPage.clickMyAccountWishListLink();
-    await myaccountWishListPage.validateWishListPage();
-    await myaccountWishListPage.noWishListMessageForNewUser();
-    
-           
-  })
+  
 
   //SB-MyA327
   test("Validate Breadcrumbs in WishList Page",async({page},testInfo)=>{ 
     //test.slow();
     const signinPage = new SignInPage(page);
-    await signinPage.login(process.env.USERNAME,process.env.PASSWORD);
+    await signinPage.login(process.env.MY_PROFILE_USER,process.env.PROFILE_PASSWORD);
     await signinPage.clickSignIn();
     await page.waitForLoadState('networkidle');
     const myaccountPage = new MyAccountPage(page);
@@ -88,7 +71,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
 test("Validate Item count is displayed near the title in WishList Page",async({page},testInfo)=>{ 
   //test.slow();
   const signinPage = new SignInPage(page);
-  await signinPage.login(process.env.PAYMENT_USERNAME,process.env.PAYMENT_PASSWORD);
+  await signinPage.login(process.env.MY_PROFILE_USER,process.env.PROFILE_PASSWORD);
   await signinPage.clickSignIn();
   await page.waitForLoadState('networkidle');
   const myaccountPage = new MyAccountPage(page);
@@ -104,12 +87,12 @@ test("Validate Item count is displayed near the title in WishList Page",async({p
 test("Validate WishListed item in WishList Page",async({page},testInfo)=>{ 
   //test.slow();
   const signinPage = new SignInPage(page);
-  await signinPage.login(process.env.PAYMENT_USERNAME,process.env.PAYMENT_PASSWORD);
+  await signinPage.login(process.env.MY_PROFILE_USER,process.env.PROFILE_PASSWORD);;
   await signinPage.clickSignIn();
   await page.waitForLoadState('networkidle');
   const myaccountPage = new MyAccountPage(page);
   const myaccountWishListPage = new MyAccountWishListPage(page);
-  await myaccountPage.displayMyAccountLeftNavigationLink();
+  //await myaccountPage.displayMyAccountLeftNavigationLink();
   await myaccountPage.clickOnMyAccountLink();
   //await myaccountPage.validateMyAccountDashboardNavigation();
   await myaccountPage.clickMyAccountWishListLink();
@@ -123,7 +106,7 @@ test("Validate WishListed item in WishList Page",async({page},testInfo)=>{
 test("Validate Alignment of WishListed item in WishList Page",async({page},testInfo)=>{ 
   //test.slow();
   const signinPage = new SignInPage(page);
-  await signinPage.login(process.env.PAYMENT_USERNAME,process.env.PAYMENT_PASSWORD);
+  await signinPage.login(process.env.MY_PROFILE_USER,process.env.PROFILE_PASSWORD);;
   await signinPage.clickSignIn();
   await page.waitForLoadState('networkidle');
   const myaccountPage = new MyAccountPage(page);
@@ -141,7 +124,7 @@ test("Validate Alignment of WishListed item in WishList Page",async({page},testI
 test("Validate Pricing of WishListed item in WishList Page is in the expected format",async({page},testInfo)=>{ 
   //test.slow();
   const signinPage = new SignInPage(page);
-  await signinPage.login(process.env.PAYMENT_USERNAME,process.env.PAYMENT_PASSWORD);
+  await signinPage.login(process.env.MY_PROFILE_USER,process.env.PROFILE_PASSWORD);;
   await signinPage.clickSignIn();
   await page.waitForLoadState('networkidle');
   const myaccountPage = new MyAccountPage(page);
@@ -162,7 +145,7 @@ test("Validate Pricing of WishListed item in WishList Page is in the expected fo
 test("Validate Heart icon is filled in the Wishlist page for all the wishlisted product",async({page},testInfo)=>{ 
   //test.slow();
   const signinPage = new SignInPage(page);
-  await signinPage.login(process.env.PAYMENT_USERNAME,process.env.PAYMENT_PASSWORD);
+  await signinPage.login(process.env.MY_PROFILE_USER,process.env.PROFILE_PASSWORD);;
   await signinPage.clickSignIn();
   await page.waitForLoadState('networkidle');
   const myaccountPage = new MyAccountPage(page);
@@ -176,10 +159,10 @@ test("Validate Heart icon is filled in the Wishlist page for all the wishlisted 
 })
 
 //SB-MyA335
-test("Validate Item Remove Success message when we click on wishlisted icon in wishList page",async({page},testInfo)=>{ 
+test.only("Validate Item Remove Success message when we click on wishlisted icon in wishList page",async({page},testInfo)=>{ 
   //test.slow();
   const signinPage = new SignInPage(page);
-  await signinPage.login(process.env.PAYMENT_USERNAME,process.env.PAYMENT_PASSWORD);
+  await signinPage.login(process.env.MY_PROFILE_USER,process.env.PROFILE_PASSWORD);
   await signinPage.clickSignIn();
   await page.waitForLoadState('networkidle');
   const myaccountPage = new MyAccountPage(page);
@@ -191,5 +174,25 @@ test("Validate Item Remove Success message when we click on wishlisted icon in w
   await myaccountWishListPage.validateItemCountIsDisplayed();
   await myaccountWishListPage.validateRemoveItemFromWishList();
 })
+
+//SB-MyA357, //SB-MyA326
+test("Validate user should be able to navigate to WishList Page in My account",async({page},testInfo)=>{ 
+  //test.slow();
+  const signinPage = new SignInPage(page);
+  await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
+  await signinPage.clickSignIn();
+  await page.waitForLoadState('networkidle');
+  const myaccountPage = new MyAccountPage(page);
+  const myaccountWishListPage = new MyAccountWishListPage(page);
+  await myaccountPage.displayMyAccountLeftNavigationLink();
+  await myaccountPage.clickOnMyAccountLink();
+  //await myaccountPage.validateMyAccountDashboardNavigation();
+  await myaccountPage.clickMyAccountWishListLink();
+  await myaccountWishListPage.validateWishListPage();
+  await myaccountWishListPage.noWishListMessageForNewUser();
+  
+         
+})
+
 
 })

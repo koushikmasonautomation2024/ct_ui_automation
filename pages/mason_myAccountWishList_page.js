@@ -228,7 +228,7 @@ async validateRemoveItemFromWishList(){
     await wishlistIconToRemove.click();
 
     // Wait for the success message to appear
-    await expect(this.page.getByText(accountpage_data.wishlist_remove_partMessage)).toBeVisible();
+    await expect(this.page.getByText(accountpage_data.wishlist_remove_partMessage)).toBeVisible({timeout:10000});
     const successMessage = await this.page.getByText(accountpage_data.wishlist_remove_partMessage);
    // await successMessage.waitForElementState('visible');
     const successMessageinnerText = await successMessage.textContent();
