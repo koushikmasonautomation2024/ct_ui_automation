@@ -7,5 +7,6 @@
     "invalid_email":"Please enter a valid email",
     "signin_success_text" : "You have been successfully signed in to your account",
     "signout_success_text" : "You have been successfully logged out",
-    "invalid_login_errormessage" : "The supplied user name or password is incorrect"
+    "invalid_login_errormessage" : "The supplied user name or password is incorrect",
+    "null_email_message":"Enter an email address"
 }

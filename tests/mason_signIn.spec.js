@@ -50,11 +50,11 @@ test.describe("Mason SignIn Scenarios", ()=>{
   
 
   //SB-LOGREG009
-test("Account - SignIn - Validate the Loader icon when user tries to sign-in",async({page})=>{ 
+test.only("Account - SignIn - Validate the Loader icon when user tries to sign-in",async({page})=>{ 
   const signinPage = new SignInPage(page);
   await signinPage.clickSignIn();
   //await signinPage.validateSignInDialog();
-  await signinPage.login(process.env.USERNAME,process.env.PASSWORD);
+  await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
   await signinPage.clickSignIn();
   await signinPage.checkLoaderwhileSignIn();
 
@@ -66,7 +66,7 @@ test("Account - Sign In (Drawer)/Sign In Page - Validate user should be able to 
   const signinPage = new SignInPage(page);
   await signinPage.clickSignIn();
   //await signinPage.validateSignInDialog();
-  await signinPage.login(process.env.USERNAME,process.env.PASSWORD);
+  await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
   await signinPage.clickSignIn();
   await signinPage.waitForHiddenSignedInMessage();
            
@@ -77,7 +77,7 @@ test("Account - Sign In (Drawer)/Sign In Page - Validate user should be able to 
   const signinPage = new SignInPage(page);
   await signinPage.clickSignIn();
   //await signinPage.validateSignInDialog();
-  await signinPage.login(process.env.USERNAME,process.env.PASSWORD);
+  await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
   await signinPage.clickSignIn();
   await signinPage.waitForHiddenSignedInMessage();
   await signinPage.closeSignIsSuccessMessage();
@@ -90,14 +90,14 @@ test("Account - Sign In (Drawer)/Sign In Page - Validate proper message when log
   const signinPage = new SignInPage(page);
   await signinPage.clickSignIn();
   //await signinPage.validateSignInDialog();
-  await signinPage.login(process.env.RESET_USERNAME,process.env.PASSWORD);
+  await signinPage.login(process.env.NON_CREDIT_USER,process.env.PASSWORD);
   await signinPage.clickSignIn();
   await signinPage.loginFailMessage();
          
 })
 
 //SB-LOGREG036
-test("Account - Sign In (Drawer)/Sign In Page - Validate the Error message for null or invalid email",async({page})=>{ 
+test.only("Account - Sign In (Drawer)/Sign In Page - Validate the Error message for null or invalid email",async({page})=>{ 
   //test.slow();
   // const homePage = new HomePage(page);
   // await homePage.clickOnHomePageSignIn();
@@ -118,7 +118,7 @@ test("Account - SignIn - Validate the Password Hide/Show in Sign-In ",async({pag
   const password = [...Array(6)].map(() => String.fromCharCode(Math.random() * 26 + 97 | 0)).join('') + String.fromCharCode(Math.random() * 26 + 65 | 0) + (Math.random() * 10 | 0);
   //await signinPage.enterPasswordOnCreateAccountPage(password);
   await signinPage.clickSignIn();
-  await signinPage.login(process.env.RESET_USERNAME,password);
+  await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
   await signinPage.validatePasswordShowLinkIsVisible();
   await signinPage.clickOnShowPassword();
   await signinPage.validatePasswordIsShown();

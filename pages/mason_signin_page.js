@@ -104,7 +104,7 @@ exports.SignInPage = class SignInPage{
         // await this.forgot_emailaddress_textbox.click();
         // await this.forgot_emailaddress_textbox.fill(  );
         await (this.submit_forgot_password).click();
-        await expect(this.page.getByText(signinpage_data.invalid_email)).toBeVisible(); 
+        await expect(this.page.getByText(signinpage_data.null_email_message)).toBeVisible(); 
     }
 
     async validateInvalidEmailAddressOnForgotPassword() {
