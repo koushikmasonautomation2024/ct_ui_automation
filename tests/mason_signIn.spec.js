@@ -50,7 +50,7 @@ test.describe("Mason SignIn Scenarios", ()=>{
   
 
   //SB-LOGREG009
-test.only("Account - SignIn - Validate the Loader icon when user tries to sign-in",async({page})=>{ 
+test("Account - SignIn - Validate the Loader icon when user tries to sign-in",async({page})=>{ 
   const signinPage = new SignInPage(page);
   await signinPage.clickSignIn();
   //await signinPage.validateSignInDialog();
@@ -97,7 +97,7 @@ test("Account - Sign In (Drawer)/Sign In Page - Validate proper message when log
 })
 
 //SB-LOGREG036
-test.only("Account - Sign In (Drawer)/Sign In Page - Validate the Error message for null or invalid email",async({page})=>{ 
+test("Account - Sign In (Drawer)/Sign In Page - Validate the Error message for null or invalid email",async({page})=>{ 
   //test.slow();
   // const homePage = new HomePage(page);
   // await homePage.clickOnHomePageSignIn();

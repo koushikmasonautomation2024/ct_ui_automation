@@ -159,7 +159,7 @@ test("Validate Heart icon is filled in the Wishlist page for all the wishlisted 
 })
 
 //SB-MyA335
-test.only("Validate Item Remove Success message when we click on wishlisted icon in wishList page",async({page},testInfo)=>{ 
+test("Validate Item Remove Success message when we click on wishlisted icon in wishList page",async({page},testInfo)=>{ 
   //test.slow();
   const signinPage = new SignInPage(page);
   await signinPage.login(process.env.MY_PROFILE_USER,process.env.PROFILE_PASSWORD);
@@ -171,6 +171,7 @@ test.only("Validate Item Remove Success message when we click on wishlisted icon
   await myaccountPage.clickOnMyAccountLink();
   //await myaccountPage.validateMyAccountDashboardNavigation();
   await myaccountPage.clickMyAccountWishListLink();
+  await page.reload();
   await myaccountWishListPage.validateItemCountIsDisplayed();
   await myaccountWishListPage.validateRemoveItemFromWishList();
 })

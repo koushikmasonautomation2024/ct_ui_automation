@@ -136,7 +136,7 @@ test("Account - Create Account - Validate the account Creation in Create Account
 })
 
 //SB-LOGREG066 //SB-LOGREG056
-test.only("Account - Create Account - Validate the User is redirected to Account Dashboard after account creation from Create Account Page ",async({page})=>{ 
+test("Account - Create Account - Validate the User is redirected to Account Dashboard after account creation from Create Account Page ",async({page})=>{ 
   const signinPage = new SignInPage(page);
   const createAccountPage = new CreateAccountPage(page);
   const firstname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
