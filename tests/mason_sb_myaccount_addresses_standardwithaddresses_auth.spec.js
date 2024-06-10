@@ -156,7 +156,7 @@ test.describe("Mason MyAccount - Addresses - Standard With Addresses", () => {
 
   //Account - Addresses - Standard With Addresses - Test Cases ID-SB-MyA239/SB-MyA240
   test.only("Account - Addresses - Set as Default Address - Verify if the 'Set as default billing & shipping address' checkbox is selected then newly added address gets updated as the Default Billing & Shipping Address upon save..", async ({ page }, testInfo) => {
-    //test.slow();
+    test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
     }

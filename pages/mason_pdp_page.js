@@ -12,6 +12,7 @@ const selected_thumbnail_blackborderlocator = 'div.min-w-0[aria-roledescription=
 const sizechart_button_text = 'Size Chart';
 
 
+
 exports.PDPPage = class PDPPage {
     constructor(page) {
         this.page = page;
@@ -30,7 +31,15 @@ exports.PDPPage = class PDPPage {
         this.priceSectionLocator = page.locator('section.flex.items-center.gap-x-1.pt-30');
         this.paymentSectionLocator = page.locator('section.flex.items-center.gap-1.pt-5');
         this.creditMessageLocator = page.locator('section.mt-4.py-5');
-
+        this.qtyMinusButton = page.locator('div.flex > button:nth-child(1)');
+        this.qtyPlusButton = page.locator('div.flex > button:nth-child(3)');
+        this.qtyInputTextBox = page.locator('input.numberInputCounter');
+        this.qtyText = page.getByText('Qty:');
+        this.availabilityText = page.getByText('Availability:');
+        this.addtoCartButton = page.getByRole('button', { name: 'Add to Cart' });
+        this.addtoWishListButton = page.getByRole('button', { name: 'Add to Wish List' });
+        this.miniCartHeaderText = page.getByRole('button', { name: 'My Cart' });
+        this.miniCart = page.locator('img[alt="Mini Cart"]');
 
     }
 
@@ -60,10 +69,6 @@ exports.PDPPage = class PDPPage {
 
         // Step 2: Select a variant
         await this.clickOnPDPColorVariantButton();
-
-        // Step 3: Wait for the image to change
-        //await this.page.waitForSelector(firstProductImage, { state: 'detached' });
-        // await this.page.waitForSelector(firstProductImage, { state: 'attached' });
 
         // Step 4: Capture the new image URL
         const newImageUrl = await this.page.getAttribute(pdp_product_big_image, 'src');
@@ -364,5 +369,134 @@ exports.PDPPage = class PDPPage {
         }
     }
 
+    async validateProductQTYSection() {
+        await this.qtyText.waitFor({ state: 'visible' });
+        await expect(this.qtyText).toBeVisible();
+        await expect(this.qtyMinusButton).toBeVisible();
+        await expect(this.qtyPlusButton).toBeVisible();
+        await expect(this.qtyInputTextBox).toBeVisible();
+        const defaultInputQty = await this.qtyInputTextBox.inputValue();
+
+    }
+
+    async validateProductAvailabilityMessage() {
+        await expect(this.availabilityText).toBeVisible();
+        // Locate the p element with the text "Availability:"
+        const pElement = await this.page.locator('p:has-text("Availability:")');
+        // Locate the strong element that follows the p element
+        const strongElement = pElement.locator('xpath=following-sibling::strong');
+        // Get the text content of the strong element
+        const strongText = await strongElement.textContent();
+        expect(strongText).toBeTruthy();
+    }
+
+    async validateProductQTYIncreaseDecrease() {
+        await this.qtyText.waitFor({ state: 'visible' });
+        // Check if both buttons are disabled
+        const isMinusButtonDisabled = await this.qtyMinusButton.isDisabled();
+        const isPlusButtonDisabled = await this.qtyPlusButton.isDisabled();
+
+        // If both buttons are disabled, assert that the quantity cannot be updated
+        if (isMinusButtonDisabled && isPlusButtonDisabled) {
+            console.log("Both buttons are disabled. Quantity cannot be updated.");
+            const initialInputValue = await this.qtyInputTextBox.inputValue();
+            await this.qtyMinusButton.click(); // Attempt to change the quantity
+            const updatedMinusValue = await this.qtyInputTextBox.inputValue();
+            expect(initialInputValue).toBe(updatedMinusValue, 'Quantity should not change when both buttons are disabled');
+            await this.qtyPlusButton.click(); // Attempt to change the quantity
+            const updatedPlusValue = await this.qtyInputTextBox.inputValue();
+            expect(initialInputValue).toBe(updatedPlusValue, 'Quantity should not change when both buttons are disabled');
+        } else {
+            // If either button is enabled, update the quantity accordingly
+            const initialInputValue = await this.qtyInputTextBox.inputValue();
+
+            if (!isMinusButtonDisabled) {
+                // Click the minus button to decrease the quantity
+                await this.qtyMinusButton.click();
+                const newValueAfterMinus = await this.qtyInputTextBox.inputValue();
+                expect(parseInt(newValueAfterMinus)).toBe(parseInt(initialInputValue) - 1, 'Quantity should decrease by 1');
+            }
+
+            if (!isPlusButtonDisabled) {
+                // Click the plus button to increase the quantity
+                const updatedInputValue = await this.qtyInputTextBox.inputValue();
+                await this.qtyPlusButton.click();
+                const newValueAfterPlus = await this.qtyInputTextBox.inputValue();
+                expect(parseInt(newValueAfterPlus)).toBe(parseInt(updatedInputValue) + 1, 'Quantity should increase by 1');
+            }
+        }
+
+    }
+
+    async validateProductQTYUpdateByTypeIn(enterProductQty) {
+        const initialQtyValue = await this.qtyInputTextBox.inputValue();
+        await this.qtyInputTextBox.fill(enterProductQty);
+        await this.qtyInputTextBox.press('Tab');
+
+        // Verify the new quantity value is set correctly
+        const updatedQtyValue = await this.qtyInputTextBox.inputValue();
+        expect(updatedQtyValue).toBe(enterProductQty);
+    }
+
+    async addtoCart() {
+        await this.addtoCartButton.waitFor({ state: 'visible' });
+        await this.addtoCartButton.click({ timeout: 10000 });
+
+    }
+
+    async addtoWishList() {
+        await expect(this.addtoWishListButton).toBeVisible();
+        await this.addtoWishListButton.click();
+
+    }
+
+    async miniCartDrawer() {
+        
+        await this.miniCartHeaderText.waitFor({ state: 'visible' });
+        await expect(this.miniCartHeaderText).toBeVisible();
+        await this.page.getByRole('button', { name: 'My Cart' }).waitFor({state:'visible'});
+        // Locate the container element that holds all products
+        const productsContainer = await this.page.locator('ul.grid.gap-4.p-4');
+
+        // Get all product items within the container
+        const productItems = await productsContainer.locator('li.rounded-sm.border.border-foggyGray.bg-white.p-4').all();
+
+        // Loop through each product item and validate its contents
+        for (const productItem of productItems) {
+            // Extract product name
+            const productName = await productItem.evaluateAll('p.text-sm.font-semibold.leading-[19.6px].text-black', el => el.textContent.trim());
+            expect(productName).toBeTruthy();
+            console.log('Product Name:', productName);
+
+            // Extract product image source
+            const productImageSrc = await productItem.evaluateAll('section.flex.gap-4 a[href] svg', el => el.getAttribute('src'));
+            expect(productImageSrc).toBeTruthy();
+            console.log('Product Image Source:', productImageSrc);
+
+
+            // Extract other product details
+            const sections = await this.page.locator('section.flex.flex-col.gap-1').all();
+
+            for (const section of sections) {
+                const pTags = await section.locator('p').all();
+                for (const pTag of pTags) {
+                    const textContent = await pTag.textContent();
+                    expect(textContent).toBeTruthy();
+                    console.log(textContent.trim());
+                }
+            }
+        }
+    }
+
+    async minCartItemCount() {
+        const miniCartCountElement = this.miniCart.locator('xpath=following-sibling::section');
+        // Get the text content of the strong element
+        const miniCartCount = await miniCartCountElement.textContent();
+        expect(miniCartCount).toBeTruthy();
+    }
+
+    async closeMiniCartDrawer(){
+        await this.miniCartHeaderText.click();
+    }
 
 }

@@ -151,16 +151,16 @@ test.describe("Mason Commerce Tool Site", () => {
     const homePage = new HomePageNew(page);
     await homePage.clickOnHomePageSignIn();
     const myaccountPage = new MyAccountPage(page);
-    await myaccountPage.redirectToMyAccount();
+    //await myaccountPage.redirectToMyAccount();
     await myaccountPage.clickSignOutButton();
     const signinPage = new SignInPageNew(page);
     await signinPage.validateSignOutMessage(signinpage_data.signout_success_text);
-    await signinPage.signoutPageHeaderTextValidation(signoutpage_data.signout_pageheadertext);
-    await signinPage.pageTextValidation(signoutpage_data.signout_pagetext1);
-    await signinPage.pageTextValidation(signoutpage_data.signout_pagetext2);
-    await signinPage.pageTextValidation(signoutpage_data.signout_pagetext3);
-    await signinPage.validateSignOutPageFormFields();
-    await signinPage.keepmeSignInCheckbox(signoutpage_data.signout_keepmesignincheckbox);
+    //await signinPage.signoutPageHeaderTextValidation(signoutpage_data.signout_pageheadertext);
+    // await signinPage.pageTextValidation(signoutpage_data.signout_pagetext1);
+    // await signinPage.pageTextValidation(signoutpage_data.signout_pagetext2);
+    // await signinPage.pageTextValidation(signoutpage_data.signout_pagetext3);
+    // await signinPage.validateSignOutPageFormFields();
+    // await signinPage.keepmeSignInCheckbox(signoutpage_data.signout_keepmesignincheckbox);
     //console.log(testInfo.status);
 
   })

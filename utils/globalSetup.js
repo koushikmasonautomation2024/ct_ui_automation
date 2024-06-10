@@ -15,56 +15,102 @@ const myaccountpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_
 const creditUserFile = './credituser.json';
 const nonCreditUserFile = './noncredituser.json';
 const newUserFile = './newuser.json';
+const paymentUserFile = './paymentuser.json';
+const profileUserFile = './profileuser.json';
 
 export default async () => {
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
   try {
-    // Authenticate as credit user
+    // Authenticate as new user
     await page.goto(process.env.WEB_URL);
     await page.waitForLoadState('networkidle');
     await page.getByRole('button', { name: 'My Account Sign In' }).click();
     await page.getByRole('button', { name: 'Sign In' }).click();
     await page.getByLabel('*Email Address').click();
-    await page.getByLabel('*Email Address').fill(process.env.NEW_USER);
+    await page.getByLabel('*Email Address').fill(process.env.MY_PROFILE_USER);
     await page.getByLabel('*Password').click();
     await page.getByLabel('*Password').fill(process.env.PASSWORD);
-    await page.getByRole('button', { name: 'Sign In' }).click();
+    await page.getByRole('button', { name: 'Sign In' }).click({timeout:10000});
     await expect(page.getByRole('heading', { name: 'My Account' })).toBeVisible();
     const signinPage = new SignInPageNew(page);
     await signinPage.waitForMyAccountDashboardLoad();
     await signinPage.validateSignInMessage(signinpage_data.signin_success_text);
     await page.waitForLoadState('networkidle');
     //await page.waitForURL(process.env.WEB_URL + '/dashboard');
-    await page.context().storageState({ path: newUserFile });
+    await page.context().storageState({ path: profileUserFile });
   } catch (error) {
     console.error("Admin login failed:", error);
   }
 
   // try {
-  //   // Authenticate as noncredituser
+  //   // Authenticate as credit user
   //   await page.goto(process.env.WEB_URL);
   //   await page.waitForLoadState('networkidle');
-  //   const homePage = new HomePageNew(page);
-  //   await homePage.clickOnHomePageSignIn();
+  //   await page.getByRole('button', { name: 'My Account Sign In' }).click();
+  //   await page.getByRole('button', { name: 'Sign In' }).click();
+  //   await page.getByLabel('*Email Address').click();
+  //   await page.getByLabel('*Email Address').fill(process.env.CREDIT_USER);
+  //   await page.getByLabel('*Password').click();
+  //   await page.getByLabel('*Password').fill(process.env.CREDIT_USER_PASSWORD);
+  //   await page.getByRole('button', { name: 'Sign In' }).click();
+  //   await expect(page.getByRole('heading', { name: 'My Account' })).toBeVisible();
   //   const signinPage = new SignInPageNew(page);
-  //   await signinPage.validateWelcomeTextSignInDialog(signinpage_data.signin_dailog_text);
-  //   await signinPage.validateWelcomeSignInDialog();
-  //   await signinPage.clickSignIn();
-  //   await signinPage.validateSignInDialog();
-  //   await signinPage.login(process.env.NON_CREDIT_USER, process.env.NON_CREDIT_PASSWORD);
-  //   await signinPage.clickSignIn();
   //   await signinPage.waitForMyAccountDashboardLoad();
   //   await signinPage.validateSignInMessage(signinpage_data.signin_success_text);
   //   await page.waitForLoadState('networkidle');
   //   //await page.waitForURL(process.env.WEB_URL + '/dashboard');
-  //   await page.context().storageState({ path: nonCreditUserFile });
+  //   await page.context().storageState({ path: newUserFile });
   // } catch (error) {
-  //   console.error("User login failed:", error);
+  //   console.error("Admin login failed:", error);
   // }
 
-  // await browser.close();
+  // try {
+  //   // Authenticate as non credit user
+  //   await page.goto(process.env.WEB_URL);
+  //   await page.waitForLoadState('networkidle');
+  //   await page.getByRole('button', { name: 'My Account Sign In' }).click();
+  //   await page.getByRole('button', { name: 'Sign In' }).click();
+  //   await page.getByLabel('*Email Address').click();
+  //   await page.getByLabel('*Email Address').fill(process.env.NON_CREDIT_USER);
+  //   await page.getByLabel('*Password').click();
+  //   await page.getByLabel('*Password').fill(process.env.NON_CREDIT_PASSWORD);
+  //   await page.getByRole('button', { name: 'Sign In' }).click();
+  //   await expect(page.getByRole('heading', { name: 'My Account' })).toBeVisible();
+  //   const signinPage = new SignInPageNew(page);
+  //   await signinPage.waitForMyAccountDashboardLoad();
+  //   await signinPage.validateSignInMessage(signinpage_data.signin_success_text);
+  //   await page.waitForLoadState('networkidle');
+  //   //await page.waitForURL(process.env.WEB_URL + '/dashboard');
+  //   await page.context().storageState({ path: newUserFile });
+  // } catch (error) {
+  //   console.error("Admin login failed:", error);
+  // }
+
+  // try {
+  //   // Authenticate as make a payment user
+  //   await page.goto(process.env.WEB_URL);
+  //   await page.waitForLoadState('networkidle');
+  //   await page.getByRole('button', { name: 'My Account Sign In' }).click();
+  //   await page.getByRole('button', { name: 'Sign In' }).click();
+  //   await page.getByLabel('*Email Address').click();
+  //   await page.getByLabel('*Email Address').fill(process.env.PAYMENT_USERNAME);
+  //   await page.getByLabel('*Password').click();
+  //   await page.getByLabel('*Password').fill(process.env.PAYMENT_PASSWORD);
+  //   await page.getByRole('button', { name: 'Sign In' }).click();
+  //   await expect(page.getByRole('heading', { name: 'My Account' })).toBeVisible();
+  //   const signinPage = new SignInPageNew(page);
+  //   await signinPage.waitForMyAccountDashboardLoad();
+  //   await signinPage.validateSignInMessage(signinpage_data.signin_success_text);
+  //   await page.waitForLoadState('networkidle');
+  //   //await page.waitForURL(process.env.WEB_URL + '/dashboard');
+  //   await page.context().storageState({ path: paymentUserFile });
+  // } catch (error) {
+  //   console.error("Admin login failed:", error);
+  // }
+
+   await browser.close();
 };
 
 

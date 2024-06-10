@@ -15,8 +15,8 @@ const homepage_data =JSON.parse(JSON.stringify(require('../test_data/mason_sb_ho
 const signinpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_signin_page_data.json')));
 const signoutpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_signout_page_data.json')));
 const myaccountpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_sb_myaccount_page_data.json')));
-const savedAddress = myaccountpage_data.myaccount_newaddress_firstname +" "+ myaccountpage_data.myaccount_newaddress_lastname +" "+ myaccountpage_data.myaccount_newaddress_addressline1;
-const editAddress = myaccountpage_data.myaccount_editaddress_firstname +" "+ myaccountpage_data.myaccount_editaddress_lastname +" "+ myaccountpage_data.myaccount_editaddress_addressline1;
+const pdp_data =JSON.parse(JSON.stringify(require('../test_data/mason_pdp_page_data.json')));
+
 let loginSuccessful = false;
 test.describe("Mason PDP", ()=>{
 
@@ -47,7 +47,7 @@ test.describe("Mason PDP", ()=>{
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
+    await page.goto(pdp_data.pdp_url);
     await pdpPage.verifyImageChangesOnVariantSelection();
   })
 
@@ -57,7 +57,7 @@ test.describe("Mason PDP", ()=>{
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
+    await page.goto(pdp_data.pdp_url);
     await pdpPage.clickLeftRightCarouselButton();
   })
 
@@ -67,7 +67,7 @@ test.describe("Mason PDP", ()=>{
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
+    await page.goto(pdp_data.pdp_url);
     await pdpPage.thumbnailImageLeftRightArrowDisplay();
   })
 
@@ -77,7 +77,7 @@ test.describe("Mason PDP", ()=>{
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
+    await page.goto(pdp_data.pdp_url);
     await pdpPage.validateThumbnailImageSelection();
   })
 
@@ -87,7 +87,7 @@ test.describe("Mason PDP", ()=>{
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
+    await page.goto(pdp_data.pdp_url);
     await pdpPage.validateProductDetails();
   })
 
@@ -97,7 +97,7 @@ test.describe("Mason PDP", ()=>{
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
+    await page.goto(pdp_data.pdp_url);
     await pdpPage.validateSelectSizeValue();
     await pdpPage.validateSelectColorValue();
   })
@@ -108,7 +108,7 @@ test.describe("Mason PDP", ()=>{
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
+    await page.goto(pdp_data.pdp_url);
     await pdpPage.validatePricingSection();  
   })
 
@@ -118,7 +118,7 @@ test.describe("Mason PDP", ()=>{
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
+    await page.goto(pdp_data.pdp_url);
     await pdpPage.validateCreditMessageSection();  
   })
 
@@ -128,7 +128,7 @@ test.describe("Mason PDP", ()=>{
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
+    await page.goto(pdp_data.pdp_url);
     await pdpPage.validateDescription();
     await pdpPage.validateSpecifications();
     await pdpPage.validateShipping();  
@@ -140,7 +140,7 @@ test.describe("Mason PDP", ()=>{
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
+    await page.goto(pdp_data.pdp_url);
     await pdpPage.validateWaysToWearIt();  
   })
 
@@ -150,9 +150,53 @@ test.describe("Mason PDP", ()=>{
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto('https://dev--stoneberry-masoncompanies.netlify.app/product/black-shimmer-array-women-s-charlie-pump/1011530-16/');
+    await page.goto(pdp_data.pdp_url);
     await pdpPage.validateReviews();
     await pdpPage.validateQuestionsAnswers();  
+  })
+
+  //PDP - Quantity field & Stock Availability: Display - Test Cases ID
+  test.only("PDP - Quantity field & Stock Availability: Display - Verify Quantity field & Stock Availability display:",async({page},testInfo)=>{ 
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const pdpPage = new PDPPage(page);
+    await page.goto(pdp_data.pdp_url);
+    await pdpPage.validateProductQTYSection();
+    await pdpPage.validateProductAvailabilityMessage();  
+  })
+
+  //PDP - Quantity field & Stock Availability: Display - Test Cases ID
+  test.only("PDP - Quantity update - Verify Quantity update on clicking the plus and minus button:",async({page},testInfo)=>{ 
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const pdpPage = new PDPPage(page);
+    await page.goto(pdp_data.pdp_url);
+    await pdpPage.validateProductQTYIncreaseDecrease(); 
+  })
+
+  //PDP - Quantity field & Stock Availability: Display - Test Cases ID
+  test.only("PDP - Quantity update - Verify Quantity update on entering value in the Quantity textbox:",async({page},testInfo)=>{ 
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const pdpPage = new PDPPage(page);
+    await page.goto(pdp_data.pdp_url);
+    await pdpPage.validateProductQTYUpdateByTypeIn(pdp_data.product_quantity); 
+  })
+
+  //PDP - Quantity field & Stock Availability: Display - Test Cases ID
+  test.only("PDP - Add To Cart - Verify on clicking Add To Cart CTA the product variant will be added to the user’s cart update the numeric qty of items displayed under the cart icon within the Global Header.",async({page},testInfo)=>{ 
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const pdpPage = new PDPPage(page);
+    await page.goto(pdp_data.pdp_url);
+    await pdpPage.addtoCart();
+    await pdpPage.miniCartDrawer();
+    await pdpPage.closeMiniCartDrawer();
+    await pdpPage.minCartItemCount(); 
   })
 
 })

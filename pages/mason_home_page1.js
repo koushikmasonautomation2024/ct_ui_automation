@@ -8,7 +8,8 @@ exports.HomePageNew = class HomePageNew{
         this.homepage_searchbutton=page.getByLabel(homepage_locator.homepage_searchbutton, { exact: true });
         //this.homepage_signin=page.getByRole('button', { name: homepage_locator.homepage_signin,exact:true });
         this.homepage_signin=page.locator(homepage_locator.homepage_signin);   
-        this.homepage_cart=page.getByRole('button', { name: homepage_locator.homepage_cart }); 
+        //this.homepage_cart=page.getByRole('button', { name: homepage_locator.homepage_cart }); 
+        this.homepage_cart=page.locator('img[alt="Mini Cart"]');
         this.homepage_category=page.getByRole('button', { name: homepage_locator.homepage_category }); 
         this.minicart_drawer_heading=page.getByRole('button', { name: homepage_locator.minicart_drawer_heading });
         this.minicart_drawer_subtotalsection=page.getByText(homepage_locator.minicart_drawer_subtotalsection);
@@ -113,8 +114,9 @@ exports.HomePageNew = class HomePageNew{
 
     async clickOnMegaMenuL2Category(l2CategoryName){
         //await this.page.getByLabel('Main Menu').locator('div').filter({ hasText: 'Womens ClothingAll Womens' })
-        await this.page.getByRole('link', { name: l2CategoryName }).click();
+        await this.page.getByRole('link', { name: l2CategoryName }).first().click();
         await this.page.waitForNavigation();
+        await this.page.locator('section.plpGrid').waitFor({state:'visible'});
     }
 
     async validateCLPNavigationUrl(clpUrl){
