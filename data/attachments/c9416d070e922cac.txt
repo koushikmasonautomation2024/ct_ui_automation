@@ -1,0 +1,5 @@
+account status value:Current
+Customer Account Number :locator('//strong[contains(text(),"Customer Account #:")]/following-sibling::strong')
+Customer Account Status :locator('//p[contains(text(),"Account Status:")]/following-sibling::p')
+Customer Last Statement Date :locator('//p[contains(text(),"Last Statement Date:")]/following-sibling::p')
+Customer Next Statement Date :locator('//p[contains(text(),"Next Statement Date:")]/following-sibling::p')

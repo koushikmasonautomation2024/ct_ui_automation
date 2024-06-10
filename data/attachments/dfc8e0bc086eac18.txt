@@ -1,0 +1,10 @@
+Address Element Value: 8088 Retha Key
+City Element Value: Karlcester
+State Element Value: KS
+ZipCode Element Value: 53600
+PhoneNumber Element Value: (191) 138-4619
+Address updated successfully!
+First Name: Barrett Daugherty
+Last Name: Barrett Daugherty
+Address:  8189 Towne Centers 
+City: New Christopfort,  OR 78298
