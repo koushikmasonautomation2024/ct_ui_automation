@@ -42,7 +42,7 @@ test.describe("Mason MyAccount New User", ()=>{
     }
   })
   //Account - My Account - New Customer - Test Cases ID-SB-MyA005
-  test.only("New User Account - My Account-Left-hand Navigation - Verify all navigation links are clickable",async({page},testInfo)=>{ 
+  test("New User Account - My Account-Left-hand Navigation - Verify all navigation links are clickable",async({page},testInfo)=>{ 
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -54,7 +54,7 @@ test.describe("Mason MyAccount New User", ()=>{
   })
 
   //Account - My Account - New Customer - Test Cases ID-SB-MyA005
-  test.only("New User Account - My Account-Left-hand Navigation - Verify navigation link highlights current section",async({page},testInfo)=>{ 
+  test("New User Account - My Account-Left-hand Navigation - Verify navigation link highlights current section",async({page},testInfo)=>{ 
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -66,7 +66,7 @@ test.describe("Mason MyAccount New User", ()=>{
   })
 
   //Account - My Account - New Customer - Test Cases ID-SB-MyA043/SB-MyA044/SB-MyA045/SB-MyA046
-  test.only("New User Account - My Stoneberry Credit - Verify display of Get Pre Qualified and Learn More links and redirection to the corresponding pages",async({page},testInfo)=>{ 
+  test("New User Account - My Stoneberry Credit - Verify display of Get Pre Qualified and Learn More links and redirection to the corresponding pages",async({page},testInfo)=>{ 
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -78,7 +78,7 @@ test.describe("Mason MyAccount New User", ()=>{
   })
 
   //Account - My Account - New Customer
-  test.only("New User Account - Payments - Verify display of Credit Account Verification when user click on the Make a payment link for new user.",async({page},testInfo)=>{ 
+  test("New User Account - Payments - Verify display of Credit Account Verification when user click on the Make a payment link for new user.",async({page},testInfo)=>{ 
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -93,7 +93,7 @@ test.describe("Mason MyAccount New User", ()=>{
   })
 
   //Account - My Account - New Customer
-  test.only("New User Account - Payments - Verify correct display of help icon tooltip.",async({page},testInfo)=>{ 
+  test("New User Account - Payments - Verify correct display of help icon tooltip.",async({page},testInfo)=>{ 
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -108,7 +108,7 @@ test.describe("Mason MyAccount New User", ()=>{
   })
 
   //Account - My Account - New Customer - Test Cases ID-SB-MyA185
-  test.only("New User Account - Orders - Verify display of message There are no recent orders in your account.",async({page},testInfo)=>{ 
+  test("New User Account - Orders - Verify display of message There are no recent orders in your account.",async({page},testInfo)=>{ 
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -122,7 +122,7 @@ test.describe("Mason MyAccount New User", ()=>{
   })
 
   //Account - My Account - New Customer - Test Cases ID-SB-MyA048/SB-MyA049/SB-MyA050
-  test.only("New User Account - Addresses - Verify display of message There are currently no addresses saved to your account.",async({page},testInfo)=>{ 
+  test("New User Account - Addresses - Verify display of message There are currently no addresses saved to your account.",async({page},testInfo)=>{ 
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -136,7 +136,7 @@ test.describe("Mason MyAccount New User", ()=>{
   })
 
   //Account - My Account - New Customer - Test Cases ID-SB-MyA051/SB-MyA052/SB-MyA053/SB-MyA054
-  test.only("New User Account - Saved Credit Cards - Verify display of message There are currently no credit cards saved to your account.",async({page},testInfo)=>{ 
+  test("New User Account - Saved Credit Cards - Verify display of message There are currently no credit cards saved to your account.",async({page},testInfo)=>{ 
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -150,7 +150,7 @@ test.describe("Mason MyAccount New User", ()=>{
   })
 
   //Account - My Account - New Customer - Test Cases ID-SB-MyA051/SB-MyA052/SB-MyA053/SB-MyA054
-  test.only("New User Account - Saved Credit Cards - Verify application expands and focuses the user to the Add New Credit/Debit Card fields when navigated to Saved cards page.",async({page},testInfo)=>{ 
+  test("New User Account - Saved Credit Cards - Verify application expands and focuses the user to the Add New Credit/Debit Card fields when navigated to Saved cards page.",async({page},testInfo)=>{ 
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -167,7 +167,7 @@ test.describe("Mason MyAccount New User", ()=>{
   })
 
   //Account - My Account - New Customer - Test Cases ID-SB-MyA055
-  test.only("New User Account - Wishlist - Verify display of message There are currently no items saved to your wish list.",async({page},testInfo)=>{ 
+  test("New User Account - Wishlist - Verify display of message There are currently no items saved to your wish list.",async({page},testInfo)=>{ 
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');

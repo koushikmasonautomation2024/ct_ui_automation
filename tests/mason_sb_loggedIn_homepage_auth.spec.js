@@ -40,7 +40,7 @@ test.describe("Mason Commerce Tool Site", () => {
     }
   })
   //Global Persistent Header (Logged In) - Promotional Banner Management-SB-GPH010
-  test.only("GPH-Promotional Banner Managment - Verify the promotional banner should be displayed On Homepage", async ({ page }, testInfo) => {
+  test("GPH-Promotional Banner Managment - Verify the promotional banner should be displayed On Homepage", async ({ page }, testInfo) => {
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -57,7 +57,7 @@ test.describe("Mason Commerce Tool Site", () => {
   })
 
   //Global Persistent Header (Logged In) - Stoneberry Logo Redirect-SB-GPH012
-  test.only("GPH-Stoneberry Logo Redirect - Verify the appearance and accesibility of the Stoneberry logo at the lefthand side", async ({ page }, testInfo) => {
+  test("GPH-Stoneberry Logo Redirect - Verify the appearance and accesibility of the Stoneberry logo at the lefthand side", async ({ page }, testInfo) => {
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -71,7 +71,7 @@ test.describe("Mason Commerce Tool Site", () => {
   })
 
   //Global Persistent Header (Logged In) - Sticky Header-SB-GPH002
-  test.only("GPH-Sticky Header- Verify the header is sticky through the following pages: PDP", async ({ page }, testInfo) => {
+  test("GPH-Sticky Header- Verify the header is sticky through the following pages: PDP", async ({ page }, testInfo) => {
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -85,7 +85,7 @@ test.describe("Mason Commerce Tool Site", () => {
   })
 
   //Global Persistent Header (Logged In) - Mega Menu Navigation-SB-GPH002
-  test.only("GPH-Mega Menu Navigation - Verify Mega Menu Navigation opens on hovering within the CTA", async ({ page }, testInfo) => {
+  test("GPH-Mega Menu Navigation - Verify Mega Menu Navigation opens on hovering within the CTA", async ({ page }, testInfo) => {
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -100,7 +100,7 @@ test.describe("Mason Commerce Tool Site", () => {
   })
 
   //Global Persistent Header (Logged In) - Search Bar-SB-GPH015/SB-GPH016/SB-GPH017
-  test.only("GPH-Search Bar - Verify the search field appearance, help text display, and functionality", async ({ page }, testInfo) => {
+  test("GPH-Search Bar - Verify the search field appearance, help text display, and functionality", async ({ page }, testInfo) => {
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -114,7 +114,7 @@ test.describe("Mason Commerce Tool Site", () => {
   })
 
   //Global Persistent Header (Logged In) - Account Drawer-SB-GPH039
-  test.only("GPH-Account Drawer - Verify generation of the account drawer upon clicking the Account icon", async ({ page }, testInfo) => {
+  test("GPH-Account Drawer - Verify generation of the account drawer upon clicking the Account icon", async ({ page }, testInfo) => {
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -130,7 +130,7 @@ test.describe("Mason Commerce Tool Site", () => {
   })
 
   //Global Persistent Header (Logged In) - Account State Update-SB-GPH038
-  test.only("GPH-Account State Update - Verify the header update to display the logged-in user state, display of user's first name under the Account icon", async ({ page }, testInfo) => {
+  test("GPH-Account State Update - Verify the header update to display the logged-in user state, display of user's first name under the Account icon", async ({ page }, testInfo) => {
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -143,7 +143,7 @@ test.describe("Mason Commerce Tool Site", () => {
   })
 
   //Global Persistent Header (Logged In) - Sign In/Sign Out-SB-GPH040
-  test.only("GPH-Sign In/Sign Out - Verify the Test successful sign in/out functionality, display of success messages, redirection behavior upon sign out", async ({ page }, testInfo) => {
+  test("GPH-Sign In/Sign Out - Verify the Test successful sign in/out functionality, display of success messages, redirection behavior upon sign out", async ({ page }, testInfo) => {
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -166,7 +166,7 @@ test.describe("Mason Commerce Tool Site", () => {
   })
 
   //Global Persistent Header (Logged In) - Cart Icon and Drawer-SB-GPH020
-  test.only("GPH-Cart Icon and Drawer - Verify display and functionality of the Cart icon and drawer", async ({ page }, testInfo) => {
+  test("GPH-Cart Icon and Drawer - Verify display and functionality of the Cart icon and drawer", async ({ page }, testInfo) => {
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
