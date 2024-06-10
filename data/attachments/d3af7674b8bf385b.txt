@@ -1,0 +1,26 @@
+An error occurred in test.beforeEach: page.goto: url: expected string, got undefined
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_bip.auth.spec.js:24:18 {
+  [Symbol(step)]: {
+    stepId: 'pw:api@9',
+    location: {
+      file: '/home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_bip.auth.spec.js',
+      line: 24,
+      column: 18,
+      function: undefined
+    },
+    category: 'pw:api',
+    title: 'page.goto()',
+    apiName: 'page.goto',
+    params: { url: undefined, waitUntil: 'load' },
+    wallTime: 1718017740783,
+    boxedStack: undefined,
+    steps: [],
+    complete: [Function: complete],
+    endWallTime: 1718017740785,
+    error: {
+      message: 'Error: page.goto: url: expected string, got undefined',
+      stack: 'Error: page.goto: url: expected string, got undefined\n' +
+        '    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_bip.auth.spec.js:24:18'
+    }
+  }
+}
