@@ -40,11 +40,6 @@ test.describe("Mason MyAccount Longstanding Customer", ()=>{
     }
   
   })
-
-  test.afterEach('Sign Out', async ({ page }) => {
-    const myaccountPage = new MyAccountPage(page);
-    await myaccountPage.clickSignOutButton();
-  })
   
   //Account - My Account- Longstanding Customer - Test Cases ID -SB-MyA005
   test("Account - My Account-Left-hand Navigation - Verify all navigation links are clickable",async({page},testInfo)=>{ 

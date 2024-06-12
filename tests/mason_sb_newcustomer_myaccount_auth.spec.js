@@ -54,14 +54,14 @@ test.describe("Mason MyAccount New User", ()=>{
   })
 
   //Account - My Account - New Customer - Test Cases ID-SB-MyA005
-  test("New User Account - My Account-Left-hand Navigation - Verify navigation link highlights current section",async({page},testInfo)=>{ 
+  test.only("New User Account - My Account-Left-hand Navigation - Verify navigation link highlights current section",async({page},testInfo)=>{ 
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
     }
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.redirectToMyAccount();
-    await myaccountPage.clickAndVerifyHighlightedLink();
+    await myaccountPage.clickAndVerifyHighlightedLink(myaccountpage_data.navhighlighted_color);
           
   })
 

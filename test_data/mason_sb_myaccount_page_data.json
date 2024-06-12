@@ -52,7 +52,8 @@
     "makepayment_payment_info":"Payment Information",
 
     "wishlist_remove_success_message":"You have successfully removed (.+) from your Wish List",
-    "wishlist_remove_partMessage":"You have successfully removed"
+    "wishlist_remove_partMessage":"You have successfully removed",
+    "navhighlighted_color" : "a.text-stoneberry-highlightColor"
     
     
     

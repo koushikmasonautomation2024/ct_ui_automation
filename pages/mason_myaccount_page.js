@@ -643,9 +643,9 @@ exports.MyAccountPage = class MyAccountPage {
     async clickAndVerifyHighlightedLink() {
         const locators = this.page.locator('nav section nav a').first();
         await locators.click();
-        await expect(this.page.locator('a.border-l-black')).toBeVisible();
-        const isHighlighted = await locators.evaluate(link => link.classList.contains('border-l-black'));
-        console.log(`Is Highlighted: ${isHighlighted}`);
+        await expect(this.page.locator('a.text-stoneberry-highlightColor')).toBeVisible();
+        const isHighlighted = await locators.evaluate(link => link.classList.contains('a.text-stoneberry-highlightColor'));
+        //console.log(`Is Highlighted: ${isHighlighted}`);
     }
 
     async verifyAllLinksAreClickable() {

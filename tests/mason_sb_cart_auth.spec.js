@@ -5,6 +5,7 @@ import { SignInPageNew } from '../pages/mason_signin_page1';
 import { MyAccountPage } from '../pages/mason_myaccount_page';
 import { PDPPage } from '../pages/mason_pdp_page';
 import { CartDrawerPage } from '../pages/mason_cart_drawer_page';
+import { CartPage } from '../pages/mason_cart_page';
 import { allure } from 'allure-playwright';
 import fs from 'fs';
 require('dotenv').config();
@@ -20,7 +21,7 @@ const pdp_data = JSON.parse(JSON.stringify(require('../test_data/mason_pdp_page_
 const minicart_data = JSON.parse(JSON.stringify(require('../test_data/mason_minicart_page_data.json')));
 
 let loginSuccessful = false;
-test.describe("Mason Cart Drawer", () => {
+test.describe("Mason Cart Page", () => {
 
   test.beforeEach(async ({ page, isMobile }, testInfo) => {
     test.slow();
@@ -43,22 +44,19 @@ test.describe("Mason Cart Drawer", () => {
     }
   })
 
-  //Cart Drawer - Adding a product with variations to the cart - Test Cases ID-SB-Cart006/SB-Cart007
-  test.only("Cart Drawer - Adding a product with variations to the cart - Verify Choose Options drawer gets open when user click on add to cart against a product which has multiple variants from PLP and after adding to cart Cart Drawer opens", async ({ page }, testInfo) => {
+  //Cart - Display Order Total - Test Cases ID-
+  test("Cart - Display Order Total - Verify that the order total is displayed to the right of the page title.", async ({ page }, testInfo) => {
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
     }
-    const homePage = new HomePageNew(page);
-    await homePage.mouseHoverMegaMenu(homepage_data.categoryNameL1);
-    await homePage.clickOnMegaMenuL2Category(homepage_data.l2CategoryName);
-    await page.waitForLoadState('networkidle');
     const pdpPage = new PDPPage(page);
-    const cartDrawerPage = new CartDrawerPage(page);
-    await cartDrawerPage.clickAddtoCartPLP();
+    await page.goto(pdp_data.pdp_url_limitedStock);
     await pdpPage.addtoCart();
-    await pdpPage.miniCartDrawer();
-    //await cartDrawerPage.validateMiniCartProductDetails();
-
+    const cartDrawerPage = new CartDrawerPage(page);
+    await cartDrawerPage.miniCartClickViewCartButton();
+    const cartPage = new CartPage(page);
+    await cartPage.cartGetOrderTotal();
+    
   })
 
 

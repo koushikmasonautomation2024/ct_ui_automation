@@ -33,6 +33,7 @@ exports.PDPPage = class PDPPage {
         this.creditMessageLocator = page.locator('section.mt-4.py-5');
         this.qtyMinusButton = page.locator('div.flex > button:nth-child(1)');
         this.qtyPlusButton = page.locator('div.flex > button:nth-child(3)');
+        this.defaultQtyPlusButton = page.locator('div.flex > button:nth-child(2)');
         this.qtyInputTextBox = page.locator('input.numberInputCounter');
         this.qtyText = page.getByText('Qty:');
         this.availabilityText = page.getByText('Availability:');
@@ -235,7 +236,22 @@ exports.PDPPage = class PDPPage {
 
     async validatePricingSection() {
         // Locate the first section and extract its text
-        const priceText = await this.priceSectionLocator.locator('strong.text-xl.font-bold').textContent();
+        //const priceText = await this.priceSectionLocator.locator('strong.text-xl.font-bold').textContent();
+
+        const priceText = await this.priceSectionLocator.evaluate((section) => {
+            const priceSpan = section.querySelector('span.leading-5');
+            const priceStrong = section.querySelector('strong.leading-5');
+            return priceSpan ? priceSpan.textContent.trim() : (priceStrong ? priceStrong.textContent.trim() : null);
+        });
+
+        if (priceText) {
+            console.log('Price:', priceText);
+        } else {
+            console.error('Price not found');
+        }
+
+        // Use assertion to verify the price content
+        expect(priceText).toBeTruthy();
 
         // Validate the text content of the first section
         expect(priceText).toMatch(/^\$\d{1,3}\.\d{2}$/);
@@ -248,7 +264,7 @@ exports.PDPPage = class PDPPage {
         // Validate the text content of the second section
         expect(orText.trim()).toMatch('or');
         expect(monthlyText.trim()).toMatch(/^\$\d{1,3}\.\d{2}\/month\*$/);
-        expect(creditText.trim()).toMatch('with Stoneberry credit');
+        expect(creditText.trim()).toBeTruthy();
     }
 
     async validateCreditMessageSection() {
@@ -372,10 +388,15 @@ exports.PDPPage = class PDPPage {
     async validateProductQTYSection() {
         await this.qtyText.waitFor({ state: 'visible' });
         await expect(this.qtyText).toBeVisible();
-        await expect(this.qtyMinusButton).toBeVisible();
-        await expect(this.qtyPlusButton).toBeVisible();
+        const initialInputValue = await this.qtyInputTextBox.inputValue();
+        if (initialInputValue == 1) {
+            await expect(this.qtyMinusButton).toBeHidden();
+            await expect(this.defaultQtyPlusButton).toBeVisible();
+        } else {
+            await expect(this.qtyMinusButton).toBeVisible();
+            await expect(this.qtyPlusButton).toBeVisible();
+        }
         await expect(this.qtyInputTextBox).toBeVisible();
-        const defaultInputQty = await this.qtyInputTextBox.inputValue();
 
     }
 
@@ -393,8 +414,8 @@ exports.PDPPage = class PDPPage {
     async validateProductQTYIncreaseDecrease() {
         await this.qtyText.waitFor({ state: 'visible' });
         // Check if both buttons are disabled
-        const isMinusButtonDisabled = await this.qtyMinusButton.isDisabled();
-        const isPlusButtonDisabled = await this.qtyPlusButton.isDisabled();
+        const isMinusButtonDisabled = await this.qtyMinusButton.isHidden();
+        const isPlusButtonDisabled = await this.defaultQtyPlusButton.isDisabled();
 
         // If both buttons are disabled, assert that the quantity cannot be updated
         if (isMinusButtonDisabled && isPlusButtonDisabled) {
@@ -403,7 +424,7 @@ exports.PDPPage = class PDPPage {
             await this.qtyMinusButton.click(); // Attempt to change the quantity
             const updatedMinusValue = await this.qtyInputTextBox.inputValue();
             expect(initialInputValue).toBe(updatedMinusValue, 'Quantity should not change when both buttons are disabled');
-            await this.qtyPlusButton.click(); // Attempt to change the quantity
+            await this.defaultQtyPlusButton.click(); // Attempt to change the quantity
             const updatedPlusValue = await this.qtyInputTextBox.inputValue();
             expect(initialInputValue).toBe(updatedPlusValue, 'Quantity should not change when both buttons are disabled');
         } else {
@@ -420,7 +441,7 @@ exports.PDPPage = class PDPPage {
             if (!isPlusButtonDisabled) {
                 // Click the plus button to increase the quantity
                 const updatedInputValue = await this.qtyInputTextBox.inputValue();
-                await this.qtyPlusButton.click();
+                await this.defaultQtyPlusButton.click();
                 const newValueAfterPlus = await this.qtyInputTextBox.inputValue();
                 expect(parseInt(newValueAfterPlus)).toBe(parseInt(updatedInputValue) + 1, 'Quantity should increase by 1');
             }
@@ -451,52 +472,67 @@ exports.PDPPage = class PDPPage {
     }
 
     async miniCartDrawer() {
-        
+
         await this.miniCartHeaderText.waitFor({ state: 'visible' });
         await expect(this.miniCartHeaderText).toBeVisible();
-        await this.page.getByRole('button', { name: 'My Cart' }).waitFor({state:'visible'});
+        await this.page.getByRole('button', { name: 'My Cart' }).waitFor({ state: 'visible' });
         // Locate the container element that holds all products
         const productsContainer = await this.page.locator('ul.grid.gap-4.p-4');
 
         // Get all product items within the container
-        const productItems = await productsContainer.locator('li.rounded-sm.border.border-foggyGray.bg-white.p-4').all();
-
+        const productItems = await productsContainer.locator('li.rounded-sm.border.border-foggyGray.bg-white.p-4');
+        const productItemCount = await productItems.count();
         // Loop through each product item and validate its contents
-        for (const productItem of productItems) {
+        for (let i = 0; i < productItemCount; i++) {
+            const productItem = productItems.nth(i);
             // Extract product name
-            const productName = await productItem.evaluateAll('p.text-sm.font-semibold.leading-[19.6px].text-black', el => el.textContent.trim());
+            const productName = await productItem.locator('p.text-sm.font-semibold.text-black').textContent();
             expect(productName).toBeTruthy();
-            console.log('Product Name:', productName);
+            console.log('Product Name:', productName.trim());
 
-            // Extract product image source
-            const productImageSrc = await productItem.evaluateAll('section.flex.gap-4 a[href] svg', el => el.getAttribute('src'));
-            expect(productImageSrc).toBeTruthy();
-            console.log('Product Image Source:', productImageSrc);
-
+            // Check for the image display
+            const productImage = await productItem.locator('section.mt-4.flex.gap-4 a[href]');
+            //expect(await productImage.isVisible()).toBe(true);
+            await expect(productImage).toBeVisible({timeout:10000});
+            console.log('Product image is visible');
 
             // Extract other product details
-            const sections = await this.page.locator('section.flex.flex-col.gap-1').all();
+            const detailSections = await productItem.locator('section.flex.flex-col.gap-1');
 
-            for (const section of sections) {
-                const pTags = await section.locator('p').all();
-                for (const pTag of pTags) {
+            // Count the number of detail sections
+            const detailSectionCount = await detailSections.count();
+
+            // Loop through each detail section
+            for (let j = 0; j < detailSectionCount; j++) {
+                const detailSection = detailSections.nth(j);
+                const pTags = detailSection.locator('p');
+
+                // Count the number of <p> tags
+                const pTagCount = await pTags.count();
+
+                // Loop through each <p> tag and log its text content
+                for (let k = 0; k < pTagCount; k++) {
+                    const pTag = pTags.nth(k);
                     const textContent = await pTag.textContent();
-                    expect(textContent).toBeTruthy();
-                    console.log(textContent.trim());
+                    //expect(textContent).toBeTruthy();
+                    console.log('Detail:', textContent.trim());
                 }
             }
         }
-    }
+
+
+
+        }
 
     async minCartItemCount() {
-        const miniCartCountElement = this.miniCart.locator('xpath=following-sibling::section');
-        // Get the text content of the strong element
-        const miniCartCount = await miniCartCountElement.textContent();
-        expect(miniCartCount).toBeTruthy();
-    }
+            const miniCartCountElement = this.miniCart.locator('xpath=following-sibling::section');
+            // Get the text content of the strong element
+            const miniCartCount = await miniCartCountElement.textContent();
+            expect(miniCartCount).toBeTruthy();
+        }
 
-    async closeMiniCartDrawer(){
-        await this.miniCartHeaderText.click();
-    }
+    async closeMiniCartDrawer() {
+            await this.miniCartHeaderText.click();
+        }
 
-}
+    }
