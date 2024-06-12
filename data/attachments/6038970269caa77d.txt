@@ -1,9 +1,0 @@
-Address added successfully!
-First Name: Delmer Durgan-Williamson
-Last Name: Delmer Durgan-Williamson
-Address:  5951 Fredrick Camp 
-City: Lawton,  IN 99674
-Default Address First Name:Destiny Farrell-Abshire
-First Non Default Address First Name:James Bond
-Is displayed: true
-Is displayed: true
