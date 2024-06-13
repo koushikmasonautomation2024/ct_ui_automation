@@ -1,41 +1,71 @@
 {
   "cookies": [
     {
+      "name": "cee",
+      "value": "aEZ7HhKqIPYJDN0%2BboGRIXMYEizHlfxFhkQQdGC%2BL0o%3D.%7B%7D",
+      "domain": ".capig.shoemall.com",
+      "path": "/events/8198415454b19484ddcea29217235f26d99983c02cad2fbfec0cca52c33b5c9f",
+      "expires": 1726052619.68566,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
       "name": "locale",
       "value": "en",
-      "domain": "dev--stoneberry-masoncompanies.netlify.app",
+      "domain": "stage--stoneberry-masoncompanies.netlify.app",
       "path": "/",
-      "expires": 1720424587.368724,
+      "expires": 1720695830.092016,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
-      "name": "_uetsid",
-      "value": "0b88278026fd11efa7608f53cbbc5293",
-      "domain": ".dev--stoneberry-masoncompanies.netlify.app",
+      "name": "__cf_bm",
+      "value": "WOnrGVbCdZpSu1Q6vC3j3efmu5415b5FBfPyG5ZP1Zc-1718276618-1.0.1.1-6l5A2gRjGtap0gQ7nqPY5GL3w7dp2nqefOBUWrhlDf.INNg.B_7y6IeGqBrBI1LUj3MCLLiwdlGorjynumpfCA",
+      "domain": ".cordial.io",
       "path": "/",
-      "expires": 1718091773,
+      "expires": 1718278418.176759,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_cfuvid",
+      "value": "rcc.tkEaPHqZ24_cY95HGrfmM0WnwyA_b_utysJdR.A-1718276618261-0.0.1.1-604800000",
+      "domain": ".lightboxcdn.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_uetsid",
+      "value": "961677c0297411efa95771b3b278441a",
+      "domain": ".stage--stoneberry-masoncompanies.netlify.app",
+      "path": "/",
+      "expires": 1718363018,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "_uetvid",
-      "value": "0b88624026fd11efb77e39d3c71662d1",
-      "domain": ".dev--stoneberry-masoncompanies.netlify.app",
+      "value": "9616a0e0297411efb68a7b065c8a8090",
+      "domain": ".stage--stoneberry-masoncompanies.netlify.app",
       "path": "/",
-      "expires": 1751701373,
+      "expires": 1751972618,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "MUID",
-      "value": "3CBDF4E5ADCD6D2E0FAEE07FACCB6CCD",
+      "value": "0E885FDAB9FC64430C774B47B80E6592",
       "domain": ".bing.com",
       "path": "/",
-      "expires": 1751701373.604622,
+      "expires": 1751972618.426169,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -45,57 +75,37 @@
       "value": "0",
       "domain": ".bat.bing.com",
       "path": "/",
-      "expires": 1718610173.604721,
+      "expires": 1718881418.426249,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
-      "name": "__cf_bm",
-      "value": "fbFi4QnJdxcDRCQqL0RIYRQGV1DhqNZJJ5uOjXzyRRk-1718005373-1.0.1.1-UMvytxSGY6MxhCdB380g0GZoRjUbcc.DzdOM9jm5i6kcdbrrlCdRxgFTk9p7ed7dV0L0tNUQQXquMQyRsr3NTw",
+      "name": "v2_stoneberry-sandbox",
+      "value": "{%22bid%22:%2287d930bc-18d7-4d77-8495-9284085004e1%22}",
       "domain": ".cordial.io",
       "path": "/",
-      "expires": 1718007173.762766,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "_cfuvid",
-      "value": "Sh.Q4wqkgqW1y.GPHfvr37vKHTpNntgf22lnqw4_37I-1718005373982-0.0.1.1-604800000",
-      "domain": ".lightboxcdn.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": true,
+      "expires": 1749812618,
+      "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "_fbp",
-      "value": "fb.2.1718005374609.617438548650398261",
-      "domain": ".dev--stoneberry-masoncompanies.netlify.app",
+      "value": "fb.2.1718276618960.135734645643453904",
+      "domain": ".stage--stoneberry-masoncompanies.netlify.app",
       "path": "/",
-      "expires": 1725781389,
+      "expires": 1726052630,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
-      "name": "v2_stoneberry-sandbox",
-      "value": "{%22bid%22:%22427ab13c-6e9d-44e4-a232-ffae23d98cc6%22}",
-      "domain": ".cordial.io",
-      "path": "/",
-      "expires": 1749541374,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
       "name": "TiPMix",
-      "value": "94.56469518751287",
+      "value": "59.35759607375752",
       "domain": ".api.lightboxcdn.com",
       "path": "/",
-      "expires": 1718008976.934676,
+      "expires": 1718280219.506968,
       "httpOnly": true,
       "secure": true,
       "sameSite": "None"
@@ -105,15 +115,15 @@
       "value": "self",
       "domain": ".api.lightboxcdn.com",
       "path": "/",
-      "expires": 1718008976.934753,
+      "expires": 1718280219.507044,
       "httpOnly": true,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "frontastic-session",
-      "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhbm9ueW1vdXNJZCI6Ijk3NmZkMmZhLTNjNzUtNGE5MC1hM2E2LTY5YWFkMTE5NDZiMyIsImNoZWNrb3V0VG9rZW4iOnsidG9rZW4iOiJFM3hjcF9vLUNwLWVzWjRxSDRiU2pfSkc4bmVYSHZkQyIsImV4cGlyYXRpb25UaW1lIjoxNzE4MDE2MTc0MTU3LCJyZWZyZXNoVG9rZW4iOiJtYXNvbi1jb21wYW5pZXMtZGV2LTAwMTpOUTR0ZG9CdnB1X0JnOHlXd2stX1NYWC1ncW83Q05yV2hZQXc2bW9qRHlrIn0sImNhcnRJZCI6ImJlN2EwMDVjLTQ3Y2MtNDg0MC04ZDkzLWJkOGIzOTcwM2Q5MSIsImFjY291bnQiOnsiYWNjb3VudElkIjoiZGExYjIzN2QtN2I4My00MGQ2LTlmYzYtZGU0Y2VmZTNiZDdhIiwiZW1haWwiOiJibGFja2JveEB0ZXN0LmNvbSIsImZpcnN0TmFtZSI6IkJsYWNrYm94IiwibGFzdE5hbWUiOiJUZXN0IiwiY29uZmlybWVkIjp0cnVlLCJhZGRyZXNzZXMiOltdLCJhdGdQcm9maWxlSWQiOiJ1MzM2NTgxMjg5In19.CY3E3m2soNAKlIELe_fgM9vzzxtBxhhKkGpx-d59xuk",
-      "domain": "dev--stoneberry-masoncompanies.netlify.app",
+      "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhbm9ueW1vdXNJZCI6IjAxNjZhNTU5LTdkYzAtNGJiZS0xMjY1LTk1ODJlYmU4MTgxNSIsImNoZWNrb3V0VG9rZW4iOnsidG9rZW4iOiJiN3R5OXV0VW01RTVKbkpMTW1LOVZNcFVrYTMwT3c4dCIsImV4cGlyYXRpb25UaW1lIjoxNzE4Mjg3NDE5MDM1LCJyZWZyZXNoVG9rZW4iOiJtYXNvbi1jb21wYW5pZXMtc3RhZ2luZy0wMDE6SkRWeTNoV2o5Z1FpR2NZejhySUxOV0UybGZvN1hPWEFKT2FmWElyOV84RSJ9LCJjYXJ0SWQiOiJlNjUzNzU1YS1mYTc1LTQ4ZmUtYTk5ZS1lMGViMWQ5MDc1NGIiLCJhY2NvdW50Ijp7ImFjY291bnRJZCI6ImRiYjM1YjUxLTFjMzAtNGQ5My04YjI2LWM5MjQwMDUyMzg0NyIsImVtYWlsIjoiYmx1ZXNreTQ1NjMzQHlhaG9vLm1hc29uLmNvbSIsImZpcnN0TmFtZSI6IkFuZHJldyIsImxhc3ROYW1lIjoiUGlja2VucyIsImNvbmZpcm1lZCI6ZmFsc2UsImFkZHJlc3NlcyI6W10sImF0Z1Byb2ZpbGVJZCI6InVaQjQ2NjE1OTI1MCJ9fQ.jgVR7ervVBrFVAX-JuNPYIyf7k78S3rS0gWY0MkoxIY",
+      "domain": "stage--stoneberry-masoncompanies.netlify.app",
       "path": "/",
       "expires": -1,
       "httpOnly": false,
@@ -123,47 +133,47 @@
   ],
   "origins": [
     {
-      "origin": "https://dev--stoneberry-masoncompanies.netlify.app",
+      "origin": "https://stage--stoneberry-masoncompanies.netlify.app",
       "localStorage": [
         {
-          "name": "algoliasearch-client-js-4.22.1-RHEVLGQ2F5",
-          "value": "{\"{\\\"protocol\\\":\\\"https\\\",\\\"url\\\":\\\"RHEVLGQ2F5-dsn.algolia.net\\\",\\\"accept\\\":1}\":{\"timestamp\":1718005374200,\"value\":{\"protocol\":\"https\",\"url\":\"RHEVLGQ2F5-dsn.algolia.net\",\"accept\":1,\"status\":3,\"lastUpdate\":1718005374200}}}"
-        },
-        {
           "name": "_bcnctkn",
-          "value": "5491b6ceffffd08b444220e6425f3816b033"
+          "value": "95642cc774d73315f6e5541aa80b55721351"
         },
         {
           "name": "lastExternalReferrer",
           "value": "empty"
         },
         {
-          "name": "algoliasearch-client-js-4.23.2-RHEVLGQ2F5",
+          "name": "algoliasearch-client-js-4.22.1-E07W2V3ZN1",
+          "value": "{\"{\\\"protocol\\\":\\\"https\\\",\\\"url\\\":\\\"E07W2V3ZN1-dsn.algolia.net\\\",\\\"accept\\\":1}\":{\"timestamp\":1718276619035,\"value\":{\"protocol\":\"https\",\"url\":\"E07W2V3ZN1-dsn.algolia.net\",\"accept\":1,\"status\":3,\"lastUpdate\":1718276619035}}}"
+        },
+        {
+          "name": "algoliasearch-client-js-4.23.2-E07W2V3ZN1",
           "value": "{}"
         },
         {
           "name": "_uetsid_exp",
-          "value": "Tue, 11 Jun 2024 07:42:53 GMT"
+          "value": "Fri, 14 Jun 2024 11:03:38 GMT"
         },
         {
           "name": "lastExternalReferrerTime",
-          "value": "1718005374601"
+          "value": "1718276618954"
         },
         {
           "name": "_uetvid",
-          "value": "0b88624026fd11efb77e39d3c71662d1"
+          "value": "9616a0e0297411efb68a7b065c8a8090"
         },
         {
           "name": "_uetvid_exp",
-          "value": "Sat, 05 Jul 2025 07:42:53 GMT"
+          "value": "Tue, 08 Jul 2025 11:03:38 GMT"
         },
         {
           "name": "xdibx",
-          "value": "N4Ig-mBGAeDGCuAnRIBcoAOGAuBnNAjAOwEAcADOQKwDMRAbAJwAs5ANCBgG6wB22hDrnypiZSrQYt2nLrj4DRHREgA2aECA6q1GgPRaQqvIRIVqdJqw4ZdqANogDAXQC-HCDAyIAplzSgACYAhgCeIvZi5pJWNG4eUNB-PvwiwO7gibAAloEasKwEgTT0kAC09KQAZgRlzIw0jGWkkPTMZT6QkFUATJBEsIGM9IFlURJ0zPT0NCCuQA"
+          "value": "N4Ig-mBGAeDGCuAnRIBcoAOGAuBnNAjAOwEAcATEQGxUECcArAeQDQgYBusAdtoW7nypiZSjXpNW7Drh59hbREgA2aECDbKVagPQaQyvIRIVqtRszYZtqANog9AXQC-bCDAyIAphzSgAJgCGAJ5CtiKm4hYALC5uUNA-XrxCwK7gCbAAlv5qVKSk0QDMAAxUdAC0Jf7-pBXFAGYEFXTkJQ0VDdGwDXR0sD1FRUQVEWK0pEV0JSDOQA__"
         },
         {
           "name": "_uetsid",
-          "value": "0b88278026fd11efa7608f53cbbc5293"
+          "value": "961677c0297411efa95771b3b278441a"
         }
       ]
     }

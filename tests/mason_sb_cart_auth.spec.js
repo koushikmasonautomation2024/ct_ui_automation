@@ -59,5 +59,56 @@ test.describe("Mason Cart Page", () => {
     
   })
 
+  //Cart - Display Product Details - Test Cases ID-SB-Cart061
+  test("Cart - Display Product Details - Verify that each product is displayed as a separate line item with relevant details.", async ({ page }, testInfo) => {
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const pdpPage = new PDPPage(page);
+    await page.goto(pdp_data.pdp_url_limitedStock);
+    await pdpPage.addtoCart();
+    const cartDrawerPage = new CartDrawerPage(page);
+    await cartDrawerPage.miniCartClickViewCartButton();
+    const cartPage = new CartPage(page);
+    await cartPage.cartLineItemProductDetails();
+    
+  })
+
+  //Cart - Quantity Field Functionality - Test Cases ID-SB-Cart061
+  test("Cart - Quantity Field Functionality - Verify total price gets updated if user increases/decreases the quantity or applies a valid promo code.", async ({ page }, testInfo) => {
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const pdpPage = new PDPPage(page);
+    await page.goto(pdp_data.pdp_url);
+    await pdpPage.clickOnPDPSizeVariantButton();
+    await pdpPage.addtoCart();
+    const cartDrawerPage = new CartDrawerPage(page);
+    await cartDrawerPage.miniCartClickViewCartButton();
+    const cartPage = new CartPage(page);
+    await cartPage.cartUpdateQtyPlusMinus();
+    
+  })
+
+  //Cart - Edit Item Functionality - Test Cases ID-SB-Cart088
+  test("Cart - Edit Item Functionality - Verify that the Edit Item Drawer functions correctly, allowing users to modify variant options.", async ({ page }, testInfo) => {
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const pdpPage = new PDPPage(page);
+    await page.goto(pdp_data.pdp_url);
+    await pdpPage.clickOnPDPSizeVariantButton();
+    await pdpPage.addtoCart();
+    const cartDrawerPage = new CartDrawerPage(page);
+    await cartDrawerPage.miniCartClickViewCartButton();
+    const cartPage = new CartPage(page);
+    await cartPage.clickCartEditButton();
+    await cartPage.validateEditCartDrawerProductDetails();
+    await pdpPage.validatePricingSection();
+    await pdpPage.validateCreditMessageSection();
+    await pdpPage.sizeChartDisplay();
+    
+  })
+
 
 })

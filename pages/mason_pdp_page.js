@@ -29,7 +29,7 @@ exports.PDPPage = class PDPPage {
         this.linkLocator = page.locator('section.pt-18 a.underline-inset-2.text-sm.font-normal.leading-5.underline');
         this.sizechart_button = page.getByRole('button', { name: sizechart_button_text });
         this.priceSectionLocator = page.locator('section.flex.items-center.gap-x-1.pt-30');
-        this.paymentSectionLocator = page.locator('section.flex.items-center.gap-1.pt-5');
+        this.paymentSectionLocator = page.locator('section.flex.gap-1.pt-5');
         this.creditMessageLocator = page.locator('section.mt-4.py-5');
         this.qtyMinusButton = page.locator('div.flex > button:nth-child(1)');
         this.qtyPlusButton = page.locator('div.flex > button:nth-child(3)');
@@ -216,15 +216,31 @@ exports.PDPPage = class PDPPage {
         const sizeVariantCount = await selectSizeVariant.count();
 
         if (sizeVariantCount > 0) {
-            // Select a random button index
-            const randomIndex = Math.floor(Math.random() * sizeVariantCount);
-
-            // Click the randomly selected button
+            let randomIndex;
+            let isDisabled;
+            
+            do {
+                // Select a random button index
+                randomIndex = Math.floor(Math.random() * sizeVariantCount);
+                // Check if the button is disabled
+                isDisabled = await selectSizeVariant.nth(randomIndex).getAttribute('disabled');
+            } while (isDisabled !== null); // Continue loop if button is disabled
+    
+            // Click the randomly selected button that is not disabled
             await selectSizeVariant.nth(randomIndex).click();
             console.log(`Clicked button with index: ${randomIndex}`);
         } else {
             console.log('No buttons found');
         }
+        //     // Select a random button index
+        //     const randomIndex = Math.floor(Math.random() * sizeVariantCount);
+
+        //     // Click the randomly selected button
+        //     await selectSizeVariant.nth(randomIndex).click();
+        //     console.log(`Clicked button with index: ${randomIndex}`);
+        // } else {
+        //     console.log('No buttons found');
+        // }
     }
 
     async validateSelectColorValue() {
