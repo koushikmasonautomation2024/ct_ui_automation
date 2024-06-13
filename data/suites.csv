@@ -1,2 +1,2 @@
 "Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Wed Jun 12 12:08:31 UTC 2024","Wed Jun 12 12:08:51 UTC 2024","19442","Mason","mason_sb_newcustomer_myaccount_auth.spec.js","Mason MyAccount New User","","","New User Account - My Account-Left-hand Navigation - Verify navigation link highlights current section",""
+"passed","Thu Jun 13 11:22:15 UTC 2024","Thu Jun 13 11:22:31 UTC 2024","16209","Mason","mason_sb_newcustomer_myaccount_auth.spec.js","Mason MyAccount New User","","","New User Account - My Account-Left-hand Navigation - Verify navigation link highlights current section",""
