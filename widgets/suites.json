@@ -1,1 +1,1 @@
-{"total":1,"items":[{"uid":"1a970408774bddbaeda95bf421d17560","name":"Mason","statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1}}]}
+{"total":1,"items":[{"uid":"1a970408774bddbaeda95bf421d17560","name":"Mason","statistic":{"failed":30,"broken":25,"skipped":1,"passed":115,"unknown":0,"total":171}}]}
