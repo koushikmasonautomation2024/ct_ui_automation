@@ -1,6 +1,0 @@
-*First Name
-Please enter valid first name
-*Last Name
-Please enter valid last name
-*Address Line 1
-Enter an address

@@ -1,5 +1,0 @@
-Card Number Text: ***7777
-Expiry Date Text: Expires  12/32
-Card Number Text: ***7777
-Expiry Date Text: Expires  08/42
-Found 0  sections

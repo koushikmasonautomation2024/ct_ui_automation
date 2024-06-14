@@ -1,5 +1,0 @@
-Clicked button with index: 2
-Product Name: Marmot Men's MMW Hoodie
-Reviews: (2 Reviews)
-Price: $64.99
-Credit Message Not Available For This Product

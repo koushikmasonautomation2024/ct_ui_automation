@@ -1,5 +1,0 @@
-Address Element Value: 558 Garrick Orchard
-City Element Value: Kutchton
-State Element Value: NJ
-ZipCode Element Value: 68342
-PhoneNumber Element Value: (524) 798-5015
