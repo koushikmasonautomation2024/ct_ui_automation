@@ -9,6 +9,7 @@ require('dotenv').config();
 const creditUserFile = './credituser.json';
 const nonCreditUserFile = './noncredituser.json';
 const newUserFile = './newuser.json';
+const profileUserFile = './profileuser.json';
 
 const homepage_data = JSON.parse(JSON.stringify(require('../test_data/mason_sb_home_page_data.json')));
 const signinpage_data = JSON.parse(JSON.stringify(require('../test_data/mason_signin_page_data.json')));
@@ -17,7 +18,7 @@ const myaccountpage_data = JSON.parse(JSON.stringify(require('../test_data/mason
 const savedAddress = myaccountpage_data.myaccount_newaddress_firstname + " " + myaccountpage_data.myaccount_newaddress_lastname + " " + myaccountpage_data.myaccount_newaddress_addressline1;
 const editAddress = myaccountpage_data.myaccount_editaddress_firstname + " " + myaccountpage_data.myaccount_editaddress_lastname + " " + myaccountpage_data.myaccount_editaddress_addressline1;
 let loginSuccessful = false;
-test.describe("Mason Commerce Tool Site", () => {
+test.describe("Mason LoggedIn User HomePage", () => {
 
   test.beforeEach(async ({ page, isMobile }, testInfo) => {
     test.slow();

@@ -82,9 +82,10 @@ test("MegaNav - Validate User is redirected to L2 when clicked on the hyperlink"
   const homePage = new HomePage(page);
   const l2_index=2;
   // await homePage.clickOnHomePageSignIn();
-  const l2category="Toys";
+  const l2category="Home";
   await homePage.categoryL1ToBeVisibleOnDepartmentHover();
-  //const [l1CategoryText,index] = await homePage.getRandomL1CategoryText();
+  //await homePage.clickRandomThirdLevelNavLink();
+  const [l1CategoryText,index] = await homePage.getRandomL1CategoryText();
   await homePage.checkIfcategoryL1isBold(l2category);
   const [l2Text, l3Text]=await homePage.getRandomL2L3CategoryText(l2_index);
   console.log(l2Text);

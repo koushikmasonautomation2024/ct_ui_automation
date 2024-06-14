@@ -136,9 +136,10 @@ test.describe("Mason Cart Drawer", () => {
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto(pdp_data.pdp_url_limitedStock);
-    await pdpPage.addtoCart();
     const cartDrawerPage = new CartDrawerPage(page);
+    await page.goto(pdp_data.pdp_url_limitedStock);
+    //await cartDrawerPage.updateQtyForMinStock();
+    await pdpPage.addtoCart();
     await cartDrawerPage.miniCartUpdateInStockQty();
     await pdpPage.closeMiniCartDrawer();
   })

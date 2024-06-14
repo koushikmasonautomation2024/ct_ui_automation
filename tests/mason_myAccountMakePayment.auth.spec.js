@@ -54,8 +54,7 @@ test.describe("Mason MakePayment Scenarios", () => {
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.redirectToMyAccount();
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
-    await myaccountPage.clickMyAccountMakeaPaymentLink();
-    await page.waitForLoadState('networkidle');
+    await myaccountPage.clickMakeAPaymentButton();
     await myaccountMakePaymentpage.validateMakeaPaymentPage();
     await myaccountMakePaymentpage.validateNewCreditCardRadioButton();
     await myaccountMakePaymentpage.validateSavedCreditCardRadioButton();
@@ -72,7 +71,7 @@ test.describe("Mason MakePayment Scenarios", () => {
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.redirectToMyAccount();
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
-    await myaccountPage.clickMyAccountMakeaPaymentLink();
+    await myaccountPage.clickMakeAPaymentButton();
     await myaccountMakePaymentpage.validateMakeaPaymentPage();
     await myaccountMakePaymentpage.validateNewCreditCardRadioButton();
     await myaccountMakePaymentpage.validateSavedCreditCardRadioButton();
@@ -89,7 +88,7 @@ test.describe("Mason MakePayment Scenarios", () => {
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.redirectToMyAccount();
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
-    await myaccountPage.clickMyAccountMakeaPaymentLink();
+    await myaccountPage.clickMakeAPaymentButton();
     await myaccountMakePaymentpage.addNewCreditCard();
     await myaccountMakePaymentpage.validateBillingAddressRadioButtons();
 
@@ -104,7 +103,7 @@ test.describe("Mason MakePayment Scenarios", () => {
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.redirectToMyAccount();
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
-    await myaccountPage.clickMyAccountMakeaPaymentLink();
+    await myaccountPage.clickMakeAPaymentButton();
     await myaccountMakePaymentpage.addNewCreditCard();
     await myaccountMakePaymentpage.addNewAddress();
     await myaccountMakePaymentpage.validateNewAddressModal();
@@ -120,7 +119,7 @@ test.describe("Mason MakePayment Scenarios", () => {
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.redirectToMyAccount();
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
-    await myaccountPage.clickMyAccountMakeaPaymentLink();
+    await myaccountPage.clickMakeAPaymentButton();
     await myaccountMakePaymentpage.addNewCreditCard();
     await myaccountMakePaymentpage.validateSavedAddressisSelectedbyDefault();
     await myaccountMakePaymentpage.validateSavedAddressComboBox();
@@ -136,7 +135,7 @@ test.describe("Mason MakePayment Scenarios", () => {
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.redirectToMyAccount();
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
-    await myaccountPage.clickMyAccountMakeaPaymentLink();
+    await myaccountPage.clickMakeAPaymentButton();
     await myaccountMakePaymentpage.addNewCreditCard();
     await myaccountMakePaymentpage.validateSavedAddressisSelectedbyDefault();
     await myaccountMakePaymentpage.validateSavedAddressComboBox();
@@ -153,7 +152,7 @@ test.describe("Mason MakePayment Scenarios", () => {
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.redirectToMyAccount();
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
-    await myaccountPage.clickMyAccountMakeaPaymentLink();
+    await myaccountPage.clickMakeAPaymentButton();
     await myaccountMakePaymentpage.validateSavedCCisSelectedbyDefault();
 
   })
@@ -167,7 +166,7 @@ test.describe("Mason MakePayment Scenarios", () => {
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.redirectToMyAccount();
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
-    await myaccountPage.clickMyAccountMakeaPaymentLink();
+    await myaccountPage.clickMakeAPaymentButton();
     await myaccountMakePaymentpage.validateSavedCCisSelectedbyDefault();
     await myaccountMakePaymentpage.validateSavedCCDropDownField();
 
@@ -182,7 +181,7 @@ test.describe("Mason MakePayment Scenarios", () => {
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.redirectToMyAccount();
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
-    await myaccountPage.clickMyAccountMakeaPaymentLink();
+    await myaccountPage.clickMakeAPaymentButton();
     await myaccountMakePaymentpage.validateSavedCCisSelectedbyDefault();
     await myaccountMakePaymentpage.validateSavedCCDropDownField();
     await myaccountMakePaymentpage.clickAnOptionFromSavedCCList();
@@ -199,7 +198,7 @@ test.describe("Mason MakePayment Scenarios", () => {
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.redirectToMyAccount();
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
-    await myaccountPage.clickMyAccountMakeaPaymentLink();
+    await myaccountPage.clickMakeAPaymentButton();
     await myaccountMakePaymentpage.validateSavedCCisSelectedbyDefault();
     await myaccountMakePaymentpage.validateSavedCCDropDownField();
     await myaccountMakePaymentpage.clickAnOptionFromSavedCCList();
@@ -218,7 +217,7 @@ test.describe("Mason MakePayment Scenarios", () => {
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.redirectToMyAccount();
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
-    await myaccountPage.clickMyAccountMakeaPaymentLink();
+    await myaccountPage.clickMakeAPaymentButton();
     await myaccountMakePaymentpage.validateSavedCCisSelectedbyDefault();
     await myaccountMakePaymentpage.validateSavedCCDropDownField();
     await myaccountMakePaymentpage.clickAnOptionFromSavedCCList();
@@ -237,7 +236,7 @@ test.describe("Mason MakePayment Scenarios", () => {
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.redirectToMyAccount();
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
-    await myaccountPage.clickMyAccountMakeaPaymentLink();
+    await myaccountPage.clickMakeAPaymentButton();
     await myaccountMakePaymentpage.validateSavedCCDropDownField();
     await myaccountMakePaymentpage.clickAnOptionFromSavedCCList();
     await myaccountMakePaymentpage.clickOnReviewPayment();
@@ -256,7 +255,7 @@ test.describe("Mason MakePayment Scenarios", () => {
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.redirectToMyAccount();
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
-    await myaccountPage.clickMyAccountMakeaPaymentLink();
+    await myaccountPage.clickMakeAPaymentButton();
     await myaccountMakePaymentpage.validateSavedCCDropDownField();
     await myaccountMakePaymentpage.clickAnOptionFromSavedCCList();
     await myaccountMakePaymentpage.clickOnReviewPayment();
@@ -275,9 +274,9 @@ test.describe("Mason MakePayment Scenarios", () => {
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.redirectToMyAccount();
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
-    await myaccountPage.clickMyAccountMakeaPaymentLink();
+    await myaccountPage.clickMakeAPaymentButton();
     await myaccountMakePaymentpage.validateSavedCCDropDownField();
-    await myaccountMakePaymentpage.clickAnOptionFromSavedCCList();
+    await myaccountMakePaymentpage.selectComboBoxValue('****7777');
     await myaccountMakePaymentpage.clickOnReviewPayment();
     await myaccountMakePaymentpage.editPaymentFromReviewPayment();
 

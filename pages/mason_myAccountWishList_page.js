@@ -156,8 +156,64 @@ exports.MyAccountWishListPage = class MyAccountWishListPage{
     }
 }
 
-async validatePricingFormat(){
-    
+async validateAlignmentInWishListNew() {
+    const productItems = await this.page.$$(myaccountpage_locator.wishlist_items);
+    const itemCount = productItems.length;
+    console.log(`Total product items: ${itemCount}`);
+
+    for (const item of productItems) {
+        const pricing = await item.$(myaccountpage_locator.wishlist_pricing);
+        const productName = await item.$(myaccountpage_locator.wishlist_productname);
+        const reviews = await item.$(myaccountpage_locator.wishlist_productReview);
+
+        if (pricing && productName && reviews) {
+            const pricingRect = await pricing.boundingBox();
+            const productInfoRect = await productName.boundingBox();
+            const reviewInfoRect = await reviews.boundingBox();
+
+            if (pricingRect && productInfoRect && reviewInfoRect) {
+                // Verify pricing is below product name and above reviews
+                expect(pricingRect.y).toBeGreaterThan(productInfoRect.y);
+                expect(pricingRect.y).toBeLessThan(reviewInfoRect.y);
+
+                // Verify pricing is in the same horizontal row for all products
+                expect(pricingRect.x).toBe(productInfoRect.x);
+            } else {
+                console.log('Bounding box not available for one of the elements');
+            }
+        } else {
+            console.log('One of the elements (pricing, productName, reviews) is not available');
+        }
+    }
+}
+
+async validatePricingFormatNew() {
+    await this.page.waitForLoadState('networkidle');
+
+    // Select all the product items
+    const productItems = await this.page.$$('ul.grid > section > li');
+    const itemCount = productItems.length;
+    console.log(`Total product items: ${itemCount}`);
+
+    // Define a regular expression to match dollar and cent format (e.g., $xx.xx)
+    const priceRegex = /^\$\d+\.\d{2}$/;
+
+    // Iterate over each product item
+    for (const item of productItems) {
+        // Select the pricing element within the current product item
+        const pricingElement = await item.waitForSelector('section > section > p');
+        await pricingElement.waitForElementState('visible');
+
+        // Get the inner text of the pricing element
+        const regularPriceText = await pricingElement.innerText();
+        console.log(regularPriceText);
+
+        // Verify regular price format
+        expect(regularPriceText).toMatch(priceRegex);
+    }
+}
+
+async validatePricingFormat(){ 
     await this.page.waitForLoadState('networkidle');
     const productItems = await this.page.$$(myaccountpage_locator.wishlist_items);
         const itemCount = productItems.length;
@@ -253,7 +309,7 @@ async validateRemoveItemFromWishList(){
 
     // Check the page title after removing the item
     // Wait for the section to appear
-  const wishListSection = await this.page.waitForSelector('section.flex');
+  //const wishListSection = await this.page.waitForSelector('section.flex');
 
   
 

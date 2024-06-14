@@ -29,9 +29,9 @@ export default async () => {
     await page.getByRole('button', { name: 'My Account Sign In' }).click();
     await page.getByRole('button', { name: 'Sign In' }).click();
     await page.getByLabel('*Email Address').click();
-    await page.getByLabel('*Email Address').fill(process.env.NEW_USER);
+    await page.getByLabel('*Email Address').fill(process.env.MY_PROFILE_USER);
     await page.getByLabel('*Password').click();
-    await page.getByLabel('*Password').fill(process.env.NON_CREDIT_PASSWORD);
+    await page.getByLabel('*Password').fill(process.env.PROFILE_PASSWORD);
     await page.getByRole('button', { name: 'Sign In' }).click({timeout:10000});
     //await expect(page.getByRole('heading', { name: 'My Account' })).toBeVisible();
     const signinPage = new SignInPageNew(page);
@@ -39,7 +39,7 @@ export default async () => {
     await signinPage.validateSignInMessage(signinpage_data.signin_success_text);
     await page.waitForLoadState('networkidle');
     //await page.waitForURL(process.env.WEB_URL + '/dashboard');
-    await page.context().storageState({ path: newUserFile });
+    await page.context().storageState({ path: profileUserFile });
   } catch (error) {
     console.error("Admin login failed:", error);
   }

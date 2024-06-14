@@ -1,5 +1,7 @@
 import test, { expect } from 'playwright/test';
 
+const productStockLeft='strong.text-stoneberry-onlyLeft';
+
 exports.CartDrawerPage = class CartDrawerPage {
     constructor(page) {
         this.page=page;
@@ -163,6 +165,32 @@ exports.CartDrawerPage = class CartDrawerPage {
 
     async removeMiniCartItemsRemoveButton() {
         await this.miniCartRemoveButton.first().click();
+    }
+
+    async getProductStockCount() {
+        //await this.page.waitForLoadState('networkidle');
+    
+        // Select the strong element containing the stock information
+        const stockElement = await this.page.waitForSelector(productStockLeft);
+        await stockElement.waitForElementState('visible');
+    
+        // Get the inner text of the stock element
+        const stockText = await stockElement.innerText();
+        console.log(stockText);  // Output: Only 2 left in Stock
+    
+        // Define a regular expression to extract the number
+        const stockRegex = /\d+/;
+    
+        // Extract the number from the text
+        const stockCount = stockText.match(stockRegex)[0];
+        console.log(`Stock count: ${stockCount}`);  // Output: 2
+    
+        return stockCount;
+    }
+
+    async updateQtyForMinStock(){
+        const productQtyLeft = this.getProductStockCount();
+        await this.miniCartQtyInputTextBox.fill(productQtyLeft);
     }
 
     async miniCartUpdateInStockQty() {

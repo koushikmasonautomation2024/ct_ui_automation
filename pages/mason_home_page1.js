@@ -108,8 +108,8 @@ exports.HomePageNew = class HomePageNew{
 
     async mouseHoverMegaMenu(categoryNameL1){
         await this.homepage_category.hover();
-        await this.page.getByText(categoryNameL1).hover();
-        await expect(this.page.getByText(categoryNameL1)).toBeVisible();
+        await this.page.getByText(categoryNameL1).first().hover();
+        await expect(this.page.getByText(categoryNameL1).first()).toBeVisible();
     }
 
     async clickOnMegaMenuL2Category(l2CategoryName){

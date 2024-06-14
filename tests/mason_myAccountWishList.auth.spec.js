@@ -117,7 +117,7 @@ test.describe("Mason MyAccount Wishlist", () => {
     //await myaccountPage.validateMyAccountDashboardNavigation();
     await myaccountPage.clickMyAccountWishListLink();
     await myaccountWishListPage.validateItemCountIsDisplayed();
-    await myaccountWishListPage.validateAlignmentInWishList();
+    await myaccountWishListPage.validateAlignmentInWishListNew();
 
   })
 
@@ -139,7 +139,7 @@ test.describe("Mason MyAccount Wishlist", () => {
     await page.waitForLoadState('networkidle');
     await myaccountPage.clickMyAccountWishListLink();
     await myaccountWishListPage.validateItemCountIsDisplayed();
-    await myaccountWishListPage.validatePricingFormat();
+    await myaccountWishListPage.validatePricingFormatNew();
   })
 
 
@@ -180,7 +180,8 @@ test.describe("Mason MyAccount Wishlist", () => {
   })
 
   //SB-MyA357, //SB-MyA326
-  test("Validate user should be able to navigate to WishList Page in My account", async ({ page }, testInfo) => {
+  test.skip("Validate user should be able to navigate to WishList Page in My account", async ({ page }, testInfo) => {
+    //this test is covered in newcustomer_myaccount user flow
     //test.slow();
     // const signinPage = new SignInPage(page);
     // await signinPage.login(process.env.NON_CREDIT_USER, process.env.NON_CREDIT_PASSWORD);
