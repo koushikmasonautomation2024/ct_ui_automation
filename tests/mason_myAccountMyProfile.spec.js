@@ -196,7 +196,7 @@ test("Validate Cancel Email Address modal in My Profile page",async({page},testI
 })
 
 //SB-MyA277 //SB-My287 //SB-MyA290
-test.only("Validate Change Password Button is enabled on meeting the New Password criteria", async ({ page }, testInfo) => {
+test("Validate Change Password Button is enabled on meeting the New Password criteria", async ({ page }, testInfo) => {
   const generateRandomString = (length) => {
     const getRandomChar = (base, range) => String.fromCharCode(base + Math.floor(Math.random() * range));
     return getRandomChar(65, 26) + Array.from({ length: length - 1 }, () => getRandomChar(97, 26)).join('');

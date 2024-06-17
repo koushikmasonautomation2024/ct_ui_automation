@@ -126,8 +126,8 @@ test("Validate Single Filter applied in L3 PLP",async({page})=>{
   console.log(selectedFilter);
 })
 
-//SB-PLP049
-test.only("Validate Multiple Filters applied in L3 PLP",async({page})=>{ 
+//SB-PLP049,55
+test("Validate Multiple Filters applied in L3 PLP",async({page})=>{ 
   //test.slow();
   const homePage = new HomePage(page);
   const plpPage = new MasonPLPPage(page);
@@ -156,5 +156,65 @@ test.only("Validate Multiple Filters applied in L3 PLP",async({page})=>{
  console.log(selectedFilter);
 })
 
+//SB-PLP050
+test("Validate Expand and Close option for the Filters",async({page})=>{ 
+  //test.slow();
+  const homePage = new HomePage(page);
+  const plpPage = new MasonPLPPage(page);
+  const l2category="Clothing, Shoes + Bags";
+  const l3Text="Athletic";
+  await homePage.categoryL1ToBeVisibleOnDepartmentHover();
+  //const [l2category,l2_index] = await homePage.getRandomL1CategoryText();
+  await homePage.checkIfcategoryL1isBold(l2category);
+  // const [l2Text, l3Text]=await homePage.getRandomL2L3CategoryText(l2_index);
+  // console.log(l2Text);
+  // console.log(l3Text);
+  await homePage.navigateToCategoryL1(l3Text);
+  await page.waitForTimeout(3000);
+  await plpPage.validateItemCount();
+  await plpPage.validatePresenceOfFilter();
+  await plpPage.validateCheckboxesForAllFilters();
+  await plpPage.validateFilterExpandClose();
+})
+
+//SB-PLP051,52,53
+test("Validate View More link for more than 8 or 16 options",async({page})=>{ 
+  //test.slow();
+  const homePage = new HomePage(page);
+  const plpPage = new MasonPLPPage(page);
+  const l2category="Clothing, Shoes + Bags";
+  const l3Text="Athletic";
+  await homePage.categoryL1ToBeVisibleOnDepartmentHover();
+  //const [l2category,l2_index] = await homePage.getRandomL1CategoryText();
+  await homePage.checkIfcategoryL1isBold(l2category);
+  // const [l2Text, l3Text]=await homePage.getRandomL2L3CategoryText(l2_index);
+  // console.log(l2Text);
+  // console.log(l3Text);
+  await homePage.navigateToCategoryL1(l3Text);
+  await page.waitForTimeout(3000);
+  await plpPage.validateItemCount();
+  await plpPage.validatePresenceOfFilter();
+  await plpPage.validateCheckboxesForAllFilters();
+  await plpPage.validateViewMoreOption();
+})
+
+//SB-PLP062
+test("Validate SortBy in PLP",async({page})=>{ 
+  //test.slow();
+  const homePage = new HomePage(page);
+  const plpPage = new MasonPLPPage(page);
+  const l2category="Clothing, Shoes + Bags";
+  const l3Text="Tops";
+  await homePage.categoryL1ToBeVisibleOnDepartmentHover();
+  //const [l2category,l2_index] = await homePage.getRandomL1CategoryText();
+  await homePage.checkIfcategoryL1isBold(l2category);
+  await homePage.navigateToCategoryL1(l3Text);
+  await page.waitForTimeout(3000);
+  await plpPage.validateItemCount();
+  await plpPage.validateSortBy();
+  //await plpPage.validateFeatureIsDefaultSort();
+  //await plpPage.validateSortOptions();
+  await plpPage.selectSortOption();
+})
 
 })

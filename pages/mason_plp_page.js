@@ -8,6 +8,11 @@ const filter_options='div[data-state="open"]';
 const filter_title='h3[data-radix-collection-item]';
 const filter_search='input[type="search"]';
 const filter_container='.border-b > h3';
+const filter_checkbox='.border-b input[type="checkbox"]';
+const filter_option_button='[data-radix-collection-item]';
+const filters_list='ul.grid li';
+const filter_view_more='button:has-text("View More")';
+const sort_by='select.ais-SortBy-select';
 
 
 exports.MasonPLPPage = class MasonPLPPage{
@@ -94,7 +99,7 @@ async validateAppliedFilters(selectedFilters) {
 
 async randomlySelectFilterCheckbox() {
     // Find all checkbox elements within the filter
-    const checkboxElements = await this.page.$$('.border-b input[type="checkbox"]');
+    const checkboxElements = await this.page.$$(filter_checkbox);
 
     // Randomly select one checkbox element
     const randomIndex = Math.floor(Math.random() * checkboxElements.length);
@@ -116,7 +121,7 @@ async randomlySelectMultipleFiltersOptions(numOptionsPerCategory) {
     const filterOptions = {}; // Object to store checkbox elements by category
 
     // Find all checkbox elements within the filter
-    const checkboxElements = await this.page.$$('.border-b input[type="checkbox"]');
+    const checkboxElements = await this.page.$$(filter_checkbox);
 
     // Group checkbox elements by their category (filter name)
     checkboxElements.forEach(checkbox => {
@@ -144,5 +149,105 @@ async randomlySelectMultipleFiltersOptions(numOptionsPerCategory) {
     await this.page.waitForTimeout(2000); // Adjust the duration as needed
 
     return selectedOptions;
+}
+
+async validateFilterExpandClose(){
+     // Get all filter buttons
+  const filterButtons = await this.page.$$(filter_option_button);
+
+  // Iterate through each filter button
+  for (const button of filterButtons) {
+    // Click the filter button
+    // Wait for the filters to expand/collapse
+    await this.page.waitForTimeout(1000);
+
+    // Verify if the filters are expanded/collapsed
+    const isExpanded = await button.evaluate(button => button.getAttribute('aria-expanded') === 'true');
+    expect(isExpanded).toBeTruthy();
+
+    // Click the filter button again to collapse
+    await button.click();
+
+    // Wait for the filters to collapse/expand
+    await this.page.waitForTimeout(1000);
+
+    // Verify if the filters are collapsed/expanded
+    const isCollapsed = await button.evaluate(button => button.getAttribute('aria-expanded') === 'false');
+    expect(isCollapsed).toBeTruthy();
+  }
+}
+
+
+async validateViewMoreOption(){
+    // Get all filter buttons
+  const filterButtons = await this.page.$$(filter_option_button);
+
+  // Iterate through each filter button
+  for (const button of filterButtons) {
+    // Check if the filter has more than 8 options
+    const filterOptions = await this.page.$$(filters_list);
+    if (filterOptions.length > 8) {
+      // Verify if the 'View More' link is visible
+      const viewMoreButtons = await this.page.$$(filter_view_more);
+      if (viewMoreButtons.length > 0) {
+        // Click on 'View More' link
+        await viewMoreButtons[0].click();
+
+        // Check if the filter has more than 16 options
+        if (filterOptions.length > 16) {
+            // Verify if the 'View More' link is still visible
+            const viewMoreButtonsAfterClick = await this.page.$$(filter_view_more);
+            if (viewMoreButtonsAfterClick.length > 0) {
+              // Click on 'View More' link again
+              await viewMoreButtonsAfterClick[0].click();
+  
+              // Wait for the options to load
+              await this.page.waitForTimeout(1000);
+            }
+          }
+        }
+      } else {
+        console.log('Filter has less than 8 options.');
+      }
+    }
+}
+
+async validateSortBy(){
+    await expect(this.page.getByText('Sort By:')).toBeVisible();
+    await expect(this.page.getByRole('combobox')).toBeVisible();
+}
+
+async validateFeatureIsDefaultSort(){
+    const optionElement = await this.page.$(`.ais-SortBy-option`);
+        const optionText = await optionElement.textContent();
+        expect(optionText).toContain("Featured");
+}
+
+
+async validateSortOptions(){
+    await this.page.getByRole('combobox').click();
+    const sortingOptions = ['Best-Selling','Price - Low to High','Price - High to Low', 'Highest-Rated','Newest'];
+
+      // Validate if the sorting options can be toggled on or off
+    // for (const option of sortingOptions) {
+    //     const sortOptions = await this.page.$$(`option:has-text("${option}")`);
+    //     expect(sortOptions).toBeVisible();
+    //     console.log(option);
+    // }
+    // Validate if the sorting options are visible
+    for (const option of sortingOptions) {
+        await expect(this.page.getByRole('combobox')).toContainText(option);
+        console.log(`${option} is visible`);
+    }
+}
+
+
+async selectSortOption(){
+    await this.page.getByRole('combobox').click();
+    const sortingOptions = ['Best-Selling','Price - Low to High','Price - High to Low', 'Highest-Rated','Newest'];
+    const randomOptionIndex = Math.floor(Math.random() * sortingOptions.length);
+    const randomOption = sortingOptions[randomOptionIndex];
+    console.log(randomOption);
+    await this.page.getByRole('combobox').selectOption(randomOption);
 }
 }
