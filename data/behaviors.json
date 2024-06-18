@@ -1,1 +1,1 @@
-{"uid":"b1a8273437954620fa374b796ffaacdd","children":[],"name":"behaviors"}
+{"uid":"b1a8273437954620fa374b796ffaacdd","children":[{"name":"New User Account - My Account-Left-hand Navigation - Verify navigation link highlights current section","uid":"c59f9170681a4207","parentUid":"b1a8273437954620fa374b796ffaacdd","status":"passed","time":{"start":1718710605198,"stop":1718710626815,"duration":21617},"flaky":false,"newFailed":false,"newPassed":false,"newBroken":false,"retriesCount":0,"retriesStatusChange":false,"parameters":["Mason"],"tags":[]}],"name":"behaviors"}
