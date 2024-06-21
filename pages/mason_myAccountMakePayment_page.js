@@ -8,7 +8,7 @@ exports.MyAccountMakePaymentPage = class MyAccountMakePaymentPage {
         this.noWishListMessage = page.getByText(accountpage_data.myaccount_no_wishlist_message);
         this.newCCRadioButton = page.locator('button[id="new-card"]');
         this.savedCCRadioButton = page.locator('button[id="saved-card"]');
-        this.combobox=page.locator('button[role="combobox"]');
+        this.comboBox=page.locator('button[role="combobox"]');
         this.myaccount_cc_cardnumber_textbox = page.getByLabel(myaccountpage_locator.myaccount_cc_cardnumber_textbox);
         this.myaccount_cc_expirydate_textbox = page.getByLabel(myaccountpage_locator.myaccount_cc_expirydate_textbox);
         this.myaccount_cc_securitycode_textbox = page.getByLabel(myaccountpage_locator.myaccount_cc_securitycode_textbox);
@@ -25,6 +25,8 @@ exports.MyAccountMakePaymentPage = class MyAccountMakePaymentPage {
         this.makepayment_addnewaddress_zipcode = page.getByLabel(myaccountpage_locator.myaccount_addnewaddress_zipcode);
         this.makepayment_addnewaddress_phonenumber = page.getByLabel(myaccountpage_locator.myaccount_addnewaddress_phonenumber);
         this.makepayment_combobox = page.getByRole(myaccountpage_locator.makepayment_combobox);
+        this.otherAmountRadioButton = page.locator('button[id="otheramountRadio"]');
+        this.otherAmountTextBox=page.locator('input[id="otherAmount"]');
     }
 
 
@@ -35,10 +37,12 @@ exports.MyAccountMakePaymentPage = class MyAccountMakePaymentPage {
 
 
     async validateNewCreditCardRadioButton() {
+        await this.newCCRadioButton.waitFor({state:'visible'});
         await expect(this.newCCRadioButton).toBeVisible();
     }
 
     async validateSavedCreditCardRadioButton() {
+        await this.savedCCRadioButton.waitFor({state:'visible'});
         await expect(this.savedCCRadioButton).toBeVisible();
     }
 
@@ -134,9 +138,10 @@ exports.MyAccountMakePaymentPage = class MyAccountMakePaymentPage {
 
     //if there is a credit/debit card added
     async validateSavedCCisSelectedbyDefault() {
-        const savedCCSelected = await this.page.$(myaccountpage_locator.makepayment_savedcard_button);
-        const isSelected = await this.page.isChecked(myaccountpage_locator.makepayment_savedcard_button);
-        expect(isSelected).toBe(true);
+        //const savedCCSelected = await this.page.$(myaccountpage_locator.makepayment_savedcard_button);
+        const savedCCSelected = await this.savedCCRadioButton.locator('span').getAttribute('data-state');
+        //const isSelected = await this.page.isChecked(myaccountpage_locator.makepayment_savedcard_button);
+        expect(savedCCSelected).toBe('checked');
     }
 
 
@@ -157,6 +162,7 @@ exports.MyAccountMakePaymentPage = class MyAccountMakePaymentPage {
 
 
     async clickAnOptionFromSavedCCList() {
+        await this.makepayment_combobox.waitFor({state:'visible'});
         // Wait for the dropdown content to be visible
         await this.page.waitForSelector(myaccountpage_locator.makepayment_ccDropdownList);
 
@@ -171,32 +177,35 @@ exports.MyAccountMakePaymentPage = class MyAccountMakePaymentPage {
         const randomIndex = Math.floor(Math.random() * itemCount);
         const selectedItem = dropdownItems.nth(randomIndex);
         // Optionally, click the selected item
-        await this.combobox.click();
-        await dropdownItems.first().click();
+        const comboboxstate = await this.makepayment_combobox.getAttribute('data-state');
+        console.log('combobox state' + comboboxstate);
+        await this.makepayment_combobox.click();
+        await this.page.locator('button[role="combobox"] span div div').click();
+        //await dropdownItems.first().click();
         //await selectedItem.press('Tab');
     }
 
-    async  selectComboBoxValue(valueToSelect) {
-        // Click the combo box button to open the dropdown
-        await this.combobox.click();
+    // async  selectComboBoxValue(valueToSelect) {
+    //     // Click the combo box button to open the dropdown
+    //     await this.combobox.click();
     
-        // Wait for the dropdown items to appear
-        const dropdownItemSelector = 'button[role="combobox"] span div'; // Adjust this selector based on your actual DOM structure
-        await page.waitForSelector(dropdownItemSelector);
+    //     // Wait for the dropdown items to appear
+    //     const dropdownItemSelector = 'button[role="combobox"] span div'; // Adjust this selector based on your actual DOM structure
+    //     await page.waitForSelector(dropdownItemSelector);
     
-        // Find all dropdown items
-        const options = await page.$$eval(dropdownItemSelector, (elements, valueToSelect) => {
-            return elements.filter(element => element.textContent.trim().includes(valueToSelect));
-        }, valueToSelect);
+    //     // Find all dropdown items
+    //     const options = await page.$$eval(dropdownItemSelector, (elements, valueToSelect) => {
+    //         return elements.filter(element => element.textContent.trim().includes(valueToSelect));
+    //     }, valueToSelect);
     
-        if (options.length > 0) {
-            // Click on the first matching option
-            await options[0].click();
-            console.log(`Selected option: ${valueToSelect}`);
-        } else {
-            console.log(`Option '${valueToSelect}' not found`);
-        }
-    }
+    //     if (options.length > 0) {
+    //         // Click on the first matching option
+    //         await options[0].click();
+    //         console.log(`Selected option: ${valueToSelect}`);
+    //     } else {
+    //         console.log(`Option '${valueToSelect}' not found`);
+    //     }
+    // }
 
     async validateEditCardlink() {
         await expect(this.page.getByRole('button', { name: 'Edit Card' })).toBeVisible();
@@ -222,8 +231,8 @@ exports.MyAccountMakePaymentPage = class MyAccountMakePaymentPage {
     }
 
     async validateOtherAmountisEditable() {
-        await this.page.locator(myaccountpage_locator.makepayment_otheramount_radio).click();
-        await this.page.getByLabel(myaccountpage_locator.makepayment_otheramount).fill('67');
+        await this.otherAmountRadioButton.click();
+        await this.otherAmountTextBox.fill('67');
     }
 
     async clickOnReviewPayment() {

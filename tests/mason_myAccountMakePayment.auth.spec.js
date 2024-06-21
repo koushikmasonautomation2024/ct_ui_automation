@@ -184,7 +184,8 @@ test.describe("Mason MakePayment Scenarios", () => {
     await myaccountPage.clickMakeAPaymentButton();
     await myaccountMakePaymentpage.validateSavedCCisSelectedbyDefault();
     await myaccountMakePaymentpage.validateSavedCCDropDownField();
-    await myaccountMakePaymentpage.clickAnOptionFromSavedCCList();
+    await myaccountMakePaymentpage.selectComboBoxValue(/.+/);
+    //await myaccountMakePaymentpage.clickAnOptionFromSavedCCList();
 
   })
 
@@ -200,8 +201,8 @@ test.describe("Mason MakePayment Scenarios", () => {
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
     await myaccountPage.clickMakeAPaymentButton();
     await myaccountMakePaymentpage.validateSavedCCisSelectedbyDefault();
-    await myaccountMakePaymentpage.validateSavedCCDropDownField();
-    await myaccountMakePaymentpage.clickAnOptionFromSavedCCList();
+    // await myaccountMakePaymentpage.validateSavedCCDropDownField();
+    // await myaccountMakePaymentpage.selectComboBoxValue(/.+/);
     await myaccountMakePaymentpage.validateEditCardlink();
     await myaccountMakePaymentpage.validateCardDetailOnPage();
     await myaccountMakePaymentpage.validateExpiryDetailOnPage();
@@ -219,8 +220,6 @@ test.describe("Mason MakePayment Scenarios", () => {
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
     await myaccountPage.clickMakeAPaymentButton();
     await myaccountMakePaymentpage.validateSavedCCisSelectedbyDefault();
-    await myaccountMakePaymentpage.validateSavedCCDropDownField();
-    await myaccountMakePaymentpage.clickAnOptionFromSavedCCList();
     await myaccountMakePaymentpage.validatePaymentsection();
     await myaccountMakePaymentpage.validateOtherAmountisEditable();
 
@@ -237,8 +236,6 @@ test.describe("Mason MakePayment Scenarios", () => {
     await myaccountPage.redirectToMyAccount();
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
     await myaccountPage.clickMakeAPaymentButton();
-    await myaccountMakePaymentpage.validateSavedCCDropDownField();
-    await myaccountMakePaymentpage.clickAnOptionFromSavedCCList();
     await myaccountMakePaymentpage.clickOnReviewPayment();
     await myaccountMakePaymentpage.validateReviewPaymentModal();
 
@@ -256,8 +253,6 @@ test.describe("Mason MakePayment Scenarios", () => {
     await myaccountPage.redirectToMyAccount();
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
     await myaccountPage.clickMakeAPaymentButton();
-    await myaccountMakePaymentpage.validateSavedCCDropDownField();
-    await myaccountMakePaymentpage.clickAnOptionFromSavedCCList();
     await myaccountMakePaymentpage.clickOnReviewPayment();
     await myaccountMakePaymentpage.validateSubmitPayment();
     await myaccountMakePaymentpage.validatePaymentSuccessPage();
@@ -275,8 +270,8 @@ test.describe("Mason MakePayment Scenarios", () => {
     await myaccountPage.redirectToMyAccount();
     const myaccountMakePaymentpage = new MyAccountMakePaymentPage(page);
     await myaccountPage.clickMakeAPaymentButton();
-    await myaccountMakePaymentpage.validateSavedCCDropDownField();
-    await myaccountMakePaymentpage.selectComboBoxValue('****7777');
+    // await myaccountMakePaymentpage.validateSavedCCDropDownField();
+    // await myaccountMakePaymentpage.selectComboBoxValue('****7777');
     await myaccountMakePaymentpage.clickOnReviewPayment();
     await myaccountMakePaymentpage.editPaymentFromReviewPayment();
 

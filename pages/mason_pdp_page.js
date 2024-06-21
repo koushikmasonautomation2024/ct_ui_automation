@@ -33,7 +33,7 @@ exports.PDPPage = class PDPPage {
         this.creditMessageLocator = page.locator('section.mt-4.py-5');
         this.qtyMinusButton = page.locator('div.flex > button:nth-child(1)');
         this.qtyPlusButton = page.locator('div.flex > button:nth-child(3)');
-        this.defaultQtyPlusButton = page.locator('div.flex > button:nth-child(2)');
+        this.defaultQtyPlusButton = page.locator('div.flex > button:nth-child(3)').first();
         this.qtyInputTextBox = page.locator('input.numberInputCounter');
         this.qtyText = page.getByText('Qty:');
         this.availabilityText = page.getByText('Availability:');
@@ -302,35 +302,41 @@ exports.PDPPage = class PDPPage {
 
     async validateDescription() {
         await this.clickOnDescription();
-        const desciptionButton = await this.page.locator('button:has-text("Description")');
-        const dataState = await desciptionButton.getAttribute('data-state');
-        expect(dataState).toMatch('open');
     }
 
     async clickOnDescription() {
-        await this.page.locator('button:has-text("Description")').click();
+        const desciptionButton = await this.page.locator('button:has-text("Description")');
+        const dataState = await desciptionButton.getAttribute('data-state');
+        if(dataState==='open'){
+            expect(dataState).toMatch('open');
+        }else{
+            await desciptionButton.click();
+            expect(dataState).toMatch('open');
+        }
+        
     }
 
     async clickOnSpecifications() {
-        await this.page.locator('button:has-text("Specifications")').click();
-    }
-
-    async validateSpecifications() {
-        await this.clickOnSpecifications();
         const specificationsButton = await this.page.locator('button:has-text("Specifications")');
+        await specificationsButton.click();
         const dataState = await specificationsButton.getAttribute('data-state');
         expect(dataState).toMatch('open');
     }
 
+    async validateSpecifications() {
+        await this.clickOnSpecifications();
+    }
+
     async clickOnShipping() {
-        await this.page.locator('button:has-text("Shipping")').click();
+        const shippingButton = await this.page.locator('button:has-text("Shipping")');
+        await shippingButton.click();
+        const dataState = await shippingButton.getAttribute('data-state');
+        expect(dataState).toMatch('open');
+        
     }
 
     async validateShipping() {
         await this.clickOnShipping();
-        const shippingButton = await this.page.locator('button:has-text("Shipping")');
-        const dataState = await shippingButton.getAttribute('data-state');
-        expect(dataState).toMatch('open');
     }
 
     async validateWaysToWearIt() {
@@ -406,7 +412,7 @@ exports.PDPPage = class PDPPage {
         await expect(this.qtyText).toBeVisible();
         const initialInputValue = await this.qtyInputTextBox.inputValue();
         if (initialInputValue == 1) {
-            await expect(this.qtyMinusButton).toBeHidden();
+            await expect(this.qtyMinusButton).toBeDisabled();
             await expect(this.defaultQtyPlusButton).toBeVisible();
         } else {
             await expect(this.qtyMinusButton).toBeVisible();
@@ -430,7 +436,7 @@ exports.PDPPage = class PDPPage {
     async validateProductQTYIncreaseDecrease() {
         await this.qtyText.waitFor({ state: 'visible' });
         // Check if both buttons are disabled
-        const isMinusButtonDisabled = await this.qtyMinusButton.isHidden();
+        const isMinusButtonDisabled = await this.qtyMinusButton.isDisabled();
         const isPlusButtonDisabled = await this.defaultQtyPlusButton.isDisabled();
 
         // If both buttons are disabled, assert that the quantity cannot be updated
@@ -541,7 +547,8 @@ exports.PDPPage = class PDPPage {
         }
 
     async minCartItemCount() {
-            const miniCartCountElement = this.miniCart.locator('xpath=following-sibling::section');
+            //const miniCartCountElement = this.miniCart.locator('xpath=following-sibling::section');
+            const miniCartCountElement = this.page.locator('section.mt.absolute');
             // Get the text content of the strong element
             const miniCartCount = await miniCartCountElement.textContent();
             expect(miniCartCount).toBeTruthy();

@@ -135,7 +135,7 @@ exports.HomePageNew = class HomePageNew{
     }
 
     async emptyMiniCartDrawerSection(){
-        await expect(this.page.getByRole('dialog').locator('section').filter({ hasText: '✕' }).nth(1)).toBeVisible();
+        await expect(this.page.getByRole('button', { name: 'My Cart' })).toBeVisible();
     }
 
     async validatedEmptyMiniCartDrawer(){

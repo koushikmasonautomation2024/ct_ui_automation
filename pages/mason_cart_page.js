@@ -67,7 +67,7 @@ exports.CartPage = class CartPage {
             const productItem = await this.cartProductItems.nth(i);
 
             // Verify the product image
-            const productImage = productItem.locator('a[href*="/product/"] svg').first();
+            const productImage = productItem.locator('a[href*="/product/"] img').first();
             await expect(productImage).toBeVisible();
 
             // Verify the product name link and text

@@ -399,11 +399,11 @@ test.describe("Mason MyAccount MyProfile", () => {
     await myAccountMyProfilePage.enterCurrentPasswordOnMyProfile(password);
     //await myAccountMyProfilePage.validatePasswordShowLinkIsVisible();
     await myAccountMyProfilePage.clickOnShowInMyProfile();
-    await myAccountMyProfilePage.validatePasswordIsShown();
-    await myAccountMyProfilePage.readPasswordFromTextboxAndValidate(password);
+    await myAccountMyProfilePage.validatePasswordIsShownProfile();
+    await myAccountMyProfilePage.readPasswordFromTextboxAndValidateProfile(password);
     //await myAccountMyProfilePage.validatePasswordHideLinkIsVisible();
     await myAccountMyProfilePage.clickOnHideInMyProfile();
-    await myAccountMyProfilePage.validatePasswordIsHidden();
+    await myAccountMyProfilePage.validatePasswordIsHiddenProfile();
 
   })
 

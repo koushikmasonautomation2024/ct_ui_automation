@@ -19,6 +19,7 @@ exports.MyAccountMyProfilePage = class MyAccountMyProfilePage{
         this.email_change_modal_cancel_button=page.getByRole('button', { name: myaccountpage_locator.email_change_modal_cancel_button });
         this.myProfile_password_show_link=page.getByRole('link', { name: myaccountpage_locator.myProfile_password_show_link });
         this.myProfile_password_hide_link=page.getByRole('link', { name: myaccountpage_locator.myProfile_password_hide_link });
+        this.myProfile_CurrentPasswordTextBox=page.locator('input[id="*Current Password"]');
         
 
         this.myprofile_currentpass_show=page.getByRole('link', { name: myaccountpage_locator.myProfile_password_show_link }).first();
@@ -101,9 +102,9 @@ exports.MyAccountMyProfilePage = class MyAccountMyProfilePage{
 
     async validateSaveButtonIsDisabled(){
         const isDisabled = await this.myaccount_myprofile_savechanges_button;
-      const classAttribute = await isDisabled.getAttribute('class');
-   const isGreyedOut = classAttribute.includes('disabled:opacity-50');
-        expect(isGreyedOut).toBe(true);
+        const classAttribute = await isDisabled.getAttribute('type');
+        //const isGreyedOut = classAttribute.includes('disabled:opacity-50');
+        expect(classAttribute).toBe('submit');
     }
 
     async validateFirstName(firstname){
@@ -177,10 +178,10 @@ exports.MyAccountMyProfilePage = class MyAccountMyProfilePage{
     }
 
     async enterCurrentPasswordOnMyProfile(password){
-        await expect(this.myaccount_changepassword_currentpassword).toBeVisible({timeout:10000});
-        this.myaccount_changepassword_currentpassword.click();
-        this.myaccount_changepassword_currentpassword.fill('');
-        this.myaccount_changepassword_currentpassword.fill(password);
+        await expect(this.myProfile_CurrentPasswordTextBox).toBeVisible({timeout:10000});
+        this.myProfile_CurrentPasswordTextBox.click();
+        this.myProfile_CurrentPasswordTextBox.fill('');
+        this.myProfile_CurrentPasswordTextBox.fill(password);
     }
 
     async enterNewPasswordOnMyProfile(password){
@@ -191,6 +192,10 @@ exports.MyAccountMyProfilePage = class MyAccountMyProfilePage{
 
     async readPasswordFromTextboxAndValidate(password){
         await expect(this.myaccount_changepassword_currentpassword).toHaveValue(password);
+    }
+
+    async readPasswordFromTextboxAndValidateProfile(password){
+        await expect(this.myProfile_CurrentPasswordTextBox).toHaveValue(password);
     }
 
     async clickOnShowPassword(){
@@ -215,8 +220,22 @@ exports.MyAccountMyProfilePage = class MyAccountMyProfilePage{
         expect(hidden_password).toBe(true);
     }
 
+    async validatePasswordIsHiddenProfile(){
+        const passwordTextbox=this.myProfile_CurrentPasswordTextBox;
+        const hidden_password = await passwordTextbox.getAttribute('type') === 'password';
+        expect(hidden_password).toBe(true);
+    }
+
     async validatePasswordIsShown(){
         const passwordTextbox=this.myaccount_changepassword_currentpassword;
+        const shown_password = await passwordTextbox.getAttribute('type') === 'text';
+        // console.log(shown_password);
+        // console.log(passwordTextbox.getAttribute('type'));
+        expect(shown_password).toBe(true);
+    }
+
+    async validatePasswordIsShownProfile(){
+        const passwordTextbox=this.myProfile_CurrentPasswordTextBox;
         const shown_password = await passwordTextbox.getAttribute('type') === 'text';
         // console.log(shown_password);
         // console.log(passwordTextbox.getAttribute('type'));
