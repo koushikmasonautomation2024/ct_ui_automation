@@ -1,0 +1,5 @@
+Clicked button with index: 0
+Product Name: Marmot Men's Coastal Hoodie
+Reviews: (17 Reviews)
+Price: $64.99
+Credit Message Not Available For This Product

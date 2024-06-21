@@ -1,9 +1,0 @@
-Address added successfully!
-First Name: Floyd O'Reilly
-Last Name: Floyd O'Reilly
-Address:  5897 Gerson Parks 
-City: Lake Janview,  OH 40080
-Default Address First Name:James Bond
-First Non Default Address First Name:Roshan lal
-Is displayed: true
-Is displayed: true
