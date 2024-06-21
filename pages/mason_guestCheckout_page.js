@@ -41,6 +41,10 @@ const continue_to_review="Continue to Review";
 const review="Review";
 const place_order_button='button[type="submit"]';
 
+const email_us='Email Us:';
+const email_text='Email your question to';
+const mail_id="service@stoneberry.com";
+
 
 exports.GuestCheckOutPage = class GuestCheckOutPage{
     constructor(page){
@@ -57,6 +61,17 @@ exports.GuestCheckOutPage = class GuestCheckOutPage{
         this.search_result_title=page.getByText(search_result_title);
         this.itemCount = page.getByText(item_count);
         this.popular_searches=page.getByText(popular_searches);
+
+        this.makepayment_newAddress=page.locator('section').filter({ hasText: new RegExp(myaccountpage_locator.makepayment_newAddress) });
+        this.makepayment_newaddress_fname=page.getByLabel(myaccountpage_locator.myaccount_addnewaddress_firstname);
+        this.makepayment_newaddress_lname=page.getByLabel(myaccountpage_locator.myaccount_addnewaddress_lastname);
+        this.makepayment_newaddress_address1=page.getByLabel(myaccountpage_locator.myaccount_addnewaddress_addressline1);
+        this.makepayment_newaddress_address2=page.getByRole('button', { name: myaccountpage_locator.makepayment_newAddress_address2 });
+        this.makepayment_addnewaddress_city=page.getByLabel(myaccountpage_locator.myaccount_addnewaddress_city);
+        this.makepayment_newAddress_state=page.locator(myaccountpage_locator.makepayment_newAddress_state);
+        this.makepayment_addnewaddress_zipcode=page.getByLabel(myaccountpage_locator.myaccount_addnewaddress_zipcode);
+        this.makepayment_addnewaddress_phonenumber=page.getByLabel(myaccountpage_locator.myaccount_addnewaddress_phonenumber);
+        this.makepayment_combobox=page.getByRole(myaccountpage_locator.makepayment_combobox);
     }
 
 
@@ -108,7 +123,7 @@ async clickCloseCart(){
 
 
 async validateSecureCheckout(){
-    await expect(this.page.getByText(secure_checkout_header)).toBeVisible();
+    await expect(this.page.getByText(secure_checkout_header)).toBeVisible({timeout:10000});
     await expect(this.page.getByText(sign_in_option)).toBeVisible();
     await expect(this.page.getByText(checkOut_as_guest)).toBeVisible();
     await expect(this.page.getByText(guest_text)).toBeVisible();
@@ -123,7 +138,7 @@ async validateShippingSection(){
     await this.page.$(`//h2[contains(text(), "${shipping}")]`);
     await this.page.$(`//p[contains(text(), "${shipping}")]`);
     await this.page.$(`//p[contains(text(), "${shipping_method}")]`);
-    await expect(this.page.getByText(secure_checkout_link)).toBeVisible();
+    await expect(this.page.getByText(secure_checkout_link)).toBeVisible({timeout:10000});
     await expect(this.page.getByText(return_to_cart_link)).toBeVisible();
     await expect(this.page.getByText(shipping_address)).toBeVisible();
     await expect(this.page.getByText(items_in_cart)).toBeVisible();
@@ -136,7 +151,7 @@ async validateShippingSection(){
 
 async validateReturnToCart(){
     await this.page.getByText(return_to_cart_link).click();
-    await expect(this.page.getByText("Shopping Cart")).toBeVisible();
+    await expect(this.page.getByText("Shopping Cart")).toBeVisible({timeout:10000});
 }
 
 async validatePaymentSection(){
@@ -170,8 +185,7 @@ async validateProgressBar(){
       fontWeight: style.getPropertyValue('font-weight'),
     };
   });
-  console.log(computedStyle.color);
-  console.log(computedStyle.fontWeight);
+  
    // Validate if the text is highlighted with black background and bold
    const isHighlighted = computedStyle.color === 'rgb(15, 23, 42)' 
    //&& computedStyle.backgroundColor === 'rgb(255, 255, 0)' // Adjust this RGB value as per your specific highlight color
@@ -209,7 +223,6 @@ async validateProgressBar(){
     };
   });
 
-  console.log(paymentStyle.color);
 
   const isPaymentGreyedOut = paymentStyle.color === 'rgb(183, 183, 184)';
 
@@ -219,4 +232,70 @@ async validateProgressBar(){
     console.log(`Validation failed: Payment is not greyed out.`);
   }
 }
+
+//FAQ
+async validateCallSection(){
+    await expect(this.page.getByText('Call Us Toll-Free')).toBeVisible({timeout:10000});
+    await expect(this.page.getByRole('link', { name: '1-800-704-5480' }).first()).toBeVisible();
+    await expect(this.page.getByText('6 a.m. to Midnight (CST),')).toBeVisible();
+    await expect(this.page.getByText('7 days a week')).toBeVisible();
+}
+
+async validateEmailSection(){
+    await expect(this.page.getByText(email_us)).toBeVisible({timeout:10000});
+    await expect(this.page.getByText(email_text)).toBeVisible();
+    await expect(this.page.getByRole('link', { name: mail_id })).toBeVisible();
+}
+
+
+async validateNeedHelpSection(){
+    await expect(this.page.getByText('Need Help?')).toBeVisible({timeout:10000});
+    await expect(this.page.getByText('View FAQs:')).toBeVisible();
+    await expect(this.page.getByText('Find your answer by visiting')).toBeVisible();
+    await expect(this.page.getByText('Chat With Us:')).toBeVisible();
+    await expect(this.page.getByText('Send us your question via')).toBeVisible();
+    await expect(this.page.getByRole('link', { name: 'Frequently Asked Questions' })).toBeVisible();
+    await expect(this.page.getByRole('link', { name: 'chat now' })).toBeVisible();
+
+}
+
+
+async validateNewAddressModal(){
+    await expect(this.makepayment_newaddress_fname).toBeVisible();
+    await expect(this.makepayment_newaddress_lname).toBeVisible();
+    await expect(this.makepayment_newaddress_address1).toBeVisible();
+    await expect(this.makepayment_newaddress_address2).toBeVisible();
+    await expect(this.makepayment_addnewaddress_city).toBeVisible();
+    await expect(this.makepayment_newAddress_state).toBeVisible();
+    await expect(this.makepayment_addnewaddress_zipcode).toBeVisible();
+    await expect(this.makepayment_addnewaddress_phonenumber).toBeVisible();
+} 
+
+async verifyShippingOptionVisibility(option) {
+    const selector = `label:has-text("${option}")`; // Using Playwright's :has-text pseudo-selector
+
+    // Check if the element matching the option is visible
+    const element = await this.page.locator(selector).first();
+    await expect(element).toBeVisible();
+  }
+
+  async validateShippingAddressRadioButtons(){
+    //await expect(this.billingAddressHeader).toBeVisible();
+    await expect(this.makepayment_newAddress).toBeVisible();
+    await expect(this.page.locator('section').filter({ hasText: new RegExp(myaccountpage_locator.makepayment_savedAddress) })).toBeVisible();
+}
+
+//if there is an address added
+async validateSavedAddressisSelectedbyDefault(){
+    // Check if the "Saved address" radio button is present and selected by default
+     // Wait for the button to appear on the page
+     const button = await this.page.waitForSelector('button#savedAddress');
+
+     // Get the value of aria-checked attribute
+     const ariaChecked = await button.getAttribute('aria-checked');
+ 
+     // Assert that aria-checked attribute is 'true'
+     expect(ariaChecked).toBeTruthy();
+}
+
 }

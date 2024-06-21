@@ -94,7 +94,30 @@ test('Validate the Progress Bar for the checkout scenario', async ({ page }) => 
 })
 
 
-test.only('Verify Checkout Scenario for the loggedIn user - go to shipping scenario', async ({ page }) => {
+test('Verify Checkout Scenario for the loggedIn user - go to shipping scenario - check progress bar and return to cart', async ({ page }) => {
+  // Navigate to the page containing the popular search terms
+  const guestCheckoutPage = new GuestCheckOutPage(page);
+  const signinPage = new SignInPage(page);
+  const homePage = new HomePage(page);
+  await homePage.clickOnHomePageSignIn();
+  await signinPage.clickSignIn();
+  await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
+  await signinPage.clickSignIn();
+  await page.waitForLoadState('networkidle');
+  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Yellow');
+  await guestCheckoutPage.clickAddToCart();
+  await page.waitForTimeout(5000);
+  await guestCheckoutPage.clickCheckoutOnMyCart();
+  await page.waitForTimeout(5000);
+  //await guestCheckoutPage.validateSecureCheckout();
+  await guestCheckoutPage.validateShippingSection();
+  await guestCheckoutPage.validateProgressBar();
+  await guestCheckoutPage.validateReturnToCart();
+
+})
+
+//Need Help section
+test('Verify Need Help section - Checkout Scenario for the loggedIn user - go to shipping scenario - check progress bar and return to cart', async ({ page }) => {
   // Navigate to the page containing the popular search terms
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const signinPage = new SignInPage(page);
@@ -107,12 +130,58 @@ test.only('Verify Checkout Scenario for the loggedIn user - go to shipping scena
   await guestCheckoutPage.clickAddToCart();
   await page.waitForTimeout(5000);
   await guestCheckoutPage.clickCheckoutOnMyCart();
-  await page.waitForTimeout(5000);
-  //await guestCheckoutPage.validateSecureCheckout();
+  await page.waitForTimeout(10000);
   await guestCheckoutPage.validateShippingSection();
   await guestCheckoutPage.validateProgressBar();
-  await guestCheckoutPage.validateReturnToCart();
+  await guestCheckoutPage.validateNeedHelpSection();
+  await guestCheckoutPage.validateCallSection();
+  await guestCheckoutPage.validateEmailSection();
+  await guestCheckoutPage.validateNewAddressModal();
 
+})
+
+
+test('Verify Shipping Methods - Checkout Scenario for the loggedIn user - go to shipping scenario', async ({ page }) => {
+  // Navigate to the page containing the popular search terms
+  const guestCheckoutPage = new GuestCheckOutPage(page);
+  const signinPage = new SignInPage(page);
+  const homePage = new HomePage(page);
+  await homePage.clickOnHomePageSignIn();
+  await signinPage.clickSignIn();
+  await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
+  await signinPage.clickSignIn();
+  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Yellow');
+  await guestCheckoutPage.clickAddToCart();
+  await page.waitForTimeout(5000);
+  await guestCheckoutPage.clickCheckoutOnMyCart();
+  await page.waitForTimeout(10000);
+  await guestCheckoutPage.validateShippingSection();
+
+// List of shipping options to verify
+  const shippingOptions = ['Priority', 'Standard', 'Express'];
+  for (const option of shippingOptions) {
+    await guestCheckoutPage.verifyShippingOptionVisibility(option);
+  }
+})
+
+
+test.only('Verify Shipping Address Options - Checkout Scenario for the loggedIn user - go to shipping section', async ({ page }) => {
+  // Navigate to the page containing the popular search terms
+  const guestCheckoutPage = new GuestCheckOutPage(page);
+  const signinPage = new SignInPage(page);
+  const homePage = new HomePage(page);
+  await homePage.clickOnHomePageSignIn();
+  await signinPage.clickSignIn();
+  await signinPage.login(process.env.PAYMENT_USERNAME,process.env.PAYMENT_PASSWORD);
+  await signinPage.clickSignIn();
+  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Yellow');
+  await guestCheckoutPage.clickAddToCart();
+  await page.waitForTimeout(5000);
+  await guestCheckoutPage.clickCheckoutOnMyCart();
+  await page.waitForTimeout(10000);
+  await guestCheckoutPage.validateShippingSection();
+  await guestCheckoutPage.validateShippingAddressRadioButtons();
+  await guestCheckoutPage.validateSavedAddressisSelectedbyDefault();
 })
 
 })
