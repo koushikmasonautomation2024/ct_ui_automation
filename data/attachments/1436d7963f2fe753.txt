@@ -1,0 +1,6 @@
+
+3
+Total product items: 3
+Path fill attribute for product 0: #002C4E
+Path fill attribute for product 1: #002C4E
+Path fill attribute for product 2: #002C4E

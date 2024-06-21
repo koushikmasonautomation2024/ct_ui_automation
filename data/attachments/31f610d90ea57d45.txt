@@ -1,0 +1,6 @@
+Link: https://stage--stoneberry-masoncompanies.netlify.app/account/orders/ is clickable: true
+Link: https://stage--stoneberry-masoncompanies.netlify.app/account/addresses/ is clickable: true
+Link: https://stage--stoneberry-masoncompanies.netlify.app/account/myprofile/ is clickable: true
+Link: https://stage--stoneberry-masoncompanies.netlify.app/account/savedcreditcard/ is clickable: true
+Link: https://stage--stoneberry-masoncompanies.netlify.app/account/wishlist/ is clickable: true
+Link: https://stage--stoneberry-masoncompanies.netlify.app/account/myprofile/#changePassword is clickable: true

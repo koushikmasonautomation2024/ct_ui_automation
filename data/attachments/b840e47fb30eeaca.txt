@@ -1,0 +1,38 @@
+Navigation failed: page.goto: net::ERR_ABORTED; maybe frame was detached?
+Call log:
+  - navigating to "https://stage--stoneberry-masoncompanies.netlify.app/", waiting until "load"
+
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_sb_minicart_drawer_auth.spec.js:39:18 {
+  name: 'Error',
+  [Symbol(step)]: {
+    stepId: 'pw:api@8',
+    location: {
+      file: '/home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_sb_minicart_drawer_auth.spec.js',
+      line: 39,
+      column: 18,
+      function: undefined
+    },
+    category: 'pw:api',
+    title: 'page.goto(https://stage--stoneberry-masoncompanies.netlify.app/)',
+    apiName: 'page.goto',
+    params: {
+      url: 'https://stage--stoneberry-masoncompanies.netlify.app/',
+      waitUntil: 'load'
+    },
+    wallTime: 1718950831745,
+    boxedStack: undefined,
+    steps: [],
+    complete: [Function: complete],
+    endWallTime: 1718950926712,
+    error: {
+      message: 'Error: page.goto: net::ERR_ABORTED; maybe frame was detached?\n' +
+        'Call log:\n' +
+        '  \x1B[2m- navigating to "https://stage--stoneberry-masoncompanies.netlify.app/", waiting until "load"\x1B[22m\n',
+      stack: 'Error: page.goto: net::ERR_ABORTED; maybe frame was detached?\n' +
+        'Call log:\n' +
+        '  \x1B[2m- navigating to "https://stage--stoneberry-masoncompanies.netlify.app/", waiting until "load"\x1B[22m\n' +
+        '\n' +
+        '    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_sb_minicart_drawer_auth.spec.js:39:18'
+    }
+  }
+}
