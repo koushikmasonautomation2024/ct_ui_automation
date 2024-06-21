@@ -1,0 +1,26 @@
+Navigation failed: page.waitForLoadState: Test timeout of 90000ms exceeded.
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_myAccountMyProfile.auth.spec.js:42:18 {
+  [Symbol(step)]: {
+    stepId: 'pw:api@9',
+    location: {
+      file: '/home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_myAccountMyProfile.auth.spec.js',
+      line: 42,
+      column: 18,
+      function: undefined
+    },
+    category: 'pw:api',
+    title: 'page.waitForLoadState',
+    apiName: 'page.waitForLoadState',
+    params: { info: [Object] },
+    wallTime: 1718975678012,
+    boxedStack: undefined,
+    steps: [],
+    complete: [Function: complete],
+    endWallTime: 1718975751196,
+    error: {
+      message: 'Error: page.waitForLoadState: Test timeout of 90000ms exceeded.',
+      stack: 'Error: page.waitForLoadState: Test timeout of 90000ms exceeded.\n' +
+        '    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_myAccountMyProfile.auth.spec.js:42:18'
+    }
+  }
+}

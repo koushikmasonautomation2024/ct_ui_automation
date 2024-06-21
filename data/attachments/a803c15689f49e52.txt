@@ -1,9 +1,0 @@
-Address added successfully!
-First Name: Madilyn Emard
-Last Name: Madilyn Emard
-Address: 4592 Hahn Common 
-City: Cortezville,  KS 26825
-Default Address First Name:Hoyt Hammes
-First Non Default Address First Name:James Bond
-Is displayed: true
-Is displayed: true
