@@ -203,5 +203,19 @@ test.describe("Mason Cart Drawer", () => {
     
   })
 
+  //Cart Drawer - Displaying success banners for adding items to the cart - Test Cases ID-SB-Cart050/SB-Cart051
+  test("Cart Drawer - Displaying success banners for adding items to the cart - Verify application shows 'x item added to the cart' message when single quantity is added to the cart.", async ({ page }, testInfo) => {
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const pdpPage = new PDPPage(page);
+    await page.goto(pdp_data.pdp_url);
+    await pdpPage.addtoCart();
+    await pdpPage.miniCartDrawer();
+    const cartDrawerPage = new CartDrawerPage(page);
+    await cartDrawerPage.cartDrawerSuccessMessage();
+    await pdpPage.closeMiniCartDrawer();
+  })
+
 
 })

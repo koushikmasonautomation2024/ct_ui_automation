@@ -90,7 +90,7 @@ test.describe("Mason Cart Page", () => {
     
   })
 
-  //Cart - Edit Item Functionality - Test Cases ID-SB-Cart088
+  //Cart - Edit Item Functionality - Test Cases ID-SB-Cart088/SB-Cart089/SB-Cart090
   test("Cart - Edit Item Functionality - Verify that the Edit Item Drawer functions correctly, allowing users to modify variant options.", async ({ page }, testInfo) => {
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -99,6 +99,7 @@ test.describe("Mason Cart Page", () => {
     await page.goto(pdp_data.pdp_url);
     await pdpPage.clickOnPDPSizeVariantButton();
     await pdpPage.addtoCart();
+    await pdpPage.miniCartDrawer();
     const cartDrawerPage = new CartDrawerPage(page);
     await cartDrawerPage.miniCartClickViewCartButton();
     const cartPage = new CartPage(page);
@@ -107,6 +108,47 @@ test.describe("Mason Cart Page", () => {
     await pdpPage.validatePricingSection();
     await pdpPage.validateCreditMessageSection();
     await pdpPage.sizeChartDisplay();
+    
+  })
+
+  //Cart - Remove Item from Cart - Test Cases ID-SB-Cart078
+  test("Cart - Remove Item from Cart - Verify application shows a success message '<Product Name> was successfully removed from your cart. Undo' at the top of the cart when user removes item from the cart.", async ({ page }, testInfo) => {
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const pdpPage = new PDPPage(page);
+    await page.goto(pdp_data.pdp_url);
+    await pdpPage.clickOnPDPSizeVariantButton();
+    await pdpPage.addtoCart();
+    await pdpPage.miniCartDrawer();
+    const cartDrawerPage = new CartDrawerPage(page);
+    await cartDrawerPage.miniCartClickViewCartButton();
+    const cartPage = new CartPage(page);
+    const removedProdName = await cartPage.getCartFirstItemProductName();
+    await cartPage.clickRemoveCartButton();
+    await cartPage.cartRemoveSuccessMessage(`Removed ${removedProdName} item from the cart`);
+    
+  })
+
+  //Cart - Remove Item from Cart - Test Cases ID-SB-Cart078
+  test("Cart - Remove Item from Cart - Verify clicking on Undo at the end of the success message, application adds product back in the cart.", async ({ page }, testInfo) => {
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const pdpPage = new PDPPage(page);
+    await page.goto(pdp_data.pdp_url);
+    await pdpPage.clickOnPDPSizeVariantButton();
+    await pdpPage.addtoCart();
+    await pdpPage.miniCartDrawer();
+    const cartDrawerPage = new CartDrawerPage(page);
+    await cartDrawerPage.miniCartClickViewCartButton();
+    const cartPage = new CartPage(page);
+    const removedProdName = await cartPage.getCartFirstItemProductName();
+    const totalProdCount = await cartPage.cartGetTotalItemsCount();
+    await cartPage.clickRemoveCartButton();
+    await cartPage.cartRemoveSuccessMessage(`Removed ${removedProdName} item from the cart`);
+    await cartPage.clickCartUndoButton();
+    await cartPage.validateUndoCartItems(totalProdCount);
     
   })
 

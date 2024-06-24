@@ -1,4 +1,5 @@
 import test, { expect } from 'playwright/test';
+import { allowedNodeEnvironmentFlags } from 'process';
 
 const productStockLeft='strong.text-stoneberry-onlyLeft';
 
@@ -290,5 +291,13 @@ exports.CartDrawerPage = class CartDrawerPage {
         const labelText = this.page.locator('label[for="step1"] ~ h2');
         await expect(labelText).toHaveText('Shipping');
 
+    }
+
+    async cartDrawerSuccessMessage(){
+        // Locate the paragraph element with the specified class
+    const messageLocator = this.page.locator('p.text-forestGreen.font-medium.leading-6').nth(1);
+    
+    // Verify the paragraph contains the text "items added to cart"
+    await expect(messageLocator).toContainText('item added to cart');
     }
 }

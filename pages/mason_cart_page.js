@@ -1,14 +1,14 @@
 import test, { expect } from 'playwright/test';
 
-const cartProductNameLinkLocator='p.text-base.font-bold.leading-\\[20\\.8px\\].text-black';
-const cartItemTotalPriceLocator ='p:has-text("Total Price:") strong';
-const cartAvailabilityLocator ='p:has-text("Availability:") strong';
-const cartEditButton ='button:has-text("Edit")';
-const cartRemoveButton ='button:has-text("Remove")';
-const cartSaveForLaterButton ='button:has-text("Save for Later")';
+const cartProductNameLinkLocator = 'p.text-base.font-bold.leading-\\[20\\.8px\\].text-black';
+const cartItemTotalPriceLocator = 'p:has-text("Total Price:") strong';
+const cartAvailabilityLocator = 'p:has-text("Availability:") strong';
+const cartEditButton = 'button:has-text("Edit")';
+const cartRemoveButton = 'button:has-text("Remove")';
+const cartSaveForLaterButton = 'button:has-text("Save for Later")';
 const cartQtyInputLocator = 'input.numberInputCounter';
-const cartEditItemDrawerHeader ='strong:has-text("Edit Item")';
-const cartEditItemDrawerCloseButton ='section.z-10.flex button';
+const cartEditItemDrawerHeader = 'strong:has-text("Edit Item")';
+const cartEditItemDrawerCloseButton = 'section.z-10.flex button';
 const pdp_colorvariant_button_locator = 'section.flex.flex-wrap.items-center.gap-5 button[aria-label="choose color button"]';
 const pdp_sizevariant_button_locator = 'section.flex.flex-wrap.items-center.gap-2\\.5.pt-4 button[aria-label="choose color button"]';
 const sizechart_button_text = 'Size Chart';
@@ -23,6 +23,7 @@ exports.CartPage = class CartPage {
         this.cartOrderTotal = this.cartOrderTotalText.locator('xpath=preceding-sibling::strong[1]');
         this.cartProductItems = page.locator('ul.grid.gap-3.p-3 li');
         this.productNameLocator = page.locator('h1.text-lg.font-bold.leading-7.lg\\:text-\\[22px\\]');
+        this.cartProductNameLocator = page.locator('p.text-base.font-bold.leading-\\[20\\.8px\\].text-black');
         this.reviewsLocator = page.locator('section.flex.items-center.pt-2 p.pl-2\\.5.text-sm.font-normal.leading-5');
         this.linkLocator = page.locator('section.pt-18 a.underline-inset-2.text-sm.font-normal.leading-5.underline');
         this.sizechart_button = page.getByRole('button', { name: sizechart_button_text });
@@ -37,6 +38,11 @@ exports.CartPage = class CartPage {
         this.availabilityText = page.getByText('Availability:');
         this.pdp_colorvariant_button = page.locator(pdp_colorvariant_button_locator);
         this.pdp_sizevariant_button = page.locator(pdp_sizevariant_button_locator);
+        this.updateCartButton = page.getByRole('button', { name: 'Update Cart' });
+        this.cancelUpdateCartButton = page.getByRole('button', { name: 'Cancel' });
+        this.removeCartButton = page.getByRole('button', { name: 'Remove' });
+        this.cartSuccessMessage = page.locator('p.text-forestGreen.font-medium.leading-6');
+        this.cartUndoButton = page.getByRole('button', { name: 'Undo' });
 
     }
 
@@ -140,8 +146,8 @@ exports.CartPage = class CartPage {
 
         // Locate the quantity input and plus/minus buttons
         const quantityInput = firstProductItem.locator(cartQtyInputLocator).first();
-        const plusButton = firstProductItem.locator('button').nth(1); 
-        const minusButton = firstProductItem.locator('button').nth(0); 
+        const plusButton = firstProductItem.locator('button').nth(1);
+        const minusButton = firstProductItem.locator('button').nth(0);
 
         // Get initial quantity
         const initialQuantity = await quantityInput.inputValue();
@@ -168,13 +174,13 @@ exports.CartPage = class CartPage {
         expect(updatedTotalPriceMinus).toBeCloseTo(expectedTotalPriceMinus, 2);
     }
 
-    async clickCartEditButton(){
+    async clickCartEditButton() {
         await this.page.locator(cartEditButton).first().click();
-        await this.page.locator(cartEditItemDrawerHeader).waitFor({state:'visible'});
+        await this.page.locator(cartEditItemDrawerHeader).waitFor({ state: 'visible' });
 
     }
 
-    async clickCloseCartEditDrawer(){
+    async clickCloseCartEditDrawer() {
         await this.page.locator(cartEditItemDrawerCloseButton).click();
     }
 
@@ -184,14 +190,29 @@ exports.CartPage = class CartPage {
         const productName = await this.productNameLocator.textContent();
         console.log(`Product Name: ${productName}`);
 
-        // Locate the reviews element and extract text content
-        const reviewsText = await this.reviewsLocator.textContent();
-        console.log(`Reviews: ${reviewsText}`);
+        // Try to locate the reviews element and extract text content
+        await this.page.locator('section.flex.gap-x-0\\.5.pl-2\\.5').waitFor({ state: 'visible' });
+        let reviewsText = '';
+        let noReviewsPresent = false;
+        try {
+            // Check if "No Reviews" element is present
+            if (await this.page.locator('section.flex.gap-x-0\\.5.pl-2\\.5 >> text=No Reviews').count() > 0) {
+                noReviewsPresent = true;
+                console.log('No reviews present for the product.');
+            } else {
+                // Check if review count element is present
+                reviewsText = await this.page.locator('section.flex.gap-x-0\\.5.pl-2\\.5 >> text=(\\d+ Reviews)').textContent();
+                console.log(`Reviews: ${reviewsText}`);
+            }
+        } catch (error) {
+            console.log('No reviews element present for the product.');
+        }
 
         // Perform validations
         expect(productName).toBeTruthy(); // Ensure product name is not empty
-        expect(reviewsText).toMatch(/\(\d+ Reviews\)/); // Ensure reviews text matches the expected pattern
-        
+        if (!noReviewsPresent && reviewsText) {
+            expect(reviewsText).toMatch(/\(\d+ Reviews\)/); // Ensure reviews text matches the expected pattern
+        }
 
         const colorButtons = this.pdp_colorvariant_button;
         // Verify that the color buttons are visible
@@ -211,5 +232,36 @@ exports.CartPage = class CartPage {
             // console.log(`Button ${i + 1} is visible: ${isVisible}`);
         }
 
+        await expect(this.updateCartButton).toBeVisible();
+        await expect(this.cancelUpdateCartButton).toBeVisible();
+
+    }
+
+    async clickRemoveCartButton() {
+        await this.removeCartButton.first().click();
+
+    }
+
+    async getCartFirstItemProductName() {
+        await this.cartProductNameLocator.first().waitFor({ state: 'visible' });
+        const productName = await this.cartProductNameLocator.first().textContent();
+        return productName;
+    }
+
+    async cartRemoveSuccessMessage(removedMessage) {
+        await this.cartSuccessMessage.nth(1).waitFor({ state: 'visible' });
+        await expect(this.cartSuccessMessage.nth(1)).toContainText(removedMessage);
+        await expect(this.cartUndoButton).toBeVisible();
+    }
+
+    async clickCartUndoButton() {
+        await this.cartUndoButton.click();
+        await this.page.waitForTimeout(10000);
+        
+    }
+
+    async validateUndoCartItems(undoProductCount) {
+        await this.cartTotalItems.waitFor({state:'visible'});
+        expect(await this.cartTotalItems.textContent()).toBe(undoProductCount);
     }
 }

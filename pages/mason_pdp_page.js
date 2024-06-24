@@ -218,14 +218,14 @@ exports.PDPPage = class PDPPage {
         if (sizeVariantCount > 0) {
             let randomIndex;
             let isDisabled;
-            
+
             do {
                 // Select a random button index
                 randomIndex = Math.floor(Math.random() * sizeVariantCount);
                 // Check if the button is disabled
                 isDisabled = await selectSizeVariant.nth(randomIndex).getAttribute('disabled');
             } while (isDisabled !== null); // Continue loop if button is disabled
-    
+
             // Click the randomly selected button that is not disabled
             await selectSizeVariant.nth(randomIndex).click();
             console.log(`Clicked button with index: ${randomIndex}`);
@@ -307,13 +307,13 @@ exports.PDPPage = class PDPPage {
     async clickOnDescription() {
         const desciptionButton = await this.page.locator('button:has-text("Description")');
         const dataState = await desciptionButton.getAttribute('data-state');
-        if(dataState==='open'){
+        if (dataState === 'open') {
             expect(dataState).toMatch('open');
-        }else{
+        } else {
             await desciptionButton.click();
             expect(dataState).toMatch('open');
         }
-        
+
     }
 
     async clickOnSpecifications() {
@@ -332,7 +332,7 @@ exports.PDPPage = class PDPPage {
         await shippingButton.click();
         const dataState = await shippingButton.getAttribute('data-state');
         expect(dataState).toMatch('open');
-        
+
     }
 
     async validateShipping() {
@@ -515,7 +515,7 @@ exports.PDPPage = class PDPPage {
             // Check for the image display
             const productImage = await productItem.locator('section.mt-4.flex.gap-4 a[href]');
             //expect(await productImage.isVisible()).toBe(true);
-            await expect(productImage).toBeVisible({timeout:10000});
+            await expect(productImage).toBeVisible({ timeout: 10000 });
             console.log('Product image is visible');
 
             // Extract other product details
@@ -542,20 +542,24 @@ exports.PDPPage = class PDPPage {
             }
         }
 
-
-
-        }
+    }
 
     async minCartItemCount() {
-            //const miniCartCountElement = this.miniCart.locator('xpath=following-sibling::section');
-            const miniCartCountElement = this.page.locator('section.mt.absolute');
-            // Get the text content of the strong element
-            const miniCartCount = await miniCartCountElement.textContent();
-            expect(miniCartCount).toBeTruthy();
-        }
+        //const miniCartCountElement = this.miniCart.locator('xpath=following-sibling::section');
+        const miniCartCountElement = this.page.locator('section.mt.absolute');
+        // Get the text content of the strong element
+        const miniCartCount = await miniCartCountElement.textContent();
+        expect(miniCartCount).toBeTruthy();
+    }
 
     async closeMiniCartDrawer() {
-            await this.miniCartHeaderText.click();
-        }
+        await this.miniCartHeaderText.click();
+    }
+
+    async getProductQty() {
+        const productQty = this.qtyInputTextBox.inputValue();
+        return productQty;
 
     }
+
+}
