@@ -1,0 +1,26 @@
+An error occurred in test.beforeEach: page.waitForLoadState: Test timeout of 90000ms exceeded.
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_sb_homepage.spec.js:21:23 {
+  [Symbol(step)]: {
+    stepId: 'pw:api@8',
+    location: {
+      file: '/home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_sb_homepage.spec.js',
+      line: 21,
+      column: 23,
+      function: undefined
+    },
+    category: 'pw:api',
+    title: 'page.waitForLoadState',
+    apiName: 'page.waitForLoadState',
+    params: { info: [Object] },
+    wallTime: 1719231140750,
+    boxedStack: undefined,
+    steps: [],
+    complete: [Function: complete],
+    endWallTime: 1719231228126,
+    error: {
+      message: 'Error: page.waitForLoadState: Test timeout of 90000ms exceeded.',
+      stack: 'Error: page.waitForLoadState: Test timeout of 90000ms exceeded.\n' +
+        '    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_sb_homepage.spec.js:21:23'
+    }
+  }
+}

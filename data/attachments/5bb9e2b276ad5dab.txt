@@ -1,2 +1,0 @@
-The numeric part extracted and incremented is: 3
-The numeric part extracted from the section is: 2
