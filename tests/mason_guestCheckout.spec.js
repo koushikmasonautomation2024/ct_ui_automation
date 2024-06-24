@@ -53,7 +53,9 @@ test('Verify Checkout Scenario for the guest user', async ({ page }) => {
   await guestCheckoutPage.clickCheckoutOnMyCart();
   await guestCheckoutPage.validateSecureCheckout();
   await guestCheckoutPage.continueCheckoutAsGuest();
+  await page.waitForTimeout(5000);
   await guestCheckoutPage.validateShippingSection();
+  
 })
 
 test('Verify closing of cart - Checkout Scenario for the guest user', async ({ page }) => {
@@ -74,6 +76,8 @@ test('Verify Checkout Scenario for the guest user - login with no address or cre
   await guestCheckoutPage.validateSecureCheckout();
   await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
   await signinPage.clickSignIn();
+  await page.waitForLoadState('networkidle');
+  await page.waitForTimeout(5000);
   await guestCheckoutPage.validateShippingSection();
   
 
@@ -117,7 +121,7 @@ test('Verify Checkout Scenario for the loggedIn user - go to shipping scenario -
 })
 
 //Need Help section
-test('Verify Need Help section - Checkout Scenario for the loggedIn user - go to shipping scenario - check progress bar and return to cart', async ({ page }) => {
+test.only('Verify Need Help section and New Address - Checkout Scenario for the loggedIn user - go to shipping scenario', async ({ page }) => {
   // Navigate to the page containing the popular search terms
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const signinPage = new SignInPage(page);
@@ -126,6 +130,7 @@ test('Verify Need Help section - Checkout Scenario for the loggedIn user - go to
   await signinPage.clickSignIn();
   await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
   await signinPage.clickSignIn();
+  await page.waitForLoadState('networkidle');
   await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Yellow');
   await guestCheckoutPage.clickAddToCart();
   await page.waitForTimeout(5000);
@@ -137,7 +142,7 @@ test('Verify Need Help section - Checkout Scenario for the loggedIn user - go to
   await guestCheckoutPage.validateCallSection();
   await guestCheckoutPage.validateEmailSection();
   await guestCheckoutPage.validateNewAddressModal();
-
+  await guestCheckoutPage.validateAddNewAddress();
 })
 
 
@@ -165,7 +170,7 @@ test('Verify Shipping Methods - Checkout Scenario for the loggedIn user - go to 
 })
 
 
-test.only('Verify Shipping Address Options - Checkout Scenario for the loggedIn user - go to shipping section', async ({ page }) => {
+test('Verify Shipping Address Options - Checkout Scenario for the loggedIn user - go to shipping section', async ({ page }) => {
   // Navigate to the page containing the popular search terms
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const signinPage = new SignInPage(page);
@@ -182,6 +187,7 @@ test.only('Verify Shipping Address Options - Checkout Scenario for the loggedIn 
   await guestCheckoutPage.validateShippingSection();
   await guestCheckoutPage.validateShippingAddressRadioButtons();
   await guestCheckoutPage.validateSavedAddressisSelectedbyDefault();
+  await guestCheckoutPage.validateSavedAddress();
 })
 
 })

@@ -44,6 +44,7 @@ const place_order_button='button[type="submit"]';
 const email_us='Email Us:';
 const email_text='Email your question to';
 const mail_id="service@stoneberry.com";
+const dropdownSelector = '#addressId';
 
 
 exports.GuestCheckOutPage = class GuestCheckOutPage{
@@ -271,6 +272,28 @@ async validateNewAddressModal(){
     await expect(this.makepayment_addnewaddress_phonenumber).toBeVisible();
 } 
 
+async validateAddNewAddress(){
+    await (this.makepayment_newaddress_fname).click();
+    await (this.makepayment_newaddress_fname).fill('TestFName');
+    await (this.makepayment_newaddress_lname).click();
+    await (this.makepayment_newaddress_lname).fill('TestLName');
+    await (this.makepayment_newaddress_address1).click();
+    await (this.makepayment_newaddress_address1).fill('213 Address');
+    await expect(this.makepayment_newaddress_address2).toBeVisible();
+    await (this.makepayment_addnewaddress_city).click();
+    await (this.makepayment_addnewaddress_city).fill('TestCity');
+    await (this.makepayment_newAddress_state).selectOption('NY');
+   // await (this.makepayment_addnewaddress_zipcode).click();
+    await (this.makepayment_addnewaddress_zipcode).fill('21345');
+    await (this.makepayment_addnewaddress_phonenumber).click();
+    await (this.makepayment_addnewaddress_phonenumber).fill('(234) 567-7888');
+    await expect(this.page.getByLabel('Save this Address')).toBeVisible();
+    await this.page.getByLabel('Save this Address').click();
+    await (this.page.getByRole('button', { name: continue_to_payment })).click();
+    await expect(this.page.getByText('TestFName TestLName')).toBeVisible();
+
+} 
+
 async verifyShippingOptionVisibility(option) {
     const selector = `label:has-text("${option}")`; // Using Playwright's :has-text pseudo-selector
 
@@ -296,6 +319,38 @@ async validateSavedAddressisSelectedbyDefault(){
  
      // Assert that aria-checked attribute is 'true'
      expect(ariaChecked).toBeTruthy();
+}
+
+
+async validateSavedAddress(){
+    
+
+    // Wait for the dropdown to appear on the page
+    await this.page.waitForSelector(dropdownSelector);
+
+    // Get all options from the dropdown
+    const options = await this.page.$$eval(`${dropdownSelector} > option`, options =>
+      options.map(option => ({
+        value: option.value,
+        text: option.innerText.trim()
+      }))
+    );
+
+    // Select a random option from the dropdown
+    const randomIndex = Math.floor(Math.random() * options.length);
+    const randomOption = options[randomIndex];
+
+    // Select the random option by its value
+    await this.page.selectOption(dropdownSelector, randomOption.value);
+
+    // Wait for the address details to appear on the page
+    await this.page.waitForSelector('.ml-6'); // Adjust selector as per your actual structure
+
+    // Get the text content of the address details
+    const addressDetails = await this.page.textContent('.ml-6');
+
+    // Validate that the selected address details are displayed
+    expect(addressDetails).toContain(randomOption.text);
 }
 
 }

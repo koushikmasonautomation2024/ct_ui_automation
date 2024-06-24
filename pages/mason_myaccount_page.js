@@ -1310,7 +1310,7 @@ exports.MyAccountPage = class MyAccountPage{
 
         // Click the "Save Address" button
         await this.myaccount_addnewaddress_saveaddressbutton.click();
-        await this.page.wa
+        
 
         await this.verifyAddressSuggestionModal();
 
