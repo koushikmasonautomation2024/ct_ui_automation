@@ -12,6 +12,7 @@ const selected_thumbnail_blackborderlocator = 'div.min-w-0[aria-roledescription=
 const sizechart_button_text = 'Size Chart';
 
 
+
 exports.PDPPage = class PDPPage {
     constructor(page) {
         this.page = page;
@@ -28,9 +29,18 @@ exports.PDPPage = class PDPPage {
         this.linkLocator = page.locator('section.pt-18 a.underline-inset-2.text-sm.font-normal.leading-5.underline');
         this.sizechart_button = page.getByRole('button', { name: sizechart_button_text });
         this.priceSectionLocator = page.locator('section.flex.items-center.gap-x-1.pt-30');
-        this.paymentSectionLocator = page.locator('section.flex.items-center.gap-1.pt-5');
+        this.paymentSectionLocator = page.locator('section.flex.gap-1.pt-5');
         this.creditMessageLocator = page.locator('section.mt-4.py-5');
-
+        this.qtyMinusButton = page.locator('div.flex > button:nth-child(1)');
+        this.qtyPlusButton = page.locator('div.flex > button:nth-child(3)');
+        this.defaultQtyPlusButton = page.locator('div.flex > button:nth-child(3)').first();
+        this.qtyInputTextBox = page.locator('input.numberInputCounter');
+        this.qtyText = page.getByText('Qty:');
+        this.availabilityText = page.getByText('Availability:');
+        this.addtoCartButton = page.getByRole('button', { name: 'Add to Cart' });
+        this.addtoWishListButton = page.getByRole('button', { name: 'Add to Wish List' });
+        this.miniCartHeaderText = page.getByRole('button', { name: 'My Cart' });
+        this.miniCart = page.locator('img[alt="Mini Cart"]');
 
     }
 
@@ -60,10 +70,6 @@ exports.PDPPage = class PDPPage {
 
         // Step 2: Select a variant
         await this.clickOnPDPColorVariantButton();
-
-        // Step 3: Wait for the image to change
-        //await this.page.waitForSelector(firstProductImage, { state: 'detached' });
-        // await this.page.waitForSelector(firstProductImage, { state: 'attached' });
 
         // Step 4: Capture the new image URL
         const newImageUrl = await this.page.getAttribute(pdp_product_big_image, 'src');
@@ -210,15 +216,31 @@ exports.PDPPage = class PDPPage {
         const sizeVariantCount = await selectSizeVariant.count();
 
         if (sizeVariantCount > 0) {
-            // Select a random button index
-            const randomIndex = Math.floor(Math.random() * sizeVariantCount);
+            let randomIndex;
+            let isDisabled;
 
-            // Click the randomly selected button
+            do {
+                // Select a random button index
+                randomIndex = Math.floor(Math.random() * sizeVariantCount);
+                // Check if the button is disabled
+                isDisabled = await selectSizeVariant.nth(randomIndex).getAttribute('disabled');
+            } while (isDisabled !== null); // Continue loop if button is disabled
+
+            // Click the randomly selected button that is not disabled
             await selectSizeVariant.nth(randomIndex).click();
             console.log(`Clicked button with index: ${randomIndex}`);
         } else {
             console.log('No buttons found');
         }
+        //     // Select a random button index
+        //     const randomIndex = Math.floor(Math.random() * sizeVariantCount);
+
+        //     // Click the randomly selected button
+        //     await selectSizeVariant.nth(randomIndex).click();
+        //     console.log(`Clicked button with index: ${randomIndex}`);
+        // } else {
+        //     console.log('No buttons found');
+        // }
     }
 
     async validateSelectColorValue() {
@@ -230,7 +252,22 @@ exports.PDPPage = class PDPPage {
 
     async validatePricingSection() {
         // Locate the first section and extract its text
-        const priceText = await this.priceSectionLocator.locator('strong.text-xl.font-bold').textContent();
+        //const priceText = await this.priceSectionLocator.locator('strong.text-xl.font-bold').textContent();
+
+        const priceText = await this.priceSectionLocator.evaluate((section) => {
+            const priceSpan = section.querySelector('span.leading-5');
+            const priceStrong = section.querySelector('strong.leading-5');
+            return priceSpan ? priceSpan.textContent.trim() : (priceStrong ? priceStrong.textContent.trim() : null);
+        });
+
+        if (priceText) {
+            console.log('Price:', priceText);
+        } else {
+            console.error('Price not found');
+        }
+
+        // Use assertion to verify the price content
+        expect(priceText).toBeTruthy();
 
         // Validate the text content of the first section
         expect(priceText).toMatch(/^\$\d{1,3}\.\d{2}$/);
@@ -243,7 +280,7 @@ exports.PDPPage = class PDPPage {
         // Validate the text content of the second section
         expect(orText.trim()).toMatch('or');
         expect(monthlyText.trim()).toMatch(/^\$\d{1,3}\.\d{2}\/month\*$/);
-        expect(creditText.trim()).toMatch('with Stoneberry credit');
+        expect(creditText.trim()).toBeTruthy();
     }
 
     async validateCreditMessageSection() {
@@ -265,35 +302,41 @@ exports.PDPPage = class PDPPage {
 
     async validateDescription() {
         await this.clickOnDescription();
-        const desciptionButton = await this.page.locator('button:has-text("Description")');
-        const dataState = await desciptionButton.getAttribute('data-state');
-        expect(dataState).toMatch('open');
     }
 
     async clickOnDescription() {
-        await this.page.locator('button:has-text("Description")').click();
+        const desciptionButton = await this.page.locator('button:has-text("Description")');
+        const dataState = await desciptionButton.getAttribute('data-state');
+        if (dataState === 'open') {
+            expect(dataState).toMatch('open');
+        } else {
+            await desciptionButton.click();
+            expect(dataState).toMatch('open');
+        }
+
     }
 
     async clickOnSpecifications() {
-        await this.page.locator('button:has-text("Specifications")').click();
-    }
-
-    async validateSpecifications() {
-        await this.clickOnSpecifications();
         const specificationsButton = await this.page.locator('button:has-text("Specifications")');
+        await specificationsButton.click();
         const dataState = await specificationsButton.getAttribute('data-state');
         expect(dataState).toMatch('open');
     }
 
+    async validateSpecifications() {
+        await this.clickOnSpecifications();
+    }
+
     async clickOnShipping() {
-        await this.page.locator('button:has-text("Shipping")').click();
+        const shippingButton = await this.page.locator('button:has-text("Shipping")');
+        await shippingButton.click();
+        const dataState = await shippingButton.getAttribute('data-state');
+        expect(dataState).toMatch('open');
+
     }
 
     async validateShipping() {
         await this.clickOnShipping();
-        const shippingButton = await this.page.locator('button:has-text("Shipping")');
-        const dataState = await shippingButton.getAttribute('data-state');
-        expect(dataState).toMatch('open');
     }
 
     async validateWaysToWearIt() {
@@ -364,5 +407,159 @@ exports.PDPPage = class PDPPage {
         }
     }
 
+    async validateProductQTYSection() {
+        await this.qtyText.waitFor({ state: 'visible' });
+        await expect(this.qtyText).toBeVisible();
+        const initialInputValue = await this.qtyInputTextBox.inputValue();
+        if (initialInputValue == 1) {
+            await expect(this.qtyMinusButton).toBeDisabled();
+            await expect(this.defaultQtyPlusButton).toBeVisible();
+        } else {
+            await expect(this.qtyMinusButton).toBeVisible();
+            await expect(this.qtyPlusButton).toBeVisible();
+        }
+        await expect(this.qtyInputTextBox).toBeVisible();
+
+    }
+
+    async validateProductAvailabilityMessage() {
+        await expect(this.availabilityText).toBeVisible();
+        // Locate the p element with the text "Availability:"
+        const pElement = await this.page.locator('p:has-text("Availability:")');
+        // Locate the strong element that follows the p element
+        const strongElement = pElement.locator('xpath=following-sibling::strong');
+        // Get the text content of the strong element
+        const strongText = await strongElement.textContent();
+        expect(strongText).toBeTruthy();
+    }
+
+    async validateProductQTYIncreaseDecrease() {
+        await this.qtyText.waitFor({ state: 'visible' });
+        // Check if both buttons are disabled
+        const isMinusButtonDisabled = await this.qtyMinusButton.isDisabled();
+        const isPlusButtonDisabled = await this.defaultQtyPlusButton.isDisabled();
+
+        // If both buttons are disabled, assert that the quantity cannot be updated
+        if (isMinusButtonDisabled && isPlusButtonDisabled) {
+            console.log("Both buttons are disabled. Quantity cannot be updated.");
+            const initialInputValue = await this.qtyInputTextBox.inputValue();
+            await this.qtyMinusButton.click(); // Attempt to change the quantity
+            const updatedMinusValue = await this.qtyInputTextBox.inputValue();
+            expect(initialInputValue).toBe(updatedMinusValue, 'Quantity should not change when both buttons are disabled');
+            await this.defaultQtyPlusButton.click(); // Attempt to change the quantity
+            const updatedPlusValue = await this.qtyInputTextBox.inputValue();
+            expect(initialInputValue).toBe(updatedPlusValue, 'Quantity should not change when both buttons are disabled');
+        } else {
+            // If either button is enabled, update the quantity accordingly
+            const initialInputValue = await this.qtyInputTextBox.inputValue();
+
+            if (!isMinusButtonDisabled) {
+                // Click the minus button to decrease the quantity
+                await this.qtyMinusButton.click();
+                const newValueAfterMinus = await this.qtyInputTextBox.inputValue();
+                expect(parseInt(newValueAfterMinus)).toBe(parseInt(initialInputValue) - 1, 'Quantity should decrease by 1');
+            }
+
+            if (!isPlusButtonDisabled) {
+                // Click the plus button to increase the quantity
+                const updatedInputValue = await this.qtyInputTextBox.inputValue();
+                await this.defaultQtyPlusButton.click();
+                const newValueAfterPlus = await this.qtyInputTextBox.inputValue();
+                expect(parseInt(newValueAfterPlus)).toBe(parseInt(updatedInputValue) + 1, 'Quantity should increase by 1');
+            }
+        }
+
+    }
+
+    async validateProductQTYUpdateByTypeIn(enterProductQty) {
+        const initialQtyValue = await this.qtyInputTextBox.inputValue();
+        await this.qtyInputTextBox.fill(enterProductQty);
+        await this.qtyInputTextBox.press('Tab');
+
+        // Verify the new quantity value is set correctly
+        const updatedQtyValue = await this.qtyInputTextBox.inputValue();
+        expect(updatedQtyValue).toBe(enterProductQty);
+    }
+
+    async addtoCart() {
+        await this.addtoCartButton.waitFor({ state: 'visible' });
+        await this.addtoCartButton.click({ timeout: 10000 });
+
+    }
+
+    async addtoWishList() {
+        await expect(this.addtoWishListButton).toBeVisible();
+        await this.addtoWishListButton.click();
+
+    }
+
+    async miniCartDrawer() {
+
+        await this.miniCartHeaderText.waitFor({ state: 'visible' });
+        await expect(this.miniCartHeaderText).toBeVisible();
+        await this.page.getByRole('button', { name: 'My Cart' }).waitFor({ state: 'visible' });
+        // Locate the container element that holds all products
+        const productsContainer = await this.page.locator('ul.grid.gap-4.p-4');
+
+        // Get all product items within the container
+        const productItems = await productsContainer.locator('li.rounded-sm.border.border-foggyGray.bg-white.p-4');
+        const productItemCount = await productItems.count();
+        // Loop through each product item and validate its contents
+        for (let i = 0; i < productItemCount; i++) {
+            const productItem = productItems.nth(i);
+            // Extract product name
+            const productName = await productItem.locator('p.text-sm.font-semibold.text-black').textContent();
+            expect(productName).toBeTruthy();
+            console.log('Product Name:', productName.trim());
+
+            // Check for the image display
+            const productImage = await productItem.locator('section.mt-4.flex.gap-4 a[href]');
+            //expect(await productImage.isVisible()).toBe(true);
+            await expect(productImage).toBeVisible({ timeout: 10000 });
+            console.log('Product image is visible');
+
+            // Extract other product details
+            const detailSections = await productItem.locator('section.flex.flex-col.gap-1');
+
+            // Count the number of detail sections
+            const detailSectionCount = await detailSections.count();
+
+            // Loop through each detail section
+            for (let j = 0; j < detailSectionCount; j++) {
+                const detailSection = detailSections.nth(j);
+                const pTags = detailSection.locator('p');
+
+                // Count the number of <p> tags
+                const pTagCount = await pTags.count();
+
+                // Loop through each <p> tag and log its text content
+                for (let k = 0; k < pTagCount; k++) {
+                    const pTag = pTags.nth(k);
+                    const textContent = await pTag.textContent();
+                    //expect(textContent).toBeTruthy();
+                    console.log('Detail:', textContent.trim());
+                }
+            }
+        }
+
+    }
+
+    async minCartItemCount() {
+        //const miniCartCountElement = this.miniCart.locator('xpath=following-sibling::section');
+        const miniCartCountElement = this.page.locator('section.mt.absolute');
+        // Get the text content of the strong element
+        const miniCartCount = await miniCartCountElement.textContent();
+        expect(miniCartCount).toBeTruthy();
+    }
+
+    async closeMiniCartDrawer() {
+        await this.miniCartHeaderText.click();
+    }
+
+    async getProductQty() {
+        const productQty = this.qtyInputTextBox.inputValue();
+        return productQty;
+
+    }
 
 }

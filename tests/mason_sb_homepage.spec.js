@@ -4,6 +4,7 @@ import {HomePageNew} from '../pages/mason_home_page1';
 import {SignInPageNew} from '../pages/mason_signin_page1';
 import {MyAccountPage} from '../pages/mason_myaccount_page';
 import { allure } from 'allure-playwright';
+require('dotenv').config();
 
 const homepage_data =JSON.parse(JSON.stringify(require('../test_data/mason_sb_home_page_data.json')));
 const signinpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_signin_page_data.json')));
@@ -11,15 +12,13 @@ const myaccountpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_
 const savedAddress = myaccountpage_data.myaccount_newaddress_firstname +" "+ myaccountpage_data.myaccount_newaddress_lastname +" "+ myaccountpage_data.myaccount_newaddress_addressline1;
 const editAddress = myaccountpage_data.myaccount_editaddress_firstname +" "+ myaccountpage_data.myaccount_editaddress_lastname +" "+ myaccountpage_data.myaccount_editaddress_addressline1;
 
-test.describe("Mason Commerce Tool Site", ()=>{
+test.describe("Mason Guest User Home Page", ()=>{
 
    test.beforeEach(async({page,isMobile},testInfo)=>{
     test.slow();
        try {
            await page.goto(process.env.WEB_URL);
            await page.waitForLoadState('networkidle');
-           const masonHomePageScreenshot = await page.screenshot();
-           await testInfo.attach('screenshot', { body: masonHomePageScreenshot, contentType: 'image/png' });
        } catch (error) {
            // Handle the error here
            console.error("An error occurred in test.beforeEach:", error);
@@ -50,7 +49,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     await homePage.staticPageNavigation(homepage_data.staticPageUrl);
     await homePage.clickSiteLogo(homepage_data.homepage_sitename_logo);
     await homePage.homePageRedirectionValidation(homepage_data.homePageUrl);
-    console.log(testInfo.status);
+    //console.log(testInfo.status);
           
   })
 
@@ -61,7 +60,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     await homePage.staticPageNavigation(homepage_data.pdpURL);
     await homePage.pageScrollBy(homepage_data.scrollXAxis,homepage_data.scrollYAxis);
     await homePage.displayPDPStickyAddtoCartButton();
-    console.log(testInfo.status);
+    //console.log(testInfo.status);
           
   })
 
@@ -73,7 +72,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     await homePage.mouseHoverMegaMenu(homepage_data.categoryNameL1);
     await homePage.clickOnMegaMenuL2Category(homepage_data.l2CategoryName);
     await homePage.validateCLPNavigationUrl(homepage_data.expectedclpUrl);
-    console.log(testInfo.status);
+    //console.log(testInfo.status);
           
   })
 
@@ -84,7 +83,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     await homePage.displaySearchBar();
     await homePage.enterSearchTerm(homepage_data.searchterm);
     await homePage.hiddenSearchPlaceholderText();
-    console.log(testInfo.status);
+    //console.log(testInfo.status);
           
   })
 
@@ -95,7 +94,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     await homePage.clickOnHomePageSignIn();
     const signinPage = new SignInPageNew(page);
     await signinPage.validateSignInAccountDrawer();
-    console.log(testInfo.status);
+    //console.log(testInfo.status);
           
   })
 
@@ -107,7 +106,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     await homePage.clickMiniCartIcon();
     await homePage.validatedEmptyMiniCartDrawer();
     await homePage.emptyMiniCartDrawerSection();
-    console.log(testInfo.status);
+    //console.log(testInfo.status);
           
   })
 
@@ -119,7 +118,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     await homePage.validateFooterNewsLetterSignUpEmailContent(homepage_data.footer_newsletterSignUpEmailContent);
     await homePage.displayFooterSignUpButton();
     await homePage.signUpModalDisplayValidation(homepage_data.signup_email);
-    console.log(testInfo.status);
+    //console.log(testInfo.status);
           
   })
 
@@ -139,7 +138,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     await homePage.displayFooterLinks(homepage_data.homepage_footer_sociallink1);
     await homePage.displayFooterLinks(homepage_data.homepage_footer_sociallink2);
     await homePage.displayFooterLinks(homepage_data.homepage_footer_sociallink3);
-    console.log(testInfo.status);
+    //console.log(testInfo.status);
           
   })
 
@@ -151,7 +150,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     await homePage.displayFooterLinks(homepage_data.homepage_footer_sociallink1);
     await homePage.displayFooterLinks(homepage_data.homepage_footer_sociallink2);
     await homePage.displayFooterLinks(homepage_data.homepage_footer_sociallink3);
-    console.log(testInfo.status);
+    //console.log(testInfo.status);
           
   })
 
@@ -162,7 +161,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     await homePage.validateOtherSitesLinks(homepage_data.footer_otherSitesLinkName1);
     await homePage.validateOtherSitesLinks(homepage_data.footer_otherSitesLinkName2);
     await homePage.validateOtherSitesSection(homepage_data.footer_otherSitesSectionLabelName);
-    console.log(testInfo.status);
+    //console.log(testInfo.status);
           
   })
 
@@ -174,7 +173,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     await homePage.validateCopyrightLegalText(homepage_data.footer_copyrightLegalText1);
     await homePage.validateCopyrightLegalText(homepage_data.footer_copyrightLegalText2);
     await homePage.validateCopyrightLegalText(homepage_data.footer_copyrightLegalText3);
-    console.log(testInfo.status);
+    //console.log(testInfo.status);
           
   })
 
@@ -191,7 +190,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     await homePage.categoryLinkValidation(homepage_data.category_image2_alttext);
     await homePage.categoryLinkValidation(homepage_data.category_image3_alttext);
     await homePage.categoryLinkValidation(homepage_data.category_image4_alttext);
-    console.log(testInfo.status);
+    //console.log(testInfo.status);
           
   })
 
@@ -200,7 +199,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     //test.slow();
     const homePage = new HomePageNew(page);
     await homePage.displayHeroBanner(homepage_data.homepage_second_herobanner_name);
-    console.log(testInfo.status);
+    //console.log(testInfo.status);
           
   })
 
@@ -210,7 +209,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     const homePage = new HomePageNew(page);
     await homePage.getTopCategoryImageTilesCount();
     await homePage.topCategoriesImageDisplayValidation();
-    console.log(testInfo.status);
+    //console.log(testInfo.status);
           
   })
 
@@ -227,7 +226,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     await homePage.categoryLinkValidation(homepage_data.topbrand_image2_alttext);
     await homePage.categoryLinkValidation(homepage_data.topbrand_image3_alttext);
     await homePage.categoryLinkValidation(homepage_data.topbrand_image4_alttext);
-    console.log(testInfo.status);
+    //console.log(testInfo.status);
           
   })
 
@@ -237,7 +236,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     const homePage = new HomePageNew(page);
     await homePage.getBrandsImageTilesCount();
     await homePage.brandsImageDisplayValidation();
-    console.log(testInfo.status);
+    //console.log(testInfo.status);
           
   })
 
@@ -247,7 +246,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     const homePage = new HomePageNew(page);
     await homePage.seasonalSavingsAndViewAlllink();
     await homePage.displayHeroBanner(homepage_data.homepage_third_herobanner_name);
-    console.log(testInfo.status);
+    //console.log(testInfo.status);
           
   })
 
@@ -260,7 +259,7 @@ test.describe("Mason Commerce Tool Site", ()=>{
     await signinPage.login(process.env.INVALIDUSERNAME, process.env.INVALIDPASSWORD);
     await signinPage.clickSignIn();
     await signinPage.invalidUserLoginValidation(signinpage_data.invalid_login_errormessage);
-    console.log(testInfo.status);
+    //console.log(testInfo.status);
           
   })
 

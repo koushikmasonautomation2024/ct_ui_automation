@@ -1,4 +1,5 @@
 import test, { expect } from 'playwright/test';
+import { faker } from '@faker-js/faker/locale/en';
 const myaccountpage_locator =JSON.parse(JSON.stringify(require('../object_repositories/mason_myaccount_page_repo.json')));
 const accountpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_sb_myaccount_page_data.json')));
 
@@ -46,6 +47,8 @@ const email_text='Email your question to';
 const mail_id="service@stoneberry.com";
 const dropdownSelector = '#addressId';
 
+const gift_message='Gift Message (optional)';
+
 
 exports.GuestCheckOutPage = class GuestCheckOutPage{
     constructor(page){
@@ -81,22 +84,25 @@ async selectAnOptionFromSearchSuggestion(search_text){
     await this.search_placeholder.fill(search_text);
     // Wait for the autocomplete suggestions to appear
     await this.page.waitForSelector(auto_suggestion_container); // replace with the appropriate selector for your suggestion list
-
+    
   // Get the count of suggestions
-    const suggestions = await this.page.$$(auto_suggestion_container); // replace with the appropriate selector for your suggestion list
-
+     // replace with the appropriate selector for your suggestion list
+    
+    await this.page.waitForSelector(auto_suggestion_container,{state:"visible"});
   // Use expect to ensure the count is 10
+    const suggestions = await this.page.$$(auto_suggestion_container);
      expect(suggestions).toHaveLength(10);
      // Click on the first suggestion (adjust the selector as per your UI)
     if (suggestions.length > 0) {
-        await suggestions[0].click(); // Click on the first suggestion
+        await suggestions[0].click(); 
+        await this.page.waitForTimeout(2000);// Click on the first suggestion
     } else {
         throw new Error('No suggestions found');
     }
 
     // Wait for a specific condition related to the search result page (example)
-    await this.page.waitForSelector('h1'); // Wait for any h1 element (adjust as per your UI)
-
+    await this.page.waitForSelector('h1', { visible: true }); // Wait for any h1 element (adjust as per your UI)
+    //await this.page.$(`//h1[contains(text(), "${search_text}")]`).waitFor({state:"visible"});
     // Example: Check if an h1 element containing search_text is visible
     const searchResultH1 = await this.page.$(`//h1[contains(text(), "${search_text}")]`);
     if (!searchResultH1) {
@@ -156,10 +162,11 @@ async validateReturnToCart(){
 }
 
 async validatePaymentSection(){
+    //await this.page.$(`//h2[contains(text(), "${payment}")]`).waitFor({ state: 'visible' });
     await this.page.$(`//h2[contains(text(), "${payment}")]`);
     await this.page.$(`//h1[contains(text(), "${payment}")]`);
     await this.page.$(`//p[contains(text(), "${payment_method}")]`);
-    await expect(this.page.getByRole('button', { name: continue_to_review })).toBeVisible();
+    await (this.page.getByRole('button', { name: continue_to_review })).waitFor({ state: 'visible' });
 }
 
 async validateReviewSection(){
@@ -273,26 +280,95 @@ async validateNewAddressModal(){
 } 
 
 async validateAddNewAddress(){
-    await (this.makepayment_newaddress_fname).click();
-    await (this.makepayment_newaddress_fname).fill('TestFName');
-    await (this.makepayment_newaddress_lname).click();
-    await (this.makepayment_newaddress_lname).fill('TestLName');
-    await (this.makepayment_newaddress_address1).click();
-    await (this.makepayment_newaddress_address1).fill('213 Address');
-    await expect(this.makepayment_newaddress_address2).toBeVisible();
-    await (this.makepayment_addnewaddress_city).click();
-    await (this.makepayment_addnewaddress_city).fill('TestCity');
-    await (this.makepayment_newAddress_state).selectOption('NY');
-   // await (this.makepayment_addnewaddress_zipcode).click();
-    await (this.makepayment_addnewaddress_zipcode).fill('21345');
-    await (this.makepayment_addnewaddress_phonenumber).click();
-    await (this.makepayment_addnewaddress_phonenumber).fill('(234) 567-7888');
+  //   await (this.makepayment_newaddress_fname).click();
+  //   await (this.makepayment_newaddress_fname).fill('TestFName');
+  //   await (this.makepayment_newaddress_lname).click();
+  //   await (this.makepayment_newaddress_lname).fill('TestLName');
+  //   await (this.makepayment_newaddress_address1).click();
+  //   await (this.makepayment_newaddress_address1).fill('213 Address');
+  //   await expect(this.makepayment_newaddress_address2).toBeVisible();
+  //   await (this.makepayment_addnewaddress_city).click();
+  //   await (this.makepayment_addnewaddress_city).fill('TestCity');
+  //   await (this.makepayment_newAddress_state).selectOption('NY');
+  //  // await (this.makepayment_addnewaddress_zipcode).click();
+  //   await (this.makepayment_addnewaddress_zipcode).fill('21345');
+  //   await (this.makepayment_addnewaddress_phonenumber).click();
+  //   await (this.makepayment_addnewaddress_phonenumber).fill('(234) 567-7888');
+  // Generate random data
+  const firstName = faker.person.firstName();
+  const lastName = faker.person.lastName();
+  const address = faker.location.streetAddress();
+  const city = faker.location.city();
+  //const state = fakerEN_US.location.state();
+  const state = faker.location.state({ abbreviated: true })
+  const zipCode = faker.location.zipCode().substring(0, 5); // Get only the first 5 digits
+  const phoneNumber = faker.phone.number();
+  const phoneNumberPattern = new RegExp(/\(\d{3}\) \d{3}-\d{4}/);
+  //await this.page.click('#newAddress');
+  // Fill in the required fields
+    await this.page.type('#firstName', firstName);
+    await this.page.type('#lastName', lastName);
+    await this.page.type('#address', address);
+    await this.page.type('#city', city);
+    await this.page.selectOption('#state', state);
+    await this.page.type('#zipCode', zipCode);
+    await this.page.type('#phoneNumber', phoneNumber);
     await expect(this.page.getByLabel('Save this Address')).toBeVisible();
     await this.page.getByLabel('Save this Address').click();
-    await (this.page.getByRole('button', { name: continue_to_payment })).click();
-    await expect(this.page.getByText('TestFName TestLName')).toBeVisible();
+    //await (this.page.getByRole('button', { name: continue_to_payment })).click();
+    await this.page.getByRole('button', { name: 'Continue to Payment' }).click();
+    //await this.page.getByRole('button', { name: 'Continue to Payment' }).click();
+    await this.page.waitForTimeout(5000);
+   //await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
+
+   const headingVisible = await this.page.waitForSelector('h2', { text: 'Verify Your Address', visible: true });
+
+   if (headingVisible) {
+     // If heading is visible, find the section with text 'Use Original Address' and click it
+     const section = await this.page.locator('section').filter({ hasText: /^Use Original Address$/ }).first();
+     if (section) {
+       await section.click();
+       await this.page.click('#r2');
+       await this.page.getByRole("button",{ name: 'Continue' }).click();
+       console.log('Clicked on "Use Original Address" section.');
+     } else {
+       console.log('Could not find section with text "Use Original Address".');
+     }
+   } else {
+     console.log('Heading "Verify Your Address" is not visible.');
+     await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
+   }
 
 } 
+
+async validateEditAddress(){
+  const state = faker.location.state({ abbreviated: true })
+  await this.page.getByRole("button",{ name: 'Edit' }).click();
+  await this.page.selectOption('#state', state);
+
+  await this.page.getByRole('button', { name: 'Continue to Payment' }).click();
+    //await this.page.getByRole('button', { name: 'Continue to Payment' }).click();
+    await this.page.waitForTimeout(5000);
+   //await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
+
+   const headingVisible = await this.page.waitForSelector('h2', { text: 'Verify Your Address', visible: true });
+
+   if (headingVisible) {
+     // If heading is visible, find the section with text 'Use Original Address' and click it
+     const section = await this.page.locator('section').filter({ hasText: /^Use Original Address$/ }).first();
+     if (section) {
+       await section.click();
+       await this.page.click('#r2');
+       await this.page.getByRole("button",{ name: 'Continue' }).click();
+       console.log('Clicked on "Use Original Address" section.');
+     } else {
+       console.log('Could not find section with text "Use Original Address".');
+     }
+   } else {
+     console.log('Heading "Verify Your Address" is not visible.');
+     await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
+    }
+}
 
 async verifyShippingOptionVisibility(option) {
     const selector = `label:has-text("${option}")`; // Using Playwright's :has-text pseudo-selector
@@ -351,6 +427,43 @@ async validateSavedAddress(){
 
     // Validate that the selected address details are displayed
     expect(addressDetails).toContain(randomOption.text);
+}
+
+
+async validateGiftMessage(){
+  await this.page.getByRole('button', { name: gift_message }).click();
+  //await expect(page.getByPlaceholder(' ')).toBeVisible();
+  await expect(this.page.getByText(gift_message)).toBeVisible();
+}
+
+
+async validateItemsInCartSection(){
+   // Wait for the button with specific name to be visible
+   //const button = await this.page.waitForSelector('button[data-radix-collection-item]:has-text("Items in Your Cart")', { visible: true });
+
+   const button= await this.page.getByRole('button', { name: 'Items in Your Cart' });
+   // Function to check initial data-state
+   const isDataStateClosed = async () => {
+     const dataState = await button.getAttribute('data-state');
+     return dataState === 'closed';
+   };
+ 
+   // Assert initial state using expect
+   const initialDataStateClosed = await isDataStateClosed();
+   expect(initialDataStateClosed).toBe(true); // Assert that initial state is closed
+ 
+   // Click on the button to change data-state
+   await button.click();
+ 
+   // Wait for the data-state to change to 'open'
+  //  await this.page.waitForFunction(() => {
+  //    const button = document.querySelector('button[data-radix-collection-item]:has-text("Items in Your Cart")');
+  //    return button.getAttribute('data-state') === 'open';
+  //  });
+ 
+   // Assert data-state changed using expect
+   const finalDataState = await button.getAttribute('data-state');
+   expect(finalDataState).toBe('open'); // Assert that final state is open
 }
 
 }

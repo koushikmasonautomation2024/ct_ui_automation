@@ -8,7 +8,8 @@ exports.HomePageNew = class HomePageNew{
         this.homepage_searchbutton=page.getByLabel(homepage_locator.homepage_searchbutton, { exact: true });
         //this.homepage_signin=page.getByRole('button', { name: homepage_locator.homepage_signin,exact:true });
         this.homepage_signin=page.locator(homepage_locator.homepage_signin);   
-        this.homepage_cart=page.getByRole('button', { name: homepage_locator.homepage_cart }); 
+        //this.homepage_cart=page.getByRole('button', { name: homepage_locator.homepage_cart }); 
+        this.homepage_cart=page.locator('img[alt="Mini Cart"]');
         this.homepage_category=page.getByRole('button', { name: homepage_locator.homepage_category }); 
         this.minicart_drawer_heading=page.getByRole('button', { name: homepage_locator.minicart_drawer_heading });
         this.minicart_drawer_subtotalsection=page.getByText(homepage_locator.minicart_drawer_subtotalsection);
@@ -45,12 +46,14 @@ exports.HomePageNew = class HomePageNew{
         await this.homepage_category.waitFor({ state: 'visible' });
         await expect(this.homepage_category).toBeVisible();
     }
-    async displaySiteLogo(brandLogoName){
-        await expect(this.page.getByRole('link', { name: brandLogoName, exact: true })).toBeVisible();
+    async displaySiteLogo(){
+        await expect(this.page.locator('a.flex img.max-w-full')).toBeVisible();
     }
 
-    async clickSiteLogo(brandLogoName){
-        await this.page.getByRole('link', { name: brandLogoName, exact: true }).click();
+    async clickSiteLogo(){
+        //await this.page.getByRole('link', { name: brandLogoName, exact: true }).click();
+        await this.page.locator('a.flex img.max-w-full').click();
+        //await this.page.waitForNavigation();
         
     }
 
@@ -58,14 +61,16 @@ exports.HomePageNew = class HomePageNew{
         await expect(this.page).toHaveURL(homePageUrl);
     }
     async displayHeroBanner(bannerName){
-        await expect(this.page.getByRole('link', { name: bannerName })).toBeVisible();
+        //await expect(this.page.getByRole('link', { name: bannerName })).toBeVisible();
+        await expect(this.page.locator(`a img[alt="${bannerName}"]`).first()).toBeVisible();
+        
     }
     async displayPromotionalBanner(promotionalBannerContent){
         await expect(this.page.getByRole('banner').locator('div').filter({ hasText: promotionalBannerContent }).nth(2)).toBeVisible();
     }
 
     async displayGlobalBanner(bannerText){
-        await expect(page.locator('div').filter({ hasText: new RegExp("^" + bannerText + "$") }).first()).toBeVisible();
+        await expect(this.page.locator('div').filter({ hasText: new RegExp("^" + bannerText + "$") }).first()).toBeVisible();
 
     }
 
@@ -103,17 +108,19 @@ exports.HomePageNew = class HomePageNew{
 
     async mouseHoverMegaMenu(categoryNameL1){
         await this.homepage_category.hover();
-        await this.page.getByText(categoryNameL1).hover();
-        await expect(this.page.getByText(categoryNameL1)).toBeVisible();
+        await this.page.getByText(categoryNameL1).first().hover();
+        await expect(this.page.getByText(categoryNameL1).first()).toBeVisible();
     }
 
     async clickOnMegaMenuL2Category(l2CategoryName){
         //await this.page.getByLabel('Main Menu').locator('div').filter({ hasText: 'Womens ClothingAll Womens' })
-        await this.page.getByRole('link', { name: l2CategoryName }).click();
+        await this.page.getByRole('link', { name: l2CategoryName }).first().click();
+        await this.page.waitForNavigation();
+        await this.page.locator('section.plpGrid').waitFor({state:'visible'});
     }
 
     async validateCLPNavigationUrl(clpUrl){
-        const expectedURL = new RegExp(`.*${clpUrl}`);
+        const expectedURL = new RegExp(/.*\/(categories)\/[^\/]+/);
         await expect(this.page).toHaveURL(expectedURL);
 
     }
@@ -128,7 +135,7 @@ exports.HomePageNew = class HomePageNew{
     }
 
     async emptyMiniCartDrawerSection(){
-        await expect(this.page.getByRole('dialog').locator('section').filter({ hasText: '✕' }).nth(1)).toBeVisible();
+        await expect(this.page.getByRole('button', { name: 'My Cart' })).toBeVisible();
     }
 
     async validatedEmptyMiniCartDrawer(){

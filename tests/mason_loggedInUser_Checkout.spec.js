@@ -15,7 +15,7 @@ const myaccountpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_
 const savedAddress = myaccountpage_data.myaccount_newaddress_firstname +" "+ myaccountpage_data.myaccount_newaddress_lastname +" "+ myaccountpage_data.myaccount_newaddress_addressline1;
 const editAddress = myaccountpage_data.myaccount_editaddress_firstname +" "+ myaccountpage_data.myaccount_editaddress_lastname +" "+ myaccountpage_data.myaccount_editaddress_addressline1;
 
-test.describe("Mason Guest Checkout Scenario", ()=>{
+test.describe("Mason LoggedIn User Checkout Scenario", ()=>{
 
    test.beforeEach(async({page,isMobile},testInfo)=>{
     test.slow();
@@ -44,28 +44,6 @@ test.describe("Mason Guest Checkout Scenario", ()=>{
  
 
 
-
-test('Verify Checkout Scenario for the guest user', async ({ page }) => {
-  // Navigate to the page containing the popular search terms
-  const guestCheckoutPage = new GuestCheckOutPage(page);
-  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Yellow');
-  await guestCheckoutPage.clickAddToCart();
-  await guestCheckoutPage.clickCheckoutOnMyCart();
-  await guestCheckoutPage.validateSecureCheckout();
-  await guestCheckoutPage.continueCheckoutAsGuest();
-  await page.waitForTimeout(5000);
-  await guestCheckoutPage.validateShippingSection();
-  
-})
-
-test('Verify closing of cart - Checkout Scenario for the guest user', async ({ page }) => {
-  // Navigate to the page containing the popular search terms
-  const guestCheckoutPage = new GuestCheckOutPage(page);
-  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Yellow');
-  await guestCheckoutPage.clickAddToCart();
-  await guestCheckoutPage.clickCloseCart();
-})
-
 test('Verify Checkout Scenario for the guest user - login with no address or credit - go to shipping scenario', async ({ page }) => {
   // Navigate to the page containing the popular search terms
   const guestCheckoutPage = new GuestCheckOutPage(page);
@@ -83,19 +61,7 @@ test('Verify Checkout Scenario for the guest user - login with no address or cre
 
 })
 
-test('Validate the Progress Bar for the checkout scenario', async ({ page }) => {
-  // Navigate to the page containing the popular search terms
-  const guestCheckoutPage = new GuestCheckOutPage(page);
-  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Yellow');
-  await guestCheckoutPage.clickAddToCart();
-  await page.waitForTimeout(5000);
-  await guestCheckoutPage.clickCheckoutOnMyCart();
-  await guestCheckoutPage.validateSecureCheckout();
-  await guestCheckoutPage.continueCheckoutAsGuest();
-  await page.waitForTimeout(1000);
-  await guestCheckoutPage.validateShippingSection();
-  await guestCheckoutPage.validateProgressBar();
-})
+
 
 
 test('Verify Checkout Scenario for the loggedIn user - go to shipping scenario - check progress bar and return to cart', async ({ page }) => {
@@ -146,7 +112,7 @@ test('Verify Need Help section - Checkout Scenario for the loggedIn user - go to
 })
 
 //Need Help section
-test.only('Verify add/edit New Address - Checkout Scenario for the loggedIn user - go to shipping scenario', async ({ page }) => {
+test('Verify add/edit New Address - Checkout Scenario for the loggedIn user - go to shipping scenario', async ({ page }) => {
   // Navigate to the page containing the popular search terms
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const signinPage = new SignInPage(page);
@@ -219,6 +185,55 @@ test('Verify Shipping Address Options - Checkout Scenario for the loggedIn user 
   await guestCheckoutPage.validateShippingAddressRadioButtons();
   await guestCheckoutPage.validateSavedAddressisSelectedbyDefault();
   await guestCheckoutPage.validateSavedAddress();
+})
+
+test('Verify Gift Message Options - Checkout Scenario for the loggedIn user - go to shipping section', async ({ page }) => {
+  // Navigate to the page containing the popular search terms
+  const guestCheckoutPage = new GuestCheckOutPage(page);
+  const signinPage = new SignInPage(page);
+  const homePage = new HomePage(page);
+  await homePage.clickOnHomePageSignIn();
+  await signinPage.clickSignIn();
+  await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
+  await signinPage.clickSignIn();
+  await page.waitForTimeout(5000);
+  await page.waitForLoadState('networkidle');
+  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Marion');
+  await page.waitForTimeout(5000);
+  await page.waitForLoadState('networkidle');
+  
+  await guestCheckoutPage.clickAddToCart();
+  await page.waitForTimeout(5000);
+  await page.waitForLoadState('networkidle');
+  await guestCheckoutPage.clickCheckoutOnMyCart();
+  await page.waitForTimeout(10000);
+  await guestCheckoutPage.validateShippingSection();
+  await guestCheckoutPage.validateGiftMessage();
+})
+
+test.only('Verify Items in Cart section - open/close - Checkout Scenario for the loggedIn user - go to shipping section', async ({ page }) => {
+  // Navigate to the page containing the popular search terms
+  const guestCheckoutPage = new GuestCheckOutPage(page);
+  const signinPage = new SignInPage(page);
+  const homePage = new HomePage(page);
+  await homePage.clickOnHomePageSignIn();
+  await signinPage.clickSignIn();
+  await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
+  await signinPage.clickSignIn();
+  await page.waitForTimeout(5000);
+  await page.waitForLoadState('networkidle');
+  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Neck');
+  await page.waitForTimeout(5000);
+  await page.waitForLoadState('networkidle');
+  
+  await guestCheckoutPage.clickAddToCart();
+  await page.waitForTimeout(5000);
+  await page.waitForLoadState('networkidle');
+  await guestCheckoutPage.clickCheckoutOnMyCart();
+  await page.waitForTimeout(10000);
+  await guestCheckoutPage.validateShippingSection();
+  await guestCheckoutPage.validateItemsInCartSection();
+
 })
 
 })
