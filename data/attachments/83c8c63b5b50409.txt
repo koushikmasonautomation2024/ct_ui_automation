@@ -1,1 +1,0 @@
-Content of the <strong> tag: $127.96
