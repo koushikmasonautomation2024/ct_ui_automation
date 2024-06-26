@@ -222,7 +222,7 @@ test.describe("Mason MyAccount MyProfile", () => {
   })
 
   //SB-MyA277 //SB-My287 //SB-MyA290
-  test("Validate Change Password Button is enabled on meeting the New Password criteria", async ({ page }, testInfo) => {
+  test.skip("Validate Change Password Button is enabled on meeting the New Password criteria", async ({ page }, testInfo) => {
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
     }

@@ -1,7 +1,7 @@
 import test, { expect } from 'playwright/test';
 
 const pdp_colorvariant_button_locator = 'section.flex.flex-wrap.items-center.gap-5 button[aria-label="choose color button"]';
-const pdp_sizevariant_button_locator = 'section.flex.flex-wrap.items-center.gap-2\\.5.pt-4 button[aria-label="choose color button"]';
+const pdp_sizevariant_button_locator = 'section.flex.flex-wrap.items-center.gap-2\\.5.pt-4 button.min-w-\\[130px\\]';
 const pdp_product_big_image = 'img[data-nimg="1"]';
 const carousel_rightArrowButtonLocator = 'button.absolute.right-4';
 const carousel_leftArrowButtonLocator = 'button.absolute.left-4';
@@ -555,11 +555,16 @@ exports.PDPPage = class PDPPage {
     async closeMiniCartDrawer() {
         await this.miniCartHeaderText.click();
     }
-
+    
     async getProductQty() {
         const productQty = this.qtyInputTextBox.inputValue();
         return productQty;
 
+    }
+
+    async getCartItemCount(){
+        const cartItemCount = await this.page.locator('section.mt.absolute').textContent();
+        return cartItemCount;
     }
 
 }
