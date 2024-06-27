@@ -5,8 +5,16 @@ const accountpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_sb
 exports.MyAccountSavedCCPage = class MyAccountSavedCCPage{
     constructor(page){
         this.page=page;
+        this.myaccount_savedcreditcards_link=page.getByRole('link', { name: myaccountpage_locator.myaccount_savedcreditcards_link,exact:true });
         this.myaccount_savedcc_addccdebitcard_button=page.getByRole('button', { name: myaccountpage_locator.myaccount_savedcc_addccdebitcard_button });
         this.noCardMessage=page.getByText(accountpage_data.myaccount_savedcc_nodeCard_message);
+
+    }
+
+    async clickSavedCreditCard(){
+        await this.myaccount_savedcreditcards_link.click();
+        await expect(this.page).toHaveURL(/.*savedcreditcard/);
+        
     }
 
     async displaySavedCCHeaderText(){

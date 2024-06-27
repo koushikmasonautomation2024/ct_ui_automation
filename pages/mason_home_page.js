@@ -223,7 +223,7 @@ async navigateToCategoryL1(l1Category){
         const links = Array.from(document.querySelectorAll('nav[aria-label="Breadcrumb"] a'));
         return links.map(link => link.textContent.trim());
     });
-
+    console.log(l1Category);
     // Check if any of the breadcrumb links contain the categoryName
     const isCategoryNavigated = breadcrumbLinks.some(linkText => linkText.includes(l1Category));
     expect(isCategoryNavigated).toBe(true);
@@ -232,7 +232,7 @@ async navigateToCategoryL1(l1Category){
 
 async getRandomL2L3CategoryText(index){
     const l2Selector = homepage_locator.l2categoryText.replace('${index + 1}', index + 1);
-        const l3Selector = homepage_locator.l2categoryText.replace('${index + 1}', index + 1);
+        const l3Selector = homepage_locator.l3categoryText.replace('${index + 1}', index + 1);
         try {
             // Check if L2 element is visible
             await this.page.waitForSelector(l2Selector, { visible: true, timeout: 5000 });

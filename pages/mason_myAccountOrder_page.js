@@ -47,7 +47,7 @@ exports.MyAccountOrderPage = class MyAccountOrderPage{
 
     async clickOncontactUs(){
         await this.page.locator(myaccountpage_locator.no_Order_contactUs_link).click();
-        await expect(this.page).toHaveURL(/.*contactus/);
+        await expect(this.page).toHaveURL(/.*contact-us/);
 
     }
 
