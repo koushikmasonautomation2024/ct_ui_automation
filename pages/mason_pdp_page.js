@@ -555,16 +555,23 @@ exports.PDPPage = class PDPPage {
     async closeMiniCartDrawer() {
         await this.miniCartHeaderText.click();
     }
-    
+
     async getProductQty() {
         const productQty = this.qtyInputTextBox.inputValue();
         return productQty;
 
     }
 
-    async getCartItemCount(){
-        const cartItemCount = await this.page.locator('section.mt.absolute').textContent();
-        return cartItemCount;
+    async getCartItemCount() {
+        const cartCountElement = this.page.locator('section.mt.absolute');
+        const isVisible = await cartCountElement.isVisible();
+        
+        if (isVisible) {
+            const cartItemsCount = await cartCountElement.textContent();
+            return cartItemsCount.trim();
+        } else {
+            return '0'; // Default value when the cart count element is not visible
+        }
     }
 
 }

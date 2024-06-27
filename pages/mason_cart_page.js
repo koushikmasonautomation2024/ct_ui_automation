@@ -13,7 +13,7 @@ const cartQtyInputLocator = 'input.numberInputCounter';
 const cartEditItemDrawerHeader = 'strong:has-text("Edit Item")';
 const cartEditItemDrawerCloseButton = 'section.z-10.flex button';
 const pdp_colorvariant_button_locator = 'section.flex.flex-wrap.items-center.gap-5 button[aria-label="choose color button"]';
-const pdp_sizevariant_button_locator = 'section.flex.flex-wrap.items-center.gap-2\\.5.pt-4 button[aria-label="choose color button"]';
+const pdp_sizevariant_button_locator = 'section.flex.flex-wrap.items-center.gap-2\\.5.pt-4 button.min-w-\\[130px\\]';
 const sizechart_button_text = 'Size Chart';
 const cartApplyPromoCode = 'Apply Promo Code (optional)';
 const cartOrderSummarySubTotal = /^Subtotal\s*\(\d+\s*Items\):\s*$/;
@@ -243,7 +243,8 @@ exports.CartPage = class CartPage {
                 console.log('No reviews present for the product.');
             } else {
                 // Check if review count element is present
-                reviewsText = await this.page.locator('section.flex.gap-x-0\\.5.pl-2\\.5 >> text=(\\d+ Reviews)').textContent();
+                //reviewsText = await this.page.locator('section.flex.gap-x-0\\.5.pl-2\\.5 >> text=(\\d+ Reviews)').textContent();
+                reviewsText = await this.page.getByText('Reviews').textContent();
                 console.log(`Reviews: ${reviewsText}`);
             }
         } catch (error) {
@@ -280,7 +281,11 @@ exports.CartPage = class CartPage {
     }
 
     async clickRemoveCartButton() {
+        const removedProdName = await this.getCartFirstItemProductName();
+        const removedItemMessage = `Removed ${removedProdName} item from the cart`;
         await this.removeCartButton.first().click();
+        await this.page.getByText(removedItemMessage).waitFor({state:'visible'});
+        await expect(this.page.getByText(removedItemMessage)).toBeVisible();
 
     }
 
@@ -338,18 +343,27 @@ exports.CartPage = class CartPage {
     }
 
     async clickSaveForLaterButton() {
+        const saveForLaterProdName = await this.getCartFirstItemProductName();
+        const saveForLaterMessage = `${saveForLaterProdName} was successfully saved for later.`;
         await this.cartSaveForLaterButton.first().click();
-        await this.page.waitForTimeout(5000);
+        await this.page.getByText(saveForLaterMessage).waitFor({state:'visible'});
+        await expect(this.page.getByText(saveForLaterMessage)).toBeVisible();
     }
 
     async clickMoveToCartButton() {
+        const moveToCartProdName = await this.getCartSavedForLaterFirstItemProductName();
+        const moveToCartMessage = `${moveToCartProdName} was successfully moved to your cart`;
         await this.cartMoveToCartButton.first().click();
-        await this.page.waitForTimeout(5000);
+        await this.page.getByText(moveToCartMessage).waitFor({state:'visible'});
+        await expect(this.page.getByText(moveToCartMessage)).toBeVisible();
     }
 
-    async clickOnRemoveButtonSaveLater(){
+    async clickOnRemoveButtonSaveLater() {
+        const saveForLaterProdName = await this.getCartSavedForLaterFirstItemProductName();
+        const saveForLaterItemRemoveMessage = `${saveForLaterProdName} was successfully removed from save for later wishlist.`;
         await this.cartRemoveButtonSaveLater.first().click();
-        await this.page.waitForTimeout(5000);
+        await this.page.getByText(saveForLaterItemRemoveMessage).waitFor({state:'visible'});
+        await expect(this.page.getByText(saveForLaterItemRemoveMessage)).toBeVisible();
     }
 
     async validateUndoCartItems(undoProductCount) {
@@ -438,9 +452,14 @@ exports.CartPage = class CartPage {
     }
 
     async validateCartSaveForLater() {
-        await this.cartSavedForLaterSection.waitFor({ state: 'visible' });
-        expect(await this.cartSavedForLaterText.textContent()).toBe('Saved for Later');
-        expect(await this.cartSavedForLaterItems).toBeVisible();
+        const isVisible = await this.cartSavedForLaterSection.isVisible();
+        if (isVisible) {
+            expect(await this.cartSavedForLaterText.textContent()).toBe('Saved for Later');
+            expect(await this.cartSavedForLaterItems).toBeVisible();
+            return true;
+        } {
+            return false;
+        }
     }
 
     async getAddedProdQty() {
@@ -507,8 +526,13 @@ exports.CartPage = class CartPage {
     }
 
     async clickApplyCodeButton() {
+        const promoCode = await this.getEnteredPromoCode();
+        const promoCodeMessage = `Promo code ${promoCode} applied to order`;
+        const promoCodeTopMessage = `Promo code ${promoCode} has been applied to your order`;
         await this.cartApplyPromoCodeButton.click();
-        await this.page.waitForTimeout(10000);
+        await this.page.getByText(promoCodeMessage).waitFor({state:'visible'});
+        await expect(this.page.getByText(promoCodeMessage)).toBeVisible();
+        await expect(this.page.getByText(promoCodeTopMessage)).toBeVisible();
     }
 
     async clickPromoCodeOption() {
@@ -596,7 +620,7 @@ exports.CartPage = class CartPage {
 
     }
 
-    
+
 
 
 
