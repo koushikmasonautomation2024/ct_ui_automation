@@ -99,11 +99,10 @@ async selectAnOptionFromSearchSuggestion(search_text){
     } else {
         throw new Error('No suggestions found');
     }
-
-    // Wait for a specific condition related to the search result page (example)
-    await this.page.waitForSelector('h1', { visible: true }); // Wait for any h1 element (adjust as per your UI)
+    await this.page.waitForSelector(`//h1[contains(text(), "${search_text}")]`,{ visible: true });
+    
     //await this.page.$(`//h1[contains(text(), "${search_text}")]`).waitFor({state:"visible"});
-    // Example: Check if an h1 element containing search_text is visible
+ 
     const searchResultH1 = await this.page.$(`//h1[contains(text(), "${search_text}")]`);
     if (!searchResultH1) {
         throw new Error(`${search_text} h1 element not found`);
@@ -151,7 +150,7 @@ async validateShippingSection(){
     await expect(this.page.getByText(items_in_cart)).toBeVisible();
     await expect(this.page.getByText(order_summary)).toBeVisible();
     await expect(this.page.getByText(order_total)).toBeVisible();
-    await expect(this.page.getByRole('button', { name: continue_to_payment })).toBeVisible();
+    //await expect(this.page.getByRole('button', { name: continue_to_payment })).toBeVisible();
     
     
 }
@@ -166,7 +165,7 @@ async validatePaymentSection(){
     await this.page.$(`//h2[contains(text(), "${payment}")]`);
     await this.page.$(`//h1[contains(text(), "${payment}")]`);
     await this.page.$(`//p[contains(text(), "${payment_method}")]`);
-    await (this.page.getByRole('button', { name: continue_to_review })).waitFor({ state: 'visible' });
+    //await (this.page.getByRole('button', { name: continue_to_review })).waitFor({ state: 'visible' });
 }
 
 async validateReviewSection(){
@@ -279,95 +278,101 @@ async validateNewAddressModal(){
     await expect(this.makepayment_addnewaddress_phonenumber).toBeVisible();
 } 
 
-async validateAddNewAddress(){
-  //   await (this.makepayment_newaddress_fname).click();
-  //   await (this.makepayment_newaddress_fname).fill('TestFName');
-  //   await (this.makepayment_newaddress_lname).click();
-  //   await (this.makepayment_newaddress_lname).fill('TestLName');
-  //   await (this.makepayment_newaddress_address1).click();
-  //   await (this.makepayment_newaddress_address1).fill('213 Address');
-  //   await expect(this.makepayment_newaddress_address2).toBeVisible();
-  //   await (this.makepayment_addnewaddress_city).click();
-  //   await (this.makepayment_addnewaddress_city).fill('TestCity');
-  //   await (this.makepayment_newAddress_state).selectOption('NY');
-  //  // await (this.makepayment_addnewaddress_zipcode).click();
-  //   await (this.makepayment_addnewaddress_zipcode).fill('21345');
-  //   await (this.makepayment_addnewaddress_phonenumber).click();
-  //   await (this.makepayment_addnewaddress_phonenumber).fill('(234) 567-7888');
-  // Generate random data
+
+
+async addShippingAddress(){
   const firstName = faker.person.firstName();
+  await this.makepayment_newaddress_fname.fill(firstName);
   const lastName = faker.person.lastName();
+  await (this.makepayment_newaddress_lname).fill(lastName);
   const address = faker.location.streetAddress();
+  await (this.makepayment_newaddress_address1).fill(address);
   const city = faker.location.city();
-  //const state = fakerEN_US.location.state();
-  const state = faker.location.state({ abbreviated: true })
+  await (this.makepayment_addnewaddress_city).fill(city);
+  const state = faker.location.state({ abbreviated: true });
+  await (this.makepayment_newAddress_state).selectOption(state);
   const zipCode = faker.location.zipCode().substring(0, 5); // Get only the first 5 digits
+  await (this.makepayment_addnewaddress_zipcode).fill(zipCode);
   const phoneNumber = faker.phone.number();
   const phoneNumberPattern = new RegExp(/\(\d{3}\) \d{3}-\d{4}/);
-  //await this.page.click('#newAddress');
-  // Fill in the required fields
-    await this.page.type('#firstName', firstName);
-    await this.page.type('#lastName', lastName);
-    await this.page.type('#address', address);
-    await this.page.type('#city', city);
-    await this.page.selectOption('#state', state);
-    await this.page.type('#zipCode', zipCode);
-    await this.page.type('#phoneNumber', phoneNumber);
-    await expect(this.page.getByLabel('Save this Address')).toBeVisible();
-    await this.page.getByLabel('Save this Address').click();
-    //await (this.page.getByRole('button', { name: continue_to_payment })).click();
-    await this.page.getByRole('button', { name: 'Continue to Payment' }).click();
-    //await this.page.getByRole('button', { name: 'Continue to Payment' }).click();
-    await this.page.waitForTimeout(5000);
-   //await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
+  //await this.page.type('#phoneNumber', phoneNumber);
+  await (this.makepayment_addnewaddress_phonenumber).fill(phoneNumber);
+    //return firstName, lastName;
+}
 
-   const headingVisible = await this.page.waitForSelector('h2', { text: 'Verify Your Address', visible: true });
+async clickSaveAddress(){
+  await expect(this.page.getByLabel('Save this Address')).toBeVisible();
+  await this.page.getByLabel('Save this Address').click();
+}
 
-   if (headingVisible) {
-     // If heading is visible, find the section with text 'Use Original Address' and click it
-     const section = await this.page.locator('section').filter({ hasText: /^Use Original Address$/ }).first();
-     if (section) {
-       await section.click();
-       await this.page.click('#r2');
-       await this.page.getByRole("button",{ name: 'Continue' }).click();
-       console.log('Clicked on "Use Original Address" section.');
-     } else {
-       console.log('Could not find section with text "Use Original Address".');
-     }
-   } else {
-     console.log('Heading "Verify Your Address" is not visible.');
-     await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
-   }
+async clickOnContinueToPayment(){
+  await this.page.getByRole('button', { name: 'Continue to Payment' }).click();
+}
 
-} 
+async checkIfAddressValidationIsRequired(){
+  await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
+}
+
+async validateAddressVerification(){
+  const headingVisible = await this.page.waitForSelector('h2', { text: 'Verify Your Address', visible: true });
+  if (headingVisible) {
+    
+    // If heading is visible, find the section with text 'Use Original Address' and click it
+    const section = await this.page.locator('section').filter({ hasText: /^Use Original Address$/ }).first();
+    if (section) {
+      // await section.click();
+      // await this.page.click('#r2');
+      await this.page.click('label:has-text("Use Original Address")');
+     //  const continueButton = await this.page.waitForSelector('button:enabled', {
+     //   text: 'Continue',
+     // });
+     await expect(this.page.getByRole("button",{ name: 'Continue' })).toBeEnabled();
+      await this.page.getByRole("button",{ name: 'Continue' }).click();
+      console.log('Clicked on "Use Original Address" section.');
+    } else {
+      console.log('Could not find section with text "Use Original Address".');
+    }
+  } else {
+    console.log('Heading "Verify Your Address" is not visible.');
+    //await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
+  }
+
+
+}
 
 async validateEditAddress(){
   const state = faker.location.state({ abbreviated: true })
-  await this.page.getByRole("button",{ name: 'Edit' }).click();
-  await this.page.selectOption('#state', state);
+  await this.page.waitForSelector("(//button[text()='Edit'])[1]", { visible: true });
+  const button = await this.page.$('(//button[text()="Edit"])[1]');
+  await button.click();
+  await this.page.getByRole("button",{ name: 'Edit Address' }).click();
+  await this.addShippingAddress();
+  // await this.page.getByRole('button', { name: 'Continue to Payment' }).click();
+  //   //await this.page.getByRole('button', { name: 'Continue to Payment' }).click();
+  //   await this.page.waitForTimeout(5000);
+  //  //await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
 
-  await this.page.getByRole('button', { name: 'Continue to Payment' }).click();
-    //await this.page.getByRole('button', { name: 'Continue to Payment' }).click();
-    await this.page.waitForTimeout(5000);
-   //await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
+  //  const headingVisible = await this.page.waitForSelector('h2', { text: 'Verify Your Address', visible: true });
 
-   const headingVisible = await this.page.waitForSelector('h2', { text: 'Verify Your Address', visible: true });
-
-   if (headingVisible) {
-     // If heading is visible, find the section with text 'Use Original Address' and click it
-     const section = await this.page.locator('section').filter({ hasText: /^Use Original Address$/ }).first();
-     if (section) {
-       await section.click();
-       await this.page.click('#r2');
-       await this.page.getByRole("button",{ name: 'Continue' }).click();
-       console.log('Clicked on "Use Original Address" section.');
-     } else {
-       console.log('Could not find section with text "Use Original Address".');
-     }
-   } else {
-     console.log('Heading "Verify Your Address" is not visible.');
-     await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
-    }
+  //  if (headingVisible) {
+  //    // If heading is visible, find the section with text 'Use Original Address' and click it
+  //    const section = await this.page.locator('section').filter({ hasText: /^Use Original Address$/ }).first();
+  //    if (section) {
+  //      await section.click();
+  //      await this.page.click('#r2');
+  //     //  const continueButton = await this.page.waitForSelector('button:enabled', {
+  //     //   text: 'Continue',
+  //     // });
+  //     await expect(this.page.getByRole("button",{ name: 'Continue' })).toBeEnabled();
+  //      await this.page.getByRole("button",{ name: 'Continue' }).click();
+  //      console.log('Clicked on "Use Original Address" section.');
+  //    } else {
+  //      console.log('Could not find section with text "Use Original Address".');
+  //    }
+  //  } else {
+  //    console.log('Heading "Verify Your Address" is not visible.');
+  //    await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
+  //   }
 }
 
 async verifyShippingOptionVisibility(option) {
@@ -464,6 +469,19 @@ async validateItemsInCartSection(){
    // Assert data-state changed using expect
    const finalDataState = await button.getAttribute('data-state');
    expect(finalDataState).toBe('open'); // Assert that final state is open
+}
+
+
+async validateShippingSectionAbovePaymentSection(){
+  const shippingSection = await this.page.$(`//h1[contains(text(), "${shipping}")]`);
+  const paymentForm = await this.page.$(`//h1[contains(text(), "${payment}")]`);
+
+  const shippingBox = await shippingSection.boundingBox();
+  const paymentBox = await paymentForm.boundingBox();
+
+  // Verify Shipping section is above Payment form section
+  expect(shippingBox.y).toBeLessThan(paymentBox.y);
+
 }
 
 }

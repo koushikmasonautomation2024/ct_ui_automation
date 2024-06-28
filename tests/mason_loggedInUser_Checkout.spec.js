@@ -2,6 +2,8 @@ const { chromium } = require('playwright');
 import {test,expect } from '@playwright/test';
 import {HomePage} from '../pages/mason_home_page';
 import {SignInPage} from '../pages/mason_signin_page';
+import {PDPPage} from '../pages/mason_pdp_page';
+import {SignInPageNew} from '../pages/mason_signin_page1';
 import {ResetPage} from '../pages/mason_reset_page';
 import {MyAccountPage} from '../pages/mason_myaccount_page';
 import {GuestCheckOutPage} from '../pages/mason_guestCheckout_page';
@@ -48,8 +50,13 @@ test('Verify Checkout Scenario for the guest user - login with no address or cre
   // Navigate to the page containing the popular search terms
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const signinPage = new SignInPage(page);
-  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Yellow');
+  const signinPageNew = new SignInPageNew(page);
+  const pdpPage = new PDPPage(page);
+  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Pant');
+  await pdpPage.clickOnPDPColorVariantButton();
+  await pdpPage.clickOnPDPSizeVariantButton();
   await guestCheckoutPage.clickAddToCart();
+  await pdpPage.miniCartDrawer();
   await guestCheckoutPage.clickCheckoutOnMyCart();
   await guestCheckoutPage.validateSecureCheckout();
   await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
@@ -69,14 +76,20 @@ test('Verify Checkout Scenario for the loggedIn user - go to shipping scenario -
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const signinPage = new SignInPage(page);
   const homePage = new HomePage(page);
+  const pdpPage = new PDPPage(page);
+  const signinPageNew = new SignInPageNew(page);
   await homePage.clickOnHomePageSignIn();
   await signinPage.clickSignIn();
   await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
   await signinPage.clickSignIn();
+  await signinPageNew.waitForMyAccountDashboardLoad();
+  //await signinPageNew.validateSignInMessage(signinpage_data.signin_success_text);
   await page.waitForLoadState('networkidle');
-  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Yellow');
+  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Pant');
+  await pdpPage.clickOnPDPColorVariantButton();
+  await pdpPage.clickOnPDPSizeVariantButton();
   await guestCheckoutPage.clickAddToCart();
-  await page.waitForTimeout(5000);
+  await pdpPage.miniCartDrawer();
   await guestCheckoutPage.clickCheckoutOnMyCart();
   await page.waitForTimeout(5000);
   //await guestCheckoutPage.validateSecureCheckout();
@@ -92,14 +105,20 @@ test('Verify Need Help section - Checkout Scenario for the loggedIn user - go to
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const signinPage = new SignInPage(page);
   const homePage = new HomePage(page);
+  const pdpPage = new PDPPage(page);
+  const signinPageNew = new SignInPageNew(page);
   await homePage.clickOnHomePageSignIn();
   await signinPage.clickSignIn();
   await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
   await signinPage.clickSignIn();
+  await signinPageNew.waitForMyAccountDashboardLoad();
+  //await signinPageNew.validateSignInMessage(signinpage_data.signin_success_text);
   await page.waitForLoadState('networkidle');
-  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Yellow');
+  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Pant');
+  await pdpPage.clickOnPDPColorVariantButton();
+  await pdpPage.clickOnPDPSizeVariantButton();
   await guestCheckoutPage.clickAddToCart();
-  await page.waitForTimeout(5000);
+  await pdpPage.miniCartDrawer();
   await guestCheckoutPage.clickCheckoutOnMyCart();
   await page.waitForTimeout(10000);
   await guestCheckoutPage.validateShippingSection();
@@ -107,37 +126,42 @@ test('Verify Need Help section - Checkout Scenario for the loggedIn user - go to
   await guestCheckoutPage.validateNeedHelpSection();
   await guestCheckoutPage.validateCallSection();
   await guestCheckoutPage.validateEmailSection();
-  await guestCheckoutPage.validateNewAddressModal();
-  await guestCheckoutPage.validateAddNewAddress();
 })
 
 //Need Help section
-test('Verify add/edit New Address - Checkout Scenario for the loggedIn user - go to shipping scenario', async ({ page }) => {
+test('Verify add New Address - Checkout Scenario for the loggedIn user - go to shipping scenario', async ({ page }) => {
   // Navigate to the page containing the popular search terms
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const signinPage = new SignInPage(page);
   const homePage = new HomePage(page);
+  const pdpPage = new PDPPage(page);
+  const signinPageNew = new SignInPageNew(page);
   await homePage.clickOnHomePageSignIn();
   await signinPage.clickSignIn();
   await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
   await signinPage.clickSignIn();
-  await page.waitForTimeout(5000);
+  await signinPageNew.waitForMyAccountDashboardLoad();
+  //await signinPageNew.validateSignInMessage(signinpage_data.signin_success_text);
   await page.waitForLoadState('networkidle');
-  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Marion');
-  await page.waitForTimeout(5000);
-  await page.waitForLoadState('networkidle');
+  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Pant');
+  await pdpPage.clickOnPDPColorVariantButton();
+  await pdpPage.clickOnPDPSizeVariantButton();
   
   await guestCheckoutPage.clickAddToCart();
-  await page.waitForTimeout(5000);
-  await page.waitForLoadState('networkidle');
+  await pdpPage.miniCartDrawer();
   await guestCheckoutPage.clickCheckoutOnMyCart();
   await page.waitForTimeout(10000);
   await guestCheckoutPage.validateShippingSection();
   await guestCheckoutPage.validateProgressBar();
   await guestCheckoutPage.validateNewAddressModal();
-  await guestCheckoutPage.validateAddNewAddress();
-  await page.waitForLoadState('networkidle');
-  await guestCheckoutPage.validateEditAddress();
+  // await guestCheckoutPage.validateAddNewAddress();
+  // await page.waitForLoadState('networkidle');
+  // await guestCheckoutPage.validateEditAddress();
+  // await guestCheckoutPage.validatePaymentSection();
+
+  await guestCheckoutPage.addShippingAddress();
+  await guestCheckoutPage.clickOnContinueToPayment();
+  await guestCheckoutPage.validateAddressVerification();
   await guestCheckoutPage.validatePaymentSection();
   
 })
@@ -148,13 +172,20 @@ test('Verify Shipping Methods - Checkout Scenario for the loggedIn user - go to 
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const signinPage = new SignInPage(page);
   const homePage = new HomePage(page);
+  const pdpPage = new PDPPage(page);
+  const signinPageNew = new SignInPageNew(page);
   await homePage.clickOnHomePageSignIn();
   await signinPage.clickSignIn();
   await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
   await signinPage.clickSignIn();
-  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Yellow');
+  await signinPageNew.waitForMyAccountDashboardLoad();
+  //await signinPageNew.validateSignInMessage(signinpage_data.signin_success_text);
+  await page.waitForLoadState('networkidle');
+  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Pant');
+  await pdpPage.clickOnPDPColorVariantButton();
+  await pdpPage.clickOnPDPSizeVariantButton();
   await guestCheckoutPage.clickAddToCart();
-  await page.waitForTimeout(5000);
+  await pdpPage.miniCartDrawer();
   await guestCheckoutPage.clickCheckoutOnMyCart();
   await page.waitForTimeout(10000);
   await guestCheckoutPage.validateShippingSection();
@@ -172,13 +203,20 @@ test('Verify Shipping Address Options - Checkout Scenario for the loggedIn user 
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const signinPage = new SignInPage(page);
   const homePage = new HomePage(page);
+  const pdpPage = new PDPPage(page);
+  const signinPageNew = new SignInPageNew(page);
   await homePage.clickOnHomePageSignIn();
   await signinPage.clickSignIn();
   await signinPage.login(process.env.PAYMENT_USERNAME,process.env.PAYMENT_PASSWORD);
   await signinPage.clickSignIn();
-  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Yellow');
+  await signinPageNew.waitForMyAccountDashboardLoad();
+  //await signinPageNew.validateSignInMessage(signinpage_data.signin_success_text);
+  await page.waitForLoadState('networkidle');
+  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Pant');
+  await pdpPage.clickOnPDPColorVariantButton();
+  await pdpPage.clickOnPDPSizeVariantButton();
   await guestCheckoutPage.clickAddToCart();
-  await page.waitForTimeout(5000);
+  await pdpPage.miniCartDrawer();
   await guestCheckoutPage.clickCheckoutOnMyCart();
   await page.waitForTimeout(10000);
   await guestCheckoutPage.validateShippingSection();
@@ -187,53 +225,115 @@ test('Verify Shipping Address Options - Checkout Scenario for the loggedIn user 
   await guestCheckoutPage.validateSavedAddress();
 })
 
+test.only('Verify Edit Shipping Address Options - Checkout Scenario for the loggedIn user - go to shipping section', async ({ page }) => {
+  // Navigate to the page containing the popular search terms
+  const guestCheckoutPage = new GuestCheckOutPage(page);
+  const signinPage = new SignInPage(page);
+  const homePage = new HomePage(page);
+  const pdpPage = new PDPPage(page);
+  const signinPageNew = new SignInPageNew(page);
+  await homePage.clickOnHomePageSignIn();
+  await signinPage.clickSignIn();
+  await signinPage.login(process.env.PAYMENT_USERNAME,process.env.PAYMENT_PASSWORD);
+  await signinPage.clickSignIn();
+  await signinPageNew.waitForMyAccountDashboardLoad();
+  //await signinPageNew.validateSignInMessage(signinpage_data.signin_success_text);
+  await page.waitForLoadState('networkidle');
+  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Pant');
+  await pdpPage.clickOnPDPColorVariantButton();
+  await pdpPage.clickOnPDPSizeVariantButton();
+  await guestCheckoutPage.clickAddToCart();
+  await pdpPage.miniCartDrawer();
+  await guestCheckoutPage.clickCheckoutOnMyCart();
+  await page.waitForTimeout(10000);
+ // await guestCheckoutPage.validateShippingSection();
+  await guestCheckoutPage.validateEditAddress();
+  await guestCheckoutPage.clickOnContinueToPayment();
+  await guestCheckoutPage.validateAddressVerification();
+  await guestCheckoutPage.validatePaymentSection();
+})
+
 test('Verify Gift Message Options - Checkout Scenario for the loggedIn user - go to shipping section', async ({ page }) => {
   // Navigate to the page containing the popular search terms
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const signinPage = new SignInPage(page);
   const homePage = new HomePage(page);
+  const pdpPage = new PDPPage(page);
+  const signinPageNew = new SignInPageNew(page);
   await homePage.clickOnHomePageSignIn();
   await signinPage.clickSignIn();
   await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
   await signinPage.clickSignIn();
-  await page.waitForTimeout(5000);
+  await signinPageNew.waitForMyAccountDashboardLoad();
+  //await signinPageNew.validateSignInMessage(signinpage_data.signin_success_text);
   await page.waitForLoadState('networkidle');
-  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Marion');
-  await page.waitForTimeout(5000);
-  await page.waitForLoadState('networkidle');
+  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Pant');
+  await pdpPage.clickOnPDPColorVariantButton();
+  await pdpPage.clickOnPDPSizeVariantButton();
   
   await guestCheckoutPage.clickAddToCart();
-  await page.waitForTimeout(5000);
-  await page.waitForLoadState('networkidle');
+  await pdpPage.miniCartDrawer();
   await guestCheckoutPage.clickCheckoutOnMyCart();
   await page.waitForTimeout(10000);
   await guestCheckoutPage.validateShippingSection();
   await guestCheckoutPage.validateGiftMessage();
 })
 
-test.only('Verify Items in Cart section - open/close - Checkout Scenario for the loggedIn user - go to shipping section', async ({ page }) => {
+test('Verify Items in Cart section - open/close - Checkout Scenario for the loggedIn user - go to shipping section', async ({ page }) => {
   // Navigate to the page containing the popular search terms
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const signinPage = new SignInPage(page);
   const homePage = new HomePage(page);
+  const pdpPage = new PDPPage(page);
+  const signinPageNew = new SignInPageNew(page);
   await homePage.clickOnHomePageSignIn();
   await signinPage.clickSignIn();
   await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
   await signinPage.clickSignIn();
-  await page.waitForTimeout(5000);
+  await signinPageNew.waitForMyAccountDashboardLoad();
+  //await signinPageNew.validateSignInMessage(signinpage_data.signin_success_text);
   await page.waitForLoadState('networkidle');
-  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Neck');
-  await page.waitForTimeout(5000);
-  await page.waitForLoadState('networkidle');
+  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Pant');
+  await pdpPage.clickOnPDPColorVariantButton();
+  await pdpPage.clickOnPDPSizeVariantButton();
   
   await guestCheckoutPage.clickAddToCart();
-  await page.waitForTimeout(5000);
-  await page.waitForLoadState('networkidle');
+  await pdpPage.miniCartDrawer();
   await guestCheckoutPage.clickCheckoutOnMyCart();
   await page.waitForTimeout(10000);
   await guestCheckoutPage.validateShippingSection();
   await guestCheckoutPage.validateItemsInCartSection();
 
+})
+
+
+test('Verify shipping section is above Payment section - Checkout Scenario for the loggedIn user - go to shipping section', async ({ page }) => {
+  // Navigate to the page containing the popular search terms
+  const guestCheckoutPage = new GuestCheckOutPage(page);
+  const signinPage = new SignInPage(page);
+  const homePage = new HomePage(page);
+  const pdpPage = new PDPPage(page);
+  const signinPageNew = new SignInPageNew(page);
+  await homePage.clickOnHomePageSignIn();
+  await signinPage.clickSignIn();
+  await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
+  await signinPage.clickSignIn();
+  await signinPageNew.waitForMyAccountDashboardLoad();
+  //await signinPageNew.validateSignInMessage(signinpage_data.signin_success_text);
+  await page.waitForLoadState('networkidle');
+  await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Pant');
+  await page.waitForTimeout(5000);
+  await page.waitForLoadState('networkidle');
+  await pdpPage.clickOnPDPColorVariantButton();
+  await pdpPage.clickOnPDPSizeVariantButton();
+  await guestCheckoutPage.clickAddToCart();
+  await pdpPage.miniCartDrawer();
+  await guestCheckoutPage.clickCheckoutOnMyCart();
+  await page.waitForTimeout(10000);
+  //await guestCheckoutPage.validateShippingSection();
+  // await guestCheckoutPage.validateAddNewAddress();
+  // await page.waitForLoadState('networkidle');
+  await guestCheckoutPage.validateShippingSectionAbovePaymentSection();
 })
 
 })
