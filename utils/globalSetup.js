@@ -19,16 +19,17 @@ const paymentUserFile = './paymentuser.json';
 const profileUserFile = './profileuser.json';
 const globalUser1File = './globaluser1.json';
 const globalUser2File = './globaluser2.json';
+const orderDetailsCancelOrderFile = './orderdetailscancelorder.json';
 
 async function globalSetup(config) {
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
   // Authenticate as user1
-  await authenticateUser(page, process.env.GLOBAL_USER1, globalUser1File);
+  await authenticateUser(page, process.env.ORDERDETAILS_CANCELORDER, orderDetailsCancelOrderFile);
 
-  // Authenticate as user2
-  await authenticateUser(page, process.env.GLOBAL_USER2, globalUser2File);
+  // // Authenticate as user2
+  // await authenticateUser(page, process.env.GLOBAL_USER2, globalUser2File);
 
   await browser.close();
 }
@@ -42,7 +43,7 @@ async function authenticateUser(page, userEmail, storageFile) {
     await page.getByLabel('*Email Address').click();
     await page.getByLabel('*Email Address').fill(userEmail);
     await page.getByLabel('*Password').click();
-    await page.getByLabel('*Password').fill(process.env.GLOBAL_PASSWORD);
+    await page.getByLabel('*Password').fill(process.env.CREDIT_USER_PASSWORD);
     await page.getByRole('button', { name: 'Sign In' }).click({ timeout: 10000 });
     
     const signinPage = new SignInPageNew(page);

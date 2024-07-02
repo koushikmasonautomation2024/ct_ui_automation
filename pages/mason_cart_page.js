@@ -238,7 +238,7 @@ exports.CartPage = class CartPage {
         let noReviewsPresent = false;
         try {
             // Check if "No Reviews" element is present
-            if (await this.page.locator('section.flex.gap-x-0\\.5.pl-2\\.5 >> text=No Reviews').count() > 0) {
+            if (await this.page.getByText('No Reviews').count() > 0) {
                 noReviewsPresent = true;
                 console.log('No reviews present for the product.');
             } else {
