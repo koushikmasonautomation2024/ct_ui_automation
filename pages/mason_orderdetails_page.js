@@ -3,7 +3,7 @@ import test, { expect } from 'playwright/test';
 const orderStatus_ReturnedText = 'Returned';
 const orderStatus_CancenceledText = 'Canceled';
 const orderStatus_DeliveredText = 'Delivered';
-const orderStatus_ShippedText = 'Shipped';
+const orderStatus_ShippedText = 'Shipped on';
 const orderStatus_PendingShipmentText = 'Pending Shipment';
 const order_Section = 'section.mb-7.border';
 const product_Section = 'section.mt-4.flex.items-center';
@@ -14,6 +14,26 @@ const cancelItemModal_HeadingText = 'Cancel item';
 const cancelItemModal_Text = 'Are you sure you want to cancel this item?';
 const orderDetailsAwatingShipmentSection = 'Awaiting ShipmentPending Shipment';
 const orderDetails_CanceledItem_SuccessMessage = 'Your Item has been canceled.';
+const orderDetailsOrderSummarySubTotal = /^Subtotal\s*\(\d+\s*items\):\s*$/;
+const orderDetailsOrderSummaryShipping = 'Shipping:';
+const orderDetailsOrderSummaryEstSurcharge = 'Shipping Surcharge:';
+const orderDetailsOrderSummarySalesTax = 'Sales Tax:';
+const orderDetailsOrderSummaryOrderTotal = 'Order Total:';
+const tooltipButton = 'button[aria-label="tooltip"]';
+const orderDetailsShippingSectionText = 'Shipping';
+const orderDetailsShippingSectionAddressText = 'Shipping Address';
+const orderDetailsShippingSectionShippingMethodText = 'Shipping Method';
+const name = /^[A-Za-z\s]+$/;
+const addressLine1 = /^\d+\s[A-Za-z\s]+$/;
+const cityStateZip = /^[A-Za-z\s]+,\s[A-Z]{2},\s\d{5}-\d{4}$/;
+const phone = /^\(\d{3}\)\s\d{3}-\d{4}$/;
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const orderDetailsShippingAddress = 'section.ml-3.pt-9:has-text("Shipping Address")';
+const orderDetailsBillingAddress = 'section.mb-9.pr-22:has-text("Billing Address")';
+const orderDetailsBillingAddressContactInfo = 'section.mb-9.pr-22:has-text("Contact Info")';
+const orderDetailsAccountNumber = 'section.mb-9.mt-8.lg\\:mb-6.lg\\:mt-0:has-text("Payment")';
+const orderDetailsShippedSection = 'section.border-radius-\\[6px\\].mt-6:has-text("Shipped")';
+const trackShipmentText = 'section.mb-\\[30px\\]:has-text("Track Shipment")';
 
 exports.OrderDetailsPage = class OrderDetailsPage {
 
@@ -245,17 +265,175 @@ exports.OrderDetailsPage = class OrderDetailsPage {
             // Assert the visibility of the canceled item
             await expect(this.orderDetailsCanceledItemHeading).toBeVisible();
         }
-      
+
     }
 
-    async getOrderNumberInOrderDetails(){
-        const orderNumber = await this.page.locator('text-2xl font-bold text-black').textContent();
+    async getOrderNumberInOrderDetails() {
+        const orderNumber = await this.page.locator('h2.text-2xl.font-bold.text-black').textContent();
         return orderNumber;
     }
 
-    async validatedCanceledOrder(orderNumber){
+    async validatedCanceledOrder(orderNumber) {
         await this.orderDetailsCancelOrderModalCancelButton.click();
-        await expect(this.page.getByText(`${orderNumber} was successfully canceled.` )).toBeVisible();
+        await expect(this.page.getByText(`${orderNumber} was successfully canceled.`)).toBeVisible();
         await expect(this.orderDetailsCanceledItemHeading).toBeVisible();
+    }
+
+    async clickViewOrderDetailsLink() {
+        await this.orderDetailsLink.first().click();
+        await this.page.getByText(order_SummaryText).waitFor({ state: 'visible' });
+        await expect(this.page.getByText(order_SummaryText)).toBeVisible();
+    }
+
+    async validateOrderDetailsOrderSummary() {
+        // Define expected labels
+        const expectedLabels = [
+            orderDetailsOrderSummarySubTotal,
+            orderDetailsOrderSummaryShipping,
+            orderDetailsOrderSummaryEstSurcharge,
+            orderDetailsOrderSummarySalesTax,
+            orderDetailsOrderSummaryOrderTotal
+        ];
+
+        // Check visibility for each label
+        for (const label of expectedLabels) {
+            await expect(this.page.getByText(label)).toBeVisible();
+        }
+
+        // Extract and validate text content
+        const subTotalText = await this.page.getByText(orderDetailsOrderSummarySubTotal).locator('..').locator('p:last-child').textContent();
+        const estShippingText = await this.page.getByText(orderDetailsOrderSummaryShipping).locator('..').locator('..').locator('p:last-child').textContent();
+        const shippingTooltipButton = this.page.getByText(orderDetailsOrderSummaryShipping).locator('..').locator(tooltipButton);
+        await expect(shippingTooltipButton).toBeVisible();
+        const estSurchargeText = await this.page.getByText(orderDetailsOrderSummaryEstSurcharge).locator('..').locator('..').locator('p:last-child').textContent();
+        const estSalesTaxText = await this.page.getByText(orderDetailsOrderSummarySalesTax).locator('..').locator('..').locator('p:last-child').textContent();
+        const salesTaxTooltipButton = this.page.getByText(orderDetailsOrderSummarySalesTax).locator('..').locator(tooltipButton);
+        await expect(salesTaxTooltipButton).toBeVisible();
+        const orderTotalText = await this.page.getByText(orderDetailsOrderSummaryOrderTotal).locator('..').locator('p:last-child').textContent();
+
+        // Match each value against the currency format regex
+        expect(subTotalText.trim()).toMatch(/^\$\d+(\.\d{2})?$/);
+        expect(estShippingText.trim()).toMatch(/^\$\d+(\.\d{2})?$/);
+        expect(estSurchargeText.trim()).toMatch(/^\$\d+(\.\d{2})?$/);
+        expect(estSalesTaxText.trim()).toMatch(/^\$\d+(\.\d{2})?$/);
+        expect(orderTotalText.trim()).toMatch(/^\$\d+(\.\d{2})?$/);
+
+    }
+
+    async validateOrderDetailsShippingDetails() {
+        await expect(this.page.getByText(orderDetailsShippingSectionText, { exact: true })).toBeVisible();
+        await expect(this.page.getByText(orderDetailsShippingSectionAddressText, { exact: true })).toBeVisible();
+        await expect(this.page.getByText(orderDetailsShippingSectionShippingMethodText, { exact: true })).toBeVisible();
+        const shippingAddressSection = this.page.locator(orderDetailsShippingAddress);
+
+        const shippingAddressText = await shippingAddressSection.locator('p').nth(1).textContent();
+        expect(shippingAddressText.trim()).toBeTruthy();
+
+        const nameText = await shippingAddressSection.locator('p').nth(2).textContent();
+        expect(nameText.trim()).toBeTruthy();
+
+        const addressLine1Text = await shippingAddressSection.locator('p').nth(3).textContent();
+        expect(addressLine1Text.trim()).toBeTruthy();
+
+        const cityStateZipText = await shippingAddressSection.locator('p').nth(4).textContent();
+        expect(cityStateZipText.trim()).toBeTruthy();
+
+        const phoneText = await shippingAddressSection.locator('p').nth(5).textContent();
+        expect(phoneText.trim()).toBeTruthy();
+
+        const shippingMethodText = await shippingAddressSection.locator('p').nth(6).textContent();
+        expect(shippingMethodText.trim()).toBeTruthy();
+
+        const shippingMethod = await shippingAddressSection.locator('p').nth(7).textContent();
+        expect(shippingMethod.trim()).toBeTruthy();
+    }
+
+    async validateOrderDetailsBillingAddress() {
+        // Locate the billing address section
+        const billingAddressSection = this.page.locator(orderDetailsBillingAddress);
+
+        // Extract and validate each p tag content within the billing address section
+        const billingAddressText = await billingAddressSection.locator('p').nth(0).textContent();
+        expect(billingAddressText.trim()).toBeTruthy();
+
+        const nameText = await billingAddressSection.locator('p').nth(1).textContent();
+        expect(nameText.trim()).toBeTruthy();
+
+        const addressLine1Text = await billingAddressSection.locator('p').nth(2).textContent();
+        expect(addressLine1Text.trim()).toBeTruthy();
+
+        const cityStateZipText = await billingAddressSection.locator('p').nth(3).textContent();
+        expect(cityStateZipText.trim()).toBeTruthy();
+
+        const phoneText = await billingAddressSection.locator('p').nth(4).textContent();
+        expect(phoneText.trim()).toBeTruthy();
+
+        // Extract and validate the email address
+        const contactInfoText = await billingAddressSection.locator('p').nth(5).textContent();
+        expect(contactInfoText.trim()).toBeTruthy();
+
+        const emailText = await billingAddressSection.locator('p').nth(6).textContent();
+        expect(emailText.trim()).toBeTruthy();
+    }
+
+    async validateOrderDetailsPaymentSection() {
+        const accountNumberSection = this.page.locator(orderDetailsAccountNumber);
+        const paymentMethodText = await accountNumberSection.locator('p').nth(1).textContent();
+        expect(paymentMethodText.trim()).toBeTruthy();
+        //const paymentMethodsvg = this.page.locator('section.ml-3.lg\\:ml-0 section section p.mb-6 svg');
+        const paymentMethodsvg = await accountNumberSection.locator('section').locator('section').locator('p.mb-6 svg');
+        expect(paymentMethodsvg).toBeVisible();
+        const accountNumberText = await accountNumberSection.locator('p').nth(3).textContent();
+        expect(accountNumberText.trim()).toBeTruthy();
+        const accountNumberDetails = await accountNumberSection.locator('p').nth(4).textContent();
+        expect(accountNumberDetails.trim()).toBeTruthy();
+    }
+
+    async validateShippedOrderInOrderDetails() {
+        // Step 1: Locate all order sections on the page
+        await this.page.locator(order_Section).first().waitFor({ state: 'visible' });
+    
+        // Step 2: Loop through each order section
+        const orderSections = await this.page.locator(order_Section);
+        const totalOrders = await orderSections.count();
+    
+        for (let i = 0; i < totalOrders; i++) {
+            const orderSection = orderSections.nth(i);
+    
+            // Step 3: Locate the product sections and "Shipped on" <p> tags within the current order section
+            const productSections = orderSection.locator(product_Section);
+            const totalProductSectionsCount = await productSections.count();
+            const shippedTags = orderSection.locator(`section.truncate > p:has-text("${orderStatus_ShippedText}")`);
+            const totalTagsCount = await shippedTags.count();
+    
+            // Step 4: Verify if all products have "Shipped on" status
+            if (totalTagsCount > 0) {
+                const orderDetailsLink = orderSection.locator('a:has-text("View Order Details")');
+    
+                if (await orderDetailsLink.isVisible()) {
+                    await orderDetailsLink.click();
+                    console.log('Clicked on the "View Order Details" link for order', await orderSection.locator('h2').textContent());
+                    const shippedSection = this.page.locator(orderDetailsShippedSection);
+                    const shippedText = await shippedSection.locator('h1').nth(0).textContent();
+                    expect(shippedText.trim()).toBeTruthy();
+                    const shippedOnText = await shippedSection.locator('h1').nth(1).textContent();
+                    expect(shippedOnText.trim()).toBeTruthy();
+                    const trackShipment = await this.page.locator(trackShipmentText).nth(0).textContent();
+                    expect(trackShipment.trim()).toBeTruthy();
+                    const trackShipmentNumber = await this.page.locator(trackShipmentText).locator('a').nth(0).textContent();
+                    expect(trackShipmentNumber.trim()).toBeTruthy();
+                    break;  // Exit the loop after clicking the first valid order link
+                } else {
+                    console.log('"View Order Details" link is not visible for order', await orderSection.locator('h2').textContent());
+                }
+            } else {
+                console.log('Not all products have "Shipped" status or count mismatch for order', await orderSection.locator('h2').textContent());
+            }
+        }
+    }
+
+    async clickOnTrackShipmentNumber(){
+        await this.page.locator('section.mb-\\[30px\\] a').nth(1).click();
+        await this.page.waitForURL('**/fedextrack/**');
     }
 }

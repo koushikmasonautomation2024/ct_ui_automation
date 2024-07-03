@@ -133,8 +133,8 @@ test.describe("Mason Order Details Page", () => {
 
   })
 
-  //Order Details - Order Cancellation - Test Cases ID-SB-MyA199
-  test("My Account Order details - Order Cancellation - Verify if an item within a multiple item order has not been processed or shipped, application displays 'Cancel Item' button with the text 'Changed your mind?' within the bottom righthand corner of the item detail card.", async ({ page }, testInfo) => {
+  //Order Details - Item Cancellation - Test Cases ID-SB-MyA199
+  test("My Account Order details - Item Cancellation - Verify if an item within a multiple item order has not been processed or shipped, application displays 'Cancel Item' button with the text 'Changed your mind?' within the bottom righthand corner of the item detail card.", async ({ page }, testInfo) => {
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
     }
@@ -147,8 +147,8 @@ test.describe("Mason Order Details Page", () => {
 
   })
 
-  //Order Details - Order Cancellation - Test Cases ID-SB-MyA201
-  test("My Account Order details - Order Cancellation - Verify clicking on Cancel Item on, application opens a cancel item modal along with following options:- Yes, Cancel the product- No, Go back to the Order- X option", async ({ page }, testInfo) => {
+  //Order Details - Item Cancellation - Test Cases ID-SB-MyA201
+  test("My Account Order details - Item Cancellation - Verify clicking on Cancel Item on, application opens a cancel item modal along with following options:- Yes, Cancel the product- No, Go back to the Order- X option", async ({ page }, testInfo) => {
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
     }
@@ -162,8 +162,8 @@ test.describe("Mason Order Details Page", () => {
 
   })
 
-  //Order Details - Order Cancellation - Test Cases ID-SB-MyA196
-  test("My Account Order details - Order Cancellation - Verify clicking on X closes the cancel Item modal.", async ({ page }, testInfo) => {
+  //Order Details - Item Cancellation - Test Cases ID-SB-MyA196
+  test("My Account Order details - Item Cancellation - Verify clicking on X closes the cancel Item modal.", async ({ page }, testInfo) => {
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
     }
@@ -178,8 +178,8 @@ test.describe("Mason Order Details Page", () => {
 
   })
 
-  //Order Details - Order Cancellation - Test Cases ID-SB-MyA196
-  test("My Account Order details - Order Cancellation - Verify clicking on No,Go Back closes the cancel Item modal.", async ({ page }, testInfo) => {
+  //Order Details - Item Cancellation - Test Cases ID-SB-MyA196
+  test("My Account Order details - Item Cancellation - Verify clicking on No,Go Back closes the cancel Item modal.", async ({ page }, testInfo) => {
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
     }
@@ -194,8 +194,8 @@ test.describe("Mason Order Details Page", () => {
 
   })
 
-  //Order Details - Order Cancellation - Test Cases ID-SB-MyA202/SB-MyA203
-  test("My Account Order details - Order Cancellation - Verify clicking on 'Cancel Item' button, modal gets closed, page gets refreshed and application shows the order status as 'Cancelled' on the applicable item.", async ({ page }, testInfo) => {
+  //Order Details - Item Cancellation - Test Cases ID-SB-MyA202/SB-MyA203
+  test("My Account Order details - Item Cancellation - Verify clicking on 'Cancel Item' button, modal gets closed, page gets refreshed and application shows the order status as 'Cancelled' on the applicable item.", async ({ page }, testInfo) => {
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
     }
@@ -218,10 +218,65 @@ test.describe("Mason Order Details Page", () => {
     await myaccountPage.clickMyAccountOrderLink();
     const orderDetailsPage = new OrderDetailsPage(page);
     await orderDetailsPage.validateCancelOrderInOrderDetails();
-    const orderNumber = await orderDetailsPage.getOrderNumberInOrderDetails();
+    const orderID = await orderDetailsPage.getOrderNumberInOrderDetails();
     await orderDetailsPage.clickCancelOrderButton();
-    await orderDetailsPage.validatedCanceledOrder(orderNumber);
+    await orderDetailsPage.validatedCanceledOrder(orderID);
 
+  })
+
+  //Order Details - Order Summary - Test Cases ID-SB-MyA204
+  test("My Account Order details - Order Summary - Verify Order Summary shows following fields:- Subtotal- Shipping with ? icon- Shipping Surcharge (when applicable) - with ? icon- Sales Tax - with ? icon- Order total.", async ({ page }, testInfo) => {
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const myaccountPage = new MyAccountPage(page);
+    await myaccountPage.redirectToMyAccount();
+    await myaccountPage.clickMyAccountOrderLink();
+    const orderDetailsPage = new OrderDetailsPage(page);
+    await orderDetailsPage.clickViewOrderDetailsLink();
+    await orderDetailsPage.validateOrderDetailsOrderSummary();
+
+  })
+
+  //Order Details - Shipping Section - Test Cases ID-SB-MyA212
+  test("My Account Order details - Shipping Section - Verify below the Order Summary, Shipping section shows with the following data: - Shipping Address- First & Last Name- Address Line 1- Address Line 2 (if available)- City, State/Region & Zip Code- 10 digit phone - (XXX) XXX-XXXX format.", async ({ page }, testInfo) => {
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const myaccountPage = new MyAccountPage(page);
+    await myaccountPage.redirectToMyAccount();
+    await myaccountPage.clickMyAccountOrderLink();
+    const orderDetailsPage = new OrderDetailsPage(page);
+    await orderDetailsPage.clickViewOrderDetailsLink();
+    await orderDetailsPage.validateOrderDetailsShippingDetails();
+
+  })
+
+  //Order Details - Payment Section - Test Cases ID-SB-MyA214/SB-MyA215
+  test("My Account Order details - Payment Section - Verify following details are shown along with Payment details: - Billing Address- First & Last Name- Address Line 1- Address Line 2 (if available)- City, State/Region & Zip Code- 10 digit phone - (XXX) XXX-XXXX format.", async ({ page }, testInfo) => {
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const myaccountPage = new MyAccountPage(page);
+    await myaccountPage.redirectToMyAccount();
+    await myaccountPage.clickMyAccountOrderLink();
+    const orderDetailsPage = new OrderDetailsPage(page);
+    await orderDetailsPage.clickViewOrderDetailsLink();
+    await orderDetailsPage.validateOrderDetailsBillingAddress();
+    await orderDetailsPage.validateOrderDetailsPaymentSection();
+  })
+
+  //Order Details - Shipment Details - Test Cases ID-SB-MyA217
+  test("My Account Order details - Shipment Details - Verify following details are shown in the Shipment section:- Shipment (number).", async ({ page }, testInfo) => {
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const myaccountPage = new MyAccountPage(page);
+    await myaccountPage.redirectToMyAccount();
+    await myaccountPage.clickMyAccountOrderLink();
+    const orderDetailsPage = new OrderDetailsPage(page);
+    await orderDetailsPage.validateShippedOrderInOrderDetails();
+    await orderDetailsPage.clickOnTrackShipmentNumber();
   })
 
 })
