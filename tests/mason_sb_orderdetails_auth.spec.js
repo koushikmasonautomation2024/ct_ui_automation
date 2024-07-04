@@ -16,6 +16,7 @@ const nonCreditUserFile = './noncredituser.json';
 const newUserFile = './newuser.json';
 const globalUser1File = './globaluser1.json';
 const orderDetailsCancelOrderFile = './orderdetailscancelorder.json';
+const paymentUserFile = './paymentuser.json';
 
 const homepage_data = JSON.parse(JSON.stringify(require('../test_data/mason_sb_home_page_data.json')));
 const signinpage_data = JSON.parse(JSON.stringify(require('../test_data/mason_signin_page_data.json')));
@@ -30,7 +31,7 @@ test.describe("Mason Order Details Page", () => {
 
   test.beforeEach(async ({ page, isMobile }, testInfo) => {
     test.slow();
-    const storageStatePath = isMobile ? orderDetailsCancelOrderFile : orderDetailsCancelOrderFile;
+    const storageStatePath = isMobile ? paymentUserFile : paymentUserFile;
 
     if (fs.existsSync(storageStatePath)) {
       await page.context().addCookies(JSON.parse(fs.readFileSync(storageStatePath, 'utf-8')).cookies);
@@ -266,7 +267,7 @@ test.describe("Mason Order Details Page", () => {
     await orderDetailsPage.validateOrderDetailsPaymentSection();
   })
 
-  //Order Details - Shipment Details - Test Cases ID-SB-MyA217
+  //Order Details - Shipment Details - Test Cases ID-SB-MyA217/SB-MyA218
   test("My Account Order details - Shipment Details - Verify following details are shown in the Shipment section:- Shipment (number).", async ({ page }, testInfo) => {
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -277,6 +278,85 @@ test.describe("Mason Order Details Page", () => {
     const orderDetailsPage = new OrderDetailsPage(page);
     await orderDetailsPage.validateShippedOrderInOrderDetails();
     await orderDetailsPage.clickOnTrackShipmentNumber();
+  })
+
+  //Order Details - Product Data - Test Cases ID-SB-MyA222
+  test("My Account Order details - Product Data - Verify display of product details including name, image thumbnail, variant attributes, quantity, price, protection plan, etc.", async ({ page }, testInfo) => {
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const myaccountPage = new MyAccountPage(page);
+    await myaccountPage.redirectToMyAccount();
+    await myaccountPage.clickMyAccountOrderLink();
+    const orderDetailsPage = new OrderDetailsPage(page);
+    await orderDetailsPage.clickViewOrderDetailsLink();
+    await orderDetailsPage.validateProductSection();
+  })
+
+  //Order Details - Write a Product Review - Test Cases ID-SB-MyA224
+  test("My Account Order details - Write a Product Review - Verify 'Write a Product Review' button is shown only if the order status is marked 'Delivered'.", async ({ page }, testInfo) => {
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const myaccountPage = new MyAccountPage(page);
+    await myaccountPage.redirectToMyAccount();
+    await myaccountPage.clickMyAccountOrderLink();
+    const orderDetailsPage = new OrderDetailsPage(page);
+    await orderDetailsPage.validateDeliveredOrderInOrderDetails();
+  })
+
+  //Order Details - Write a Product Review - Test Cases ID-SB-MyA225
+  test("My Account Order details - Write a Product Review - Verify clicking on the 'Write a Product Review' button, application opens a modal hosted from Power Reviews integration.", async ({ page }, testInfo) => {
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const myaccountPage = new MyAccountPage(page);
+    await myaccountPage.redirectToMyAccount();
+    await myaccountPage.clickMyAccountOrderLink();
+    const orderDetailsPage = new OrderDetailsPage(page);
+    await orderDetailsPage.validateDeliveredOrderInOrderDetails();
+    await orderDetailsPage.clickOnWriteAReviewButton();
+  })
+
+  //Order Details - Return/Refund Information - Test Cases ID-
+  test("My Account Order details - Return/Refund Information - Verify display of return information in the Order Summary section.", async ({ page }, testInfo) => {
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const myaccountPage = new MyAccountPage(page);
+    await myaccountPage.redirectToMyAccount();
+    await myaccountPage.clickMyAccountOrderLink();
+    const orderDetailsPage = new OrderDetailsPage(page);
+    await orderDetailsPage.validateReturnedOnOrderInOrderDetails();
+    
+  })
+
+  //Order Details - Return/Refund Information - Test Cases ID-
+  test("My Account Order details - Return/Refund Information - Verify display of refund information in the Order Summary section.", async ({ page }, testInfo) => {
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const myaccountPage = new MyAccountPage(page);
+    await myaccountPage.redirectToMyAccount();
+    await myaccountPage.clickMyAccountOrderLink();
+    const orderDetailsPage = new OrderDetailsPage(page);
+    await orderDetailsPage.validateReturnedOnOrderInOrderDetails();
+    await orderDetailsPage.validatePostOrderRefundTextVisibility();
+    
+  })
+
+  //Order Details - Display the Order Number under the Orders in Left Navigation - Test Cases ID-SB-MyA175/SB-MyA176
+  test("My Account Order details - Display the Order Number under the Orders in Left Navigation - Verify the left navigation updates to Orders -> Order number when user is only any order's details page.", async ({ page }, testInfo) => {
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const myaccountPage = new MyAccountPage(page);
+    await myaccountPage.redirectToMyAccount();
+    await myaccountPage.clickMyAccountOrderLink();
+    const orderDetailsPage = new OrderDetailsPage(page);
+    await orderDetailsPage.clickViewOrderDetailsLink();
+    await orderDetailsPage.validateOrderDetailsOrderNumberSection();
+    
   })
 
 })
