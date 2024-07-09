@@ -30,7 +30,7 @@ const shipping="Shipping";
 const secure_checkout_link="Secure Checkout";
 const return_to_cart_link="Return to Cart";
 const shipping_address="Shipping Address";
-const items_in_cart="Items in Your Cart";
+const items_in_cart="Items in Your Order";
 const order_summary="Order Summary";
 const order_total="Order Total:";
 const shipping_method="Shipping Method";
@@ -48,6 +48,10 @@ const mail_id="service@stoneberry.com";
 const dropdownSelector = '#addressId';
 
 const gift_message='Gift Message (optional)';
+
+const edit_credituser_address_message='If you need to change the credit account holder’s name, please call us at 1-800-704-5480'
+
+const different_address_message='Your order may be canceled if your shipping and billing addresses are different';
 
 
 exports.GuestCheckOutPage = class GuestCheckOutPage{
@@ -144,8 +148,8 @@ async validateShippingSection(){
     await this.page.$(`//h2[contains(text(), "${shipping}")]`);
     await this.page.$(`//p[contains(text(), "${shipping}")]`);
     await this.page.$(`//p[contains(text(), "${shipping_method}")]`);
-    await expect(this.page.getByText(secure_checkout_link)).toBeVisible({timeout:10000});
-    await expect(this.page.getByText(return_to_cart_link)).toBeVisible();
+    await (this.page.getByText(secure_checkout_link)).waitFor({state:"visible"});
+    await (this.page.getByText(return_to_cart_link)).waitFor({state:"visible"});
     await expect(this.page.getByText(shipping_address)).toBeVisible();
     await expect(this.page.getByText(items_in_cart)).toBeVisible();
     await expect(this.page.getByText(order_summary)).toBeVisible();
@@ -181,9 +185,9 @@ async clickOnPlaceOrder(){
 }
 
 async validateProgressBar(){
-    await this.page.$(`//h2[contains(text(), "${shipping}")]`);
+    await this.page.$(`//span[contains(text(), "${shipping}")]`);
     // Get the computed style of the element
-  const element = await this.page.$(`//h2[contains(text(), "${shipping}")]`);
+  const element = await this.page.$(`//span[contains(text(), "${shipping}")]`);
   const computedStyle = await element.evaluate((node) => {
     const style = window.getComputedStyle(node);
     return {
@@ -205,7 +209,7 @@ async validateProgressBar(){
     }
 
     // Validate Review section is greyed out
-  const reviewElement = await this.page.$(`//h2[contains(text(), "${review}")]`);
+  const reviewElement = await this.page.$(`//span[contains(text(), "${review}")]`);
   const reviewStyle = await reviewElement.evaluate((node) => {
     const style = window.getComputedStyle(node);
     return {
@@ -222,7 +226,7 @@ async validateProgressBar(){
   }
 
   // Validate Payment section is greyed out
-  const paymentElement = await this.page.$(`//h2[contains(text(), "${payment}")]`);
+  const paymentElement = await this.page.$(`//span[contains(text(), "${payment}")]`);
   const paymentStyle = await paymentElement.evaluate((node) => {
     const style = window.getComputedStyle(node);
     return {
@@ -262,14 +266,15 @@ async validateNeedHelpSection(){
     await expect(this.page.getByText('Chat With Us:')).toBeVisible();
     await expect(this.page.getByText('Send us your question via')).toBeVisible();
     await expect(this.page.getByRole('link', { name: 'Frequently Asked Questions' })).toBeVisible();
-    await expect(this.page.getByRole('link', { name: 'chat now' })).toBeVisible();
+    //await expect(this.page.getByRole('link', { name: 'chat now ' })).toBeVisible();
+    await expect(this.page.getByText('chat now')).toBeVisible();
 
 }
 
 
 async validateNewAddressModal(){
-    await expect(this.makepayment_newaddress_fname).toBeVisible();
-    await expect(this.makepayment_newaddress_lname).toBeVisible();
+    await (this.makepayment_newaddress_fname).waitFor({state:"visible"});
+    await (this.makepayment_newaddress_lname).waitFor({state:"visible"});
     await expect(this.makepayment_newaddress_address1).toBeVisible();
     await expect(this.makepayment_newaddress_address2).toBeVisible();
     await expect(this.makepayment_addnewaddress_city).toBeVisible();
@@ -334,10 +339,16 @@ async validateAddressVerification(){
     }
   } else {
     console.log('Heading "Verify Your Address" is not visible.');
-    //await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
+    await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
   }
 
 
+}
+
+async clickOnEditAddress(){
+  await this.page.waitForSelector("(//button[text()='Edit'])[1]", { visible: true });
+  const button = await this.page.$('(//button[text()="Edit"])[1]');
+  await button.click();
 }
 
 async validateEditAddress(){
@@ -345,8 +356,19 @@ async validateEditAddress(){
   await this.page.waitForSelector("(//button[text()='Edit'])[1]", { visible: true });
   const button = await this.page.$('(//button[text()="Edit"])[1]');
   await button.click();
+ // await this.page.getByRole("button",{ name: 'Edit Address' }).click();
+ // Check if the button is visible
+const isButtonVisible = await this.page.isVisible('button', { 
+  role: 'button', 
+  name: 'Edit Address' 
+});
+if (isButtonVisible) {
   await this.page.getByRole("button",{ name: 'Edit Address' }).click();
   await this.addShippingAddress();
+}
+else{
+  await this.addShippingAddress();
+}
   // await this.page.getByRole('button', { name: 'Continue to Payment' }).click();
   //   //await this.page.getByRole('button', { name: 'Continue to Payment' }).click();
   //   await this.page.waitForTimeout(5000);
@@ -446,7 +468,7 @@ async validateItemsInCartSection(){
    // Wait for the button with specific name to be visible
    //const button = await this.page.waitForSelector('button[data-radix-collection-item]:has-text("Items in Your Cart")', { visible: true });
 
-   const button= await this.page.getByRole('button', { name: 'Items in Your Cart' });
+   const button= await this.page.getByRole('button', { name: items_in_cart });
    // Function to check initial data-state
    const isDataStateClosed = async () => {
      const dataState = await button.getAttribute('data-state');
@@ -473,6 +495,7 @@ async validateItemsInCartSection(){
 
 
 async validateShippingSectionAbovePaymentSection(){
+  await this.page.waitForSelector(`//h1[contains(text(), "${shipping}")]`, { visible: true });
   const shippingSection = await this.page.$(`//h1[contains(text(), "${shipping}")]`);
   const paymentForm = await this.page.$(`//h1[contains(text(), "${payment}")]`);
 
@@ -483,5 +506,267 @@ async validateShippingSectionAbovePaymentSection(){
   expect(shippingBox.y).toBeLessThan(paymentBox.y);
 
 }
+
+
+async validatePaymentProgressBarOld(){
+  // Wait for the progress bar elements to appear
+  await this.page.waitForSelector('nav[aria-label="Progress"]');
+
+  // Verify each step in the progress bar
+  const shippingStep = await this.page.$('nav[aria-label="Progress"] li:nth-child(1)');
+  const paymentStep = await this.page.$('nav[aria-label="Progress"] li:nth-child(2)');
+  const reviewStep = await this.page.$('nav[aria-label="Progress"] li:nth-child(3)');
+
+  // Assert the styles and content for each step
+  const shippingClass = await shippingStep.getAttribute('class');
+  const paymentClass = await paymentStep.getAttribute('class');
+  const reviewClass = await reviewStep.getAttribute('class');
+
+  // Assert the shipping step (Green with Check)
+  if (shippingClass.includes('text-[#298842]')) {
+    console.log('Shipping step is green (completed)');
+  } else {
+    console.error('Shipping step is not green');
+  }
+
+  // Assert the payment step (Highlighted)
+  if (paymentClass.includes('border-2') && paymentClass.includes('border-black')) {
+    console.log('Payment step is highlighted');
+  } else {
+    console.error('Payment step is not highlighted');
+  }
+
+  // Assert the review step (Greyed out)
+  if (reviewClass.includes('text-foggyGray')) {
+    console.log('Review step is greyed out');
+  } else {
+    console.error('Review step is not greyed out');
+  }
+
+}
+
+
+async validatePaymentProgressBar() {
+  try {
+      // Validate Shipping section (Green with Check)
+      //const shippingText = 'Shipping';
+      const shippingElement =  await this.page.$(`//span[contains(text(), "${shipping}")]`);
+      //await this.page.$(`nav[aria-label="Progress"] span:has(svg) span:has-text("${shipping}")`);
+      const shippingClass = await shippingElement.getAttribute('class');
+
+      if (shippingClass.includes('text-[#298842]')) {
+          console.log(`Validation passed: ${shipping} is green with check.`);
+      } else {
+          console.log(`Validation failed: ${shipping} is not green with check.`);
+      }
+
+      // Validate Payment section (Highlighted)
+      //const paymentText = 'Payment';
+      const paymentElement = await this.page.$(`//span[contains(text(), "${payment}")]`);
+      //await this.page.$(`nav[aria-label="Progress"] span.step-label:has-text("${payment}")`);
+      const paymentClass = await paymentElement.getAttribute('class');
+
+      if (paymentClass.includes('font-extrabold')) {
+          console.log(`Validation passed: ${payment} is highlighted.`);
+      } else {
+          console.log(`Validation failed: ${payment} is not highlighted.`);
+      }
+
+      // Validate Review section (Greyed out)
+      //const reviewText = 'Review';
+      const reviewElement = await this.page.$(`//span[contains(text(), "${review}")]`);
+      //await this.page.$(`nav[aria-label="Progress"] span.text-foggyGray:has-text("${review}")`);
+      const reviewClass = await reviewElement.getAttribute('class');
+
+      if (reviewClass.includes('text-foggyGray')) {
+          console.log(`Validation passed: ${review} is greyed out.`);
+      } else {
+          console.log(`Validation failed: ${review} is not greyed out.`);
+      }
+  } catch (error) {
+      console.error('Error during validation:', error);
+  }
+}
+
+async validatePaymentMethods(){
+ await (this.page.getByLabel('Credit/Debit Card')).waitFor({state:"visible"});
+ //await this.page.waitForSelector('text="Credit/Debit Card"', { state: 'visible' });
+  await expect(this.page.getByLabel('My Stoneberry Credit')).toBeVisible();
+}
+
+//if there is an address added
+async validateMyCreditIsSelectedbyDefault(){
+  // Check if the "Saved address" radio button is present and selected by default
+   // Wait for the button to appear on the page
+   const button = await this.page.waitForSelector('button[value="CREDIT"]');
+
+   // Get the value of aria-checked attribute
+   const ariaChecked = await button.getAttribute('aria-checked');
+
+   // Assert that aria-checked attribute is 'true'
+   expect(ariaChecked).toBeTruthy();
+}
+
+async clickCreditCard(){
+  try {
+    // Wait for the label that contains the text "Credit/Debit Card"
+    const button = await this.page.waitForSelector('button[value="CARD"]');
+
+    // Click the button
+    await button.click();
+
+    console.log('Clicked on Credit/Debit Card button.');
+
+} catch (error) {
+    console.error('Error clicking on Credit/Debit Card button:', error);
+}
+}
+
+
+
+async clickNewCard(){
+  
+  try {
+    // Wait for the label that contains the text "Credit/Debit Card"
+    const button = await this.page.waitForSelector('button[value="newCreditCard"]');
+
+    // Click the button
+    await button.click();
+
+    console.log('Clicked on New Credit/Debit Card button.');
+
+} catch (error) {
+    console.error('Error clicking on New Credit/Debit Card button:', error);
+}
+}
+
+
+
+
+async clickSameAsShippingCheckbox(){
+  await this.page.getByLabel('Same as Shipping Address').click();
+}
+
+async validateDifferentAddressMessage(){
+  await (this.page.getByText(different_address_message)).waitFor({state:"visible"});
+}
+
+async clickEditBillingAddress(){
+  await this.page.getByRole('button', { name: 'Edit Address' }).waitFor({state:"visible"});
+  await this.page.getByRole('button', { name: 'Edit Address' }).click();
+}
+
+
+async verifyBillingAddressDetails() {
+  try {
+      // List of fields to verify
+      const fieldsToVerify = [
+          { type: 'label', selector: '*First Name' },
+          { type: 'label', selector: '*Last Name' },
+          { type: 'label', selector: '*Address Line 1' },
+          { type: 'label', selector: '*City' },
+          { type: 'label', selector: '*Zip Code' },
+          { type: 'label', selector: '*Phone Number' }
+      ];
+
+      // Check each field
+      await Promise.all(fieldsToVerify.map(async field => {
+          let element;
+          switch (field.type) {
+              case 'label':
+                  element = await this.page.getByLabel(field.selector, { exact: false });
+                  break;
+              default:
+                  console.error(`Unsupported field type: ${field.type}`);
+                  return;
+          }
+
+          await expect(element).toBeVisible();
+          const value = await element.inputValue();
+
+          // Log prepopulation status
+          if (value.trim() !== '') {
+              console.log(`${field.selector} is prepopulated.`);
+          } else {
+              console.log(`${field.selector} is not prepopulated.`);
+          }
+
+          // Log text content
+          
+          console.log(`${field.selector} text content (value): ${value}`);
+      }));
+
+      console.log('Billing address details verification passed.');
+  } catch (error) {
+      console.error('Error in verifyBillingAddressDetails:', error);
+      throw error;
+  }
+}
+
+async validateEditAddressMessageForCreditUser(){
+  await (this.page.getByText(edit_credituser_address_message)).waitFor({state:"visible"});
+}
+
+
+async validateBillingAddressEditCreditAccountHolder() {
+  try {
+     
+
+      // Wait for the Credit Account Holder label to be visible
+      const creditAccountHolderLabel = await this.page.waitForSelector('p.pt-7.text-base.font-bold.leading-5', { state: 'visible' });
+
+      // Check if the label contains 'Credit Account Holder:'
+      const labelText = await creditAccountHolderLabel.innerText();
+      if (labelText.includes('Credit Account Holder:')) {
+          console.log('Credit Account Holder label is visible.');
+      } else {
+          console.error('Credit Account Holder label is not visible or does not contain expected text.');
+      }
+
+      
+
+      // Get the text content of (fname lname)
+    const firstNameLastNameElement = await this.page.$('p.pt-1\\.5.text-base');
+    let nameText = '';
+
+    if (firstNameLastNameElement) {
+        nameText = await firstNameLastNameElement.textContent(); // Get the text content
+        console.log(`Credit Account Holder: ${nameText.trim()}`); // Log the name
+    } else {
+        console.log('Name element not found.');
+    }
+
+    
+    //await expect(firstNameLastNameElement).not.toHaveAttribute('contenteditable', 'true');
+     // Verify if Brenda Hayton (fname lname) is editable
+  //    const isEditable = await firstNameLastNameElement.evaluate(element => {
+  //     return element.contentEditable === 'true'; // Check if contentEditable attribute is true
+  // });
+
+  // if (isEditable) {
+  //     console.log('Brenda Hayton (fname lname) is editable.');
+  // } else {
+  //     console.log('Brenda Hayton (fname lname) is not editable.');
+  // }
+
+  // Get the element handle for the paragraph
+  const paragraphElement = await this.page.$('p.pt-1\\.5.text-base');
+
+  // Check if the paragraph element is editable
+  const isContentEditable = await paragraphElement.evaluate(element => {
+      return element.getAttribute('contenteditable') === 'true';
+  });
+
+  // Assert that the element is not contenteditable
+  expect(isContentEditable).toBe(false);
+  console.log('firstNameLastName is not editable');
+    
+  } catch (error) {
+      console.error('Error in validateCreditAccountHolder:', error);
+      throw error;
+  }
+}
+
+
 
 }

@@ -178,7 +178,7 @@ exports.CreateAccountPage = class CreateAccountPage{
   }
 
   async accountCreationSuccessMessage(){
-    await expect(this.account_creation_success).toBeVisible();
+    await (this.account_creation_success).waitFor({state:"visible"});
   }
 
   async validateDashboardNavigation(firstName, dashboard_url){
