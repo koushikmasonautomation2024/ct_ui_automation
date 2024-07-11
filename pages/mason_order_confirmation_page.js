@@ -16,6 +16,9 @@ const orderConfirmationShippingSectionShippingMethodText = 'Shipping Method';
 const orderConfirmationPaymentMethodSection = 'section.flex.w-1\\/2.flex-col.gap-8';
 const orderConfirmationProductSection = 'section.w-full.px-4.md\\:max-w-\\[460px\\]';
 const orderConfirmationThankYouText = 'Thank you for your order,';
+const orderConfirmationThankYouDownPaymentText = 'Thank you for your down payment,';
+const orderConfirmationThankYouPendingCreditText = 'Your order has been submitted and is pending credit approval.';
+const orderConfirmationThankYouSuspendedText = 'Your order has been suspended.';
 const orderConfirmationEmailText = /A confirmation email was sent to ([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}) with your order information\./;
 const orderConfirmationEmailArriveText = 'If the email doesn’t arrive within five minutes, please check your spam folder. If you require further assistance, please Contact Us, and one of our Customer Service Representatives will be happy to help you.';
 const orderConfirmationOrderNumber = /Order Confirmation #[A-Z0-9]+/;
@@ -39,7 +42,8 @@ exports.OrderConfirmationPage = class OrderConfirmationPage {
         this.orderConfPendingApprovalText = page.getByText(orderConfirmationPendingApprovalText);
         this.orderConfPendingCreditApprovalText = page.getByText(orderConfirmationPendingCreditApprovalText);
         this.orderConfPendinApprovalSection = page.locator('p.text-\\[\\#D6A124\\]');
-        
+        this.orderConfHeroBanner = page.locator('section.mb-20.mt-6.w-full.md\\:mb-14.md\\:mt-10.md\\:px-4 img');
+
     }
 
     async checkoutPage() {
@@ -71,6 +75,26 @@ exports.OrderConfirmationPage = class OrderConfirmationPage {
         const randomString = Math.random().toString(36).substring(2, 11); // Generate a random string of 9 characters
         const domain = 'example.com';
         return `${randomString}@${domain}`;
+    }
+
+    async validateOrderConfThankYouText() {
+        const expectedThankYouText = [
+            orderConfirmationThankYouText,
+            orderConfirmationThankYouDownPaymentText,
+            orderConfirmationThankYouPendingCreditText,
+            orderConfirmationThankYouSuspendedText
+        ];
+
+        // Check if any of the expected texts are visible
+        let isAnyTextVisible = false;
+        for (const thankyouText of expectedThankYouText) {
+            if (await this.page.isVisible(`text=${thankyouText}`)) {
+                isAnyTextVisible = true;
+                break;
+            }
+        }
+        // Assert that at least one text is visible
+        expect(isAnyTextVisible).toBe(true);
     }
 
     async validateOrderConfirmationOrderSummary() {
@@ -238,12 +262,12 @@ exports.OrderConfirmationPage = class OrderConfirmationPage {
         }
     }
 
-    async validateOrderConfOrderDetails(){
-        await expect(this.orderConfThankyouText).toBeVisible();
+    async validateOrderConfOrderDetails() {
         await expect(this.orderConfEmailSent).toBeVisible();
         await expect(this.orderConfEmailArrive).toBeVisible();
         await expect(this.orderConfOrderNumber).toBeVisible();
         await this.validateOrderConfPlacedOnDate();
+        await this.validateOrderConfThankYouText();
     }
     async validateOrderConfPlacedOnDate() {
         // Wait for the element to be visible
@@ -256,25 +280,29 @@ exports.OrderConfirmationPage = class OrderConfirmationPage {
         expect(isValidDate).toBe(true);
     }
 
-    async clickOnContactUs(){
+    async clickOnContactUs() {
         await this.orderConfContactUsLink.first().click();
         await this.page.waitForURL(/.*contact-us/);
         await expect(this.orderConfContactUsText.first()).toBeVisible();
 
     }
 
-    async validateOrderConfPendingCreditApproval(){
+    async validateOrderConfPendingCreditApproval() {
         await expect(this.orderConfPendingApprovalText).toBeVisible();
         const pendingAppText = await this.orderConfPendinApprovalSection.textContent();
         expect(pendingAppText).toBe('Pending Credit Approval');
         await expect(this.orderConfPendingCreditApprovalText).toBeVisible();
     }
 
-    async validatePendingOrderNumber(){
+    async validatePendingOrderNumber() {
         await expect(this.orderConfPendingApprovalText).toBeVisible();
         await expect(this.orderConfEmailSent).toBeVisible();
         await expect(this.orderConfEmailArrive).toBeVisible();
         await expect(this.orderConfOrderNumber).toBeVisible();
         await this.validateOrderConfPlacedOnDate();
+    }
+
+    async validatOrderConfHeroBanner() {
+        await expect(this.orderConfHeroBanner).toBeVisible();
     }
 }
