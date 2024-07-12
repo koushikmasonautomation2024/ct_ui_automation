@@ -24,7 +24,7 @@ const savedAddress = myaccountpage_data.myaccount_newaddress_firstname + " " + m
 const editAddress = myaccountpage_data.myaccount_editaddress_firstname + " " + myaccountpage_data.myaccount_editaddress_lastname + " " + myaccountpage_data.myaccount_editaddress_addressline1;
 
 test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
-  test.setTimeout(120000);
+  test.setTimeout(90000);
   test.beforeEach(async ({ page }, testInfo) => {
     test.slow();
     try {
@@ -39,7 +39,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
 
   // Scenario 1: Guest user placing an order with a credit card
   test.describe("Mason Checkout - Guest user placing an order with a credit card - Scenarios", () => {
-    test("Guest user placing an order with a credit card", async ({ page }) => {
+    test.only("Guest user placing an order with a credit card", async ({ page }) => {
       const firstname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
       const lastname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
       const email = `${firstname.toLowerCase()}.${lastname.toLowerCase()}@automation.com`;
@@ -64,12 +64,17 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await guestCheckoutPage.clickOnPlaceOrderButton();
       const orderConfPage = new OrderConfirmationPage(page);
       await orderConfPage.validateOrderConfOrderDetails();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateOrderConfirmationBillingAddress();
+      await orderConfPage.validateOrderConfirmationPayment();
+      await orderConfPage.validateProductSection();
     });
   });
 
   // Scenario 2: Guest user placing an order with ZB credit
   test.describe("Mason Checkout - Guest user placing an order with ZB credit - Scenarios", () => {
-    test("Guest user placing an order with ZB credit", async ({ page }) => {
+    test.only("Guest user placing an order with ZB credit", async ({ page }) => {
       const firstname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
       const lastname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
       const email = `${firstname.toLowerCase()}.${lastname.toLowerCase()}@automation.com`;
@@ -99,12 +104,15 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await orderConfPage.validateOrderConfOrderDetails();
       await orderConfPage.validateOrderConfirmationBillingAddress();
       await orderConfPage.validateOrderConfirmationPaymentCredit();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateProductSection();
     });
   });
 
   // Scenario 3: Guest user placing an order with ZB credit and PromoCode
   test.describe("Mason Checkout - Guest user placing an order with ZB credit and PromoCode - Scenarios", () => {
-    test.slow("Guest user placing an order with ZB credit and PromoCode", async ({ page }) => {
+    test.only("Guest user placing an order with ZB credit and PromoCode", async ({ page }) => {
       const firstname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
       const lastname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
       const email = `${firstname.toLowerCase()}.${lastname.toLowerCase()}@automation.com`;
@@ -136,13 +144,16 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await orderConfPage.validateOrderConfOrderDetails();
       await orderConfPage.validateOrderConfirmationBillingAddress();
       await orderConfPage.validateOrderConfirmationPaymentCredit();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateProductSection();
     });
   });
 
   // Scenario 4: Logged in - Non Credit Users: placing order with newly added credit card
   test.describe("Mason Checkout - Logged in: Non Credit Users: placing order with newly added credit card - Scenarios", () => {
     test.use({ storageState: './noncredituser.json' });
-    test('Logged in: Non Credit Users: placing order with newly added credit card', async ({ page }) => {
+    test.only('Logged in: Non Credit Users: placing order with newly added credit card', async ({ page }) => {
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const pdpPage = new PDPPage(page);
       await pdpPage.clickOnPDPColorVariantButton();
@@ -157,13 +168,18 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await guestCheckoutPage.clickOnPlaceOrderButton();
       const orderConfPage = new OrderConfirmationPage(page);
       await orderConfPage.validateOrderConfOrderDetails();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateOrderConfirmationBillingAddress();
+      await orderConfPage.validateOrderConfirmationPayment();
+      await orderConfPage.validateProductSection();
     });
   });
 
   // Scenario 5: Logged in - Non Credit Users: placing order with saved credit card
   test.describe("Mason Checkout - Logged in: Non Credit Users: placing order with saved credit card - Scenarios", () => {
     test.use({ storageState: './savedCardUser.json' });
-    test('Logged in: Non Credit Users: placing order with saved credit card', async ({ page }) => {
+    test.only('Logged in: Non Credit Users: placing order with saved credit card', async ({ page }) => {
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const pdpPage = new PDPPage(page);
       await pdpPage.clickOnPDPColorVariantButton();
@@ -177,13 +193,18 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await guestCheckoutPage.clickOnPlaceOrderButton();
       const orderConfPage = new OrderConfirmationPage(page);
       await orderConfPage.validateOrderConfOrderDetails();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateOrderConfirmationBillingAddress();
+      await orderConfPage.validateOrderConfirmationPayment();
+      await orderConfPage.validateProductSection();
     });
   });
 
   // Scenario 6: Logged in - Non Credit Users: placing order with ZB Credit
   test.describe("Mason Checkout - Logged in: Non Credit Users: placing order with ZB Credit - Scenarios", () => {
     test.use({ storageState: './noncredituser.json' });
-    test('Logged in: Non Credit Users: placing order with ZB Credit', async ({ page }) => {
+    test.only('Logged in: Non Credit Users: placing order with ZB Credit', async ({ page }) => {
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const pdpPage = new PDPPage(page);
       await pdpPage.clickOnPDPColorVariantButton();
@@ -203,13 +224,16 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await orderConfPage.validateOrderConfOrderDetails();
       await orderConfPage.validateOrderConfirmationBillingAddress();
       await orderConfPage.validateOrderConfirmationPaymentCredit();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateProductSection();
     });
   });
 
   // Scenario 7: Logged in - Non Credit Users: placing order with ZB Credit and PromoCode
   test.describe("Mason Checkout - Logged in: Non Credit Users: placing order with ZB Credit and PromoCode - Scenarios", () => {
     test.use({ storageState: './noncredituser.json' });
-    test('Logged in: Non Credit Users: placing order with ZB Credit and PromoCode', async ({ page }) => {
+    test.only('Logged in: Non Credit Users: placing order with ZB Credit and PromoCode', async ({ page }) => {
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const pdpPage = new PDPPage(page);
       await pdpPage.clickOnPDPColorVariantButton();
@@ -231,34 +255,16 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await orderConfPage.validateOrderConfOrderDetails();
       await orderConfPage.validateOrderConfirmationBillingAddress();
       await orderConfPage.validateOrderConfirmationPaymentCredit();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateProductSection();
     });
   });
 
   // Scenario 8: Logged in - Credit User: placing order with saved ZB Credit
-  test.describe("Mason Checkout - Logged in: Credit User: placing order with saved ZB Credit - Scenarios", () => {
+  test.describe("Mason Checkout - Logged in: Credit User: placing order with newly added credit cards - Scenarios", () => {
     test.use({ storageState: './creditUser2.json' });
-    test('Logged in: Credit User: placing order with saved ZB Credit', async ({ page }) => {
-      const guestCheckoutPage = new GuestCheckOutPage(page);
-      const pdpPage = new PDPPage(page);
-      await pdpPage.clickOnPDPColorVariantButton();
-      await pdpPage.clickOnPDPSizeVariantButton();
-      await guestCheckoutPage.clickAddToCart();
-      await pdpPage.miniCartDrawer();
-      await guestCheckoutPage.clickCheckoutOnMyCart();
-      await guestCheckoutPage.validateShippingSection();
-      await guestCheckoutPage.validatePlaceOrderButton();
-      await guestCheckoutPage.clickOnPlaceOrderButton();
-      const orderConfPage = new OrderConfirmationPage(page);
-      await orderConfPage.validateOrderConfOrderDetails();
-      await orderConfPage.validateOrderConfirmationBillingAddress();
-      await orderConfPage.validateOrderConfirmationPaymentCredit();
-    });
-  });
-
-  // Scenario 9: Logged in - Credit User: placing order with newly added ZB Credit
-  test.describe("Mason Checkout - Logged in: Credit User: placing order with newly added ZB Credit - Scenarios", () => {
-    test.use({ storageState: './creditUser2.json' });
-    test.skip('Logged in: Credit User: placing order with newly added ZB Credit', async ({ page }) => {
+    test.only('Logged in: Credit User: placing order with newly added credit cards', async ({ page }) => {
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const pdpPage = new PDPPage(page);
       await pdpPage.clickOnPDPColorVariantButton();
@@ -268,22 +274,51 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await guestCheckoutPage.clickCheckoutOnMyCart();
       await guestCheckoutPage.validateShippingSection();
       await guestCheckoutPage.checkForPaymentEditButton();
-      await guestCheckoutPage.fillDOB();
-      await guestCheckoutPage.fillSSN();
-      await guestCheckoutPage.validateTermsAndConditionSection();
+      await guestCheckoutPage.clickCreditCard();
+      await guestCheckoutPage.clickNewCard();
+      await guestCheckoutPage.addCardDetails();
+      await guestCheckoutPage.clickContinueToReview();
+      await guestCheckoutPage.clickOnPlaceOrderButton();
+      const orderConfPage = new OrderConfirmationPage(page);
+      await orderConfPage.validateOrderConfOrderDetails();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateOrderConfirmationBillingAddress();
+      await orderConfPage.validateOrderConfirmationPayment();
+      await orderConfPage.validateProductSection();
+    });
+  });
+
+  // Scenario 9: Logged in - Credit User: placing order with newly added ZB Credit
+  test.describe("Mason Checkout - Logged in: Credit User: placing order with saved credit cards - Scenarios", () => {
+    test.use({ storageState: './creditUser2.json' });
+    test.only('Logged in: Credit User: placing order with saved credit cards', async ({ page }) => {
+      const guestCheckoutPage = new GuestCheckOutPage(page);
+      const pdpPage = new PDPPage(page);
+      await pdpPage.clickOnPDPColorVariantButton();
+      await pdpPage.clickOnPDPSizeVariantButton();
+      await guestCheckoutPage.clickAddToCart();
+      await pdpPage.miniCartDrawer();
+      await guestCheckoutPage.clickCheckoutOnMyCart();
+      await guestCheckoutPage.validateShippingSection();
+      await guestCheckoutPage.checkForPaymentEditButton();
+      await guestCheckoutPage.clickNewCard();
       await guestCheckoutPage.clickContinueToReview();
       await guestCheckoutPage.validatePlaceOrderButton();
       await guestCheckoutPage.clickOnPlaceOrderButton();
       const orderConfPage = new OrderConfirmationPage(page);
       await orderConfPage.validateOrderConfOrderDetails();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
       await orderConfPage.validateOrderConfirmationBillingAddress();
-      await orderConfPage.validateOrderConfirmationPaymentCredit();
+      await orderConfPage.validateOrderConfirmationPayment();
+      await orderConfPage.validateProductSection();
     });
   });
   //Scenario 10
   test.describe("Mason Checkout - Logged in: Credit Users: placing order with with ZB credit - Scenarios", () => {
     test.use({ storageState: './creditUser2.json' });
-    test('Logged in: Credit Users: placing order with with ZB credit', async ({ page }) => {
+    test.only('Logged in: Credit Users: placing order with with ZB credit', async ({ page }) => {
       // Navigate to the page containing the popular search terms
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const signinPage = new SignInPage(page);
@@ -302,6 +337,9 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await orderConfPage.validateOrderConfOrderDetails();
       await orderConfPage.validateOrderConfirmationBillingAddress();
       await orderConfPage.validateOrderConfirmationPaymentCredit();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateProductSection();
     });
   });
 
@@ -309,7 +347,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   //Scenario 11
   test.describe("Mason Checkout - Logged in: Credit Users: placing order with with ZB credit - with PromoCode - Scenarios", () => {
     test.use({ storageState: './creditUser2.json' });
-    test('Logged in: Credit Users: placing order with with ZB credit - with PromoCode', async ({ page }) => {
+    test.only('Logged in: Credit Users: placing order with with ZB credit - with PromoCode', async ({ page }) => {
       // Navigate to the page containing the popular search terms
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const signinPage = new SignInPage(page);
@@ -332,6 +370,9 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await orderConfPage.validateOrderConfOrderDetails();
       await orderConfPage.validateOrderConfirmationBillingAddress();
       await orderConfPage.validateOrderConfirmationPaymentCredit();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateProductSection();
     });
   });
 });
