@@ -1,0 +1,9 @@
+Clicked button with index: 0
+Clicked button with index: 6
+Product Name: Lace Flounce Hem Dress
+Product image is visible
+Detail: Black
+Detail: 3X
+Detail: 
+Detail: $59.99
+Detail: $7.99/month*

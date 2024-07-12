@@ -1,0 +1,35 @@
+Error clicking on New Credit/Debit Card button: page.waitForSelector: Test timeout of 270000ms exceeded.
+Call log:
+  - waiting for locator('button[value="newCreditCard"]') to be visible
+
+    at GuestCheckOutPage.clickNewCard (/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_guestCheckout_page.js:651:40)
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_CheckoutScenarios.auth.spec.js:305:31 {
+  [Symbol(step)]: {
+    stepId: 'pw:api@58',
+    location: {
+      file: '/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_guestCheckout_page.js',
+      line: 651,
+      column: 40,
+      function: 'GuestCheckOutPage.clickNewCard'
+    },
+    category: 'pw:api',
+    title: 'page.waitForSelector(button[value="newCreditCard"])',
+    apiName: 'page.waitForSelector',
+    params: { selector: 'button[value="newCreditCard"]' },
+    boxedStack: undefined,
+    steps: [],
+    complete: [Function: complete],
+    endWallTime: 1720764696866,
+    error: {
+      message: 'Error: page.waitForSelector: Test timeout of 270000ms exceeded.\n' +
+        'Call log:\n' +
+        `  \x1B[2m- waiting for locator('button[value="newCreditCard"]') to be visible\x1B[22m\n`,
+      stack: 'Error: page.waitForSelector: Test timeout of 270000ms exceeded.\n' +
+        'Call log:\n' +
+        `  \x1B[2m- waiting for locator('button[value="newCreditCard"]') to be visible\x1B[22m\n` +
+        '\n' +
+        '    at GuestCheckOutPage.clickNewCard (/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_guestCheckout_page.js:651:40)\n' +
+        '    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_CheckoutScenarios.auth.spec.js:305:31'
+    }
+  }
+}
