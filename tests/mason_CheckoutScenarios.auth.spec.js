@@ -185,8 +185,8 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await orderConfPage.validateOrderConfirmationBillingAddress();
       await orderConfPage.validateOrderConfirmationPayment();
       await orderConfPage.validateProductSection();
-      await page.screenshot({ path: `screenshots/error-${Date.now()}.png`, fullPage: true });
-      allure.attachment('Full Page Screenshot', Buffer.from(await page.screenshot({ fullPage: true })), 'image/png');
+      // await page.screenshot({ path: `screenshots/error-${Date.now()}.png`, fullPage: true });
+      // allure.attachment('Full Page Screenshot', Buffer.from(await page.screenshot({ fullPage: true })), 'image/png');
     });
   });
 
@@ -492,6 +492,15 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await orderConfPage.validateOrderConfirmationShippingDetails();
       await orderConfPage.validateProductSection();
     });
+  });
+  test.afterEach(async ({ page }) => {
+    try {
+      const screenshotPath = `screenshots/error-${Date.now()}.png`;
+      await page.screenshot({ path: screenshotPath, fullPage: true });
+      allure.attachment('Full Page Screenshot', Buffer.from(await page.screenshot({ fullPage: true })), 'image/png');
+    } catch (error) {
+      console.error('Error capturing screenshot:', error);
+    }
   });
 });
 
