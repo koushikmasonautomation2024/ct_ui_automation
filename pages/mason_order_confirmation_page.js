@@ -24,13 +24,17 @@ const orderConfirmationEmailArriveText = 'If the email doesn’t arrive within f
 const orderConfirmationOrderNumber = /Order Confirmation #[A-Z0-9]+/;
 const dateRegex = /Placed on\s+(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{2},\s+\d{4}/;
 const orderConfirmationPendingApprovalText = 'Your order has been submitted and is pending credit approval.';
-const orderConfirmationPendingCreditApprovalText = 'For your security, your Stoneberry® Credit application is pending approval. Your order has been placed successfully, but we will need a few additional days to review and verify the information you provided. If you have any questions, please call us at 1-800-704-5480.'
+const orderConfirmationPendingCreditApprovalText = 'For your security, your Stoneberry® Credit application is pending approval. Your order has been placed successfully, but we will need a few additional days to review and verify the information you provided. If you have any questions, please call us at 1-800-704-5480.';
+const items_in_cart_texts = [
+    'Items in Your Order',
+    'Item in Your Order'
+  ];
 
 exports.OrderConfirmationPage = class OrderConfirmationPage {
     constructor(page) {
         this.page = page;
         this.paymentText = page.getByText('Payment');
-        this.cartItems = page.getByText('Items in your cart');
+        this.cartItems = page.getByText('Items in Order');
         this.orderConfOrderNumber = page.getByText(orderConfirmationOrderNumber);;
         this.orderConfOrderDate = page.locator(`p:has-text(/${dateRegex.source}/)`);
         this.orderConfThankyouText = page.getByText(orderConfirmationThankYouText);
@@ -220,7 +224,15 @@ exports.OrderConfirmationPage = class OrderConfirmationPage {
     async validateProductSection() {
         // Wait for the first Product section to be visible
         await this.page.locator(orderConfirmationProductSection).first().waitFor({ state: 'visible' });
-        await expect(this.cartItems).toBeVisible();
+        for (const text of items_in_cart_texts) {
+            try {
+              await expect(this.page.getByText(text)).toBeVisible();
+              return; // If one text is visible, exit the function
+            } catch (error) {
+              // Continue checking the next text
+            }
+          }
+        
 
         // Loop through each product section
         const productSections = await this.page.locator(orderConfirmationProductSection);

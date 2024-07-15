@@ -9,6 +9,8 @@ import { GuestCheckOutPage } from '../pages/mason_guestCheckout_page';
 import { PDPPage } from '../pages/mason_pdp_page';
 import { SignInPageNew } from '../pages/mason_signin_page1';
 import { OrderConfirmationPage } from '../pages/mason_order_confirmation_page';
+import { expectWithTimeoutHandling } from '../utils/errorHandling';
+import { TimeoutError } from '../utils/errorHandler';
 import { sign } from 'crypto';
 require('dotenv').config();
 const nonCreditUserFile = './noncredituser.json';
@@ -30,11 +32,125 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
     try {
       await page.goto(process.env.WEB_URL);
       await page.goto(checkout_data.add_to_cart_pdp_url);
-      await page.waitForLoadState('networkidle');
+      //await page.waitForLoadState('networkidle');
     } catch (error) {
       // Handle the error here
       console.error("An error occurred in test.beforeEach:", error);
     }
+  });
+
+  test.describe("Mason Checkout - Guest user placing an order with a credit card Custom error - Scenarios", () => {
+    test.only("Guest user placing an order with a credit card", async ({ page }) => {
+      try {
+        const firstname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
+        const lastname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
+        const email = `${firstname.toLowerCase()}.${lastname.toLowerCase()}@automation.com`;
+        const guestCheckoutPage = new GuestCheckOutPage(page);
+        const pdpPage = new PDPPage(page);
+
+        await expectWithTimeoutHandling(async () => {
+          await pdpPage.clickOnPDPColorVariantButton();
+        }, 'Clicking on PDP color variant button');
+
+        await expectWithTimeoutHandling(async () => {
+          await pdpPage.clickOnPDPSizeVariantButton();
+        }, 'Clicking on PDP size variant button');
+
+        await expectWithTimeoutHandling(async () => {
+          await guestCheckoutPage.clickAddToCart();
+        }, 'Clicking Add to Cart');
+
+        await expectWithTimeoutHandling(async () => {
+          await pdpPage.miniCartDrawer();
+        }, 'Opening mini cart drawer');
+
+        await expectWithTimeoutHandling(async () => {
+          await guestCheckoutPage.clickCheckoutOnMyCart();
+        }, 'Clicking checkout on My Cart');
+
+        await expectWithTimeoutHandling(async () => {
+          await guestCheckoutPage.validateSecureCheckout();
+        }, 'Validating secure checkout');
+
+        await expectWithTimeoutHandling(async () => {
+          await guestCheckoutPage.continueCheckoutAsGuest();
+        }, 'Continuing checkout as guest');
+
+        await expectWithTimeoutHandling(async () => {
+          await guestCheckoutPage.validateShippingSection();
+        }, 'Validating shipping section');
+
+        await expectWithTimeoutHandling(async () => {
+          await guestCheckoutPage.validateNewAddressModal();
+        }, 'Validating new address modal');
+
+        await expectWithTimeoutHandling(async () => {
+          await guestCheckoutPage.addShippingAddress();
+        }, 'Adding shipping address');
+
+        await expectWithTimeoutHandling(async () => {
+          await guestCheckoutPage.clickOnContinueToPayment();
+        }, 'Clicking on Continue to Payment');
+
+        await expectWithTimeoutHandling(async () => {
+          await guestCheckoutPage.validateAddressVerification();
+        }, 'Validating address verification');
+
+        await expectWithTimeoutHandling(async () => {
+          await guestCheckoutPage.clickCreditCard();
+        }, 'Clicking on credit card');
+
+        await expectWithTimeoutHandling(async () => {
+          await guestCheckoutPage.addCardDetails();
+        }, 'Adding card details');
+
+        await expectWithTimeoutHandling(async () => {
+          await guestCheckoutPage.enterEmailDetails(email);
+        }, 'Entering email details');
+
+        await expectWithTimeoutHandling(async () => {
+          await guestCheckoutPage.clickContinueToReview();
+        }, 'Clicking Continue to Review');
+
+        await expectWithTimeoutHandling(async () => {
+          await guestCheckoutPage.clickOnPlaceOrderButton();
+        }, 'Clicking on Place Order button');
+
+        const orderConfPage = new OrderConfirmationPage(page);
+
+        await expectWithTimeoutHandling(async () => {
+          await orderConfPage.validateOrderConfOrderDetails();
+        }, 'Validating order confirmation order details');
+
+        await expectWithTimeoutHandling(async () => {
+          await orderConfPage.validateOrderConfirmationOrderSummary();
+        }, 'Validating order confirmation order summary');
+
+        await expectWithTimeoutHandling(async () => {
+          await orderConfPage.validateOrderConfirmationShippingDetails();
+        }, 'Validating order confirmation shipping details');
+
+        await expectWithTimeoutHandling(async () => {
+          await orderConfPage.validateOrderConfirmationBillingAddress();
+        }, 'Validating order confirmation billing address');
+
+        await expectWithTimeoutHandling(async () => {
+          await orderConfPage.validateOrderConfirmationPayment();
+        }, 'Validating order confirmation payment');
+
+        await expectWithTimeoutHandling(async () => {
+          await orderConfPage.validateProductSection();
+        }, 'Validating product section');
+
+      } catch (error) {
+        if (error instanceof TimeoutError) {
+          console.error(`Timeout occurred: ${error.message}`);
+        } else {
+          console.error('Error during test execution:', error);
+        }
+        throw new Error(`Test failed due to error: ${error.message}`);
+      }
+    });
   });
 
   // Scenario 1: Guest user placing an order with a credit card

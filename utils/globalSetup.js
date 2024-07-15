@@ -23,16 +23,22 @@ const orderDetailsCancelOrderFile = './orderdetailscancelorder.json';
 const shipAddressNoCardUser = './shipAddressNoCardUser.json';
 const savedCardUser = './savedCardUser.json';
 const creditUser2 = './creditUser2.json';
+const creditUser3 = './creditUser3.json';
+const creditUser4 = './creditUser4.json';
 
 async function globalSetup(config) {
   const browser = await chromium.launch();
-  const page = await browser.newPage();
+  //const page = await browser.newPage();
 
   // Authenticate as user1
-  await authenticateUser(page, process.env.NON_CREDIT_USER, nonCreditUserFile);
+  const page1 = await browser.newPage();
+  await authenticateUser(page1, process.env.CREDIT_USER_3, creditUser3);
+  await page1.close();
 
   // Authenticate as user2
-  //await authenticateUser(page, process.env.CREDIT_USER_2, creditUser2);
+  const page2 = await browser.newPage();
+  await authenticateUser(page2, process.env.CREDIT_USER_4, creditUser4);
+  await page2.close();
 
   await browser.close();
 }
@@ -46,7 +52,7 @@ async function authenticateUser(page, userEmail, storageFile) {
     await page.getByLabel('*Email Address').click();
     await page.getByLabel('*Email Address').fill(userEmail);
     await page.getByLabel('*Password').click();
-    await page.getByLabel('*Password').fill(process.env.NON_CREDIT_PASSWORD);
+    await page.getByLabel('*Password').fill(process.env.CREDIT_USER_PASSWORD);
     await page.getByRole('button', { name: 'Sign In' }).click({ timeout: 10000 });
     
     const signinPage = new SignInPageNew(page);

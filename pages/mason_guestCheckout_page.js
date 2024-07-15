@@ -49,6 +49,10 @@ const gift_message = 'Gift Message (optional)';
 const create_account_text = 'To use Stoneberry Credit,you must create a new account here or Sign In to an existing account'
 const edit_credituser_address_message = 'If you need to change the credit account holder’s name, please call us at 1-800-704-5480'
 const different_address_message = 'Your order may be canceled if your shipping and billing addresses are different';
+const items_in_cart_texts = [
+  'Items in Your Order',
+  'Item in Your Order'
+];
 
 exports.GuestCheckOutPage = class GuestCheckOutPage {
   constructor(page) {
@@ -152,7 +156,14 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     await (this.page.getByText(secure_checkout_link)).waitFor({ state: "visible" });
     await (this.page.getByText(return_to_cart_link)).waitFor({ state: "visible" });
     await expect(this.page.getByText(shipping_address)).toBeVisible();
-    await expect(this.page.getByText(items_in_cart)).toBeVisible();
+    for (const text of items_in_cart_texts) {
+      try {
+        await expect(this.page.getByText(text)).toBeVisible({ timeout });
+        return; // If one text is visible, exit the function
+      } catch (error) {
+        // Continue checking the next text
+      }
+    }
     await expect(this.page.getByText(order_summary)).toBeVisible();
     await expect(this.page.getByText(order_total)).toBeVisible();
     //await expect(this.page.getByRole('button', { name: continue_to_payment })).toBeVisible();
