@@ -62,6 +62,37 @@ exports.PDPPage = class PDPPage {
         }
     }
 
+    // async clickOnPDPColorVariantButton() {
+    //     await this.pdp_colorvariant_button.first().waitFor({ state: 'visible' });
+    //     const selectVariant = await this.pdp_colorvariant_button;
+
+    //     // Get the count of buttons
+    //     const variantCount = await selectVariant.count();
+
+    //     if (variantCount > 0) {
+    //         let addToCartButtonEnabled = false;
+
+    //         while (!addToCartButtonEnabled) {
+    //             // Select a random button index
+    //             const randomIndex = Math.floor(Math.random() * variantCount);
+
+    //             // Click the randomly selected button
+    //             await selectVariant.nth(randomIndex).click();
+    //             console.log(`Clicked button with index: ${randomIndex}`);
+
+    //             // Check if the Add to Cart button is enabled
+    //             addToCartButtonEnabled = await this.addtoCartButton.isEnabled();
+
+    //             if (addToCartButtonEnabled) {
+    //                 console.log('Add to Cart button is enabled.');
+    //                 return; // Exit the function once Add to Cart button is enabled
+    //             }
+    //         }
+    //     } else {
+    //         console.log('No buttons found');
+    //     }
+    // }
+
     async verifyImageChangesOnVariantSelection() {
         //const firstProductImage = await this.page.locator(pdp_product_big_image).first();
         // Step 1: Capture the initial image URL
@@ -209,6 +240,31 @@ exports.PDPPage = class PDPPage {
 
     }
 
+    // async clickOnPDPSizeVariantButton() {
+    //     await this.pdp_sizevariant_button.first().waitFor({ state: 'visible' });
+    //     const selectSizeVariant = await this.pdp_sizevariant_button;
+    //     // Get the count of buttons
+    //     const sizeVariantCount = await selectSizeVariant.count();
+
+    //     if (sizeVariantCount > 0) {
+    //         let randomIndex;
+    //         let isDisabled;
+
+    //         do {
+    //             // Select a random button index
+    //             randomIndex = Math.floor(Math.random() * sizeVariantCount);
+    //             // Check if the button is disabled
+    //             isDisabled = await selectSizeVariant.nth(randomIndex).getAttribute('disabled');
+    //         } while (isDisabled !== null); // Continue loop if button is disabled
+
+    //         // Click the randomly selected button that is not disabled
+    //         await selectSizeVariant.nth(randomIndex).click();
+    //         console.log(`Clicked button with index: ${randomIndex}`);
+    //     } else {
+    //         console.log('No buttons found');
+    //     }
+    // }
+
     async clickOnPDPSizeVariantButton() {
         await this.pdp_sizevariant_button.first().waitFor({ state: 'visible' });
         const selectSizeVariant = await this.pdp_sizevariant_button;
@@ -216,31 +272,27 @@ exports.PDPPage = class PDPPage {
         const sizeVariantCount = await selectSizeVariant.count();
 
         if (sizeVariantCount > 0) {
-            let randomIndex;
-            let isDisabled;
+            let addToCartButtonEnabled = false;
 
-            do {
+            while (!addToCartButtonEnabled) {
                 // Select a random button index
-                randomIndex = Math.floor(Math.random() * sizeVariantCount);
-                // Check if the button is disabled
-                isDisabled = await selectSizeVariant.nth(randomIndex).getAttribute('disabled');
-            } while (isDisabled !== null); // Continue loop if button is disabled
+                const randomIndex = Math.floor(Math.random() * sizeVariantCount);
 
-            // Click the randomly selected button that is not disabled
-            await selectSizeVariant.nth(randomIndex).click();
-            console.log(`Clicked button with index: ${randomIndex}`);
+                // Click the randomly selected button
+                await selectSizeVariant.nth(randomIndex).click();
+                console.log(`Clicked button with index: ${randomIndex}`);
+
+                // Check if the Add to Cart button is enabled
+                addToCartButtonEnabled = await this.addtoCartButton.isEnabled();
+
+                if (addToCartButtonEnabled) {
+                    console.log('Add to Cart button is enabled.');
+                    return; // Exit the function once Add to Cart button is enabled
+                }
+            }
         } else {
             console.log('No buttons found');
         }
-        //     // Select a random button index
-        //     const randomIndex = Math.floor(Math.random() * sizeVariantCount);
-
-        //     // Click the randomly selected button
-        //     await selectSizeVariant.nth(randomIndex).click();
-        //     console.log(`Clicked button with index: ${randomIndex}`);
-        // } else {
-        //     console.log('No buttons found');
-        // }
     }
 
     async validateSelectColorValue() {
@@ -565,7 +617,7 @@ exports.PDPPage = class PDPPage {
     async getCartItemCount() {
         const cartCountElement = this.page.locator('section.mt.absolute');
         const isVisible = await cartCountElement.isVisible();
-        
+
         if (isVisible) {
             const cartItemsCount = await cartCountElement.textContent();
             return cartItemsCount.trim();

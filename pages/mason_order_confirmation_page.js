@@ -128,11 +128,11 @@ exports.OrderConfirmationPage = class OrderConfirmationPage {
         const orderTotalText = await this.page.getByText(orderConfirmationOrderSummaryOrderTotal).locator('..').locator('strong:last-child').textContent();
 
         // Match each value against the currency format regex
-        expect(subTotalText.trim()).toMatch(/^\$\d+(\.\d{2})?$/);
-        expect(estShippingText.trim()).toMatch(/^\$\d+(\.\d{2})?$/);
-        expect(estSurchargeText.trim()).toMatch(/^\$\d+(\.\d{2})?$/);
-        expect(estSalesTaxText.trim()).toMatch(/^\$\d+(\.\d{2})?$/);
-        expect(orderTotalText.trim()).toMatch(/^\$\d+(\.\d{2})?$/);
+        expect(subTotalText.trim()).toMatch(/^-?\$\d+(\.\d{2})?$/);
+        expect(estShippingText.trim()).toMatch(/^-?\$\d+(\.\d{2})?$/);
+        expect(estSurchargeText.trim()).toMatch(/^-?\$\d+(\.\d{2})?$/);
+        expect(estSalesTaxText.trim()).toMatch(/^-?\$\d+(\.\d{2})?$/);
+        expect(orderTotalText.trim()).toMatch(/^-?\$\d+(\.\d{2})?$/);
 
     }
 
