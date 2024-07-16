@@ -459,7 +459,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
     });
   });
 
-  // Scenario 7: Logged in - Non Credit Users: placing order with ZB Credit and PromoCode
+  // Scenario 8: Logged in - Non Credit Users: placing order with ZB Credit and PromoCode
   test.describe("Mason Checkout - Logged in: Non Credit Users: placing order with ZB credit -with promo + shipping surcharge + applicable sales tax - Scenarios", () => {
     test.use({ storageState: './noncredituser.json' });
     test.only('Logged in: Non Credit Users: placing order with ZB credit -with promo + shipping surcharge + applicable sales tax', async ({ page }) => {
