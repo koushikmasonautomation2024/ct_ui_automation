@@ -265,26 +265,57 @@ exports.PDPPage = class PDPPage {
     //     }
     // }
 
-    async clickOnPDPSizeVariantButton() {
-        await this.pdp_sizevariant_button.first().waitFor({ state: 'visible' });
-        const selectSizeVariant = await this.pdp_sizevariant_button;
-        // Get the count of buttons
-        const sizeVariantCount = await selectSizeVariant.count();
+    // async clickOnPDPSizeVariantButton() {
+    //     await this.pdp_sizevariant_button.first().waitFor({ state: 'visible' });
+    //     const selectSizeVariant = await this.pdp_sizevariant_button;
+    //     // Get the count of buttons
+    //     const sizeVariantCount = await selectSizeVariant.count();
 
+    //     if (sizeVariantCount > 0) {
+    //         let addToCartButtonEnabled = false;
+
+    //         while (!addToCartButtonEnabled) {
+    //             // Select a random button index
+    //             const randomIndex = Math.floor(Math.random() * sizeVariantCount);
+
+    //             // Click the randomly selected button
+    //             await selectSizeVariant.nth(randomIndex).click();
+    //             console.log(`Clicked button with index: ${randomIndex}`);
+
+    //             // Check if the Add to Cart button is enabled
+    //             addToCartButtonEnabled = await this.addtoCartButton.isEnabled();
+
+    //             if (addToCartButtonEnabled) {
+    //                 console.log('Add to Cart button is enabled.');
+    //                 return; // Exit the function once Add to Cart button is enabled
+    //             }
+    //         }
+    //     } else {
+    //         console.log('No buttons found');
+    //     }
+    // }
+
+    async clickOnPDPSizeVariantButton() {
+        // Wait for the first size variant button to be visible
+        const firstButtonVisible = await this.pdp_sizevariant_button.first().isVisible();
+    
+        // Initialize sizeVariantCount based on the visibility of the first button
+        const sizeVariantCount = firstButtonVisible ? await this.pdp_sizevariant_button.count() : 0;
+    
         if (sizeVariantCount > 0) {
             let addToCartButtonEnabled = false;
-
+    
             while (!addToCartButtonEnabled) {
                 // Select a random button index
                 const randomIndex = Math.floor(Math.random() * sizeVariantCount);
-
+    
                 // Click the randomly selected button
-                await selectSizeVariant.nth(randomIndex).click();
+                await this.pdp_sizevariant_button.nth(randomIndex).click();
                 console.log(`Clicked button with index: ${randomIndex}`);
-
+    
                 // Check if the Add to Cart button is enabled
                 addToCartButtonEnabled = await this.addtoCartButton.isEnabled();
-
+    
                 if (addToCartButtonEnabled) {
                     console.log('Add to Cart button is enabled.');
                     return; // Exit the function once Add to Cart button is enabled

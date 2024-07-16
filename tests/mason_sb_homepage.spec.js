@@ -3,6 +3,7 @@ import {test,expect } from '@playwright/test';
 import {HomePageNew} from '../pages/mason_home_page1';
 import {SignInPageNew} from '../pages/mason_signin_page1';
 import {MyAccountPage} from '../pages/mason_myaccount_page';
+import { CartDrawerPage } from '../pages/mason_cart_drawer_page';
 import { allure } from 'allure-playwright';
 require('dotenv').config();
 
@@ -18,7 +19,7 @@ test.describe("Mason Guest User Home Page", ()=>{
     test.slow();
        try {
            await page.goto(process.env.WEB_URL);
-           await page.waitForLoadState('networkidle');
+           //await page.waitForLoadState('networkidle');
        } catch (error) {
            // Handle the error here
            console.error("An error occurred in test.beforeEach:", error);
@@ -263,5 +264,14 @@ test.describe("Mason Guest User Home Page", ()=>{
           
   })
 
+  //Global Persistent Header (Guest) - Mega Menu Navigation-SB-GPH002
+  test("GPH-Mega Menu Navigation - Verify Mega Menu Navigation opens on hovering within the CTA and on selecting the subcategory it redirected to the corresponding PLP",async({page},testInfo)=>{ 
+    //test.slow();
+    const homePage = new HomePageNew(page);
+    await homePage.displayCategory();
+    await homePage.selectSubCategoryFromMegaMenu();
+    const cartDrawerPage = new CartDrawerPage(page);
+    await cartDrawerPage.clickAddtoCartPLP();
+  })
 
 })

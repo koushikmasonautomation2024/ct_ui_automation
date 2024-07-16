@@ -1,14 +1,15 @@
 import test, { expect } from 'playwright/test';
 import { allowedNodeEnvironmentFlags } from 'process';
+import { PDPPage } from '../pages/mason_pdp_page';
 
-const productStockLeft='strong.text-stoneberry-onlyLeft';
+const productStockLeft = 'strong.text-stoneberry-onlyLeft';
 
 exports.CartDrawerPage = class CartDrawerPage {
     constructor(page) {
-        this.page=page;
+        this.page = page;
         this.miniCartPricingSection = page.locator('section.flex.flex-col.gap-1');
         this.miniCartFirstProductName = page.locator('ul.grid.gap-4.p-4 a>p');
-        this.addtoCartButtonPLP = page.locator('section.flex.w-full.items-end.gap-4 button');
+        this.addtoCartButtonPLP = page.locator('button:has-text("Add to Cart")');
         this.plpProductImages = page.locator('section.productItemParent  a');
         this.miniCartQtyMinusButton = page.locator('div[role="dialog"] ul.grid.gap-4.p-4 div.flex > button:nth-child(1)');
         this.miniCartQtyPlusButton = page.locator('div[role="dialog"] ul.grid.gap-4.p-4 div.flex > button:nth-child(3)');
@@ -21,6 +22,8 @@ exports.CartDrawerPage = class CartDrawerPage {
         this.miniCartSubTotal = page.locator('strong.text-base.leading-\\[20\\.8px\\].text-black', { hasText: 'Subtotal' });
         this.miniCartViewCartButton = page.getByRole('button', { name: 'View Cart' });
         this.miniCartCheckoutButton = page.getByRole('button', { name: 'Check Out' });
+        this.addtoCartButton = page.getByRole('button', { name: 'Add to Cart' });
+        this.chooseOptions = page.getByText('Choose Options');
 
     }
 
@@ -84,22 +87,39 @@ exports.CartDrawerPage = class CartDrawerPage {
     }
 
     async clickAddtoCartPLP() {
-        // Function to click on a button randomly
-        //const plpAddtoCartButton = await this.addtoCartButtonPLP;
-        // Get the count of buttons
-        const buttonCount = await this.addtoCartButtonPLP.count();
+        // Get the count of buttons on the PLP page
+        await this.addtoCartButtonPLP.first().waitFor({ state: 'visible' });
+        const buttonCountPLP = await this.addtoCartButtonPLP.count();
+        const pdpPage = new PDPPage(this.page);
+        if (buttonCountPLP > 0) {
+            // Select a random button index on the PLP page
+            const randomIndexPLP = Math.floor(Math.random() * buttonCountPLP);
 
-        if (buttonCount > 0) {
-            // Select a random button index
-            const randomIndex = Math.floor(Math.random() * buttonCount);
+            // Click the randomly selected button on the PLP page
+            await this.addtoCartButtonPLP.nth(randomIndexPLP).click();
 
-            // Click the randomly selected button
-            await this.addtoCartButtonPLP.nth(randomIndex).click();
-            console.log(`Clicked button with index: ${randomIndex}`);
+            // Wait for the choose cart drawer to appear
+            await this.chooseOptions.waitFor({ state: 'visible' });
+
+            // Get the "Add to Cart" button in the cart drawer
+            const addToCartButtonInDrawer = this.addtoCartButton;
+
+            // Check if the "Add to Cart" button in the cart drawer is enabled
+            if (await addToCartButtonInDrawer.isEnabled()) {
+                // Click the "Add to Cart" button in the cart drawer
+                await addToCartButtonInDrawer.click();
+                await pdpPage.miniCartDrawer();
+                console.log('Item added to cart successfully');
+            } else {
+                console.log('Add to Cart button in the cart drawer is disabled');
+                 await pdpPage.clickOnPDPColorVariantButton();
+                 await pdpPage.clickOnPDPSizeVariantButton();
+                 await addToCartButtonInDrawer.click();
+                 await pdpPage.miniCartDrawer();
+            }
         } else {
-            console.log('No buttons found');
+            console.log('No buttons found on the PLP page');
         }
-
     }
 
     async navigateToPLP(categoryName) {
@@ -170,26 +190,26 @@ exports.CartDrawerPage = class CartDrawerPage {
 
     async getProductStockCount() {
         //await this.page.waitForLoadState('networkidle');
-    
+
         // Select the strong element containing the stock information
         const stockElement = await this.page.waitForSelector(productStockLeft);
         await stockElement.waitForElementState('visible');
-    
+
         // Get the inner text of the stock element
         const stockText = await stockElement.innerText();
         console.log(stockText);  // Output: Only 2 left in Stock
-    
+
         // Define a regular expression to extract the number
         const stockRegex = /\d+/;
-    
+
         // Extract the number from the text
         const stockCount = stockText.match(stockRegex)[0];
         console.log(`Stock count: ${stockCount}`);  // Output: 2
-    
+
         return stockCount;
     }
 
-    async updateQtyForMinStock(){
+    async updateQtyForMinStock() {
         const productQtyLeft = this.getProductStockCount();
         await this.miniCartQtyInputTextBox.fill(productQtyLeft);
     }
@@ -268,12 +288,12 @@ exports.CartDrawerPage = class CartDrawerPage {
 
     }
 
-    async miniCartClickViewCartButton(){
+    async miniCartClickViewCartButton() {
         await this.miniCartViewCartButton.click();
         await this.page.waitForURL(/.*cart/);
     }
 
-    async miniCartClickCheckoutButton(){
+    async miniCartClickCheckoutButton() {
         await this.miniCartCheckoutButton.click();
         await this.page.waitForURL(/.*checkout/);
     }
@@ -293,11 +313,11 @@ exports.CartDrawerPage = class CartDrawerPage {
 
     }
 
-    async cartDrawerSuccessMessage(){
+    async cartDrawerSuccessMessage() {
         // Locate the paragraph element with the specified class
-    const messageLocator = this.page.locator('p.text-forestGreen.font-medium.leading-6').nth(1);
-    
-    // Verify the paragraph contains the text "items added to cart"
-    await expect(messageLocator).toContainText('item added to cart');
+        const messageLocator = this.page.locator('p.text-forestGreen.font-medium.leading-6').nth(1);
+
+        // Verify the paragraph contains the text "items added to cart"
+        await expect(messageLocator).toContainText('item added to cart');
     }
 }

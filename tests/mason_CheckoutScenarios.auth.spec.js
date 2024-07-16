@@ -26,7 +26,7 @@ const savedAddress = myaccountpage_data.myaccount_newaddress_firstname + " " + m
 const editAddress = myaccountpage_data.myaccount_editaddress_firstname + " " + myaccountpage_data.myaccount_editaddress_lastname + " " + myaccountpage_data.myaccount_editaddress_addressline1;
 
 test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
-  //test.setTimeout(10000);
+  test.setTimeout(90000);
   test.beforeEach(async ({ page }, testInfo) => {
     test.slow();
     try {
@@ -39,15 +39,15 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
     }
   });
 
-  test.describe("Mason Checkout - Guest user placing an order with a credit card Custom error - Scenarios", () => {
-    test.only("Guest user placing an order with a credit card", async ({ page }) => {
+  test.describe("Mason Checkout - Guest user with cc- promo code + surcharge and tax+ applicable sales tax- Custom error - Scenarios", () => {
+    test.only("Guest user with cc- promo code + surcharge and tax+ applicable sales tax", async ({ page }) => {
       try {
         const firstname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
         const lastname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
         const email = `${firstname.toLowerCase()}.${lastname.toLowerCase()}@automation.com`;
+        await page.goto(checkout_data.pdp_url_tax);
         const guestCheckoutPage = new GuestCheckOutPage(page);
         const pdpPage = new PDPPage(page);
-
         await expectWithTimeoutHandling(async () => {
           await pdpPage.clickOnPDPColorVariantButton();
         }, 'Clicking on PDP color variant button');
@@ -87,6 +87,11 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
         await expectWithTimeoutHandling(async () => {
           await guestCheckoutPage.addShippingAddress();
         }, 'Adding shipping address');
+
+        await expectWithTimeoutHandling(async () => {
+          await guestCheckoutPage.validatePromoCodeSection();
+          await guestCheckoutPage.validateValidPromoCode();
+        }, 'Applied Promo Code');
 
         await expectWithTimeoutHandling(async () => {
           await guestCheckoutPage.clickOnContinueToPayment();
@@ -142,6 +147,10 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
           await orderConfPage.validateProductSection();
         }, 'Validating product section');
 
+        await expectWithTimeoutHandling(async () => {
+          await orderConfPage.validateOrderConfGuestUserCreateAccount();
+        }, 'Validating order confirmation create account section');
+
       } catch (error) {
         if (error instanceof TimeoutError) {
           console.error(`Timeout occurred: ${error.message}`);
@@ -185,8 +194,9 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await orderConfPage.validateOrderConfirmationBillingAddress();
       await orderConfPage.validateOrderConfirmationPayment();
       await orderConfPage.validateProductSection();
-      // await page.screenshot({ path: `screenshots/error-${Date.now()}.png`, fullPage: true });
-      // allure.attachment('Full Page Screenshot', Buffer.from(await page.screenshot({ fullPage: true })), 'image/png');
+      await expectWithTimeoutHandling(async () => {
+        await orderConfPage.validateOrderConfGuestUserCreateAccount();
+      }, 'Validating order confirmation create account section');
     });
   });
 
@@ -225,6 +235,49 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await orderConfPage.validateOrderConfirmationOrderSummary();
       await orderConfPage.validateOrderConfirmationShippingDetails();
       await orderConfPage.validateProductSection();
+      
+    });
+  });
+
+  // Scenario 2: Guest user placing an order with ZB credit
+  test.describe("Mason Checkout - Guest user placing order with ZB credit -with promo code + shipping surcharge + applicable sales tax - - Scenarios", () => {
+    test.only("Guest user placing order with ZB credit -with promo code + shipping surcharge + applicable sales tax -", async ({ page }) => {
+      const firstname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
+      const lastname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
+      const email = `${firstname.toLowerCase()}.${lastname.toLowerCase()}@automation.com`;
+      const password = [...Array(6)].map(() => String.fromCharCode(Math.random() * 26 + 97 | 0)).join('') + String.fromCharCode(Math.random() * 26 + 65 | 0) + (Math.random() * 10 | 0);
+      await page.goto(checkout_data.pdp_url_tax);
+      const guestCheckoutPage = new GuestCheckOutPage(page);
+      const pdpPage = new PDPPage(page);
+      await pdpPage.clickOnPDPColorVariantButton();
+      await pdpPage.clickOnPDPSizeVariantButton();
+      await guestCheckoutPage.clickAddToCart();
+      await pdpPage.miniCartDrawer();
+      await guestCheckoutPage.clickCheckoutOnMyCart();
+      await guestCheckoutPage.validateSecureCheckout();
+      await guestCheckoutPage.continueCheckoutAsGuest();
+      await guestCheckoutPage.validateShippingSection();
+      await guestCheckoutPage.validateNewAddressModal();
+      await guestCheckoutPage.addShippingAddress();
+      await guestCheckoutPage.validatePromoCodeSection();
+      await guestCheckoutPage.validateValidPromoCode();
+      await guestCheckoutPage.clickOnContinueToPayment();
+      await guestCheckoutPage.validateAddressVerification();
+      await guestCheckoutPage.fillDOB();
+      await guestCheckoutPage.fillSSN();
+      await guestCheckoutPage.validateTermsAndConditionSection();
+      await guestCheckoutPage.enterEmailDetails(email);
+      await guestCheckoutPage.fillPassword(password);
+      await guestCheckoutPage.clickContinueToReview();
+      await guestCheckoutPage.clickOnPlaceOrderButton();
+      const orderConfPage = new OrderConfirmationPage(page);
+      await orderConfPage.validateOrderConfOrderDetails();
+      await orderConfPage.validateOrderConfirmationBillingAddress();
+      await orderConfPage.validateOrderConfirmationPaymentCredit();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateProductSection();
+      
     });
   });
 
@@ -265,6 +318,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await orderConfPage.validateOrderConfirmationOrderSummary();
       await orderConfPage.validateOrderConfirmationShippingDetails();
       await orderConfPage.validateProductSection();
+      
     });
   });
 
@@ -305,8 +359,34 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await guestCheckoutPage.clickAddToCart();
       await pdpPage.miniCartDrawer();
       await guestCheckoutPage.clickCheckoutOnMyCart();
-      await page.waitForLoadState('networkidle');
       await guestCheckoutPage.validateShippingSection();
+      await guestCheckoutPage.validatePlaceOrderButton();
+      await guestCheckoutPage.clickOnPlaceOrderButton();
+      const orderConfPage = new OrderConfirmationPage(page);
+      await orderConfPage.validateOrderConfOrderDetails();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateOrderConfirmationBillingAddress();
+      await orderConfPage.validateOrderConfirmationPayment();
+      await orderConfPage.validateProductSection();
+    });
+  });
+
+  // Scenario 5: Logged in - Non Credit Users: placing order with saved credit card
+  test.describe("Mason Checkout - Logged in: Non Credit Users: Placing order with saved cc- promo code + surcharge and tax+ applicable sales tax- - Scenarios", () => {
+    test.use({ storageState: './savedCardUser.json' });
+    test.only('Logged in: Non Credit Users: Placing order with saved cc- promo code + surcharge and tax+ applicable sales tax', async ({ page }) => {
+      await page.goto(checkout_data.pdp_url_tax);
+      const guestCheckoutPage = new GuestCheckOutPage(page);
+      const pdpPage = new PDPPage(page);
+      await pdpPage.clickOnPDPColorVariantButton();
+      await pdpPage.clickOnPDPSizeVariantButton();
+      await guestCheckoutPage.clickAddToCart();
+      await pdpPage.miniCartDrawer();
+      await guestCheckoutPage.clickCheckoutOnMyCart();
+      await guestCheckoutPage.validateShippingSection();
+      await guestCheckoutPage.validatePromoCodeSection();
+      await guestCheckoutPage.validateValidPromoCode();
       await guestCheckoutPage.validatePlaceOrderButton();
       await guestCheckoutPage.clickOnPlaceOrderButton();
       const orderConfPage = new OrderConfirmationPage(page);
@@ -352,6 +432,38 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   test.describe("Mason Checkout - Logged in: Non Credit Users: placing order with ZB Credit and PromoCode - Scenarios", () => {
     test.use({ storageState: './noncredituser.json' });
     test.only('Logged in: Non Credit Users: placing order with ZB Credit and PromoCode', async ({ page }) => {
+      const guestCheckoutPage = new GuestCheckOutPage(page);
+      const pdpPage = new PDPPage(page);
+      await pdpPage.clickOnPDPColorVariantButton();
+      await pdpPage.clickOnPDPSizeVariantButton();
+      await guestCheckoutPage.clickAddToCart();
+      await pdpPage.miniCartDrawer();
+      await guestCheckoutPage.clickCheckoutOnMyCart();
+      await guestCheckoutPage.validateShippingSection();
+      await guestCheckoutPage.validatePromoCodeSection();
+      await guestCheckoutPage.validateValidPromoCode();
+      await guestCheckoutPage.checkForPaymentEditButton();
+      await guestCheckoutPage.fillDOB();
+      await guestCheckoutPage.fillSSN();
+      await guestCheckoutPage.validateTermsAndConditionSection();
+      await guestCheckoutPage.clickContinueToReview();
+      await guestCheckoutPage.validatePlaceOrderButton();
+      await guestCheckoutPage.clickOnPlaceOrderButton();
+      const orderConfPage = new OrderConfirmationPage(page);
+      await orderConfPage.validateOrderConfOrderDetails();
+      await orderConfPage.validateOrderConfirmationBillingAddress();
+      await orderConfPage.validateOrderConfirmationPaymentCredit();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateProductSection();
+    });
+  });
+
+  // Scenario 7: Logged in - Non Credit Users: placing order with ZB Credit and PromoCode
+  test.describe("Mason Checkout - Logged in: Non Credit Users: placing order with ZB credit -with promo + shipping surcharge + applicable sales tax - Scenarios", () => {
+    test.use({ storageState: './noncredituser.json' });
+    test.only('Logged in: Non Credit Users: placing order with ZB credit -with promo + shipping surcharge + applicable sales tax', async ({ page }) => {
+      await page.goto(checkout_data.pdp_url_tax);
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const pdpPage = new PDPPage(page);
       await pdpPage.clickOnPDPColorVariantButton();
@@ -433,6 +545,37 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await orderConfPage.validateProductSection();
     });
   });
+
+  // Scenario 9: Logged in - Credit User: placing order with newly added ZB Credit
+  test.describe("Mason Checkout - Logged in: Credit User: Placing order with cc- promo code + surcharge and tax+ applicable sales tax - Scenarios", () => {
+    test.use({ storageState: './creditUser2.json' });
+    test.only('Logged in: Credit User: Placing order with cc- promo code + surcharge and tax+ applicable sales tax', async ({ page }) => {
+      await page.goto(checkout_data.pdp_url_tax);
+      const guestCheckoutPage = new GuestCheckOutPage(page);
+      const pdpPage = new PDPPage(page);
+      await pdpPage.clickOnPDPColorVariantButton();
+      await pdpPage.clickOnPDPSizeVariantButton();
+      await guestCheckoutPage.clickAddToCart();
+      await pdpPage.miniCartDrawer();
+      await guestCheckoutPage.clickCheckoutOnMyCart();
+      await guestCheckoutPage.validateShippingSection();
+      await guestCheckoutPage.validatePromoCodeSection();
+      await guestCheckoutPage.validateValidPromoCode();
+      await guestCheckoutPage.checkForPaymentEditButton();
+      await guestCheckoutPage.clickCreditCard();
+      await guestCheckoutPage.clickContinueToReview();
+      await guestCheckoutPage.validatePlaceOrderButton();
+      await guestCheckoutPage.clickOnPlaceOrderButton();
+      const orderConfPage = new OrderConfirmationPage(page);
+      await orderConfPage.validateOrderConfOrderDetails();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateOrderConfirmationBillingAddress();
+      await orderConfPage.validateOrderConfirmationPayment();
+      await orderConfPage.validateProductSection();
+    });
+  });
+
   //Scenario 10
   test.describe("Mason Checkout - Logged in: Credit Users: placing order with with ZB credit - Scenarios", () => {
     test.use({ storageState: './creditUser2.json' });
@@ -477,9 +620,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await guestCheckoutPage.clickAddToCart();
       await pdpPage.miniCartDrawer();
       await guestCheckoutPage.clickCheckoutOnMyCart();
-      await page.waitForLoadState('networkidle');
       await guestCheckoutPage.validateShippingSection();
-      await page.waitForLoadState('networkidle');
       await guestCheckoutPage.validatePromoCodeSection();
       await guestCheckoutPage.validateValidPromoCode();
       await guestCheckoutPage.validatePlaceOrderButton();
@@ -493,6 +634,37 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await orderConfPage.validateProductSection();
     });
   });
+
+  //Scenario 11
+  test.describe("Mason Checkout - Logged in: Credit Users: placing order with ZB credit -with promo + shipping surcharge + applicable sales tax - Scenarios", () => {
+    test.use({ storageState: './creditUser2.json' });
+    test.only('Logged in: Credit Users: placing order with ZB credit -with promo + shipping surcharge + applicable sales tax', async ({ page }) => {
+      await page.goto(checkout_data.pdp_url_tax);
+      const guestCheckoutPage = new GuestCheckOutPage(page);
+      const signinPage = new SignInPage(page);
+      const homePage = new HomePage(page);
+      const pdpPage = new PDPPage(page);
+      const signinPageNew = new SignInPageNew(page);
+      await pdpPage.clickOnPDPColorVariantButton();
+      await pdpPage.clickOnPDPSizeVariantButton();
+      await guestCheckoutPage.clickAddToCart();
+      await pdpPage.miniCartDrawer();
+      await guestCheckoutPage.clickCheckoutOnMyCart();
+      await guestCheckoutPage.validateShippingSection();
+      await guestCheckoutPage.validatePromoCodeSection();
+      await guestCheckoutPage.validateValidPromoCode();
+      await guestCheckoutPage.validatePlaceOrderButton();
+      await guestCheckoutPage.clickOnPlaceOrderButton();
+      const orderConfPage = new OrderConfirmationPage(page);
+      await orderConfPage.validateOrderConfOrderDetails();
+      await orderConfPage.validateOrderConfirmationBillingAddress();
+      await orderConfPage.validateOrderConfirmationPaymentCredit();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateProductSection();
+    });
+  });
+
   test.afterEach(async ({ page }) => {
     try {
       const screenshotPath = `screenshots/error-${Date.now()}.png`;

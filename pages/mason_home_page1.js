@@ -1,218 +1,218 @@
 import test, { expect } from 'playwright/test';
-const homepage_locator =JSON.parse(JSON.stringify(require('../object_repositories/mason_home_page_repo.json')));
+const homepage_locator = JSON.parse(JSON.stringify(require('../object_repositories/mason_home_page_repo.json')));
 
-exports.HomePageNew = class HomePageNew{
-    constructor(page){
-        this.page=page;
-        this.homepage_searchbarplaceholder=page.getByPlaceholder(homepage_locator.homepage_searchbarplaceholder);
-        this.homepage_searchbutton=page.getByLabel(homepage_locator.homepage_searchbutton, { exact: true });
+exports.HomePageNew = class HomePageNew {
+    constructor(page) {
+        this.page = page;
+        this.homepage_searchbarplaceholder = page.getByPlaceholder(homepage_locator.homepage_searchbarplaceholder);
+        this.homepage_searchbutton = page.getByLabel(homepage_locator.homepage_searchbutton, { exact: true });
         //this.homepage_signin=page.getByRole('button', { name: homepage_locator.homepage_signin,exact:true });
-        this.homepage_signin=page.locator(homepage_locator.homepage_signin);   
+        this.homepage_signin = page.locator(homepage_locator.homepage_signin);
         //this.homepage_cart=page.getByRole('button', { name: homepage_locator.homepage_cart }); 
-        this.homepage_cart=page.locator('img[alt="Mini Cart"]');
-        this.homepage_category=page.getByRole('button', { name: homepage_locator.homepage_category }); 
-        this.minicart_drawer_heading=page.getByRole('button', { name: homepage_locator.minicart_drawer_heading });
-        this.minicart_drawer_subtotalsection=page.getByText(homepage_locator.minicart_drawer_subtotalsection);
-        this.minicart_drawer_viewcart_button=page.getByRole('button', { name: homepage_locator.minicart_drawer_viewcart_button });
-        this.minicart_drawer_checkout_button=page.getByRole('button', { name: homepage_locator.minicart_drawer_checkout_button });
-        this.footer_signupemail_textbox=page.getByPlaceholder(homepage_locator.footer_signupemail_textbox);
-        this.footer_signup_button=page.getByRole('button', { name: homepage_locator.footer_signup_button });
-                     
+        this.homepage_cart = page.locator('img[alt="Mini Cart"]');
+        this.homepage_category = page.getByRole('button', { name: homepage_locator.homepage_category });
+        this.minicart_drawer_heading = page.getByRole('button', { name: homepage_locator.minicart_drawer_heading });
+        this.minicart_drawer_subtotalsection = page.getByText(homepage_locator.minicart_drawer_subtotalsection);
+        this.minicart_drawer_viewcart_button = page.getByRole('button', { name: homepage_locator.minicart_drawer_viewcart_button });
+        this.minicart_drawer_checkout_button = page.getByRole('button', { name: homepage_locator.minicart_drawer_checkout_button });
+        this.footer_signupemail_textbox = page.getByPlaceholder(homepage_locator.footer_signupemail_textbox);
+        this.footer_signup_button = page.getByRole('button', { name: homepage_locator.footer_signup_button });
+
     }
 
-    async displaySearchBar(){
+    async displaySearchBar() {
         await this.homepage_searchbarplaceholder.waitFor({ state: 'visible' });
         await this.homepage_searchbutton.waitFor({ state: 'visible' });
         await expect(this.homepage_searchbarplaceholder).toBeVisible();
         await expect(this.homepage_searchbutton).toBeVisible();
     }
 
-    async displaySignIn(){
+    async displaySignIn() {
         await this.homepage_signin.waitFor({ state: 'visible' });
         await expect(this.homepage_signin).toBeVisible();
     }
 
-    async displayMiniCartIcon(){
+    async displayMiniCartIcon() {
         await this.homepage_cart.waitFor({ state: 'visible' });
         await expect(this.homepage_cart).toBeVisible();
     }
 
-    async clickMiniCartIcon(){
+    async clickMiniCartIcon() {
         await this.homepage_cart.waitFor({ state: 'visible' });
         await this.homepage_cart.click();
     }
 
-    async displayCategory(){
+    async displayCategory() {
         await this.homepage_category.waitFor({ state: 'visible' });
         await expect(this.homepage_category).toBeVisible();
     }
-    async displaySiteLogo(){
+    async displaySiteLogo() {
         await expect(this.page.locator('a.flex img.max-w-full')).toBeVisible();
     }
 
-    async clickSiteLogo(){
+    async clickSiteLogo() {
         //await this.page.getByRole('link', { name: brandLogoName, exact: true }).click();
         await this.page.locator('a.flex img.max-w-full').click();
         //await this.page.waitForNavigation();
-        
+
     }
 
-    async homePageRedirectionValidation(homePageUrl){
+    async homePageRedirectionValidation(homePageUrl) {
         await expect(this.page).toHaveURL(homePageUrl);
     }
-    async displayHeroBanner(bannerName){
+    async displayHeroBanner(bannerName) {
         //await expect(this.page.getByRole('link', { name: bannerName })).toBeVisible();
         await expect(this.page.locator(`a img[alt="${bannerName}"]`).first()).toBeVisible();
-        
+
     }
-    async displayPromotionalBanner(promotionalBannerContent){
+    async displayPromotionalBanner(promotionalBannerContent) {
         await expect(this.page.getByRole('banner').locator('div').filter({ hasText: promotionalBannerContent }).nth(2)).toBeVisible();
     }
 
-    async displayGlobalBanner(bannerText){
+    async displayGlobalBanner(bannerText) {
         await expect(this.page.locator('div').filter({ hasText: new RegExp("^" + bannerText + "$") }).first()).toBeVisible();
 
     }
 
-    async displayFooter(footerName){
-        await expect(this.page.getByText(footerName,{exact:true})).toBeVisible();
+    async displayFooter(footerName) {
+        await expect(this.page.getByText(footerName, { exact: true })).toBeVisible();
     }
 
-    async displayFooterLinks(footerLinkName){
+    async displayFooterLinks(footerLinkName) {
         await expect(this.page.getByRole('link', { name: footerLinkName, exact: true })).toBeVisible();
     }
 
-    async clickOnHomePageSignIn(){
+    async clickOnHomePageSignIn() {
         await this.homepage_signin.click();
     }
 
-    async closeSignedInDrawer(){
+    async closeSignedInDrawer() {
         await this.page.getByRole('button').nth(1).click();
     }
 
-    async staticPageNavigation(staticPageUrl){
+    async staticPageNavigation(staticPageUrl) {
         await this.page.goto(staticPageUrl);
         await this.page.waitForLoadState('networkidle');
     }
 
-    async pageScrollBy(deltaX, deltaY){
+    async pageScrollBy(deltaX, deltaY) {
         await this.page.mouse.wheel(deltaX, deltaY);
 
     }
 
-    async displayPDPStickyAddtoCartButton(){
+    async displayPDPStickyAddtoCartButton() {
         await this.page.waitForSelector('section.grid.w-3\\/4.grid-cols-2');
         await expect(this.page.locator('section.grid.w-3\\/4.grid-cols-2')).toBeVisible();
         //await expect(this.page.locator(homepage_locator.stickyheader_pdp)).toBeAttached();
     }
 
-    async mouseHoverMegaMenu(categoryNameL1){
+    async mouseHoverMegaMenu(categoryNameL1) {
         await this.homepage_category.hover();
         await this.page.getByText(categoryNameL1).first().hover();
         await expect(this.page.getByText(categoryNameL1).first()).toBeVisible();
     }
 
-    async clickOnMegaMenuL2Category(l2CategoryName){
+    async clickOnMegaMenuL2Category(l2CategoryName) {
         //await this.page.getByLabel('Main Menu').locator('div').filter({ hasText: 'Womens ClothingAll Womens' })
         await this.page.getByRole('link', { name: l2CategoryName }).first().click();
         await this.page.waitForNavigation();
-        await this.page.locator('section.plpGrid').waitFor({state:'visible'});
+        await this.page.locator('section.plpGrid').waitFor({ state: 'visible' });
     }
 
-    async validateCLPNavigationUrl(clpUrl){
+    async validateCLPNavigationUrl(clpUrl) {
         const expectedURL = new RegExp(/.*\/(categories)\/[^\/]+/);
         await expect(this.page).toHaveURL(expectedURL);
 
     }
 
-    async enterSearchTerm(searchTerm){
+    async enterSearchTerm(searchTerm) {
         await this.homepage_searchbarplaceholder.fill(searchTerm);
         await this.page.waitForTimeout(500);
     }
 
-    async hiddenSearchPlaceholderText(){
+    async hiddenSearchPlaceholderText() {
         await expect(this.page.getByLabel('Search', { exact: true })).toBeEnabled();
     }
 
-    async emptyMiniCartDrawerSection(){
+    async emptyMiniCartDrawerSection() {
         await expect(this.page.getByRole('button', { name: 'My Cart' })).toBeVisible();
     }
 
-    async validatedEmptyMiniCartDrawer(){
+    async validatedEmptyMiniCartDrawer() {
         await expect(this.minicart_drawer_heading).toBeVisible();
         await expect(this.minicart_drawer_subtotalsection).toBeVisible();
         await expect(this.minicart_drawer_viewcart_button).toBeVisible();
         await expect(this.minicart_drawer_checkout_button).toBeVisible();
     }
 
-    async enterFooterEmailNewsLetter(newsLetterEmail){
+    async enterFooterEmailNewsLetter(newsLetterEmail) {
         await this.footer_signupemail_textbox.fill(newsLetterEmail);
     }
 
-    async displayFooterEmailNewsLetter(){
+    async displayFooterEmailNewsLetter() {
         await expect(this.footer_signupemail_textbox).toBeVisible();
     }
 
-    async displayFooterSignUpButton(){
+    async displayFooterSignUpButton() {
         await expect(this.footer_signup_button).toBeVisible();
     }
 
-    async clickFooterSignUpButton(){
+    async clickFooterSignUpButton() {
         await this.footer_signup_button.click();
     }
 
-    async validateFooterNewsLetterSignUpContent(newsletterSignUpContent){
+    async validateFooterNewsLetterSignUpContent(newsletterSignUpContent) {
         await expect(this.page.getByText(newsletterSignUpContent)).toBeVisible();
 
     }
-    async validateFooterNewsLetterSignUpEmailContent(newsletterSignUpEmailContent){
+    async validateFooterNewsLetterSignUpEmailContent(newsletterSignUpEmailContent) {
         await expect(this.page.getByText(newsletterSignUpEmailContent)).toBeVisible();
 
     }
 
-    async validateOtherSitesLinks(otherSitesLinkName){
+    async validateOtherSitesLinks(otherSitesLinkName) {
         await expect(this.page.getByRole('link', { name: otherSitesLinkName, exact: true })).toBeVisible();
-        
+
     }
 
-    async validateOtherSitesSection(otherSitesSectionLabelName){
+    async validateOtherSitesSection(otherSitesSectionLabelName) {
         await expect(this.page.locator('ul').filter({ hasText: otherSitesSectionLabelName })).toBeVisible();
 
     }
 
-    async clickFooterLink(footerLinkName){
+    async clickFooterLink(footerLinkName) {
         await this.page.getByRole('link', { name: footerLinkName, exact: true }).click();
     }
 
-    async validateCopyRightSection(copyrightText,contactNumber,contactUsLinkName){
+    async validateCopyRightSection(copyrightText, contactNumber, contactUsLinkName) {
         await expect(this.page.getByText(copyrightText)).toBeVisible();
         await expect(this.page.getByRole('link', { name: contactNumber })).toBeVisible();
         await expect(this.page.getByRole('link', { name: contactUsLinkName }).nth(1)).toBeVisible();
     }
 
-    async validateCopyrightLegalText(copyrightLegalText){
+    async validateCopyrightLegalText(copyrightLegalText) {
         await expect(this.page.getByText(copyrightLegalText)).toBeVisible();
     }
 
-    async getCategoryImageTilesCount(){
+    async getCategoryImageTilesCount() {
         // Get line count inside grid elements
         await expect(this.page.locator('(//div[@class=" block md:block lg:block"]/section/ul)[1]//li')).toHaveCount(4);
     }
 
-    async getTopCategoryImageTilesCount(){
+    async getTopCategoryImageTilesCount() {
         // Get line count inside grid elements
         await expect(this.page.locator('(//div[@class=" block md:block lg:block"]/section/ul)[2]//li')).toHaveCount(18);
     }
 
-    async categoryImageDisplayValidation(imageAltText){
+    async categoryImageDisplayValidation(imageAltText) {
         await expect(this.page.getByAltText(imageAltText).first()).toBeVisible();
     }
 
-    async categoryLinkValidation(catLinkName){
+    async categoryLinkValidation(catLinkName) {
         await expect(this.page.getByRole('link', { name: catLinkName }).first()).toBeVisible();
     }
 
-    async topCategoriesImageDisplayValidation(){
+    async topCategoriesImageDisplayValidation() {
         // Define the CSS selector for the grid container
         const gridSelector = '.grid.grid-cols-3.md\\:grid-cols-6 > li';
 
@@ -256,17 +256,17 @@ exports.HomePageNew = class HomePageNew{
         }
     }
 
-    async getTopBrandsImageTilesCount(){
+    async getTopBrandsImageTilesCount() {
         // Get line count inside grid elements
         await expect(this.page.locator('(//div[@class=" block md:block lg:block"]/section/ul)[3]//li')).toHaveCount(4);
     }
 
-    async getBrandsImageTilesCount(){
+    async getBrandsImageTilesCount() {
         // Get line count inside grid elements
         await expect(this.page.locator('(//div[@class=" block md:block lg:block"]/section/ul)[4]//li')).toHaveCount(6);
     }
 
-    async brandsImageDisplayValidation(){
+    async brandsImageDisplayValidation() {
         // Define the CSS selector for the logo container .grid.grid-cols-3.md\\:grid-cols-6 > li  .flex.flex-wrap.items-center.justify-center.gap-x-5.gap-y-6.md\\:justify-between.md\\:gap-x-6 
         const logoSelector = '.flex.flex-wrap.items-center.justify-center.gap-x-5.gap-y-6.md\\:justify-between.md\\:gap-x-6 > li';
 
@@ -304,12 +304,12 @@ exports.HomePageNew = class HomePageNew{
         }
     }
 
-    async seasonalSavingsAndViewAlllink(){
+    async seasonalSavingsAndViewAlllink() {
         await expect(this.page.getByText('Seasonal Savings')).toBeVisible();
         await expect(this.page.locator('section').filter({ hasText: /^Seasonal SavingsView All$/ }).getByRole('link')).toBeVisible();
     }
 
-    async signUpModalDisplayValidation(enterEmail){
+    async signUpModalDisplayValidation(enterEmail) {
         await this.page.getByRole('button', { name: 'Sign Up' }).click();
         await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByPlaceholder('Enter your email address')).toBeVisible();
         await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Close Modal')).toBeVisible();
@@ -319,4 +319,53 @@ exports.HomePageNew = class HomePageNew{
         await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByText(/^.*$/).first()).toBeHidden();
     }
 
+    async selectSubCategoryFromMegaMenu() {
+        try {
+            // Click the homepage category
+            await this.homepage_category.click();
+
+            // Get the first visible item in the first <ul>
+            const firstLi = await this.getRandomVisibleItem('ul[role="menu"] > li');
+            if (!firstLi) {
+                console.log('No items found in the first <ul>');
+                return;
+            }
+
+            // Click the first visible item in the first <ul>
+            await firstLi.click();
+
+            // Get the second visible item in the second <ul>
+            const secondLi = await this.getRandomVisibleItem(firstLi, 'div > ul > li');
+            if (!secondLi) {
+                console.log('No items found in the second <ul>');
+                return;
+            }
+
+            // Click the second visible item in the second <ul>
+            await secondLi.click();
+
+            // Wait for the expected URL and the network to be idle
+            const expectedURL = new RegExp(/.*\/(categories)\/[^\/]+/);
+            await this.page.waitForURL(expectedURL);
+            //await expect(this.page).toHaveURL(expectedURL);
+            console.log('Successfully navigated to the subcategory page.');
+        } catch (error) {
+            console.error('An error occurred while selecting a subcategory:', error);
+        }
+    }
+
+    async getRandomVisibleItem(baseLocator, nestedSelector = null) {
+        const locator = nestedSelector ? baseLocator.locator(nestedSelector) : this.page.locator(baseLocator);
+        await locator.first().waitFor({ state: 'visible' });
+
+        const itemCount = await locator.count();
+        if (itemCount > 0) {
+            const randomIndex = Math.floor(Math.random() * itemCount);
+            return locator.nth(randomIndex);
+        }
+
+        return null;
+    }
 }
+
+

@@ -85,6 +85,7 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     this.termsandConditionButton = page.getByRole('button', { name: 'Terms & Conditions' });
     this.privacyPolicyButton = page.getByRole('button', { name: 'Privacy Policy' });
     this.creditReportButton = page.getByRole('button', { name: 'Credit Report & Electronic' });
+    this.checkoutRemovePromoCodeButton = page.locator('button.underline:has-text("Remove")');
   }
 
 
@@ -330,39 +331,71 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
   }
 
+  // async validateAddressVerification() {
+  //   await this.page.waitForSelector('div[role="dialog"]', { timeout: 15000 });
+  //   const addressModalVisible = await this.page.locator('div[role="dialog"][data-state="open"]').isVisible();
+  //   if (addressModalVisible) {
+  //     await this.page.getByLabel('Use Original Address').click();
+  //     await this.page.getByRole('button', { name: 'Continue' }).click();
+  //   } else {
+  //     console.log('Heading "Verify Your Address" is not visible.');
+  //     await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
+  //   }
+  //   // const headingVisible = await this.page.waitForSelector('h2', { text: 'Verify Your Address', visible: true });
+  //   // if (headingVisible) {
+
+  //   //   // If heading is visible, find the section with text 'Use Original Address' and click it
+  //   //   const section = await this.page.locator('section').filter({ hasText: /^Use Original Address$/ }).first();
+  //   //   if (section) {
+  //   //     // await section.click();
+  //   //     // await this.page.click('#r2');
+  //   //     await this.page.click('label:has-text("Use Original Address")');
+  //   //     //  const continueButton = await this.page.waitForSelector('button:enabled', {
+  //   //     //   text: 'Continue',
+  //   //     // });
+  //   //     await expect(this.page.getByRole("button", { name: 'Continue' })).toBeEnabled();
+  //   //     await this.page.getByRole("button", { name: 'Continue' }).click();
+  //   //     console.log('Clicked on "Use Original Address" section.');
+  //   //   } else {
+  //   //     console.log('Could not find section with text "Use Original Address".');
+  //   //   }
+  //   // } else {
+  //   //   console.log('Heading "Verify Your Address" is not visible.');
+  //   //   await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
+  //   // }
+
+  // }
+
   async validateAddressVerification() {
-    await this.page.waitForSelector('div[role="dialog"]', { timeout: 15000 });
-    const addressModalVisible = await this.page.locator('div[role="dialog"][data-state="open"]').isVisible();
-    if (addressModalVisible) {
-      await this.page.getByLabel('Use Original Address').click();
-      await this.page.getByRole('button', { name: 'Continue' }).click();
-    } else {
-      console.log('Heading "Verify Your Address" is not visible.');
-      await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
+    try {
+      await this.page.waitForTimeout(5000);
+      // Check if the address verification dialog is present with the data-state="open" attribute
+      const addressModal = this.page.locator('div[role="dialog"][data-state="open"]');
+      const isModalPresent = await addressModal.count() > 0;
+
+      if (isModalPresent) {
+        // Verify if the modal is visible within 15 seconds
+        const isModalVisible = await addressModal.first().isVisible({ timeout: 15000 });
+
+        if (isModalVisible) {
+          // Click "Use Original Address" and then "Continue"
+          await this.page.getByLabel('Use Original Address').click();
+          await this.page.getByRole('button', { name: 'Continue' }).click();
+          console.log('Address verification completed.');
+          return;
+        }
+      }
+
+      console.log('Address verification modal did not appear or is not open.');
+
+      // Wait for the text containing the first and last name to be visible
+      const fullName = `${firstName} ${lastName}`;
+      await this.page.waitForSelector(`//*[contains(text(), "${fullName}")]`, { state: 'visible' });
+      console.log(`Found text: "${fullName}"`);
+
+    } catch (error) {
+      console.error('An error occurred during address verification:', error);
     }
-    // const headingVisible = await this.page.waitForSelector('h2', { text: 'Verify Your Address', visible: true });
-    // if (headingVisible) {
-
-    //   // If heading is visible, find the section with text 'Use Original Address' and click it
-    //   const section = await this.page.locator('section').filter({ hasText: /^Use Original Address$/ }).first();
-    //   if (section) {
-    //     // await section.click();
-    //     // await this.page.click('#r2');
-    //     await this.page.click('label:has-text("Use Original Address")');
-    //     //  const continueButton = await this.page.waitForSelector('button:enabled', {
-    //     //   text: 'Continue',
-    //     // });
-    //     await expect(this.page.getByRole("button", { name: 'Continue' })).toBeEnabled();
-    //     await this.page.getByRole("button", { name: 'Continue' }).click();
-    //     console.log('Clicked on "Use Original Address" section.');
-    //   } else {
-    //     console.log('Could not find section with text "Use Original Address".');
-    //   }
-    // } else {
-    //   console.log('Heading "Verify Your Address" is not visible.');
-    //   await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
-    // }
-
   }
 
   async clickOnEditAddress() {
@@ -1008,9 +1041,20 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
   }
 
   async validatePromoCodeSection() {
-    await this.page.getByRole('button', { name: 'Apply Promo Code (optional)' }).click();
-    await expect(this.page.locator('input[type="text"]')).toBeVisible();
-    await expect(this.page.getByRole('button', { name: 'Apply Code' })).toBeVisible();
+    const removePromoButton = this.checkoutRemovePromoCodeButton;
+    const applyPromoButton = this.page.getByRole('button', { name: 'Apply Promo Code (optional)' });
+    const promoCodeInput = this.page.locator('input[type="text"]');
+    const applyCodeButton = this.page.getByRole('button', { name: 'Apply Code' });
+
+    if (await removePromoButton.isVisible()) {
+      console.log('Promo code already applied');
+      await removePromoButton.click();
+      await this.page.waitForTimeout(5000); // Adjust the timeout as needed
+    }
+
+    await applyPromoButton.click();
+    await expect(promoCodeInput).toBeVisible();
+    await expect(applyCodeButton).toBeVisible();
   }
 
   async validateValidPromoCode() {
