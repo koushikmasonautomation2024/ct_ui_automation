@@ -1,0 +1,18 @@
+Clicked button with index: 0
+Clicked button with index: 5
+Add to Cart button is enabled.
+Product Name: Lace Flounce Hem Dress
+Product image is visible
+Detail: Black
+Detail: 2X
+Detail: 
+Detail: $59.99
+Detail: $7.99/month*
+Product Name: Sauder 3-Door Viabella Storage Cabinet
+Product image is visible
+Detail: Red
+Detail: No Size
+Detail: 
+Detail: $459.99
+Detail: $33.99/month*
+Order Confirmation #ZB980862263
