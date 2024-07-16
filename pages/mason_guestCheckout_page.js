@@ -156,7 +156,7 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     await this.page.$(`//p[contains(text(), "${shipping_method}")]`);
     await (this.page.getByText(secure_checkout_link)).waitFor({ state: "visible" });
     await (this.page.getByText(return_to_cart_link)).waitFor({ state: "visible" });
-    await expect(this.page.getByText(shipping_address)).toBeVisible();
+    await expect(this.page.getByText(shipping_address,{exact:true})).toBeVisible();
     for (const text of items_in_cart_texts) {
       try {
         await expect(this.page.getByText(text)).toBeVisible({ timeout });

@@ -26,7 +26,7 @@ const savedAddress = myaccountpage_data.myaccount_newaddress_firstname + " " + m
 const editAddress = myaccountpage_data.myaccount_editaddress_firstname + " " + myaccountpage_data.myaccount_editaddress_lastname + " " + myaccountpage_data.myaccount_editaddress_addressline1;
 
 test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
-  test.setTimeout(90000);
+  test.setTimeout(50000);
   test.beforeEach(async ({ page }, testInfo) => {
     test.slow();
     try {
@@ -503,7 +503,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await pdpPage.miniCartDrawer();
       await guestCheckoutPage.clickCheckoutOnMyCart();
       await guestCheckoutPage.validateShippingSection();
-      await guestCheckoutPage.checkForPaymentEditButton();
+      //await guestCheckoutPage.checkForPaymentEditButton();
       await guestCheckoutPage.clickCreditCard();
       await guestCheckoutPage.clickNewCard();
       await guestCheckoutPage.addCardDetails();

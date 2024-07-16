@@ -18,6 +18,7 @@ const orderConfirmationProductSection = 'section.w-full.px-4.md\\:max-w-\\[460px
 const orderConfirmationThankYouText = 'Thank you for your order,';
 const orderConfirmationThankYouDownPaymentText = 'Thank you for your down payment,';
 const orderConfirmationThankYouPendingCreditText = 'Your order has been submitted and is pending credit approval.';
+const orderConfirmationThankYouPendingDownPaymentText = 'Your order has been submitted and is pending down payment.';
 const orderConfirmationThankYouSuspendedText = 'Your order has been suspended.';
 const orderConfirmationEmailText = /A confirmation email was sent to ([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}) with your order information\./;
 const orderConfirmationEmailArriveText = 'If the email doesn’t arrive within five minutes, please check your spam folder. If you require further assistance, please Contact Us, and one of our Customer Service Representatives will be happy to help you.';
@@ -103,7 +104,8 @@ const orderConfCreateAccountText ='Create an account to save time checking out f
                 orderConfirmationThankYouText,
                 orderConfirmationThankYouDownPaymentText,
                 orderConfirmationThankYouPendingCreditText,
-                orderConfirmationThankYouSuspendedText
+                orderConfirmationThankYouSuspendedText,
+                orderConfirmationThankYouPendingDownPaymentText
             ];
 
             // Check if any of the expected texts are visible
