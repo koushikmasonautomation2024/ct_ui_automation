@@ -121,8 +121,8 @@ test('Verify Need Help section - go to shipping scenario', async ({ page }) => {
   
 })
 
-//Need Help section
-test.only('Verify add/edit New Address - go to shipping scenario', async ({ page }) => {
+//New Address
+test('Verify add/edit New Address - go to shipping scenario', async ({ page }) => {
   // Navigate to the page containing the popular search terms
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const pdpPage = new PDPPage(page);
@@ -169,6 +169,26 @@ test('Verify Shipping Methods - Guest User - go to shipping scenario', async ({ 
   }
 })
 
+
+test.only('Verify CreateAccount - Guest User - go to shipping scenario', async ({ page }) => {
+  const guestCheckoutPage = new GuestCheckOutPage(page);
+  const pdpPage = new PDPPage(page);
+  await page.goto(checkout_data.add_to_cart_pdp_url);
+  await pdpPage.clickOnPDPColorVariantButton();
+  await pdpPage.clickOnPDPSizeVariantButton();
+  await guestCheckoutPage.clickAddToCart();
+  await pdpPage.miniCartDrawer();
+  await guestCheckoutPage.clickCheckoutOnMyCart();
+  await guestCheckoutPage.validateSecureCheckout();
+  await guestCheckoutPage.continueCheckoutAsGuest();
+  await guestCheckoutPage.validateShippingSection();
+  await guestCheckoutPage.validateNewAddressModal();
+  await guestCheckoutPage.addShippingAddress();
+  await guestCheckoutPage.clickOnContinueToPayment();
+  await guestCheckoutPage.validateAddressVerification();
+  await guestCheckoutPage.validateCreateAccountOnCheckoutPage();
+  await guestCheckoutPage.clickOnSignIn();
+})
 
 
 })
