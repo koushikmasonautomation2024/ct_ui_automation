@@ -34,7 +34,7 @@ test.describe("Mason LoggedIn User HomePage", () => {
 
     try {
       await page.goto(process.env.WEB_URL);
-      await page.waitForLoadState('networkidle');
+      //await page.waitForLoadState('networkidle');
     } catch (error) {
       console.error("Navigation failed:", error);
       test.skip('Skipping test because navigation failed');

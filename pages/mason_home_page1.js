@@ -332,18 +332,19 @@ exports.HomePageNew = class HomePageNew {
             }
 
             // Click the first visible item in the first <ul>
-            await firstLi.click();
+            await firstLi.hover();
 
             // Get the second visible item in the second <ul>
-            const secondLi = await this.getRandomVisibleItem(firstLi, 'div > ul > li');
+            const secondLi = await this.getRandomVisibleItem(firstLi, 'div.customtablescrollbar > ul > li > a');
             if (!secondLi) {
                 console.log('No items found in the second <ul>');
                 return;
             }
-
+            await secondLi.hover();
+            // Ensure the secondLi is clickable with a timeout
+            await secondLi.waitFor({ state: 'visible', timeout: 5000 });
             // Click the second visible item in the second <ul>
             await secondLi.click();
-
             // Wait for the expected URL and the network to be idle
             const expectedURL = new RegExp(/.*\/(categories)\/[^\/]+/);
             await this.page.waitForURL(expectedURL);

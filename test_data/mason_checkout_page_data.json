@@ -1,7 +1,9 @@
 {
-    "product_quantity" : "2",
+    "product_quantity" : "1",
     "add_to_cart_pdp_url" : "https://stage--stoneberry-masoncompanies.netlify.app/product/lace-flounce-hem-dress/1375662-1/",
-    "pdp_url_limitedStock" : "https://stage--stoneberry-masoncompanies.netlify.app/product/marmot-men-s-mmw-hoodie/1374881-1/",
+    "pdp_url_limitedStock" : "https://stage--stoneberry-masoncompanies.netlify.app/product/platinum-nails-ultimate-manicure-pedicure-care-kit/1368188-1/",
+    "pdp_url_limitedStocks" : "https://stage--stoneberry-masoncompanies.netlify.app/product/marmot-men-s-mmw-hoodie/1374881-1/",
     "pdp_url_tax" : "https://stage--stoneberry-masoncompanies.netlify.app/product/sauder-3-door-viabella-storage-cabinet/1083781-1-1/"
+
 
 }

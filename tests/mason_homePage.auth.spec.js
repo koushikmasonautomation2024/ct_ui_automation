@@ -20,7 +20,7 @@ test.describe("Mason HomePage Scenarios", ()=>{
     test.slow();
     try{  
     await page.goto(process.env.WEB_URL);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
   }catch (error) {
     // Handle the error here
     console.error("An error occurred in test.beforeEach:", error);
@@ -80,17 +80,8 @@ test("MegaNav - Validate User is redirected to L1 when clicked on the hyperlink"
 test("MegaNav - Validate User is redirected to L2 when clicked on the hyperlink",async({page})=>{ 
   //test.slow();
   const homePage = new HomePage(page);
-  const l2_index=2;
-  // await homePage.clickOnHomePageSignIn();
-  const l2category="Home";
-  await homePage.categoryL1ToBeVisibleOnDepartmentHover();
-  //await homePage.clickRandomThirdLevelNavLink();
-  const [l1CategoryText,index] = await homePage.getRandomL1CategoryText();
-  await homePage.checkIfcategoryL1isBold(l2category);
-  const [l2Text, l3Text]=await homePage.getRandomL2L3CategoryText(l2_index);
-  console.log(l2Text);
-  console.log(l3Text);
-  await homePage.navigateToCategoryL1(l2Text);
+  await homePage.displayCategory();
+  await homePage.selectSubCategoryFromMegaMenu();
 
 })
 
@@ -98,17 +89,8 @@ test("MegaNav - Validate User is redirected to L2 when clicked on the hyperlink"
 test("MegaNav - Validate User is redirected to L3 when clicked on the hyperlink",async({page})=>{ 
   //test.slow();
   const homePage = new HomePage(page);
-  const l2_index=2;
-  // await homePage.clickOnHomePageSignIn();
-  const l2category="Toys";
-  await homePage.categoryL1ToBeVisibleOnDepartmentHover();
-  //const [l1CategoryText,index] = await homePage.getRandomL1CategoryText();
-  await homePage.checkIfcategoryL1isBold(l2category);
-  const [l2Text, l3Text]=await homePage.getRandomL2L3CategoryText(l2_index);
-  console.log(l2Text);
-  console.log(l3Text);
-  await homePage.navigateToCategoryL1(l3Text);
-
+  await homePage.displayCategory();
+  await homePage.selectSubCategoryFromMegaMenu();
 })
 
 //Ensure that clicking any area outside of the Mega Menu collapses it.

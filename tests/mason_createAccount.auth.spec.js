@@ -22,7 +22,7 @@ test.describe("Mason Create Account Scenarios", ()=>{
     test.slow();
     try{  
     await page.goto(process.env.WEB_URL);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     if(isMobile==true){
       const signinPage = new SignInPage(page);  
       await signinPage.clickSignInImage();

@@ -178,6 +178,8 @@ exports.CartPage = class CartPage {
     async cartUpdateQtyPlusMinus() {
         // Locate the first product item
         const firstProductItem = this.cartProductItems.first();
+        //await firstProductItem.locator(cartQtyInputLocator).first().inputValue(1);
+        //await this.page.getByRole('spinbutton').fill('1');
 
         // Verify initial total price
         const totalPriceLocator = firstProductItem.locator(cartItemTotalPriceLocator).first();

@@ -297,8 +297,8 @@ exports.PDPPage = class PDPPage {
 
     async clickOnPDPSizeVariantButton() {
         // Wait for the first size variant button to be visible
+        await this.page.locator('section.pb-6.pt-2').waitFor({state:'visible'});
         const firstButtonVisible = await this.pdp_sizevariant_button.first().isVisible();
-    
         // Initialize sizeVariantCount based on the visibility of the first button
         const sizeVariantCount = firstButtonVisible ? await this.pdp_sizevariant_button.count() : 0;
     

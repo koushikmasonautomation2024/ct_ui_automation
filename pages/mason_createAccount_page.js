@@ -178,13 +178,14 @@ exports.CreateAccountPage = class CreateAccountPage{
   }
 
   async accountCreationSuccessMessage(){
+    await this.account_creation_success.waitFor({state:'visible'});
     await expect(this.account_creation_success).toBeVisible();
   }
 
   async validateDashboardNavigation(firstName, dashboard_url){
     //await expect(this.page).toHaveURL(/.*dashboard/);
-    await new Promise(resolve => setTimeout(resolve, 3000)).then(() => expect(this.page).toHaveURL(/.*dashboard/));
-
+    //await new Promise(resolve => setTimeout(resolve, 3000)).then(() => expect(this.page).toHaveURL(/.*dashboard/));
+    await this.page.waitForURL(/.*dashboard/);
     await expect(this.page.getByText(`Hi, ${firstName}!`)).toBeVisible();
     const currentURL = await this.page.url();
     expect(currentURL).toContain(dashboard_url);

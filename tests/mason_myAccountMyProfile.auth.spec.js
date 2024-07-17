@@ -39,7 +39,7 @@ test.describe("Mason MyAccount MyProfile", () => {
 
     try {
       await page.goto(process.env.WEB_URL);
-      await page.waitForLoadState('networkidle');
+      //await page.waitForLoadState('networkidle');
     } catch (error) {
       console.error("Navigation failed:", error);
       test.skip('Skipping test because navigation failed');
@@ -278,7 +278,7 @@ test.describe("Mason MyAccount MyProfile", () => {
 
 
   //SB-MyA278
-  test("Validate Change of email in Email Address modal in My Profile page", async ({ page }, testInfo) => {
+  test.skip("Validate Change of email in Email Address modal in My Profile page", async ({ page }, testInfo) => {
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
     }

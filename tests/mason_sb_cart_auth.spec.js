@@ -40,7 +40,7 @@ test.describe("Mason Cart Page", () => {
 
     try {
       await page.goto(process.env.WEB_URL);
-      await page.waitForLoadState('networkidle');
+      //await page.waitForLoadState('networkidle');
     } catch (error) {
       console.error("Navigation failed:", error);
       test.skip('Skipping test because navigation failed');
@@ -74,7 +74,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
     const cartPage = new CartPage(page);
@@ -97,7 +97,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
     const cartPage = new CartPage(page);
@@ -113,6 +113,7 @@ test.describe("Mason Cart Page", () => {
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
+    await page.waitForLoadState('networkidle');
     const cartItemCount = await pdpPage.getCartItemCount();
     if (cartItemCount === '0') {
       await pdpPage.clickOnPDPSizeVariantButton();
@@ -120,7 +121,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await await homePage.clickMiniCartIcon();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
     const cartPage = new CartPage(page);
@@ -144,7 +145,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await pdpPage.miniCartDrawer();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
@@ -173,7 +174,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await pdpPage.miniCartDrawer();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
@@ -200,7 +201,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await pdpPage.miniCartDrawer();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
@@ -230,7 +231,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await pdpPage.miniCartDrawer();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
@@ -258,7 +259,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await pdpPage.miniCartDrawer();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
@@ -293,7 +294,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await pdpPage.miniCartDrawer();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
@@ -324,7 +325,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await pdpPage.miniCartDrawer();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
@@ -348,7 +349,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await pdpPage.miniCartDrawer();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
@@ -378,7 +379,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await pdpPage.miniCartDrawer();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
@@ -407,7 +408,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await pdpPage.miniCartDrawer();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
@@ -437,7 +438,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await pdpPage.miniCartDrawer();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
@@ -469,7 +470,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await pdpPage.miniCartDrawer();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
@@ -503,7 +504,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await pdpPage.miniCartDrawer();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
@@ -528,7 +529,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await pdpPage.miniCartDrawer();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
@@ -553,7 +554,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await pdpPage.miniCartDrawer();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
@@ -581,7 +582,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await pdpPage.miniCartDrawer();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
@@ -616,7 +617,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await pdpPage.miniCartDrawer();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
@@ -647,7 +648,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await pdpPage.miniCartDrawer();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
@@ -678,7 +679,7 @@ test.describe("Mason Cart Page", () => {
       await cartDrawerPage.miniCartClickViewCartButton();
     } else {
       const homePage = new HomePageNew(page);
-      homePage.clickMiniCartIcon();
+      await homePage.clickMiniCartIcon();
       await pdpPage.miniCartDrawer();
       await cartDrawerPage.miniCartClickViewCartButton();
     }
