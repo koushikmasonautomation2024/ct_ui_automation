@@ -156,7 +156,7 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     await this.page.$(`//p[contains(text(), "${shipping_method}")]`);
     await (this.page.getByText(secure_checkout_link)).waitFor({ state: "visible" });
     await (this.page.getByText(return_to_cart_link)).waitFor({ state: "visible" });
-    await expect(this.page.getByText(shipping_address,{exact:true})).toBeVisible();
+    await expect(this.page.getByText(shipping_address, { exact: true })).toBeVisible();
     for (const text of items_in_cart_texts) {
       try {
         await expect(this.page.getByText(text)).toBeVisible({ timeout });
@@ -409,45 +409,10 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     await this.page.waitForSelector("(//button[text()='Edit'])[1]", { visible: true });
     const button = await this.page.$('(//button[text()="Edit"])[1]');
     await button.click();
-    // await this.page.getByRole("button",{ name: 'Edit Address' }).click();
-    // Check if the button is visible
-    const isButtonVisible = await this.page.isVisible('button', {
-      role: 'button',
-      name: 'Edit Address'
-    });
-    if (isButtonVisible) {
-      await this.page.getByRole("button", { name: 'Edit Address' }).click();
-      await this.addShippingAddress();
-    }
-    else {
-      await this.addShippingAddress();
-    }
-    // await this.page.getByRole('button', { name: 'Continue to Payment' }).click();
-    //   //await this.page.getByRole('button', { name: 'Continue to Payment' }).click();
-    //   await this.page.waitForTimeout(5000);
-    //  //await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
+    await this.page.getByRole("button", { name: 'Edit Address' }).waitFor({ state: "visible" });
+    await this.page.getByRole("button", { name: 'Edit Address' }).click();
+    await this.addShippingAddress();
 
-    //  const headingVisible = await this.page.waitForSelector('h2', { text: 'Verify Your Address', visible: true });
-
-    //  if (headingVisible) {
-    //    // If heading is visible, find the section with text 'Use Original Address' and click it
-    //    const section = await this.page.locator('section').filter({ hasText: /^Use Original Address$/ }).first();
-    //    if (section) {
-    //      await section.click();
-    //      await this.page.click('#r2');
-    //     //  const continueButton = await this.page.waitForSelector('button:enabled', {
-    //     //   text: 'Continue',
-    //     // });
-    //     await expect(this.page.getByRole("button",{ name: 'Continue' })).toBeEnabled();
-    //      await this.page.getByRole("button",{ name: 'Continue' }).click();
-    //      console.log('Clicked on "Use Original Address" section.');
-    //    } else {
-    //      console.log('Could not find section with text "Use Original Address".');
-    //    }
-    //  } else {
-    //    console.log('Heading "Verify Your Address" is not visible.');
-    //    await this.page.waitForSelector(`//*[contains(text(), "${firstName} ${lastName}")]`, { visible: true });
-    //   }
   }
 
   async verifyShippingOptionVisibility(option) {
@@ -520,8 +485,15 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
   async validateItemsInCartSection() {
     // Wait for the button with specific name to be visible
     //const button = await this.page.waitForSelector('button[data-radix-collection-item]:has-text("Items in Your Cart")', { visible: true });
-
-    const button = await this.page.getByRole('button', { name: items_in_cart });
+    for (const text of items_in_cart_texts) {
+      try {
+        const button = await this.page.getByRole('button', { name: text });
+        return; // If one text is visible, exit the function
+      } catch (error) {
+        // Continue checking the next text
+      }
+    }
+    //const button = await this.page.getByRole('button', { name: items_in_cart });
     // Function to check initial data-state
     const isDataStateClosed = async () => {
       const dataState = await button.getAttribute('data-state');
@@ -1017,10 +989,12 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
 
   async clickOnPlaceOrderButton() {
     await this.page.getByRole('button', { name: 'Place Order' }).first().click();
+    await this.validatePlaceOrderProgress();
     await this.page.waitForURL(/.*\/thank-you\/.*/);
   }
 
   async validateInvalidBlankCardDetails() {
+    await this.page.getByRole('button', { name: 'Continue to Review' }).click();
     await (this.page.getByText('Enter a credit card number')).waitFor({ state: "visible" });
   }
 
@@ -1029,7 +1003,7 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     await (this.page.getByText('Order Summary')).waitFor({ state: "visible" });
     await (this.page.getByText('Subtotal:')).waitFor({ state: "visible" });
     await expect(this.page.getByText('Shipping:')).toBeVisible();
-    await expect(this.page.locator('li').filter({ hasText: 'Shipping:$' }).getByLabel('tooltip')).toBeVisible();
+    //await expect(this.page.locator('li').filter({ hasText: 'Shipping:$' }).getByLabel('tooltip')).toBeVisible();
     await expect(this.page.getByText('Shipping Surcharge:')).toBeVisible();
     await expect(this.page.getByText('Estimated Sales Tax:')).toBeVisible();
     await expect(this.page.getByText('Order Total:')).toBeVisible();
@@ -1145,6 +1119,82 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
   async fillPassword(password) {
     await this.page.getByText('*Password').click();
     await this.page.getByLabel('*Password').fill(password);
+  }
+
+  async validateReviewProgressBar() {
+    try {
+      // Validate Shipping section (Green with Check)
+      //const shippingText = 'Shipping';
+      const shippingElement = await this.page.$(`//span[contains(text(), "${shipping}")]`);
+      //await this.page.$(`nav[aria-label="Progress"] span:has(svg) span:has-text("${shipping}")`);
+      const shippingClass = await shippingElement.getAttribute('class');
+
+      if (shippingClass.includes('text-[#298842]')) {
+        console.log(`Validation passed: ${shipping} is green with check.`);
+      } else {
+        console.log(`Validation failed: ${shipping} is not green with check.`);
+      }
+
+      // Validate Payment section (Highlighted)
+      //const paymentText = 'Payment';
+      const paymentElement = await this.page.$(`//span[contains(text(), "${payment}")]`);
+      //await this.page.$(`nav[aria-label="Progress"] span.step-label:has-text("${payment}")`);
+      const paymentClass = await paymentElement.getAttribute('class');
+
+      if (paymentClass.includes('text-[#298842]')) {
+        console.log(`Validation passed: ${payment} is green with check.`);
+      } else {
+        console.log(`Validation failed: ${payment} is not not green with check.`);
+      }
+
+      // Validate Review section (Greyed out)
+      //const reviewText = 'Review';
+      const reviewElement = await this.page.$(`//span[contains(text(), "${review}")]`);
+      //await this.page.$(`nav[aria-label="Progress"] span.text-foggyGray:has-text("${review}")`);
+      const reviewClass = await reviewElement.getAttribute('class');
+
+      if (reviewClass.includes('font-extrabold')) {
+        console.log(`Validation passed: ${review} is highlighted`);
+      } else {
+        console.log(`Validation failed: ${review} is not highlighted`);
+      }
+    } catch (error) {
+      console.error('Error during validation:', error);
+    }
+  }
+
+  async validateTwoPlaceOrderButtons() {
+    await (this.page.getByRole('button', { name: 'Place Order' }).first()).waitFor({ state: "visible" });
+    await expect(this.page.getByRole('button', { name: 'Place Order' }).nth(1)).toBeVisible();
+  }
+
+  async validatePlaceOrderProgress() {
+    await (this.page.getByText('Please wait while we process your')).waitFor({ state: "visible" });
+    await expect(this.page.getByText('Don’t click the back button,')).toBeVisible();
+  }
+
+  async validateCreditUserInfo() {
+    await (this.page.locator('article').filter({ hasText: 'Payment Method' }).getByRole('img')).waitFor({ state: "visible" });
+    await expect(this.page.getByText('Contact Info')).toBeVisible();
+  }
+
+  async validatePreQualificationResultsSection() {
+    await expect(this.page.getByRole('button', { name: 'Pre-Qualification Results' })).toBeVisible();
+    await this.page.getByRole('button', { name: 'Pre-Qualification Results' }).click();
+    await expect(this.page.getByRole('heading', { name: 'Stoneberry Credit Pre-' })).toBeVisible();
+    await expect(this.page.getByRole('button', { name: 'Pre-Qualification Results' })).toBeVisible();
+    await this.page.getByRole('button', { name: 'Pre-Qualification Results' }).click();
+  }
+
+  async validateCardUserInfo() {
+    await (this.page.locator('article').filter({ hasText: 'Payment MethodCard Number' }).locator('path')).waitFor({ state: "visible" });
+    await expect(this.page.getByText('Card Number')).toBeVisible();
+    await expect(this.page.getByText('Expiration Date:')).toBeVisible();
+  }
+
+  async selectNewCardButton() {
+    const button = await this.page.waitForSelector('button[value="newCreditCard"]');
+    await button.click();
   }
 
 

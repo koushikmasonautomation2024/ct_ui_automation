@@ -1,6 +1,6 @@
 import test, { expect } from 'playwright/test';
 
-const emptyCartHeaderContent = 'My Shopping Cart';
+const emptyCartHeaderContent = 'Shopping Cart';
 const emptyCartContent = 'Your shopping Cart is empty.';
 const emptyCarAccountSignInButtonContent = 'Have an account? Sign in';
 const emptyCartAccountSignInContent = 'Have an account? Sign in to view items that were previously added to your Cart.';
@@ -19,12 +19,14 @@ exports.EmptyCartPage = class EmptyCartPage {
     }
 
     async validateEmptyCartMessageGuestUser(){
+        await this.emptyCartHeaderText.waitFor({state:'visible'});
         expect(await this.emptyCartHeaderText).toBeVisible();
         expect(await this.emptyCartText).toBeVisible();
        
     }
 
     async validateEmptyCartAccountSignInText(){
+        await this.emptyCartAccountSignInButton.waitFor({state:'visible'});
         expect(await this.emptyCartAccountSignInButton).toBeVisible();
         expect(await this.emptyCartAccountSignInText).toBeVisible();
         expect(await this.emptyCartSignInButton).toBeVisible();

@@ -297,25 +297,25 @@ exports.PDPPage = class PDPPage {
 
     async clickOnPDPSizeVariantButton() {
         // Wait for the first size variant button to be visible
-        await this.page.locator('section.pb-6.pt-2').waitFor({state:'visible'});
+        await this.page.locator('section.pb-6.pt-2').waitFor({ state: 'visible' });
         const firstButtonVisible = await this.pdp_sizevariant_button.first().isVisible();
         // Initialize sizeVariantCount based on the visibility of the first button
         const sizeVariantCount = firstButtonVisible ? await this.pdp_sizevariant_button.count() : 0;
-    
+
         if (sizeVariantCount > 0) {
             let addToCartButtonEnabled = false;
-    
+
             while (!addToCartButtonEnabled) {
                 // Select a random button index
                 const randomIndex = Math.floor(Math.random() * sizeVariantCount);
-    
+
                 // Click the randomly selected button
                 await this.pdp_sizevariant_button.nth(randomIndex).click();
                 console.log(`Clicked button with index: ${randomIndex}`);
-    
+
                 // Check if the Add to Cart button is enabled
                 addToCartButtonEnabled = await this.addtoCartButton.isEnabled();
-    
+
                 if (addToCartButtonEnabled) {
                     console.log('Add to Cart button is enabled.');
                     return; // Exit the function once Add to Cart button is enabled
@@ -647,13 +647,17 @@ exports.PDPPage = class PDPPage {
 
     async getCartItemCount() {
         const cartCountElement = this.page.locator('section.mt.absolute');
-        const isVisible = await cartCountElement.isVisible();
 
-        if (isVisible) {
+        try {
+            // Wait for the cart count element to be visible with a timeout of 10 seconds
+            await cartCountElement.waitFor({ state: 'visible', timeout: 5000 });
+            // If the element is visible, get the text content and return it
             const cartItemsCount = await cartCountElement.textContent();
             return cartItemsCount.trim();
-        } else {
-            return '0'; // Default value when the cart count element is not visible
+        } catch (error) {
+            // If the element is not visible within the timeout, return '0' as the default value
+            console.log('Cart count element is not visible:', error);
+            return '0';
         }
     }
 

@@ -4,7 +4,7 @@ const cartProductNameLinkLocator = 'p.text-base.font-bold.leading-\\[20\\.8px\\]
 const cartItemTotalPriceLocator = 'p:has-text("Total Price:") strong';
 const cartAvailabilityLocator = 'p:has-text("Availability:") strong';
 const cartArrivesByLocator = 'p:has-text("Arrives by") strong';
-const cartDeleviringTo = 'section.-ml-1.mt-1.flex.items-center p';
+const cartDeleviringTo = 'section.-ml-1.mt-1.flex p';
 const cartEditButton = 'button:has-text("Edit")';
 const cartRemoveButton = 'button:has-text("Remove")';
 const cartSaveForLaterButton = 'button:has-text("Save for Later")';
@@ -18,14 +18,14 @@ const sizechart_button_text = 'Size Chart';
 const cartApplyPromoCode = 'Apply Promo Code (optional)';
 const cartOrderSummarySubTotal = /^Subtotal\s*\(\d+\s*Items\):\s*$/;
 const cartOrderSummaryOrderTotal = 'Order Total:';
-const cartOrderSummaryEstShipping = 'Estimated Shipping:';
+const cartOrderSummaryEstShipping = 'Shipping:';
 const cartOrderSummaryEstSurcharge = 'Shipping Surcharge:';
 const cartOrderSummaryEstSalesTax = 'Estimated Sales Tax:';
 const cartNeedHelpFAQ = 'View FAQs:';
 const cartNeedHelpChatUs = 'Chat With Us:';
 const cartNeedHelpEmailUs = 'Email Us:';
 const cartNeedHelpCallUs = 'Call Us Toll-Free:';
-const cartNeedHelp = 'Need Help??';
+const cartNeedHelp = 'Need Help?';
 
 exports.CartPage = class CartPage {
     constructor(page) {
@@ -283,7 +283,7 @@ exports.CartPage = class CartPage {
 
     async clickRemoveCartButton() {
         const removedProdName = await this.getCartFirstItemProductName();
-        const removedItemMessage = `Removed ${removedProdName} item from the cart`;
+        const removedItemMessage = `${removedProdName} was successfully removed from your cart`;
         await this.removeCartButton.first().click();
         await this.page.getByText(removedItemMessage).waitFor({state:'visible'});
         await expect(this.page.getByText(removedItemMessage)).toBeVisible();
@@ -616,6 +616,7 @@ exports.CartPage = class CartPage {
 
         // Check visibility for each label
         for (const label of expectedLabels) {
+            await this.page.getByText(label).waitFor({state:'visible'});
             await expect(this.page.getByText(label)).toBeVisible();
         }
 
