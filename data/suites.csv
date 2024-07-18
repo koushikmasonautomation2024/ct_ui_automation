@@ -1,2 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Thu Jul 18 09:30:14 UTC 2024","Thu Jul 18 09:30:31 UTC 2024","16661","Mason","mason_blp.auth.spec.js","Mason Commerce Tool Site","","","Validate navigation to BLP from PDP and ensure breadcrumbs are shown in BLP",""
