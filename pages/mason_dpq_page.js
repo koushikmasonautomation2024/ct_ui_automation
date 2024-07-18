@@ -14,7 +14,7 @@ const electronic_communication='I consent to receive disclosures from you electr
 exports.MasonDPQPage = class MasonDPQPage{
     constructor(page){
         this.page=page;
-        this.logo_image=page.getByRole('img', { name: 'Stoneberry Logo' });
+        this.logo_image=page.getByRole('img', { name: 'Credit Logo' });
         this.text_under_logo=page.getByText(text_under_logo);
         this.get_prequalifiedText=page.getByText(get_prequalifiedText);
 

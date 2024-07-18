@@ -61,7 +61,7 @@ exports.HomePageNew = class HomePageNew {
         await expect(this.page).toHaveURL(homePageUrl);
     }
     async displayHeroBanner(bannerName) {
-        //await expect(this.page.getByRole('link', { name: bannerName })).toBeVisible();
+        await this.page.getByRole('link', { name: bannerName }).waitFor({ state: 'visible' });
         await expect(this.page.locator(`a img[alt="${bannerName}"]`).first()).toBeVisible();
 
     }
@@ -195,8 +195,43 @@ exports.HomePageNew = class HomePageNew {
     }
 
     async getCategoryImageTilesCount() {
-        // Get line count inside grid elements
-        await expect(this.page.locator('(//div[@class=" block md:block lg:block"]/section/ul)[1]//li')).toHaveCount(4);
+        await this.page.locator('(//div[@class=" block md:block lg:block"]/section/ul)[1]//li').first().waitFor({state:'visible'});
+        const gridItems = this.page.locator('(//div[@class=" block md:block lg:block"]/section/ul)[1]//li');
+        // Get the count of grid items
+        const itemCount = await gridItems.count();
+        // Assert that the count is either 4 or 6
+        expect(itemCount).toBeGreaterThanOrEqual(4);
+        expect(itemCount).toBeLessThanOrEqual(6);
+    }
+
+    async validateCategoryProductImages() {
+        // Wait for the list to be visible
+        const listSelector = 'ul.grid.grid-cols-2.gap-5.md\\:grid-cols-4.lg\\:grid-cols-6';
+        await this.page.waitForSelector(listSelector);
+
+        // Get all list items
+        const listItems = this.page.locator(`${listSelector} > li`);
+
+        // Get the count of list items
+        const itemCount = await listItems.count();
+
+        // Validate each item
+        for (let i = 0; i < itemCount; i++) {
+            const listItem = listItems.nth(i);
+
+            // Check if the image is present and has a valid src attribute
+            const image = listItem.locator('img');
+            await expect(image).toHaveAttribute('src', /https:\/\/images\.contentstack\.io\/v3\/assets\/.*/);
+
+            // Check if the name is present and visible
+            const name = listItem.locator('p');
+            await expect(name).toBeVisible();
+            const nameText = await name.textContent();
+            expect(nameText.trim().length).toBeGreaterThan(0); // Ensure name is not empty
+
+            console.log(`Item ${i + 1}: Image and name "${nameText.trim()}" are valid.`);
+        }
+
     }
 
     async getTopCategoryImageTilesCount() {

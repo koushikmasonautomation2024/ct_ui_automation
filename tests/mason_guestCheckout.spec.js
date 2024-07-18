@@ -134,9 +134,19 @@ test.describe("Mason Checkout - Guest Users - Scenarios", () => {
     await guestCheckoutPage.validateNewAddressModal();
     await guestCheckoutPage.validateNewAddressModal();
     await guestCheckoutPage.addShippingAddress();
+    await guestCheckoutPage.validateItemsInCartSection();
+    await guestCheckoutPage.validateGiftMessage();
+    const shippingOptions = ['Priority', 'Standard', 'Express'];
+    for (const option of shippingOptions) {
+      await guestCheckoutPage.verifyShippingOptionVisibility(option);
+    }
+
     await guestCheckoutPage.clickOnContinueToPayment();
     await guestCheckoutPage.validateAddressVerification();
-    await guestCheckoutPage.validateEditAddress();
+    await guestCheckoutPage.clickOnEditAddress();
+    await guestCheckoutPage.addShippingAddress();
+
+    await guestCheckoutPage.validateGiftMessage();
     await guestCheckoutPage.clickOnContinueToPayment();
     await guestCheckoutPage.validateAddressVerification();
     await guestCheckoutPage.validatePaymentSection();

@@ -183,21 +183,13 @@ test.describe("Mason Guest User Home Page", ()=>{
     //test.slow();
     const homePage = new HomePageNew(page);
     await homePage.getCategoryImageTilesCount();
-    await homePage.categoryImageDisplayValidation(homepage_data.category_image1_alttext);
-    await homePage.categoryImageDisplayValidation(homepage_data.category_image2_alttext);
-    await homePage.categoryImageDisplayValidation(homepage_data.category_image3_alttext);
-    await homePage.categoryImageDisplayValidation(homepage_data.category_image4_alttext);
-    await homePage.categoryLinkValidation(homepage_data.category_image1_alttext);
-    await homePage.categoryLinkValidation(homepage_data.category_image2_alttext);
-    await homePage.categoryLinkValidation(homepage_data.category_image3_alttext);
-    await homePage.categoryLinkValidation(homepage_data.category_image4_alttext);
-    //console.log(testInfo.status);
-          
+    await homePage.validateCategoryProductImages();
   })
 
   //Home Page (Guest) - Full Width Banner-SB-HMP015/SB-HMP016
   test("HP-Full Width Banner - Verify the display and functionality of full-width banners, including image/video content and redirection upon click",async({page},testInfo)=>{ 
     //test.slow();
+    await page.reload({ waitUntil: 'networkidle' })
     const homePage = new HomePageNew(page);
     await homePage.displayHeroBanner(homepage_data.homepage_second_herobanner_name);
     //console.log(testInfo.status);

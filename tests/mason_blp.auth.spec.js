@@ -17,7 +17,7 @@ const savedAddress = myaccountpage_data.myaccount_newaddress_firstname + " " + m
 const editAddress = myaccountpage_data.myaccount_editaddress_firstname + " " + myaccountpage_data.myaccount_editaddress_lastname + " " + myaccountpage_data.myaccount_editaddress_addressline1;
 
 
-test.describe("Mason Commerce Tool Site", () => {
+test.describe("Mason BLP Page", () => {
 
   test.beforeEach(async ({ page, isMobile }, testInfo) => {
     test.slow();
@@ -36,16 +36,16 @@ test.describe("Mason Commerce Tool Site", () => {
     const blpPage = new MasonBLPPage(page);
     //await page.goto(process.env.BIP_URL);
     await blpPage.clickOnTopBrandsInHomePage();
-    
+
   })
 
-   //SB-BLP002
-   test.only("Validate navigation to BLP from PDP and ensure breadcrumbs are shown in BLP", async ({ page }, testInfo) => {
+  //SB-BLP002
+  test("Validate navigation to BLP from PDP and ensure breadcrumbs are shown in BLP", async ({ page }, testInfo) => {
     const blpPage = new MasonBLPPage(page);
     await page.goto(checkout_data.add_to_cart_pdp_url);
     //await page.goto(process.env.BIP_URL);
     await blpPage.validateNavigationFromPDP();
-    
+
   })
 
 
@@ -57,9 +57,9 @@ test.describe("Mason Commerce Tool Site", () => {
     //await page.goto(process.env.BIP_URL);
     const randomAlphabet = await bipPage.validateAlphabetHeader();
     await blpPage.validateNavigationFromBIP(randomAlphabet);
-    
+
   })
 
-  
+
 
 })
