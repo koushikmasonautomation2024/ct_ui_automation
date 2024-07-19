@@ -14,7 +14,7 @@ const electronic_communication='I consent to receive disclosures from you electr
 exports.MasonDPQPage = class MasonDPQPage{
     constructor(page){
         this.page=page;
-        this.logo_image=page.getByRole('img', { name: 'Stoneberry Logo' });
+        this.logo_image=page.getByRole('img', { name: 'Credit Logo' });
         this.text_under_logo=page.getByText(text_under_logo);
         this.get_prequalifiedText=page.getByText(get_prequalifiedText);
 
@@ -107,27 +107,6 @@ async validateYourInformationSection(){
 } 
 
 async fillDOB(){
-            // Generate a random past date using faker
-       // const randomDate = faker.date.past();
-//        let randomDate;  
-//        // Generate a random date of birth for someone above 18 years old
-//   do {
-//     randomDate = faker.date.between(new Date(new Date().getFullYear() - 100, 0, 1), new Date());
-//   } while (this.calculateAge(randomDate) > 18);
-
-//   // Extract month, day, and year from the generated date
-//   const month = (randomDate.getMonth() + 1).toString().padStart(2, '0'); // Ensure 2 digits for month
-//   const day = randomDate.getDate().toString().padStart(2, '0'); // Ensure 2 digits for day
-//   const year = randomDate.getFullYear().toString(); // Ensure 4 digits for year
-
-//   // Format the date as MM/DD/YYYY
-
-//         // Format the date as MM/DD/YYYY
-//         const formattedDate = `${month}/${day}/${year}`;
-
-//         console.log(formattedDate);
-
-// Calculate the minimum date of birth which ensures age > 18
 const currentDate = new Date();
 const currentYear = currentDate.getFullYear();
 const minBirthYear = currentYear - 35;
@@ -379,6 +358,10 @@ async handleSubmissionScenario(dpqExpDigit) {
         await this.validateSubmissionPageFailure();
         console.log('Failure scenario was checked.');
         break;
+        case 9:
+          await this.validateSubmissionPageFailure();
+          console.log('Failure scenario was checked.');
+          break;
       case 14:
         await this.validateSubmissionSuccessWithDownPayment();
         console.log('Success with down payment scenario was checked.');

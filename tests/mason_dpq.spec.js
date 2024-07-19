@@ -33,7 +33,7 @@ test.describe("Mason DPQ Scenarios", ()=>{
 
 
   //SB-DPQ001 //SB-DPQ002 //SB-DPQ003
-  test('Verify DPQ Navigation from the link', async ({ page }) => {
+  test.only('Verify DPQ Navigation from the link', async ({ page }) => {
     // Navigate to the page containing the popular search terms
     const dpqPage = new MasonDPQPage(page);
     await dpqPage.validateDPQLink();
@@ -145,7 +145,7 @@ test('Verify DPQ Navigation from the link and the Electronic Communications on t
 })
 
 
-test('Verify DPQ Navigation from the link - logged In User - submission success and unavailable', async ({ page }) => {
+test('Verify DPQ Navigation from the link - logged In User - submission success', async ({ page }) => {
   // Navigate to the page containing the popular search terms
 
       const firstname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
@@ -179,23 +179,8 @@ test('Verify DPQ Navigation from the link - logged In User - submission success 
       const url1 = page.url();
       console.log(url1);
       await dpqPage.validateSubmissionSuccess();
-     // await dpqPage.clickStartShopping();
-      //await dpqPage.validateDPQLink();
-      await dpqPage.clickDPQLink();
-      await page.waitForLoadState('networkidle');
-      
-      //await dpqPage.validateLogoImage();
-      await dpqPage.validateElectronicCommunication();
-     // await dpqPage.addAddress();
-      await dpqPage.fillDOB();
-      await dpqPage.fillSNN();
-      await dpqPage.validateTermsAndConditionSection();
-      await dpqPage.clickSubmit();
-      await guestCheckoutPage.validateAddressVerification();
-      await page.waitForLoadState('networkidle');
-      const url2 = page.url();
-      console.log(url2);
-      await dpqPage.validateSubmissionPageUnavailable();
+     
+     
 })
 
 

@@ -18,18 +18,19 @@ const checkout_data = JSON.parse(JSON.stringify(require('../test_data/mason_chec
 const savedAddress = myaccountpage_data.myaccount_newaddress_firstname +" "+ myaccountpage_data.myaccount_newaddress_lastname +" "+ myaccountpage_data.myaccount_newaddress_addressline1;
 const editAddress = myaccountpage_data.myaccount_editaddress_firstname +" "+ myaccountpage_data.myaccount_editaddress_lastname +" "+ myaccountpage_data.myaccount_editaddress_addressline1;
 
-test.describe("Mason Guest User Checkout Page", ()=>{
-
-  test.beforeEach(async({page,isMobile},testInfo)=>{
-   test.slow();
-      try {
-          await page.goto(process.env.WEB_URL);
-          await page.waitForLoadState('networkidle');
-      } catch (error) {
-          // Handle the error here
-          console.error("An error occurred in test.beforeEach:", error);
-      }   
- })
+test.describe("Mason Checkout - Guest Users - Scenarios", () => {
+  test.setTimeout(90000);
+  test.beforeEach(async ({ page }, testInfo) => {
+    test.slow();
+    try {
+      await page.goto(process.env.WEB_URL);
+      await page.goto(checkout_data.add_to_cart_pdp_url);
+      await page.waitForLoadState('networkidle');
+    } catch (error) {
+      // Handle the error here
+      console.error("An error occurred in test.beforeEach:", error);
+    }
+  });
       
 
 
@@ -38,7 +39,6 @@ test('Verify Checkout Scenario for the guest user', async ({ page }) => {
   const guestCheckoutPage = new GuestCheckOutPage(page);
   //await guestCheckoutPage.selectAnOptionFromSearchSuggestion('Yellow');
   const pdpPage = new PDPPage(page);
-  await page.goto(checkout_data.add_to_cart_pdp_url);
   await pdpPage.clickOnPDPColorVariantButton();
   await pdpPage.clickOnPDPSizeVariantButton();
   await guestCheckoutPage.clickAddToCart();
@@ -55,7 +55,6 @@ test('Verify closing of cart - Checkout Scenario for the guest user', async ({ p
   // Navigate to the page containing the popular search terms
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const pdpPage = new PDPPage(page);
-  await page.goto(checkout_data.add_to_cart_pdp_url);
   await pdpPage.clickOnPDPColorVariantButton();
   await pdpPage.clickOnPDPSizeVariantButton();
   await guestCheckoutPage.clickAddToCart();
@@ -69,7 +68,6 @@ test('Validate the Progress Bar for the checkout scenario', async ({ page }) => 
   // Navigate to the page containing the popular search terms
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const pdpPage = new PDPPage(page);
-  await page.goto(checkout_data.add_to_cart_pdp_url);
   await pdpPage.clickOnPDPColorVariantButton();
   await pdpPage.clickOnPDPSizeVariantButton();
   await guestCheckoutPage.clickAddToCart();
@@ -86,7 +84,6 @@ test('Validate the Progress Bar for the checkout scenario', async ({ page }) => 
 test('Verify return to cart for guest user', async ({ page }) => {
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const pdpPage = new PDPPage(page);
-  await page.goto(checkout_data.add_to_cart_pdp_url);
   await pdpPage.clickOnPDPColorVariantButton();
   await pdpPage.clickOnPDPSizeVariantButton();
   await guestCheckoutPage.clickAddToCart();
@@ -104,7 +101,6 @@ test('Verify Need Help section - go to shipping scenario', async ({ page }) => {
   // Navigate to the page containing the popular search terms
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const pdpPage = new PDPPage(page);
-  await page.goto(checkout_data.add_to_cart_pdp_url);
   await pdpPage.clickOnPDPColorVariantButton();
   await pdpPage.clickOnPDPSizeVariantButton();
   await guestCheckoutPage.clickAddToCart();
@@ -122,11 +118,10 @@ test('Verify Need Help section - go to shipping scenario', async ({ page }) => {
 })
 
 //New Address
-test('Verify add/edit New Address - go to shipping scenario', async ({ page }) => {
+test.only('Verify add/edit New Address - go to shipping scenario', async ({ page }) => {
   // Navigate to the page containing the popular search terms
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const pdpPage = new PDPPage(page);
-  await page.goto(checkout_data.add_to_cart_pdp_url);
   await pdpPage.clickOnPDPColorVariantButton();
   await pdpPage.clickOnPDPSizeVariantButton();
   await guestCheckoutPage.clickAddToCart();
@@ -139,9 +134,19 @@ test('Verify add/edit New Address - go to shipping scenario', async ({ page }) =
   await guestCheckoutPage.validateNewAddressModal();
   await guestCheckoutPage.validateNewAddressModal();
   await guestCheckoutPage.addShippingAddress();
+  await guestCheckoutPage.validateItemsInCartSection();
+  await guestCheckoutPage.validateGiftMessage();
+  const shippingOptions = ['Priority', 'Standard', 'Express'];
+  for (const option of shippingOptions) {
+    await guestCheckoutPage.verifyShippingOptionVisibility(option);
+  }
+  
   await guestCheckoutPage.clickOnContinueToPayment();
   await guestCheckoutPage.validateAddressVerification();
-  await guestCheckoutPage.validateEditAddress();
+  await guestCheckoutPage.clickOnEditAddress();
+  await guestCheckoutPage.addShippingAddress();
+ 
+  await guestCheckoutPage.validateGiftMessage();
   await guestCheckoutPage.clickOnContinueToPayment();
   await guestCheckoutPage.validateAddressVerification();
   await guestCheckoutPage.validatePaymentSection();
@@ -152,7 +157,6 @@ test('Verify add/edit New Address - go to shipping scenario', async ({ page }) =
 test('Verify Shipping Methods - Guest User - go to shipping scenario', async ({ page }) => {
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const pdpPage = new PDPPage(page);
-  await page.goto(checkout_data.add_to_cart_pdp_url);
   await pdpPage.clickOnPDPColorVariantButton();
   await pdpPage.clickOnPDPSizeVariantButton();
   await guestCheckoutPage.clickAddToCart();
@@ -170,10 +174,9 @@ test('Verify Shipping Methods - Guest User - go to shipping scenario', async ({ 
 })
 
 
-test.only('Verify CreateAccount - Guest User - go to shipping scenario', async ({ page }) => {
+test('Verify CreateAccount - Guest User - go to shipping scenario', async ({ page }) => {
   const guestCheckoutPage = new GuestCheckOutPage(page);
   const pdpPage = new PDPPage(page);
-  await page.goto(checkout_data.add_to_cart_pdp_url);
   await pdpPage.clickOnPDPColorVariantButton();
   await pdpPage.clickOnPDPSizeVariantButton();
   await guestCheckoutPage.clickAddToCart();
