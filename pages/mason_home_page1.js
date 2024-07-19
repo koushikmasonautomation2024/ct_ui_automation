@@ -61,6 +61,21 @@ exports.HomePageNew = class HomePageNew {
         await expect(this.page).toHaveURL(homePageUrl);
     }
     async displayHeroBanner(bannerName) {
+        await this.page.getByText('Top Categories').scrollIntoViewIfNeeded();
+        await this.page.getByRole('link', { name: bannerName }).waitFor({ state: 'visible' });
+        await expect(this.page.locator(`a img[alt="${bannerName}"]`).first()).toBeVisible();
+
+    }
+
+    async displayBanner2(bannerName) {
+        await this.page.locator('section.seasonalSavings section.auc-Recommend').first().scrollIntoViewIfNeeded();
+        await this.page.getByRole('link', { name: bannerName }).waitFor({ state: 'visible' });
+        await expect(this.page.locator(`a img[alt="${bannerName}"]`).first()).toBeVisible();
+
+    }
+
+    async displayBanner1(bannerName) {
+        await this.page.getByText('Top Categories').scrollIntoViewIfNeeded();
         await this.page.getByRole('link', { name: bannerName }).waitFor({ state: 'visible' });
         await expect(this.page.locator(`a img[alt="${bannerName}"]`).first()).toBeVisible();
 
@@ -195,7 +210,7 @@ exports.HomePageNew = class HomePageNew {
     }
 
     async getCategoryImageTilesCount() {
-        await this.page.locator('(//div[@class=" block md:block lg:block"]/section/ul)[1]//li').first().waitFor({state:'visible'});
+        await this.page.locator('(//div[@class=" block md:block lg:block"]/section/ul)[1]//li').first().waitFor({ state: 'visible' });
         const gridItems = this.page.locator('(//div[@class=" block md:block lg:block"]/section/ul)[1]//li');
         // Get the count of grid items
         const itemCount = await gridItems.count();
@@ -205,6 +220,7 @@ exports.HomePageNew = class HomePageNew {
     }
 
     async validateCategoryProductImages() {
+        await this.page.getByText('Top Categories').scrollIntoViewIfNeeded();
         // Wait for the list to be visible
         const listSelector = 'ul.grid.grid-cols-2.gap-5.md\\:grid-cols-4.lg\\:grid-cols-6';
         await this.page.waitForSelector(listSelector);
@@ -236,7 +252,9 @@ exports.HomePageNew = class HomePageNew {
 
     async getTopCategoryImageTilesCount() {
         // Get line count inside grid elements
-        await expect(this.page.locator('(//div[@class=" block md:block lg:block"]/section/ul)[2]//li')).toHaveCount(18);
+        await this.page.getByText('Top Categories').scrollIntoViewIfNeeded();
+        await this.page.locator('section.topcategory ul li').first().waitFor({ state: 'visible' });
+        await expect(this.page.locator('section.topcategory ul li')).toHaveCount(18);
     }
 
     async categoryImageDisplayValidation(imageAltText) {
@@ -249,7 +267,7 @@ exports.HomePageNew = class HomePageNew {
 
     async topCategoriesImageDisplayValidation() {
         // Define the CSS selector for the grid container
-        const gridSelector = '.grid.grid-cols-3.md\\:grid-cols-6 > li';
+        const gridSelector = 'section.topcategory ul li';
 
         // Get all the grid items
         const gridItems = await this.page.$$(gridSelector);
@@ -292,116 +310,189 @@ exports.HomePageNew = class HomePageNew {
     }
 
     async getTopBrandsImageTilesCount() {
-        // Get line count inside grid elements
-        await expect(this.page.locator('(//div[@class=" block md:block lg:block"]/section/ul)[3]//li')).toHaveCount(4);
+        await this.page.locator('h4:has-text("Top Brands")').first().scrollIntoViewIfNeeded();
+        await expect(this.page.locator('section:has-text("Top Brands") + ul li')).toHaveCount(4);
+
     }
 
     async getBrandsImageTilesCount() {
-        // Get line count inside grid elements
-        await expect(this.page.locator('(//div[@class=" block md:block lg:block"]/section/ul)[4]//li')).toHaveCount(6);
+        await this.page.locator('h4:has-text("Top Brands")').first().scrollIntoViewIfNeeded();
+        await expect(this.page.locator('section.mx-auto.mt-5.max-w-screen-9xl.px-4.md\\:mt-9 ul li')).toHaveCount(6);
+
+    }
+
+    async validateTopBrands() {
+        // Select the Top Brands section
+        await this.page.locator('h4:has-text("Top Brands")').first().scrollIntoViewIfNeeded();
+        const topBrandsSection = await this.page.locator('section:has-text("Top Brands") + ul li');
+        await expect(topBrandsSection).toHaveCount(4);
+        // Validate product count
+
+        const productCount = await topBrandsSection.count();
+        expect(productCount).toBe(4); // Replace 4 with the expected number of products
+
+        // Validate each product
+        for (let i = 0; i < productCount; i++) {
+            const product = topBrandsSection.nth(i);
+
+            // Scroll product into view
+            await product.scrollIntoViewIfNeeded();
+
+            // Validate image display
+            const image = product.locator('img');
+            await expect(image).toBeVisible();
+
+            // Validate link
+            const link = product.locator('a');
+            await expect(link).toHaveAttribute('href', /\/brands\//);
+
+            // Validate product name (using aria-label for this case)
+            const productName = await link.getAttribute('aria-label');
+            expect(productName).not.toBeNull();
+            expect(productName).not.toBe('');
+        }
     }
 
     async brandsImageDisplayValidation() {
-        // Define the CSS selector for the logo container .grid.grid-cols-3.md\\:grid-cols-6 > li  .flex.flex-wrap.items-center.justify-center.gap-x-5.gap-y-6.md\\:justify-between.md\\:gap-x-6 
-        const logoSelector = '.flex.flex-wrap.items-center.justify-center.gap-x-5.gap-y-6.md\\:justify-between.md\\:gap-x-6 > li';
+        // Scroll to the section containing the images
+        await this.page.locator('h4:has-text("Top Brands")').first().scrollIntoViewIfNeeded();
+        const imageSection = await this.page.locator('section.mx-auto.mt-5.max-w-screen-9xl.px-4.md\\:mt-9 ul li img');
 
-        // Wait for the logo container to appear
-        await this.page.waitForSelector(logoSelector);
+        // Validate the number of images
+        await expect(imageSection).toHaveCount(6); // Replace 6 with the expected number of images
 
-        // Get all the logo items
-        const logoItems = await this.page.$$(logoSelector);
+        // Wait for the images to be visible and validate their attributes
+        const imageCount = await imageSection.count();
+        console.log(imageCount);
 
-        // Loop through each logo item
-        for (const item of logoItems) {
-            try {
-                // Get the link element inside the logo item
-                const linkElement = await item.$('a');
+        for (let i = 0; i < imageCount; i++) {
+            const image = imageSection.nth(i);
 
-                if (linkElement) {
-                    // Get the image element inside the link element
-                    const imageElement = await linkElement.$('img');
+            // Scroll image into view
+            await image.scrollIntoViewIfNeeded();
 
-                    // Get the src attribute of the image
-                    const srcAttribute = await imageElement.getAttribute('src');
+            // Validate image is visible
+            await expect(image).toBeVisible();
 
-                    // Get the alt attribute of the image
-                    const altAttribute = await imageElement.getAttribute('alt');
+            // Validate image has a src attribute
+            const src = await image.getAttribute('src');
+            expect(src).not.toBeNull();
+            expect(src).not.toBe('');
 
-                    //console.log('Link:', await linkElement.getAttribute('href'));
-                    //console.log('Image source:', srcAttribute);
-                    console.log('Alt text:', altAttribute);
-                } else {
-                    console.log('Link element not found for logo item.');
-                }
-            } catch (error) {
-                console.error('Error processing logo item:', error);
-            }
+            // Validate image has an alt attribute
+            const alt = await image.getAttribute('alt');
+            expect(alt).not.toBeNull();
+            expect(alt).not.toBe('');
         }
     }
+    
+    async validateSeasonalSavings() {
+    // Scroll to the carousel section
+    await this.page.locator('section.seasonalSavings section.auc-Recommend').first().scrollIntoViewIfNeeded();
+    await expect(this.page.getByText('Seasonal Savings')).toBeVisible();
 
-    async seasonalSavingsAndViewAlllink() {
-        await expect(this.page.getByText('Seasonal Savings')).toBeVisible();
-        await expect(this.page.locator('section').filter({ hasText: /^Seasonal SavingsView All$/ }).getByRole('link')).toBeVisible();
+    // Select the product items within the carousel
+    const productItems = this.page.locator('section.auc-Recommend .swiper-slide');
+    const productCount = await productItems.count();
+    console.log(`Number of products: ${productCount}`);
+
+    // Validate the number of products (adjust the expected number as needed)
+    await expect(productItems).toHaveCount(productCount); // Replace productCount with the expected number if known
+
+    for (let i = 0; i < productCount; i++) {
+        const product = productItems.nth(i);
+
+        // Scroll product into view
+        await product.scrollIntoViewIfNeeded();
+
+        // Validate product image
+        const productImage = product.locator('a > img');
+        await expect(productImage).toBeVisible();
+        const src = await productImage.getAttribute('src');
+        expect(src).not.toBeNull();
+        expect(src).not.toBe('');
+
+        // Validate product name
+        const productName = product.locator('a > p');
+        await expect(productName).toBeVisible();
+        const nameText = await productName.textContent();
+        expect(nameText).not.toBeNull();
+        expect(nameText).not.toBe('');
+
+        // Validate price
+        const price = product.locator('div.mt-3.min-h-\\[50px\\] > section > strong');
+        await expect(price).toBeVisible();
+        const priceText = await price.textContent();
+        expect(priceText).not.toBeNull();
+        expect(priceText).not.toBe('');
     }
+
+    // Validate the carousel button
+    const carouselButton = this.page.locator('section.auc-Recommend .swiper-button-next'); // Assuming there is a next button
+    await expect(carouselButton).toBeVisible();
+    await carouselButton.click();
+
+}
+    
 
     async signUpModalDisplayValidation(enterEmail) {
-        await this.page.getByRole('button', { name: 'Sign Up' }).click();
-        await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByPlaceholder('Enter your email address')).toBeVisible();
-        await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Close Modal')).toBeVisible();
-        await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Submit Modal Form')).toBeVisible();
-        await this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByPlaceholder('Enter your email address').fill(enterEmail);
-        await this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Submit Modal Form').click();
-        await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByText(/^.*$/).first()).toBeHidden();
-    }
+    await this.page.getByRole('button', { name: 'Sign Up' }).click();
+    await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByPlaceholder('Enter your email address')).toBeVisible();
+    await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Close Modal')).toBeVisible();
+    await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Submit Modal Form')).toBeVisible();
+    await this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByPlaceholder('Enter your email address').fill(enterEmail);
+    await this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Submit Modal Form').click();
+    await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByText(/^.*$/).first()).toBeHidden();
+}
 
     async selectSubCategoryFromMegaMenu() {
-        try {
-            // Click the homepage category
-            await this.homepage_category.click();
+    try {
+        // Click the homepage category
+        await this.homepage_category.click();
 
-            // Get the first visible item in the first <ul>
-            const firstLi = await this.getRandomVisibleItem('ul[role="menu"] > li');
-            if (!firstLi) {
-                console.log('No items found in the first <ul>');
-                return;
-            }
-
-            // Click the first visible item in the first <ul>
-            await firstLi.hover();
-
-            // Get the second visible item in the second <ul>
-            const secondLi = await this.getRandomVisibleItem(firstLi, 'div.customtablescrollbar > ul > li > a');
-            if (!secondLi) {
-                console.log('No items found in the second <ul>');
-                return;
-            }
-            await secondLi.hover();
-            // Ensure the secondLi is clickable with a timeout
-            await secondLi.waitFor({ state: 'visible', timeout: 5000 });
-            // Click the second visible item in the second <ul>
-            await secondLi.click();
-            // Wait for the expected URL and the network to be idle
-            const expectedURL = new RegExp(/.*\/(categories)\/[^\/]+/);
-            await this.page.waitForURL(expectedURL);
-            //await expect(this.page).toHaveURL(expectedURL);
-            console.log('Successfully navigated to the subcategory page.');
-        } catch (error) {
-            console.error('An error occurred while selecting a subcategory:', error);
+        // Get the first visible item in the first <ul>
+        const firstLi = await this.getRandomVisibleItem('ul[role="menu"] > li');
+        if (!firstLi) {
+            console.log('No items found in the first <ul>');
+            return;
         }
+
+        // Click the first visible item in the first <ul>
+        await firstLi.hover();
+
+        // Get the second visible item in the second <ul>
+        const secondLi = await this.getRandomVisibleItem(firstLi, 'div.customtablescrollbar > ul > li > a');
+        if (!secondLi) {
+            console.log('No items found in the second <ul>');
+            return;
+        }
+        await secondLi.hover();
+        // Ensure the secondLi is clickable with a timeout
+        await secondLi.waitFor({ state: 'visible', timeout: 5000 });
+        // Click the second visible item in the second <ul>
+        await secondLi.click();
+        // Wait for the expected URL and the network to be idle
+        const expectedURL = new RegExp(/.*\/(categories)\/[^\/]+/);
+        await this.page.waitForURL(expectedURL);
+        //await expect(this.page).toHaveURL(expectedURL);
+        console.log('Successfully navigated to the subcategory page.');
+    } catch (error) {
+        console.error('An error occurred while selecting a subcategory:', error);
     }
+}
 
     async getRandomVisibleItem(baseLocator, nestedSelector = null) {
-        const locator = nestedSelector ? baseLocator.locator(nestedSelector) : this.page.locator(baseLocator);
-        await locator.first().waitFor({ state: 'visible' });
+    const locator = nestedSelector ? baseLocator.locator(nestedSelector) : this.page.locator(baseLocator);
+    await locator.first().waitFor({ state: 'visible' });
 
-        const itemCount = await locator.count();
-        if (itemCount > 0) {
-            const randomIndex = Math.floor(Math.random() * itemCount);
-            return locator.nth(randomIndex);
-        }
-
-        return null;
+    const itemCount = await locator.count();
+    if (itemCount > 0) {
+        const randomIndex = Math.floor(Math.random() * itemCount);
+        return locator.nth(randomIndex);
     }
+
+    return null;
+}
 }
 
 
