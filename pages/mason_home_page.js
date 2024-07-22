@@ -205,26 +205,48 @@ exports.HomePage = class HomePage {
     }
 
 
+    // async navigateToCategoryL1(l1Category) {
+    //     //await this.homepage_category.click();
+    //     const l1CategoryElement = `a:text-is("${l1Category}")`;
+    //     await this.page.waitForSelector(l1CategoryElement, { visible: true });
+    //     const elements = await this.page.$$(l1CategoryElement);
+    //     await elements[0].click();
+
+    //     await this.page.waitForNavigation();
+    //     await this.page.waitForSelector(homepage_locator.l1breadcrumb, { visible: true });
+
+    //     // Extract the text content of all <a> elements within the breadcrumb
+    //     const breadcrumbLinks = await this.page.evaluate(() => {
+    //         const links = Array.from(document.querySelectorAll('nav[aria-label="Breadcrumb"] a'));
+    //         return links.map(link => link.textContent.trim());
+    //     });
+    //     console.log(l1Category);
+    //     // Check if any of the breadcrumb links contain the categoryName
+    //     const isCategoryNavigated = breadcrumbLinks.some(linkText => linkText.includes(l1Category));
+    //     // expect(isCategoryNavigated).toBe(true);
+    //     await expect(this.page.getByLabel('Breadcrumb').getByText(l1Category), { exact: true }).toBeVisible();
+
+    // }
+
     async navigateToCategoryL1(l1Category) {
-        //await this.homepage_category.click();
-        const l1CategoryElement = `a:text-is("${l1Category}")`;
-        await this.page.waitForSelector(l1CategoryElement, { visible: true });
-        const elements = await this.page.$$(l1CategoryElement);
-        await elements[0].click();
+        const l1CategorySelector = `a:text-is("${l1Category}")`;
 
+        // Wait for the L1 category link to be visible and click the first matching element
+        await this.page.waitForSelector(l1CategorySelector, { visible: true });
+        const l1CategoryElements = await this.page.$$(l1CategorySelector);
+        await l1CategoryElements[0].click();
 
-        await this.page.waitForSelector(homepage_locator.l1breadcrumb, { visible: true });
+        // Wait for the page to navigate and the breadcrumb to be visible
+        await this.page.waitForNavigation();
+        await this.page.waitForSelector('nav[aria-label="Breadcrumb"]', { visible: true });
 
-        // Extract the text content of all <a> elements within the breadcrumb
-        const breadcrumbLinks = await this.page.evaluate(() => {
-            const links = Array.from(document.querySelectorAll('nav[aria-label="Breadcrumb"] a'));
-            return links.map(link => link.textContent.trim());
-        });
-        console.log(l1Category);
-        // Check if any of the breadcrumb links contain the categoryName
-        const isCategoryNavigated = breadcrumbLinks.some(linkText => linkText.includes(l1Category));
-        expect(isCategoryNavigated).toBe(true);
+        // Verify the breadcrumb contains the L1 category
+        //const breadcrumbSelector = `nav[aria-label="Breadcrumb"] a:text-is("${l1Category}")`;
+        const breadcrumbSelector = await this.page.getByLabel('Breadcrumb').getByText(l1Category, { exact: true });
 
+        // Wait for the breadcrumb element to be visible
+        await breadcrumbSelector.waitFor({ state: 'visible' });
+        await expect(breadcrumbSelector).toBeVisible();
     }
 
     async getRandomL2L3CategoryText(index) {

@@ -14,7 +14,7 @@ const newuser_myaccount_paymentpage_dobtextbox="*Date of Birth (MM/DD/YYYY)";
 const newuser_myaccount_paymentpage_continuebutton="Continue";
 const newuser_myaccount_orderspage_breadcrumb="HomeMy AccountOrders";
 const newuser_myaccount_orderspage_headertext="//section[@class='flex items-center gap-2']//p[contains(text(),'Orders')]";
-const newuser_myaccount_orderspage_norecentordertext="There are no orders in your account from the last 12 months. Please adjust the time frame above, or look up a specific order below.";
+const newuser_myaccount_orderspage_norecentordertext="There are no recent orders in your account, but let’s see if we can find the order you’re looking for.";
 const newuser_myaccount_addresspage_breadcrumb="HomeMy AccountAddresses";
 const newuser_myaccount_addresspage_headertext="//section[@class='flex items-center gap-x-4']//h1[contains(text(),'Addresses')]";
 const newuser_myaccount_addresspage_norecentaddresstext="There are currently no addresses saved to your account."

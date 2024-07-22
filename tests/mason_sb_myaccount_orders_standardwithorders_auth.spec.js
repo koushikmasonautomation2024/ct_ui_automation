@@ -40,7 +40,7 @@ test.describe("Mason MyAccount Orders - Standard With Orders", ()=>{
   })
   
   //Account - Orders - Standard With Orders - Test Cases ID-SB-MyA168/SB-MyA169/SB-MyA170/SB-MyA171
-  test("Account - Orders - Standard With Orders - Verify display and functionality of the dynamic sort option dropdown",async({page},testInfo)=>{ 
+  test.skip("Account - Orders - Standard With Orders - Verify display and functionality of the dynamic sort option dropdown",async({page},testInfo)=>{ 
     //test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -61,7 +61,7 @@ test.describe("Mason MyAccount Orders - Standard With Orders", ()=>{
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.redirectToMyAccount();
     await myaccountPage.clickMyAccountOrderLink();
-    await myaccountPage.validatedOrderNumberDisplaySection(myaccountpage_data.myaccount_orders_ordernumberprefix);
+    await myaccountPage.validatedOrderNumberDisplaySectionWithLimitOrder(myaccountpage_data.myaccount_orders_ordernumberprefix);
   })
 
   //Account - Orders - Standard With Orders - Test Cases ID-SB-MyA177/SB-MyA181

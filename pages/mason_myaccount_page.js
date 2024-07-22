@@ -400,6 +400,7 @@ exports.MyAccountPage = class MyAccountPage {
     async validatedOrderNumberDisplaySection(orderNumberPrefix) {
         await expect(this.page).toHaveURL(/.*orders/);
         await expect(this.page.getByText('HomeMy AccountOrders')).toBeVisible();
+        await this.page.locator('section.border-b h2.font-semibold').first().waitFor({state:'visible'});
         await expect(this.page.locator('section.border-b h2.font-semibold').first()).toBeVisible();
         //await expect(this.page.locator(`h2.font-semibold:has-text("${orderNumberPrefix}")`).first()).toBeVisible();
         //const orderLocators = this.page.locator(`h2.font-semibold:has-text("${orderNumberPrefix}")`);
@@ -463,10 +464,107 @@ exports.MyAccountPage = class MyAccountPage {
             // Navigate back to the original page to continue the loop
             await this.page.goBack();
 
-
         }
 
+    }
 
+    async validatedOrderNumberDisplaySectionWithLimitOrder(orderNumberPrefix) {
+        await expect(this.page).toHaveURL(/.*orders/);
+        await expect(this.page.getByText('HomeMy AccountOrders')).toBeVisible();
+        await this.page.locator('section.border-b h2.font-semibold').first().waitFor({ state: 'visible' });
+        await expect(this.page.locator('section.border-b h2.font-semibold').first()).toBeVisible();
+    
+        const orderLocators = this.page.locator('section.border-b h2.font-semibold');
+        const orderLocatorsCount = await orderLocators.count();
+        console.log('Order Date Count :' + orderLocatorsCount);
+    
+        const aTextPattern = /View Order Details/;
+        const aHrefPattern = /\/account\/orders\/orderdetails\/\?orderId=\d+/;
+    
+        const orderElements = await orderLocators.all();
+        expect(orderElements.length).toBeGreaterThan(0);
+    
+        console.log(`Number of "Order #" elements: ${orderElements.length}`);
+    
+        for (const element of orderElements) {
+            console.log(await element.innerText());
+        }
+    
+        const limit = Math.min(orderLocatorsCount, 3);
+    
+        for (let i = 0; i < limit; i++) {
+            const h2Element = orderLocators.nth(i);
+            const pElement = await h2Element.locator('xpath=following-sibling::p');
+            const pText = await pElement.textContent();
+            console.log('Order Date and Price:' + pText);
+    
+            expect(pText).toMatch(/^[A-Z][a-z]+\s\d{1,2},\s\d{4}\s\|\s\$?-?\d+(?:\.\d{1,2})?$/);
+    
+            const aElement = await h2Element.locator('xpath=following-sibling::a');
+            const aText = await aElement.textContent();
+            const aHref = await aElement.getAttribute('href');
+            expect(aText).toMatch(aTextPattern);
+            expect(aHref).toMatch(aHrefPattern);
+    
+            await Promise.all([
+                this.page.waitForNavigation(),
+                aElement.click(),
+            ]);
+    
+            await expect(this.page).toHaveURL(/.*\/account\/orders\/orderdetails\/\?orderId=\d+&zipCode=\d+$/);
+    
+            await this.page.goBack();
+        }
+    }
+    
+
+    async validatedOrderNumberDisplaySectionWithLimitedOrder(orderNumberPrefix) {
+        await expect(this.page).toHaveURL(/.*orders/);
+        await expect(this.page.getByText('HomeMy AccountOrders')).toBeVisible();
+        await this.page.locator('section.border-b h2.font-semibold').first().waitFor({ state: 'visible' });
+        await expect(this.page.locator('section.border-b h2.font-semibold').first()).toBeVisible();
+    
+        const orderLocators = this.page.locator('section.border-b h2.font-semibold');
+        const orderLocatorsCount = await orderLocators.count();
+        console.log('Order Date Count :' + orderLocatorsCount);
+    
+        const aTextPattern = /View Order Details/;
+        const aHrefPattern = /\/account\/orders\/orderdetails\/\?orderId=\d+/;
+    
+        const orderElements = await orderLocators.all();
+        expect(orderElements.length).toBeGreaterThan(0);
+    
+        console.log(`Number of "Order #" elements: ${orderElements.length}`);
+    
+        for (const element of orderElements) {
+            console.log(await element.innerText());
+        }
+    
+        const limit = Math.min(orderLocatorsCount, 3);
+    
+        for (let i = 0; i < limit; i++) {
+            const h2Element = orderLocators.nth(i);
+            const pElement = await h2Element.locator('xpath=following-sibling::p');
+            const pText = await pElement.textContent();
+            console.log('Order Date and Price:' + pText);
+    
+            expect(pText).toMatch(/^[A-Z][a-z]+\s\d{1,2},\s\d{4}\s\|\s\$?-?\d+(?:\.\d{1,2})?$/);
+    
+            const aElement = await h2Element.locator('xpath=following-sibling::a');
+            const aText = await aElement.textContent();
+            const aHref = await aElement.getAttribute('href');
+            expect(aText).toMatch(aTextPattern);
+            expect(aHref).toMatch(aHrefPattern);
+    
+            await Promise.all([
+                this.page.waitForNavigation(),
+                aElement.click(),
+            ]);
+    
+            await expect(this.page).toHaveURL(/.*\/account\/orders\/orderdetails\/\?orderId=\d+&zipCode=\d+$/);
+    
+            await this.page.goBack();
+        }
     }
 
     async clickViewOrderDetailsLink() {
@@ -1258,6 +1356,7 @@ exports.MyAccountPage = class MyAccountPage {
 
     async validateOrdersSortDropdown() {
         // Array of menu items to check
+        await this.page.locator('section.border-b h2.font-semibold').first().waitFor({state:'visible'});
         const menuItems = ['Last 12 Months', 'Last 2 Years', 'Last 3 Years'];
         await expect(this.page.getByRole('button', { name: 'Last 12 Months' })).toBeVisible();
         await this.page.getByRole('button', { name: 'Last 12 Months' }).click();
@@ -1853,20 +1952,35 @@ exports.MyAccountPage = class MyAccountPage {
 
     async verifyAddressSuggestionModal() {
         try {
-            await this.page.waitForSelector('div[role="dialog"]', { timeout: 15000 });
-            await this.page.locator('div[role="dialog"][data-state="open"]').isVisible();
-            await this.page.getByLabel('Use Original Address').click();
-            await this.page.getByRole('button', { name: 'Continue' }).click();
-            // The dialog is visible, you can add additional code here to handle it if needed
-        } catch (error) {
-            if (error instanceof playwright.errors.TimeoutError) {
-                // The dialog was not found within the timeout, continue with the next steps
-                console.log("Address suggestion modal did not appear, continuing with the next steps.");
-            } else {
-                // Rethrow any other errors
-                throw error;
+            await this.page.waitForTimeout(5000);
+            // Check if the address verification dialog is present with the data-state="open" attribute
+            const addressModal = this.page.locator('div[role="dialog"][data-state="open"]');
+            const isModalPresent = await addressModal.count() > 0;
+
+            if (isModalPresent) {
+                // Verify if the modal is visible within 15 seconds
+                const isModalVisible = await addressModal.first().isVisible({ timeout: 15000 });
+
+                if (isModalVisible) {
+                    // Click "Use Original Address" and then "Continue"
+                    await this.page.getByLabel('Use Original Address').click();
+                    await this.page.getByRole('button', { name: 'Continue' }).click();
+                    console.log('Address verification completed.');
+                    return;
+                }
             }
+
+            console.log('Address verification modal did not appear or is not open.');
+
+            // // Wait for the text containing the first and last name to be visible
+            // const fullName = `${firstName} ${lastName}`;
+            // await this.page.waitForSelector(`//*[contains(text(), "${fullName}")]`, { state: 'visible' });
+            // console.log(`Found text: "${fullName}"`);
+
+        } catch (error) {
+            console.error('An error occurred during address verification:', error);
         }
+
         // await this.page.waitForSelector('div[role="dialog"]', { timeout: 15000 });
         // const addressModalVisible = await this.page.locator('div[role="dialog"][data-state="open"]').isVisible();
 

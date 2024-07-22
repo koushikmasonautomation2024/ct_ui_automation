@@ -54,7 +54,7 @@
     "myaccount_myprofile_headertext" : "My Profile",
     "myaccount_myprofile_email": "*Email Address",
     "myaccount_changepassword" : "Change Password",
-    "myaccount_changepassword_currentpassword" : "*Password",
+    "myaccount_changepassword_currentpassword" : "*Current Password",
     "myaccount_changepassword_newpassword" : "*New Password",
     "myaccount_orders_ordernumber" : ".font-semibold",
     "myaccount_orders_vieworderdetails" : "View Order Details",

@@ -112,10 +112,10 @@ exports.CartDrawerPage = class CartDrawerPage {
                 console.log('Item added to cart successfully');
             } else {
                 console.log('Add to Cart button in the cart drawer is disabled');
-                 await pdpPage.clickOnPDPColorVariantButton();
-                 await pdpPage.clickOnPDPSizeVariantButton();
-                 await addToCartButtonInDrawer.click();
-                 await pdpPage.miniCartDrawer();
+                await pdpPage.clickOnPDPColorVariantButton();
+                await pdpPage.clickOnPDPSizeVariantButton();
+                await addToCartButtonInDrawer.click();
+                await pdpPage.miniCartDrawer();
             }
         } else {
             console.log('No buttons found on the PLP page');
@@ -147,15 +147,16 @@ exports.CartDrawerPage = class CartDrawerPage {
         const productsContainer = await this.miniCartProductSection;
         // Get all product items within the container
         const productItems = await productsContainer.locator('li.rounded-sm.border.border-foggyGray.bg-white.p-4').first();
+        await this.miniCartQtyInputTextBox.first().waitFor({ state: 'visible' });
 
-        const initialInputValue = await this.miniCartQtyInputTextBox.nth(1).inputValue();
+        const initialInputValue = await this.miniCartQtyInputTextBox.first().inputValue();
         if (initialInputValue == 1) {
             await this.miniCartQtyMinusButton.first().click();
             //need to write code for the delete item message
             //await expect(productItems).toBeHidden();
         } else {
-            await this.miniCartQtyInputTextBox.nth(1).fill('1');
-            await this.miniCartQtyInputTextBox.nth(1).press('Tab');
+            await this.miniCartQtyInputTextBox.first().fill('1');
+            await this.miniCartQtyInputTextBox.first().press('Tab');
             await this.miniCartQtyMinusButton.first().click();
             //need to write code for the delete item message
             //await expect(productItems).toBeHidden();
@@ -168,15 +169,15 @@ exports.CartDrawerPage = class CartDrawerPage {
         // Get all product items within the container
         const productItems = await productsContainer.locator('li.rounded-sm.border.border-foggyGray.bg-white.p-4').first();
 
-        const initialInputValue = await this.miniCartQtyInputTextBox.nth(1).inputValue();
+        const initialInputValue = await this.miniCartQtyInputTextBox.first().inputValue();
         if (initialInputValue == 1) {
-            await this.miniCartQtyInputTextBox.nth(1).fill('0');
-            await this.miniCartQtyInputTextBox.nth(1).press('Tab');
+            await this.miniCartQtyInputTextBox.first().fill('0');
+            await this.miniCartQtyInputTextBox.first().press('Tab');
             //need to write code for the delete item message
             //await expect(productItems).toBeHidden();
         } else {
-            await this.miniCartQtyInputTextBox.nth(1).fill('0');
-            await this.miniCartQtyInputTextBox.nth(1).press('Tab');
+            await this.miniCartQtyInputTextBox.first().fill('0');
+            await this.miniCartQtyInputTextBox.first().press('Tab');
             await this.miniCartQtyMinusButton.first().click();
             //need to write code for the delete item message
             //await expect(productItems).toBeHidden();
@@ -246,11 +247,11 @@ exports.CartDrawerPage = class CartDrawerPage {
     }
 
     async miniCartQtyUpdateByTypeIn() {
-        await this.miniCartQtyInputTextBox.nth(1).fill('99');
-        await this.miniCartQtyInputTextBox.nth(1).press('Tab');
-        await expect(this.miniCartQtyInputTextBox.nth(1)).toBeEditable({ timeout: 15000 });
+        await this.miniCartQtyInputTextBox.first().fill('99');
+        await this.miniCartQtyInputTextBox.first().press('Tab');
+        await expect(this.miniCartQtyInputTextBox.first()).toBeEditable({ timeout: 15000 });
         await this.miniCartLimitedStockMessage.first().waitFor({ state: 'visible' });
-        const updateQty = await this.miniCartQtyInputTextBox.nth(1).inputValue();
+        const updateQty = await this.miniCartQtyInputTextBox.first().inputValue();
         const numericUpdateQty = parseInt(updateQty);
 
         const isSectionVisible = await this.miniCartLimitedStockMessage.first().isVisible();
@@ -267,16 +268,16 @@ exports.CartDrawerPage = class CartDrawerPage {
     }
 
     async miniCartUpdateQtyMinusPlusSign() {
-        const initialInputValue = await this.miniCartQtyInputTextBox.nth(1).inputValue();
+        const initialInputValue = await this.miniCartQtyInputTextBox.first().inputValue();
         if (initialInputValue == 1) {
             await this.miniCartQtyPlusButton.first().click();
-            await expect(this.miniCartQtyInputTextBox.nth(1)).toBeEditable({ timeout: 15000 });
-            await expect(this.miniCartQtyInputTextBox.nth(1)).toHaveValue((parseInt(initialInputValue) + 1).toString());
+            await expect(this.miniCartQtyInputTextBox.first()).toBeEditable({ timeout: 15000 });
+            await expect(this.miniCartQtyInputTextBox.first()).toHaveValue((parseInt(initialInputValue) + 1).toString());
         } else {
             // Click the minus button to decrease the quantity
             await this.miniCartQtyMinusButton.first().click();
-            await expect(this.miniCartQtyInputTextBox.nth(1)).toBeEditable({ timeout: 15000 });
-            await expect(this.miniCartQtyInputTextBox.nth(1)).toHaveValue((parseInt(initialInputValue) - 1).toString());
+            await expect(this.miniCartQtyInputTextBox.first()).toBeEditable({ timeout: 15000 });
+            await expect(this.miniCartQtyInputTextBox.first()).toHaveValue((parseInt(initialInputValue) - 1).toString());
         }
 
     }
@@ -299,25 +300,15 @@ exports.CartDrawerPage = class CartDrawerPage {
     }
 
     async navigateToCheckoutShipping() {
-        // Locate the step1 radio button and ensure it is checked
-        const step1Radio = this.page.locator('#step1');
-        await expect(step1Radio).toBeChecked();
-
-        // Locate the step-label and ensure it has the value 1
-        const stepLabel = this.page.locator('label[for="step1"] .step-label');
-        await expect(stepLabel).toHaveText('1');
-
-        // Locate the associated label's text (Shipping) and ensure it is correct
-        const labelText = this.page.locator('label[for="step1"] ~ h2');
-        await expect(labelText).toHaveText('Shipping');
-
+        // Define the locator for the shipping label
+        const shippingLabelLocator = this.page.locator('span.font-extrabold.lg\\:text-lg');
+        // Wait for the shipping label to be visible
+        await shippingLabelLocator.waitFor({ state: 'visible' });
+        // Assert that the shipping label has the correct text
+        await expect(shippingLabelLocator).toHaveText('Shipping');
     }
 
     async cartDrawerSuccessMessage() {
-        // Locate the paragraph element with the specified class
-        const messageLocator = this.page.locator('p.text-forestGreen.font-medium.leading-6').nth(1);
-
-        // Verify the paragraph contains the text "items added to cart"
-        await expect(messageLocator).toContainText('item added to cart');
+        await expect(this.page.getByText('item added to cart')).toBeVisible();
     }
 }

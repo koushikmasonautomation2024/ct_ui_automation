@@ -50,13 +50,15 @@ test.describe("Mason Cart Drawer", () => {
       test.skip('Skipping test due to failed login');
     }
     const homePage = new HomePageNew(page);
-    await homePage.mouseHoverMegaMenu(homepage_data.categoryNameL1);
-    await homePage.clickOnMegaMenuL2Category(homepage_data.l2CategoryName);
-    await page.waitForLoadState('networkidle');
     const cartDrawerPage = new CartDrawerPage(page);
-    await cartDrawerPage.clickAddtoCartPLP();
     const pdpPage = new PDPPage(page);
-    await pdpPage.addtoCart();
+    // await homePage.mouseHoverMegaMenu(homepage_data.categoryNameL1);
+    // await homePage.clickOnMegaMenuL2Category(homepage_data.l2CategoryName);
+    // await page.waitForLoadState('networkidle');
+    //await cartDrawerPage.clickAddtoCartPLP();
+    await homePage.selectSubCategoryFromMegaMenu();
+    await cartDrawerPage.clickAddtoCartPLP();
+    //await pdpPage.addtoCart();
     await pdpPage.miniCartDrawer();
     //await cartDrawerPage.validateMiniCartProductDetails();
 
@@ -67,15 +69,17 @@ test.describe("Mason Cart Drawer", () => {
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
     }
-    // const homePage = new HomePageNew(page);
+    const homePage = new HomePageNew(page);
+    const cartDrawerPage = new CartDrawerPage(page);
+    const pdpPage = new PDPPage(page);
     // await homePage.mouseHoverMegaMenu(homepage_data.categoryNameL1);
     // await homePage.clickOnMegaMenuL2Category(homepage_data.l2CategoryName);
     // await page.waitForLoadState('networkidle');
-    // const cartDrawerPage = new CartDrawerPage(page);
     // await cartDrawerPage.navigatePLPToPDP();
-    const pdpPage = new PDPPage(page);
-    await page.goto(pdp_data.pdp_url);
-    await pdpPage.addtoCart();
+    await homePage.selectSubCategoryFromMegaMenu();
+    await cartDrawerPage.clickAddtoCartPLP();
+    // await page.goto(pdp_data.pdp_url);
+    // await pdpPage.addtoCart();
     await pdpPage.miniCartDrawer();
   })
 
@@ -91,15 +95,24 @@ test.describe("Mason Cart Drawer", () => {
     await pdpPage.miniCartDrawer();
     await pdpPage.closeMiniCartDrawer();
   })
-  //Cart Drawer - Removing items from the cart - Test Cases ID-SB-Cart024
+  //Cart Drawer - Removing items from the cart - Test Cases ID-SB-Cart024 Functionality out of scope
   test("Cart Drawer - Removing items from the cart - Verify if a user clicks the minus button when the qty is 1, application removes the item from the shopping cart.", async ({ page }, testInfo) => {
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto(pdp_data.pdp_url);
-    await pdpPage.addtoCart();
+    const homePage = new HomePageNew(page);
     const cartDrawerPage = new CartDrawerPage(page);
+    // await page.goto(pdp_data.pdp_url);
+    // await pdpPage.addtoCart();
+    const cartItemCount = await pdpPage.getCartItemCount();
+    if (cartItemCount === '0') {
+      await homePage.selectSubCategoryFromMegaMenu();
+      await cartDrawerPage.clickAddtoCartPLP();
+    } else {
+      await homePage.clickMiniCartIcon();
+      await pdpPage.miniCartDrawer();
+    }
     await cartDrawerPage.removeMiniCartItemsMinusSign();
     await pdpPage.closeMiniCartDrawer();
   })
@@ -110,9 +123,18 @@ test.describe("Mason Cart Drawer", () => {
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto(pdp_data.pdp_url);
-    await pdpPage.addtoCart();
+    const homePage = new HomePageNew(page);
     const cartDrawerPage = new CartDrawerPage(page);
+    const cartItemCount = await pdpPage.getCartItemCount();
+    if (cartItemCount === '0') {
+      await homePage.selectSubCategoryFromMegaMenu();
+      await cartDrawerPage.clickAddtoCartPLP();
+    } else {
+      await homePage.clickMiniCartIcon();
+      await pdpPage.miniCartDrawer();
+    }
+    // await page.goto(pdp_data.pdp_url);
+    // await pdpPage.addtoCart();
     await cartDrawerPage.removeMiniCartItemsQtyTextBox();
     await pdpPage.closeMiniCartDrawer();
   })
@@ -123,9 +145,18 @@ test.describe("Mason Cart Drawer", () => {
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto(pdp_data.pdp_url);
-    await pdpPage.addtoCart();
+    const homePage = new HomePageNew(page);
     const cartDrawerPage = new CartDrawerPage(page);
+    const cartItemCount = await pdpPage.getCartItemCount();
+    if (cartItemCount === '0') {
+      await homePage.selectSubCategoryFromMegaMenu();
+      await cartDrawerPage.clickAddtoCartPLP();
+    } else {
+      await homePage.clickMiniCartIcon();
+      await pdpPage.miniCartDrawer();
+    }
+    // await page.goto(pdp_data.pdp_url);
+    // await pdpPage.addtoCart();
     await cartDrawerPage.removeMiniCartItemsRemoveButton();
     await pdpPage.closeMiniCartDrawer();
   })
@@ -138,7 +169,7 @@ test.describe("Mason Cart Drawer", () => {
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url_limitedStock);
-    //await cartDrawerPage.updateQtyForMinStock();
+    await pdpPage.selectSize('S')
     await pdpPage.addtoCart();
     await cartDrawerPage.miniCartUpdateInStockQty();
     await pdpPage.closeMiniCartDrawer();
@@ -150,9 +181,18 @@ test.describe("Mason Cart Drawer", () => {
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto(pdp_data.pdp_url_limitedStock);
-    await pdpPage.addtoCart();
+    const homePage = new HomePageNew(page);
     const cartDrawerPage = new CartDrawerPage(page);
+    const cartItemCount = await pdpPage.getCartItemCount();
+    if (cartItemCount === '0') {
+      await homePage.selectSubCategoryFromMegaMenu();
+      await cartDrawerPage.clickAddtoCartPLP();
+    } else {
+      await homePage.clickMiniCartIcon();
+      await pdpPage.miniCartDrawer();
+    }
+    // await page.goto(pdp_data.pdp_url_limitedStock);
+    // await pdpPage.addtoCart();
     await cartDrawerPage.miniCartUpdateQtyMinusPlusSign();
     await pdpPage.closeMiniCartDrawer();
   })
@@ -163,9 +203,18 @@ test.describe("Mason Cart Drawer", () => {
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto(pdp_data.pdp_url_limitedStock);
-    await pdpPage.addtoCart();
+    const homePage = new HomePageNew(page);
     const cartDrawerPage = new CartDrawerPage(page);
+    const cartItemCount = await pdpPage.getCartItemCount();
+    if (cartItemCount === '0') {
+      await homePage.selectSubCategoryFromMegaMenu();
+      await cartDrawerPage.clickAddtoCartPLP();
+    } else {
+      await homePage.clickMiniCartIcon();
+      await pdpPage.miniCartDrawer();
+    }
+    // await page.goto(pdp_data.pdp_url_limitedStock);
+    // await pdpPage.addtoCart();
     await cartDrawerPage.miniCartQtyUpdateByTypeIn();
     await pdpPage.closeMiniCartDrawer();
   })
@@ -176,9 +225,18 @@ test.describe("Mason Cart Drawer", () => {
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto(pdp_data.pdp_url_limitedStock);
-    await pdpPage.addtoCart();
+    const homePage = new HomePageNew(page);
     const cartDrawerPage = new CartDrawerPage(page);
+    const cartItemCount = await pdpPage.getCartItemCount();
+    if (cartItemCount === '0') {
+      await homePage.selectSubCategoryFromMegaMenu();
+      await cartDrawerPage.clickAddtoCartPLP();
+    } else {
+      await homePage.clickMiniCartIcon();
+      await pdpPage.miniCartDrawer();
+    }
+    // await page.goto(pdp_data.pdp_url_limitedStock);
+    // await pdpPage.addtoCart();
     const miniCartItemsCount = await cartDrawerPage.miniCartGetTotalItemsCount();
     console.log('Mini Cart Items Count' + miniCartItemsCount);
     await cartDrawerPage.miniCartClickViewCartButton();
@@ -186,7 +244,7 @@ test.describe("Mason Cart Drawer", () => {
     const cartItemsCount = await cartPage.cartGetTotalItemsCount();
     console.log('Shopping Cart Items Count' + cartItemsCount);
     expect(miniCartItemsCount).toBe(cartItemsCount);
-    
+
   })
 
   //Cart Drawer - Handling View Cart and Check Out CTAs - Test Cases ID-SB-Cart043
@@ -195,12 +253,21 @@ test.describe("Mason Cart Drawer", () => {
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto(pdp_data.pdp_url_limitedStock);
-    await pdpPage.addtoCart();
+    const homePage = new HomePageNew(page);
     const cartDrawerPage = new CartDrawerPage(page);
+    const cartItemCount = await pdpPage.getCartItemCount();
+    if (cartItemCount === '0') {
+      await homePage.selectSubCategoryFromMegaMenu();
+      await cartDrawerPage.clickAddtoCartPLP();
+    } else {
+      await homePage.clickMiniCartIcon();
+      await pdpPage.miniCartDrawer();
+    }
+    // await page.goto(pdp_data.pdp_url_limitedStock);
+    // await pdpPage.addtoCart();
     await cartDrawerPage.miniCartClickCheckoutButton();
     await cartDrawerPage.navigateToCheckoutShipping();
-    
+
   })
 
   //Cart Drawer - Displaying success banners for adding items to the cart - Test Cases ID-SB-Cart050/SB-Cart051
@@ -209,10 +276,10 @@ test.describe("Mason Cart Drawer", () => {
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto(pdp_data.pdp_url);
-    await pdpPage.addtoCart();
-    await pdpPage.miniCartDrawer();
+    const homePage = new HomePageNew(page);
     const cartDrawerPage = new CartDrawerPage(page);
+    await homePage.selectSubCategoryFromMegaMenu();
+    await cartDrawerPage.clickAddtoCartPLP();
     await cartDrawerPage.cartDrawerSuccessMessage();
     await pdpPage.closeMiniCartDrawer();
   })

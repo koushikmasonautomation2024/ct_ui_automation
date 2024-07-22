@@ -140,7 +140,7 @@ test.describe("Mason MyAccount Longstanding Customer", ()=>{
     const myaccountPage = new MyAccountPage(page);
     await myaccountPage.redirectToMyAccount();
     await myaccountPage.clickMyAccountOrderLink();
-    await myaccountPage.validatedOrderNumberDisplaySection(myaccountpage_data.myaccount_orders_ordernumberprefix);
+    await myaccountPage.validatedOrderNumberDisplaySectionWithLimitedOrder(myaccountpage_data.myaccount_orders_ordernumberprefix);
           
   })
 

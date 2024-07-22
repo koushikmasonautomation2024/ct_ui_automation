@@ -295,6 +295,11 @@ exports.PDPPage = class PDPPage {
     //     }
     // }
 
+    async selectSize(selectSize){
+        await this.pdp_sizevariant_button.first().waitFor({ state: 'visible' });
+        await this.page.locator(`section.flex.flex-wrap.items-center.gap-2\\.5.pt-4 button:has-text("${selectSize}")`).click();
+    }
+
     async clickOnPDPSizeVariantButton() {
         // Wait for the first size variant button to be visible
         await this.page.locator('section.pb-6.pt-2').waitFor({ state: 'visible' });

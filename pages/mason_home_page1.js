@@ -1,5 +1,12 @@
 import test, { expect } from 'playwright/test';
 const homepage_locator = JSON.parse(JSON.stringify(require('../object_repositories/mason_home_page_repo.json')));
+const expectedCategories = [
+    'As Seen On TV',
+    'Health + Beauty',
+    'Clothing, Shoes + Bags',
+    'Bed + Bath',
+    'Kitchen + Dining'
+];
 
 exports.HomePageNew = class HomePageNew {
     constructor(page) {
@@ -385,114 +392,147 @@ exports.HomePageNew = class HomePageNew {
             expect(alt).not.toBe('');
         }
     }
-    
+
     async validateSeasonalSavings() {
-    // Scroll to the carousel section
-    await this.page.locator('section.seasonalSavings section.auc-Recommend').first().scrollIntoViewIfNeeded();
-    await expect(this.page.getByText('Seasonal Savings')).toBeVisible();
+        // Scroll to the carousel section
+        await this.page.locator('section.seasonalSavings section.auc-Recommend').first().scrollIntoViewIfNeeded();
+        await expect(this.page.getByText('Seasonal Savings')).toBeVisible();
 
-    // Select the product items within the carousel
-    const productItems = this.page.locator('section.auc-Recommend .swiper-slide');
-    const productCount = await productItems.count();
-    console.log(`Number of products: ${productCount}`);
+        // Select the product items within the carousel
+        const productItems = this.page.locator('section.auc-Recommend .swiper-slide');
+        const productCount = await productItems.count();
+        console.log(`Number of products: ${productCount}`);
 
-    // Validate the number of products (adjust the expected number as needed)
-    await expect(productItems).toHaveCount(productCount); // Replace productCount with the expected number if known
+        // Validate the number of products (adjust the expected number as needed)
+        await expect(productItems).toHaveCount(productCount); // Replace productCount with the expected number if known
 
-    for (let i = 0; i < productCount; i++) {
-        const product = productItems.nth(i);
+        for (let i = 0; i < productCount; i++) {
+            const product = productItems.nth(i);
 
-        // Scroll product into view
-        await product.scrollIntoViewIfNeeded();
+            // Scroll product into view
+            await product.scrollIntoViewIfNeeded();
 
-        // Validate product image
-        const productImage = product.locator('a > img');
-        await expect(productImage).toBeVisible();
-        const src = await productImage.getAttribute('src');
-        expect(src).not.toBeNull();
-        expect(src).not.toBe('');
+            // Validate product image
+            const productImage = product.locator('a > img');
+            await expect(productImage).toBeVisible();
+            const src = await productImage.getAttribute('src');
+            expect(src).not.toBeNull();
+            expect(src).not.toBe('');
 
-        // Validate product name
-        const productName = product.locator('a > p');
-        await expect(productName).toBeVisible();
-        const nameText = await productName.textContent();
-        expect(nameText).not.toBeNull();
-        expect(nameText).not.toBe('');
+            // Validate product name
+            const productName = product.locator('a > p');
+            await expect(productName).toBeVisible();
+            const nameText = await productName.textContent();
+            expect(nameText).not.toBeNull();
+            expect(nameText).not.toBe('');
 
-        // Validate price
-        const price = product.locator('div.mt-3.min-h-\\[50px\\] > section > strong');
-        await expect(price).toBeVisible();
-        const priceText = await price.textContent();
-        expect(priceText).not.toBeNull();
-        expect(priceText).not.toBe('');
+            // Validate price
+            const price = product.locator('div.mt-3.min-h-\\[50px\\] > section > strong');
+            await expect(price).toBeVisible();
+            const priceText = await price.textContent();
+            expect(priceText).not.toBeNull();
+            expect(priceText).not.toBe('');
+        }
+
+        // Validate the carousel button
+        const carouselButton = this.page.locator('section.auc-Recommend .swiper-button-next'); // Assuming there is a next button
+        await expect(carouselButton).toBeVisible();
+        await carouselButton.click();
+
     }
 
-    // Validate the carousel button
-    const carouselButton = this.page.locator('section.auc-Recommend .swiper-button-next'); // Assuming there is a next button
-    await expect(carouselButton).toBeVisible();
-    await carouselButton.click();
-
-}
-    
 
     async signUpModalDisplayValidation(enterEmail) {
-    await this.page.getByRole('button', { name: 'Sign Up' }).click();
-    await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByPlaceholder('Enter your email address')).toBeVisible();
-    await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Close Modal')).toBeVisible();
-    await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Submit Modal Form')).toBeVisible();
-    await this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByPlaceholder('Enter your email address').fill(enterEmail);
-    await this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Submit Modal Form').click();
-    await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByText(/^.*$/).first()).toBeHidden();
-}
+        await this.page.getByRole('button', { name: 'Sign Up' }).click();
+        await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByPlaceholder('Enter your email address')).toBeVisible();
+        await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Close Modal')).toBeVisible();
+        await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Submit Modal Form')).toBeVisible();
+        await this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByPlaceholder('Enter your email address').fill(enterEmail);
+        await this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Submit Modal Form').click();
+        await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByText(/^.*$/).first()).toBeHidden();
+    }
 
     async selectSubCategoryFromMegaMenu() {
-    try {
-        // Click the homepage category
-        await this.homepage_category.click();
+        try {
+            const randomCategory = expectedCategories[Math.floor(Math.random() * expectedCategories.length)];
+            // Click the homepage category
+            await this.homepage_category.click();
 
-        // Get the first visible item in the first <ul>
-        const firstLi = await this.getRandomVisibleItem('ul[role="menu"] > li');
-        if (!firstLi) {
-            console.log('No items found in the first <ul>');
-            return;
+            // Get the first visible item in the first <ul>
+            //const firstLi = await this.getRandomVisibleItem(`ul[role="menu"] > li:has-text("${randomCategory}")`);
+            const firstLi = await this.getRandomVisibleItem('ul[role="menu"] > li');
+            if (!firstLi) {
+                console.log('No items found in the first <ul>');
+                return;
+            }
+
+            // Click the first visible item in the first <ul>
+            await firstLi.hover();
+            // await firstLi.waitFor({ state: 'visible', timeout: 5000 });
+            // Get the second visible item in the second <ul>
+            const secondLi = await this.getRandomVisibleItem(firstLi, 'div.customtablescrollbar > ul > li > a');
+            if (!secondLi) {
+                console.log('No items found in the second <ul>');
+                return;
+            }
+            await secondLi.hover();
+            // Ensure the secondLi is clickable with a timeout
+            await secondLi.waitFor({ state: 'visible', timeout: 5000 });
+            // Click the second visible item in the second <ul>
+            await secondLi.click();
+            // Wait for the expected URL and the network to be idle
+            const expectedURL = new RegExp(/.*\/(categories)\/[^\/]+/);
+            await this.page.waitForURL(expectedURL);
+            //await expect(this.page).toHaveURL(expectedURL);
+            console.log('Successfully navigated to the subcategory page.');
+        } catch (error) {
+            console.error('An error occurred while selecting a subcategory:', error);
         }
-
-        // Click the first visible item in the first <ul>
-        await firstLi.hover();
-
-        // Get the second visible item in the second <ul>
-        const secondLi = await this.getRandomVisibleItem(firstLi, 'div.customtablescrollbar > ul > li > a');
-        if (!secondLi) {
-            console.log('No items found in the second <ul>');
-            return;
-        }
-        await secondLi.hover();
-        // Ensure the secondLi is clickable with a timeout
-        await secondLi.waitFor({ state: 'visible', timeout: 5000 });
-        // Click the second visible item in the second <ul>
-        await secondLi.click();
-        // Wait for the expected URL and the network to be idle
-        const expectedURL = new RegExp(/.*\/(categories)\/[^\/]+/);
-        await this.page.waitForURL(expectedURL);
-        //await expect(this.page).toHaveURL(expectedURL);
-        console.log('Successfully navigated to the subcategory page.');
-    } catch (error) {
-        console.error('An error occurred while selecting a subcategory:', error);
     }
-}
 
     async getRandomVisibleItem(baseLocator, nestedSelector = null) {
-    const locator = nestedSelector ? baseLocator.locator(nestedSelector) : this.page.locator(baseLocator);
-    await locator.first().waitFor({ state: 'visible' });
+        const locator = nestedSelector ? baseLocator.locator(nestedSelector) : this.page.locator(baseLocator);
+        await locator.first().waitFor({ state: 'visible' });
 
-    const itemCount = await locator.count();
-    if (itemCount > 0) {
-        const randomIndex = Math.floor(Math.random() * itemCount);
-        return locator.nth(randomIndex);
+        const itemCount = await locator.count();
+        if (itemCount > 0) {
+            const randomIndex = Math.floor(Math.random() * itemCount);
+            return locator.nth(randomIndex);
+        }
+
+        return null;
     }
 
-    return null;
-}
+    // async getRandomVisibleItem(baseLocator, nestedSelector = null) {
+    //     try {
+    //         // Create the locator for the items
+    //         const locator = nestedSelector ? baseLocator.locator(nestedSelector) : this.page.locator(baseLocator);
+
+    //         // Wait for at least one item to be visible
+    //         await locator.first().waitFor({ state: 'visible', timeout: 10000 });
+
+    //         // Get the count of items
+    //         const itemCount = await locator.count();
+    //         console.log(`Found ${itemCount} items matching the locator.`); // Debugging output
+
+    //         if (itemCount > 0) {
+    //             // Select a random item
+    //             const randomIndex = Math.floor(Math.random() * itemCount);
+    //             const item = locator.nth(randomIndex);
+
+    //             // Ensure the item is visible before returning it
+    //             await item.waitFor({ state: 'visible', timeout: 5000 });
+    //             return item;
+    //         } else {
+    //             console.log('No visible items found.');
+    //             return null;
+    //         }
+    //     } catch (error) {
+    //         console.error('Error in getRandomVisibleItem:', error);
+    //         return null;
+    //     }
+    // }
+
 }
 
 
