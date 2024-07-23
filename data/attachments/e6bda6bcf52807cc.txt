@@ -1,0 +1,24 @@
+Clicked button with index: 0
+No buttons found
+Product Name: Hanes® Men's Ultimate Core Stretch Brief 6-Pack
+Product image is visible
+Detail: Black/Red/Green
+Detail: XL
+Detail: 
+Detail: $40.00
+Detail: $5.99/month*
+Product Name: Hanes® Men's Ultimate Core Stretch Brief 6-Pack
+Product image is visible
+Detail: Black/Red/Green
+Detail: XXL
+Detail: 
+Detail: $42.00
+Detail: $5.99/month*
+Product Name: Sauder 3-Door Viabella Storage Cabinet
+Product image is visible
+Detail: Cherry
+Detail: No Size
+Detail: 
+Detail: $459.99
+Detail: $33.99/month*
+Promo code already applied
