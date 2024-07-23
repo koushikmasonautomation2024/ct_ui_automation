@@ -54,6 +54,45 @@ const items_in_cart_texts = [
   'Item in Your Order'
 ];
 
+const addresses = [
+  {
+    streetAddress: '100 Irish Ivy Ct',
+    city: 'Boyd',
+    state: 'TX',
+    zipCode: '76023-4067'
+  },
+  {
+    streetAddress: '11 Falmouth Pl',
+    city: 'Albertson',
+    state: 'NY',
+    zipCode: '11507-2003'
+  },
+  {
+    streetAddress: '138C Gg25 Rd',
+    city: 'Fall River',
+    state: 'KS',
+    zipCode: '67047-4721'
+  },
+  {
+    streetAddress: '7 Yo Yo Rd',
+    city: 'Cana',
+    state: 'VA',
+    zipCode: '24317-3987'
+  },
+  {
+    streetAddress: '2 JJ Rd',
+    city: 'Charlotte',
+    state: 'AR',
+    zipCode: '72522-9645'
+  },
+  {
+    streetAddress: '103 Nnptc Cir',
+    city: 'Goose Creek',
+    state: 'SC',
+    zipCode: '29445-6324'
+  }
+];
+
 exports.GuestCheckOutPage = class GuestCheckOutPage {
   constructor(page) {
     this.page = page;
@@ -299,18 +338,24 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
 
 
   async addShippingAddress() {
+    const randomAddress = addresses[Math.floor(Math.random() * addresses.length)];
     const firstName = faker.person.firstName();
     await this.makepayment_newaddress_fname.fill(firstName);
     const lastName = faker.person.lastName();
     await (this.makepayment_newaddress_lname).fill(lastName);
+
     const address = faker.location.streetAddress();
-    await (this.makepayment_newaddress_address1).fill(address);
+    await (this.makepayment_newaddress_address1).fill(randomAddress.streetAddress);
+
     const city = faker.location.city();
-    await (this.makepayment_addnewaddress_city).fill(city);
+    await (this.makepayment_addnewaddress_city).fill(randomAddress.city);
+
     const state = faker.location.state({ abbreviated: true });
-    await (this.makepayment_newAddress_state).selectOption(state);
-    const zipCode = faker.location.zipCode().substring(0, 5); // Get only the first 5 digits
-    await (this.makepayment_addnewaddress_zipcode).fill(zipCode);
+    await (this.makepayment_newAddress_state).selectOption(randomAddress.state);
+
+    const zipCode = faker.location.zipCode().substring(0, 5); 
+    await (this.makepayment_addnewaddress_zipcode).fill(randomAddress.zipCode);
+
     const phoneNumber = faker.phone.number();
     const phoneNumberPattern = new RegExp(/\(\d{3}\) \d{3}-\d{4}/);
     //await this.page.type('#phoneNumber', phoneNumber);

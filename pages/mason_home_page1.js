@@ -470,7 +470,7 @@ exports.HomePageNew = class HomePageNew {
             await firstLi.hover();
             // await firstLi.waitFor({ state: 'visible', timeout: 5000 });
             // Get the second visible item in the second <ul>
-            const secondLi = await this.getRandomVisibleItem(firstLi, 'div.customtablescrollbar > ul > li > a');
+            const secondLi = await this.getRandomVisibleItem(firstLi, 'div.customtablescrollbar > ul > li > div');
             if (!secondLi) {
                 console.log('No items found in the second <ul>');
                 return;
