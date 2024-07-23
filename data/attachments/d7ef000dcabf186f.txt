@@ -1,0 +1,25 @@
+Clicked button with index: 0
+Clicked button with index: 3
+Add to Cart button is enabled.
+Product Name: Hanes® Men's Ultimate Core Stretch Brief 6-Pack
+Product image is visible
+Detail: Black/Red/Green
+Detail: XL
+Detail: 
+Detail: $40.00
+Detail: $5.99/month*
+Product Name: Hanes® Men's Ultimate Core Stretch Brief 6-Pack
+Product image is visible
+Detail: Black/Red/Green
+Detail: M
+Detail: 
+Detail: $40.00
+Detail: $5.99/month*
+Product Name: MUK LUKS Everett Moccasin Slipper (Men's)
+Product image is visible
+Detail: Dark Grey
+Detail: 9
+Detail: M   Medium
+Detail: $43.99
+Detail: $5.99/month*
+Clicked on Credit/Debit Card button.

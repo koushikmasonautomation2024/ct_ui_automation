@@ -1,0 +1,31 @@
+Clicked button with index: 0
+Clicked button with index: 0
+Add to Cart button is enabled.
+Product Name: Crosley Furniture Helena Etagere Bookcase
+Product image is visible
+Detail: Gold
+Detail: No Size
+Detail: 
+Detail: $544.99
+Detail: $33.99/month*
+Product Name: Hanes® Men's Ultimate Core Stretch Brief 6-Pack
+Product image is visible
+Detail: Black/Red/Green
+Detail: M
+Detail: 
+Detail: $40.00
+Detail: $5.99/month*
+Product Name: Hanes® Men's Ultimate Core Stretch Brief 6-Pack
+Product image is visible
+Detail: Black/Red/Green
+Detail: S
+Detail: 
+Detail: $40.00
+Detail: $5.99/month*
+Product Name: Sauder 3-Door Viabella Storage Cabinet
+Product image is visible
+Detail: Cherry
+Detail: No Size
+Detail: 
+Detail: $459.99
+Detail: $33.99/month*
