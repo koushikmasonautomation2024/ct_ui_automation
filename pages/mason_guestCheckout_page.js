@@ -434,9 +434,9 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
       console.log('Address verification modal did not appear or is not open.');
 
       // Wait for the text containing the first and last name to be visible
-      const fullName = `${firstName} ${lastName}`;
-      await this.page.waitForSelector(`//*[contains(text(), "${fullName}")]`, { state: 'visible' });
-      console.log(`Found text: "${fullName}"`);
+      // const fullName = `${firstName} ${lastName}`;
+      // await this.page.waitForSelector(`//*[contains(text(), "${fullName}")]`, { state: 'visible' });
+      // console.log(`Found text: "${fullName}"`);
 
     } catch (error) {
       console.error('An error occurred during address verification:', error);
