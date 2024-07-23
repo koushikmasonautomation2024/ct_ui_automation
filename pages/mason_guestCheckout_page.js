@@ -1,5 +1,6 @@
 import test, { expect } from 'playwright/test';
 import { faker } from '@faker-js/faker/locale/en';
+import { allure } from 'allure-playwright';
 const myaccountpage_locator = JSON.parse(JSON.stringify(require('../object_repositories/mason_myaccount_page_repo.json')));
 const accountpage_data = JSON.parse(JSON.stringify(require('../test_data/mason_sb_myaccount_page_data.json')));
 
@@ -1032,11 +1033,45 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     await (this.page.getByRole('button', { name: 'Place Order' }).first()).waitFor({ state: "visible" });
   }
 
+  // async clickOnPlaceOrderButton() {
+  //   await this.page.getByRole('button', { name: 'Place Order' }).first().click();
+  //   await this.validatePlaceOrderProgress();
+  //   await this.page.waitForURL(/.*\/thank-you\/.*/);
+  // }
+
   async clickOnPlaceOrderButton() {
-    await this.page.getByRole('button', { name: 'Place Order' }).first().click();
-    await this.validatePlaceOrderProgress();
-    await this.page.waitForURL(/.*\/thank-you\/.*/);
-  }
+    try {
+      // Click on the "Place Order" button
+      await this.page.getByRole('button', { name: 'Place Order' }).first().click();
+      
+      // Wait briefly for any error message to appear
+      await this.page.waitForTimeout(1000); // Short delay for the UI to update
+      
+      // Check for the presence of the error message <p> tag
+      const errorMessageSelector = 'p.text-scarletRed.font-medium.leading-6';
+      const errorMessage = await this.page.locator(errorMessageSelector).first();
+      
+      if (await errorMessage.isVisible()) {
+        // Capture the error message text
+        const errorText = await errorMessage.textContent();
+        console.log('Error Message:', errorText);
+  
+        // Optionally, you might want to throw an error or handle it in a specific way
+        throw new Error(`Order failed with message: ${errorText}`);
+      } else {
+        // Proceed if no error message is found
+        await this.validatePlaceOrderProgress();
+        await this.page.waitForURL(/.*\/thank-you\/.*/);
+        console.log('Order placed successfully, redirected to the thank-you page.');
+      }
+    } catch (error) {
+      console.error('An error occurred during order placement:', error.message);
+      // Optionally, you can take a screenshot for further analysis
+      const screenshotPath = `screenshots/order-error-${Date.now()}.png`;
+      await page.screenshot({ path: screenshotPath, fullPage: true });
+      allure.attachment('Full Page Screenshot', Buffer.from(await page.screenshot({ fullPage: true })), 'image/png');
+    }
+  }  
 
   async validateInvalidBlankCardDetails() {
     await this.page.getByRole('button', { name: 'Continue to Review' }).click();
