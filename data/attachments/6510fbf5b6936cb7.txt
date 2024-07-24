@@ -1,0 +1,1 @@
+An error occurred during order placement: Order failed with message: Error: The line item '26cc1072-2361-41f2-aa97-60e454909eab' is missing an external tax amount and rate.
