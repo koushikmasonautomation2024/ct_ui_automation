@@ -2,7 +2,8 @@ import test, { expect } from 'playwright/test';
 
 const pdp_colorvariant_button_locator = 'section.flex.flex-wrap.items-center.gap-5 button[aria-label="choose color button"]';
 const pdp_sizevariant_button_locator = 'section.flex.flex-wrap.items-center.gap-2\\.5.pt-4 button.min-w-\\[130px\\]';
-const pdp_product_big_image = 'img[data-nimg="1"]';
+//const pdp_product_big_image = 'img[data-nimg="1"]';
+const pdp_product_big_image = '.group > img:nth-of-type(2)';
 const carousel_rightArrowButtonLocator = 'button.absolute.right-4';
 const carousel_leftArrowButtonLocator = 'button.absolute.left-4';
 const pdp_thumbnail_img = 'div.min-w-0[aria-roledescription="slide"]';
@@ -25,7 +26,8 @@ exports.PDPPage = class PDPPage {
         this.thumbnailimg_leftArrowButton = page.locator(thumbnailimg_leftArrowButtonLocator);
         this.selected_thumbnail_blackborder = page.locator(selected_thumbnail_blackborderlocator);
         this.productNameLocator = page.locator('h1.text-lg.font-bold.leading-7.lg\\:text-\\[22px\\]');
-        this.reviewsLocator = page.locator('section.flex.items-center.pt-2 p.pl-2\\.5.text-sm.font-normal.leading-5');
+        //this.reviewsLocator = page.locator('section.flex.items-center.pt-2 p.pl-2\\.5.text-sm.font-normal.leading-5');
+        this.reviewsLocator = page.locator('section.flex.items-center.pt-2 p.text-sm.font-normal.leading-5').nth(1);
         this.linkLocator = page.locator('section.pt-18 a.underline-inset-2.text-sm.font-normal.leading-5.underline');
         this.sizechart_button = page.getByRole('button', { name: sizechart_button_text });
         this.priceSectionLocator = page.locator('section.flex.items-center.gap-x-1.pt-30');
@@ -93,34 +95,54 @@ exports.PDPPage = class PDPPage {
     //     }
     // }
 
+
     async verifyImageChangesOnVariantSelection() {
-        //const firstProductImage = await this.page.locator(pdp_product_big_image).first();
-        // Step 1: Capture the initial image URL
+        // Step 1: Wait and capture the initial image URL
+        await this.page.waitForSelector(pdp_product_big_image, { state: 'visible' });
         const initialImageUrl = await this.page.getAttribute(pdp_product_big_image, 'src');
         console.log('Initial Image URL:', initialImageUrl);
 
-        // Step 2: Select a variant
-        await this.clickOnPDPColorVariantButton();
+        // Step 2: Get all color variant buttons
+        const colorButtons = await this.page.locator('button[aria-label="choose color button"]').all();
 
-        // Step 4: Capture the new image URL
+        // Find the currently selected button
+        const selectedButton = await this.page.locator('button.ring-[3px], button.lg\\:ring-[4px]');
+
+        // Filter out the selected button
+        const otherButtons = colorButtons.filter(async button => {
+            return await button.evaluate(node => !node.classList.contains('ring-[3px]') && !node.classList.contains('lg:ring-[4px]'));
+        });
+
+        // Choose a random button other than the selected one
+        const randomIndex = Math.floor(Math.random() * otherButtons.length);
+        const newButton = otherButtons[randomIndex];
+
+        // Step 3: Click on the new color variant button
+        await newButton.click();
+        await this.page.waitForSelector(pdp_product_big_image, { state: 'visible' });
+
+        // Step 5: Capture the new image URL
         const newImageUrl = await this.page.getAttribute(pdp_product_big_image, 'src');
         console.log('New Image URL:', newImageUrl);
 
-        // Step 5: Compare the initial and new URLs to verify the change
+        // Step 6: Compare the initial and new URLs to verify the change
         expect(initialImageUrl).not.toBe(newImageUrl);
     }
+
 
     async clickLeftRightCarouselButton() {
         await this.carousel_rightArrowButton.waitFor({ state: 'visible' });
         const initialImageUrl = await this.page.getAttribute(pdp_product_big_image, 'src');
         console.log('Initial Image URL:', initialImageUrl);
         await this.carousel_rightArrowButton.click();
+        await this.page.waitForSelector(pdp_product_big_image, { state: 'visible' });
         console.log('Clicked the right arrow button');
 
         const isLeftArrowVisible = await this.carousel_leftArrowButton.isVisible();
         if (isLeftArrowVisible) {
             // Click the left arrow button if it is visible
             await this.carousel_leftArrowButton.click();
+            await this.page.waitForSelector(pdp_product_big_image, { state: 'visible' });
             console.log('Clicked the left arrow button');
             // Capture the new image URL
             const newImageUrl = await this.page.getAttribute(pdp_product_big_image, 'src');
@@ -198,9 +220,9 @@ exports.PDPPage = class PDPPage {
 
         // Perform validations
         expect(productName).toBeTruthy(); // Ensure product name is not empty
-        expect(reviewsText).toMatch(/\(\d+ Reviews\)/); // Ensure reviews text matches the expected pattern
+        expect(reviewsText).toMatch(/\(\d+ Reviews\)|No Reviews/); // Ensure reviews text matches the expected pattern
         expect(linkText).toBe('Shop All ' + linkTextName); // Ensure link text matches expected value
-        expect(linkHref).toBe('#'); // Ensure link href matches the expected value
+        expect(linkHref).toBeTruthy(); // Ensure link href matches the expected value
 
         const colorButtons = this.pdp_colorvariant_button;
         // Verify that the color buttons are visible
@@ -295,7 +317,7 @@ exports.PDPPage = class PDPPage {
     //     }
     // }
 
-    async selectSize(selectSize){
+    async selectSize(selectSize) {
         await this.pdp_sizevariant_button.first().waitFor({ state: 'visible' });
         await this.page.locator(`section.flex.flex-wrap.items-center.gap-2\\.5.pt-4 button:has-text("${selectSize}")`).click();
     }

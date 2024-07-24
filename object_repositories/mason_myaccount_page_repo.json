@@ -92,7 +92,7 @@
     "makepayment_savedAddress":"^Saved Address$",
     "makepayment_billingAddress":"Billing Address",
     "makepayment_newAddress_state":"#state",
-    "makepayment_newAddress_address2":"Address Line 2 (optional)",
+    "makepayment_newAddress_address2":"Address Line",
     "makepayment_newaddress_button":"#new-address",
     "makepayment_savedaddress_button":"#saved-address",
     "makepayment_combobox":"combobox",

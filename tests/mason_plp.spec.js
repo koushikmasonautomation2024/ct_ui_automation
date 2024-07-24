@@ -117,7 +117,7 @@ test.describe("Mason PLP Scenarios", () => {
     // const l2_index = 3;
     // const l2category = "Clothing, Shoes + Bags";
     // const l3Text = "Tops";
-     const numOptionsPerCategory = 1;
+    const numOptionsPerCategory = 1;
     // await homePage.categoryL1ToBeVisibleOnDepartmentHover();
     // //const [l2category,l2_index] = await homePage.getRandomL1CategoryText();
     // await homePage.checkIfcategoryL1isBold(l2category);
@@ -140,32 +140,20 @@ test.describe("Mason PLP Scenarios", () => {
   //SB-PLP049,55
   test("Validate Multiple Filters applied in L3 PLP", async ({ page }) => {
     //test.slow();
-    //const homePage = new HomePage(page);
     const plpPage = new MasonPLPPage(page);
     const homePageNew = new HomePageNew(page);
-    // const l2_index = 3;
-    // const l2category = "Clothing, Shoes + Bags";
-    // const l3Text = "Athletic";
-    // await homePage.categoryL1ToBeVisibleOnDepartmentHover();
-    // //const [l2category,l2_index] = await homePage.getRandomL1CategoryText();
-    // await homePage.checkIfcategoryL1isBold(l2category);
-    // // const [l2Text, l3Text]=await homePage.getRandomL2L3CategoryText(l2_index);
-    // // console.log(l2Text);
-    // // console.log(l3Text);
-    // await homePage.navigateToCategoryL1(l3Text);
-    // //await page.waitForLoadState('networkidle');
-    // await page.waitForTimeout(3000);
     await homePageNew.selectSubCategoryFromMegaMenu();
     await plpPage.validateItemCount();
     await plpPage.validatePresenceOfFilter();
     await plpPage.validateCheckboxesForAllFilters();
     const numOptionsPerCategory = 2;
-    //const selectedFilter =await plpPage.randomlySelectFilterCheckbox();
-    const selectedFilter = await plpPage.randomlySelectMultipleFiltersOptions(numOptionsPerCategory);
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(3000);
-    await plpPage.validateAppliedFilters(selectedFilter);
-    console.log(selectedFilter);
+    const selectedFilters = [];
+    for (let i = 0; i < numOptionsPerCategory; i++) {
+      const selectedFilter = await plpPage.randomlySelectMultipleFiltersOptions(1);
+      selectedFilters.push(selectedFilter);
+      await plpPage.validateAppliedFilters(selectedFilter);
+      console.log('Selected filter:', selectedFilter);
+    }
   })
 
   //SB-PLP050
@@ -214,22 +202,15 @@ test.describe("Mason PLP Scenarios", () => {
   //SB-PLP062
   test("Validate SortBy in PLP", async ({ page }) => {
     //test.slow();
-    //const homePage = new HomePage(page);
     const plpPage = new MasonPLPPage(page);
     const homePageNew = new HomePageNew(page);
-    // const l2category = "Clothing, Shoes + Bags";
-    // const l3Text = "Tops";
-    // await homePage.categoryL1ToBeVisibleOnDepartmentHover();
-    // //const [l2category,l2_index] = await homePage.getRandomL1CategoryText();
-    // await homePage.checkIfcategoryL1isBold(l2category);
-    // await homePage.navigateToCategoryL1(l3Text);
-    // await page.waitForTimeout(3000);
     await homePageNew.selectSubCategoryFromMegaMenu();
     await plpPage.validateItemCount();
     await plpPage.validatePresenceOfFilter();
     await plpPage.validateSortBy();
-    //await plpPage.validateFeatureIsDefaultSort();
-    //await plpPage.validateSortOptions();
+    await plpPage.clickSortBy();
+    await plpPage.validateFeatureIsDefaultSort();
+    await plpPage.validateSortOptions();
     await plpPage.selectSortOption();
   })
 

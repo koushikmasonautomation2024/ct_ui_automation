@@ -58,7 +58,7 @@ test.describe("Mason PDP", () => {
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto(pdp_data.pdp_url);
+    await page.goto(pdp_data.pdp_url_carousel);
     await pdpPage.clickLeftRightCarouselButton();
   })
 
@@ -141,7 +141,7 @@ test.describe("Mason PDP", () => {
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto(pdp_data.pdp_url);
+    await page.goto(pdp_data.pdp_url_waystowearit);
     await pdpPage.validateWaysToWearIt();
   })
 
@@ -194,6 +194,7 @@ test.describe("Mason PDP", () => {
     }
     const pdpPage = new PDPPage(page);
     await page.goto(pdp_data.pdp_url);
+    await pdpPage.clickOnPDPSizeVariantButton();
     await pdpPage.addtoCart();
     await pdpPage.miniCartDrawer();
     await pdpPage.closeMiniCartDrawer();

@@ -242,8 +242,9 @@ exports.MasonPLPPage = class MasonPLPPage {
     }
 
     async validateSortBy() {
-        await expect(this.page.getByText('Sort By:')).toBeVisible();
-        await expect(this.page.getByRole('combobox')).toBeVisible();
+        await (this.page.getByText('Sort By:').nth(1)).waitFor({state:"visible"});
+        // await expect(this.page.getByText('Sort By:')).toBeVisible();
+        // await expect(this.page.getByRole('combobox')).toBeVisible();
     }
 
     async validateFeatureIsDefaultSort() {

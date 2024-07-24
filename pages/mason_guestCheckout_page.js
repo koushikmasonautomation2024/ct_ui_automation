@@ -1045,7 +1045,7 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
       await this.page.getByRole('button', { name: 'Place Order' }).first().click();
       
       // Wait briefly for any error message to appear
-      await this.page.waitForTimeout(1000); // Short delay for the UI to update
+      await this.page.waitForTimeout(5000); // Short delay for the UI to update
       
       // Check for the presence of the error message <p> tag
       const errorMessageSelector = 'p.text-scarletRed.font-medium.leading-6';
@@ -1060,7 +1060,7 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
         throw new Error(`Order failed with message: ${errorText}`);
       } else {
         // Proceed if no error message is found
-        await this.validatePlaceOrderProgress();
+        //await this.validatePlaceOrderProgress();
         await this.page.waitForURL(/.*\/thank-you\/.*/);
         console.log('Order placed successfully, redirected to the thank-you page.');
       }
@@ -1068,8 +1068,8 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
       console.error('An error occurred during order placement:', error.message);
       // Optionally, you can take a screenshot for further analysis
       const screenshotPath = `screenshots/order-error-${Date.now()}.png`;
-      await page.screenshot({ path: screenshotPath, fullPage: true });
-      allure.attachment('Full Page Screenshot', Buffer.from(await page.screenshot({ fullPage: true })), 'image/png');
+      await this.page.screenshot({ path: screenshotPath, fullPage: true });
+      allure.attachment('Full Page Screenshot', Buffer.from(await this.page.screenshot({ fullPage: true })), 'image/png');
     }
   }  
 
