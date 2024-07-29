@@ -75,7 +75,8 @@ exports.SignInPage = class SignInPage{
     }
 
     async closeSignIsSuccessMessage(){
-        await this.page.getByRole('button', { name: '✕' }).click();
+        //await this.page.getByRole('button', { name: '✕' }).click();
+        await this.page.getByRole('button').nth(4).click();
     }
 
     async loginFailMessage(){

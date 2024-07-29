@@ -109,7 +109,7 @@ test.describe("Mason PDP", () => {
       test.skip('Skipping test due to failed login');
     }
     const pdpPage = new PDPPage(page);
-    await page.goto(pdp_data.pdp_url);
+    await page.goto(pdp_data.pdp_ulr_saleprice);
     await pdpPage.validatePricingSection();
   })
 

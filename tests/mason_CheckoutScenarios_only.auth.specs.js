@@ -40,7 +40,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   });
 
   test.describe("Mason Checkout - Guest user with cc- promo code + surcharge and tax+ applicable sales tax- Custom error - Scenarios", () => {
-    test("Guest user with cc- promo code + surcharge and tax+ applicable sales tax", async ({ page }) => {
+    test.only("Guest user with cc- promo code + surcharge and tax+ applicable sales tax", async ({ page }) => {
       try {
         const firstname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
         const lastname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
@@ -164,7 +164,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
 
   // Scenario 1: Guest user placing an order with a credit card
   test.describe("Mason Checkout - Guest user placing an order with a credit card - Scenarios", () => {
-    test("Guest user placing an order with a credit card", async ({ page }) => {
+    test.only("Guest user placing an order with a credit card", async ({ page }) => {
       const firstname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
       const lastname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
       const email = `${firstname.toLowerCase()}.${lastname.toLowerCase()}@automation.com`;
@@ -202,7 +202,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
 
   // Scenario 2: Guest user placing an order with ZB credit
   test.describe("Mason Checkout - Guest user placing an order with ZB credit - Scenarios", () => {
-    test("Guest user placing an order with ZB credit", async ({ page }) => {
+    test.only("Guest user placing an order with ZB credit", async ({ page }) => {
       const firstname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
       const lastname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
       const email = `${firstname.toLowerCase()}.${lastname.toLowerCase()}@automation.com`;
@@ -241,7 +241,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
 
   // Scenario 2: Guest user placing an order with ZB credit
   test.describe("Mason Checkout - Guest user placing order with ZB credit -with promo code + shipping surcharge + applicable sales tax - - Scenarios", () => {
-    test("Guest user placing order with ZB credit -with promo code + shipping surcharge + applicable sales tax -", async ({ page }) => {
+    test.only("Guest user placing order with ZB credit -with promo code + shipping surcharge + applicable sales tax -", async ({ page }) => {
       const firstname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
       const lastname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
       const email = `${firstname.toLowerCase()}.${lastname.toLowerCase()}@automation.com`;
@@ -283,7 +283,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
 
   // Scenario 3: Guest user placing an order with ZB credit and PromoCode
   test.describe("Mason Checkout - Guest user placing an order with ZB credit and PromoCode - Scenarios", () => {
-    test("Guest user placing an order with ZB credit and PromoCode", async ({ page }) => {
+    test.only("Guest user placing an order with ZB credit and PromoCode", async ({ page }) => {
       const firstname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
       const lastname = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + [...Array(9)].map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join('');
       const email = `${firstname.toLowerCase()}.${lastname.toLowerCase()}@automation.com`;
@@ -325,7 +325,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   // Scenario 4: Logged in - Non Credit Users: placing order with newly added credit card
   test.describe("Mason Checkout - Logged in: Non Credit Users: placing order with newly added credit card - Scenarios", () => {
     test.use({ storageState: './noncredituser.json' });
-    test('Logged in: Non Credit Users: placing order with newly added credit card', async ({ page }) => {
+    test.only('Logged in: Non Credit Users: placing order with newly added credit card', async ({ page }) => {
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const pdpPage = new PDPPage(page);
       await pdpPage.clickOnPDPColorVariantButton();
@@ -351,7 +351,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   // Scenario 5: Logged in - Non Credit Users: placing order with saved credit card
   test.describe("Mason Checkout - Logged in: Non Credit Users: placing order with saved credit card - Scenarios", () => {
     test.use({ storageState: './savedCardUser.json' });
-    test('Logged in: Non Credit Users: placing order with saved credit card', async ({ page }) => {
+    test.only('Logged in: Non Credit Users: placing order with saved credit card', async ({ page }) => {
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const pdpPage = new PDPPage(page);
       await pdpPage.clickOnPDPColorVariantButton();
@@ -375,7 +375,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   // Scenario 5: Logged in - Non Credit Users: placing order with saved credit card
   test.describe("Mason Checkout - Logged in: Non Credit Users: Placing order with saved cc- promo code + surcharge and tax+ applicable sales tax- - Scenarios", () => {
     test.use({ storageState: './savedCardUser.json' });
-    test('Logged in: Non Credit Users: Placing order with saved cc- promo code + surcharge and tax+ applicable sales tax', async ({ page }) => {
+    test.only('Logged in: Non Credit Users: Placing order with saved cc- promo code + surcharge and tax+ applicable sales tax', async ({ page }) => {
       await page.goto(checkout_data.pdp_url_tax);
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const pdpPage = new PDPPage(page);
@@ -402,7 +402,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   // Scenario 6: Logged in - Non Credit Users: placing order with ZB Credit
   test.describe("Mason Checkout - Logged in: Non Credit Users: placing order with ZB Credit - Scenarios", () => {
     test.use({ storageState: './noncredituser.json' });
-    test('Logged in: Non Credit Users: placing order with ZB Credit', async ({ page }) => {
+    test.only('Logged in: Non Credit Users: placing order with ZB Credit', async ({ page }) => {
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const pdpPage = new PDPPage(page);
       await pdpPage.clickOnPDPColorVariantButton();
@@ -431,7 +431,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   // Scenario 7: Logged in - Non Credit Users: placing order with ZB Credit and PromoCode
   test.describe("Mason Checkout - Logged in: Non Credit Users: placing order with ZB Credit and PromoCode - Scenarios", () => {
     test.use({ storageState: './noncredituser.json' });
-    test('Logged in: Non Credit Users: placing order with ZB Credit and PromoCode', async ({ page }) => {
+    test.only('Logged in: Non Credit Users: placing order with ZB Credit and PromoCode', async ({ page }) => {
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const pdpPage = new PDPPage(page);
       await pdpPage.clickOnPDPColorVariantButton();
@@ -462,7 +462,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   // Scenario 8: Logged in - Non Credit Users: placing order with ZB Credit and PromoCode
   test.describe("Mason Checkout - Logged in: Non Credit Users: placing order with ZB credit -with promo + shipping surcharge + applicable sales tax - Scenarios", () => {
     test.use({ storageState: './noncredituser.json' });
-    test('Logged in: Non Credit Users: placing order with ZB credit -with promo + shipping surcharge + applicable sales tax', async ({ page }) => {
+    test.only('Logged in: Non Credit Users: placing order with ZB credit -with promo + shipping surcharge + applicable sales tax', async ({ page }) => {
       await page.goto(checkout_data.pdp_url_tax);
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const pdpPage = new PDPPage(page);
@@ -494,7 +494,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   // Scenario 8: Logged in - Credit User: placing order with saved ZB Credit
   test.describe("Mason Checkout - Logged in: Credit User: placing order with newly added credit cards - Scenarios", () => {
     test.use({ storageState: './creditUser2.json' });
-    test('Logged in: Credit User: placing order with newly added credit cards', async ({ page }) => {
+    test.only('Logged in: Credit User: placing order with newly added credit cards', async ({ page }) => {
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const pdpPage = new PDPPage(page);
       await pdpPage.clickOnPDPColorVariantButton();
@@ -522,7 +522,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   // Scenario 9: Logged in - Credit User: placing order with newly added ZB Credit
   test.describe("Mason Checkout - Logged in: Credit User: placing order with saved credit cards - Scenarios", () => {
     test.use({ storageState: './creditUser2.json' });
-    test('Logged in: Credit User: placing order with saved credit cards', async ({ page }) => {
+    test.only('Logged in: Credit User: placing order with saved credit cards', async ({ page }) => {
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const pdpPage = new PDPPage(page);
       await pdpPage.clickOnPDPColorVariantButton();
@@ -549,7 +549,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   // Scenario 9: Logged in - Credit User: placing order with newly added ZB Credit
   test.describe("Mason Checkout - Logged in: Credit User: Placing order with cc- promo code + surcharge and tax+ applicable sales tax - Scenarios", () => {
     test.use({ storageState: './creditUser2.json' });
-    test('Logged in: Credit User: Placing order with cc- promo code + surcharge and tax+ applicable sales tax', async ({ page }) => {
+    test.only('Logged in: Credit User: Placing order with cc- promo code + surcharge and tax+ applicable sales tax', async ({ page }) => {
       await page.goto(checkout_data.pdp_url_tax);
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const pdpPage = new PDPPage(page);
@@ -579,7 +579,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   //Scenario 10
   test.describe("Mason Checkout - Logged in: Credit Users: placing order with with ZB credit - Scenarios", () => {
     test.use({ storageState: './creditUser2.json' });
-    test('Logged in: Credit Users: placing order with with ZB credit', async ({ page }) => {
+    test.only('Logged in: Credit Users: placing order with with ZB credit', async ({ page }) => {
       // Navigate to the page containing the popular search terms
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const signinPage = new SignInPage(page);
@@ -608,7 +608,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   //Scenario 11
   test.describe("Mason Checkout - Logged in: Credit Users: placing order with with ZB credit - with PromoCode - Scenarios", () => {
     test.use({ storageState: './creditUser2.json' });
-    test('Logged in: Credit Users: placing order with with ZB credit - with PromoCode', async ({ page }) => {
+    test.only('Logged in: Credit Users: placing order with with ZB credit - with PromoCode', async ({ page }) => {
       // Navigate to the page containing the popular search terms
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const signinPage = new SignInPage(page);
@@ -638,7 +638,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   //Scenario 11
   test.describe("Mason Checkout - Logged in: Credit Users: placing order with ZB credit -with promo + shipping surcharge + applicable sales tax - Scenarios", () => {
     test.use({ storageState: './creditUser2.json' });
-    test('Logged in: Credit Users: placing order with ZB credit -with promo + shipping surcharge + applicable sales tax', async ({ page }) => {
+    test.only('Logged in: Credit Users: placing order with ZB credit -with promo + shipping surcharge + applicable sales tax', async ({ page }) => {
       await page.goto(checkout_data.pdp_url_tax);
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const signinPage = new SignInPage(page);

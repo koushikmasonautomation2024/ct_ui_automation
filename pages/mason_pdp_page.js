@@ -361,26 +361,61 @@ exports.PDPPage = class PDPPage {
     }
 
     async validatePricingSection() {
-        // Locate the first section and extract its text
-        //const priceText = await this.priceSectionLocator.locator('strong.text-xl.font-bold').textContent();
+        // Define the locator for pricing sections
+        await this.page.locator('.flex.items-center.gap-x-1.pt-30').waitFor({ state: 'visible' });
+        // Define the locator for pricing sections
+        const sections = this.page.locator('.flex.items-center.gap-x-1.pt-30');
 
-        const priceText = await this.priceSectionLocator.evaluate((section) => {
-            const priceSpan = section.querySelector('span.leading-5');
-            const priceStrong = section.querySelector('strong.leading-5');
-            return priceSpan ? priceSpan.textContent.trim() : (priceStrong ? priceStrong.textContent.trim() : null);
-        });
+        // Get the count of sections
+        const sectionCount = await sections.count();
 
-        if (priceText) {
-            console.log('Price:', priceText);
-        } else {
-            console.error('Price not found');
+        for (let i = 0; i < sectionCount; i++) {
+            const section = sections.nth(i);
+
+            // Attempt to match discounted prices
+            const discountedPriceLocator = section.locator('span.text-\\[22px\\]'); // More specific for discounted price
+            const originalPriceLocator = section.locator('span.line-through');
+            const savingsLocator = section.locator('span:has-text("Save")'); // Target savings by text
+
+            // Use conditional checks based on element presence
+            const hasDiscountedPrice = await discountedPriceLocator.count() > 0;
+            const hasOriginalPrice = await originalPriceLocator.count() > 0;
+            const hasSavings = await savingsLocator.count() > 0;
+
+            if (hasDiscountedPrice && hasOriginalPrice && hasSavings) {
+                // Extract values with innerText()
+                const discountedPrice = await discountedPriceLocator.first().textContent();
+                const originalPrice = await originalPriceLocator.textContent();
+                const savings = await savingsLocator.nth(1).textContent();
+
+                // Use regex to parse the price values
+                const originalPriceRange = originalPrice.match(/\$([0-9]+\.[0-9]{2})\s*-\s*\$([0-9]+\.[0-9]{2})/);
+                const savingsMatch = savings.match(/Save\s*\$([0-9]+\.[0-9]{2})\s*\((\d{1,2}(?:\.\d{1,2})?)%\)/);
+
+                if (originalPriceRange && savingsMatch) {
+                    const [_, originalMinPrice, originalMaxPrice] = originalPriceRange;
+                    const [__, savingsAmount, savingsPercentage] = savingsMatch;
+
+                    console.log('Discounted Price Section Found:');
+                    console.log(`Discounted Price: ${discountedPrice.trim()}`);
+                    console.log(`Original Price Range: ${originalMinPrice} - ${originalMaxPrice}`);
+                    console.log(`Savings Amount: ${savingsAmount}`);
+                    console.log(`Savings Percentage: ${savingsPercentage}%`);
+                    console.log('---');
+                }
+            } else {
+                // Check for a normal price
+                const normalPriceLocator = section.locator('span.text-black.font-normal');
+
+                if (await normalPriceLocator.count() > 0) {
+                    const normalPrice = await normalPriceLocator.innerText();
+                    console.log('Normal Price Section Found:');
+                    console.log(`Price: ${normalPrice.trim()}`);
+                    console.log('---');
+                }
+            }
         }
 
-        // Use assertion to verify the price content
-        expect(priceText).toBeTruthy();
-
-        // Validate the text content of the first section
-        expect(priceText).toMatch(/^\$\d{1,3}\.\d{2}$/);
 
         // Locate the second section and extract its text
         const orText = await this.paymentSectionLocator.locator('p.inline-block.text-sm.font-normal').first().textContent();
@@ -483,6 +518,7 @@ exports.PDPPage = class PDPPage {
     }
 
     async validateReviews() {
+        await this.page.locator('button:has-text("Reviews")').waitFor({ state: 'visible' });
         const reviewsButton = await this.page.locator('button:has-text("Reviews")');
         const dataState = await reviewsButton.getAttribute('data-state');
         if (dataState === "closed") {

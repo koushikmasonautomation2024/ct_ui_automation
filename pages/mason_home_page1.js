@@ -1,7 +1,7 @@
 import test, { expect } from 'playwright/test';
 const homepage_locator = JSON.parse(JSON.stringify(require('../object_repositories/mason_home_page_repo.json')));
 const expectedCategories = [
-    'As Seen On TV',
+    'Furniture',
     'Health + Beauty',
     'Clothing, Shoes + Bags',
     'Bed + Bath',
@@ -452,56 +452,106 @@ exports.HomePageNew = class HomePageNew {
         await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByText(/^.*$/).first()).toBeHidden();
     }
 
-    async selectSubCategoryFromMegaMenu() {
+    // async selectSubCategoryFromMegaMenu() {
+    //     try {
+    //         const randomCategory = expectedCategories[Math.floor(Math.random() * expectedCategories.length)];
+    //         // Click the homepage category
+    //         await this.homepage_category.click();
+
+    //         // Get the first visible item in the first <ul>
+    //         //const firstLi = await this.getRandomVisibleItem(`ul[role="menu"] > li:has-text("${randomCategory}")`);
+    //         const firstLi = await this.getRandomVisibleItem('ul[role="menu"] > li');
+    //         if (!firstLi) {
+    //             console.log('No items found in the first <ul>');
+    //             return;
+    //         }
+
+    //         // Click the first visible item in the first <ul>
+    //         await firstLi.hover();
+    //         // await firstLi.waitFor({ state: 'visible', timeout: 5000 });
+    //         // Get the second visible item in the second <ul>
+    //         const secondLi = await this.getRandomVisibleItem(firstLi, 'div.customtablescrollbar > ul > li > div');
+    //         if (!secondLi) {
+    //             console.log('No items found in the second <ul>');
+    //             return;
+    //         }
+    //         await secondLi.hover();
+    //         // Ensure the secondLi is clickable with a timeout
+    //         await secondLi.waitFor({ state: 'visible', timeout: 5000 });
+    //         // Click the second visible item in the second <ul>
+    //         await secondLi.click();
+    //         // Wait for the expected URL and the network to be idle
+    //         const expectedURL = new RegExp(/.*\/(categories)\/[^\/]+/);
+    //         await this.page.waitForURL(expectedURL);
+    //         //await expect(this.page).toHaveURL(expectedURL);
+    //         console.log('Successfully navigated to the subcategory page.');
+    //     } catch (error) {
+    //         console.error('An error occurred while selecting a subcategory:', error);
+    //     }
+    // }
+
+
+    // async getRandomVisibleItem(baseLocator, nestedSelector = null) {
+    //     const locator = nestedSelector ? baseLocator.locator(nestedSelector) : this.page.locator(baseLocator);
+    //     await locator.first().waitFor({ state: 'visible' });
+
+    //     const itemCount = await locator.count();
+    //     if (itemCount > 0) {
+    //         const randomIndex = Math.floor(Math.random() * itemCount);
+    //         return locator.nth(randomIndex);
+    //     }
+
+    //     return null;
+    // }
+
+    async selectSubCategoryFromMegaMenu(expectedCategories) {
         try {
-            const randomCategory = expectedCategories[Math.floor(Math.random() * expectedCategories.length)];
-            // Click the homepage category
-            await this.homepage_category.click();
-
-            // Get the first visible item in the first <ul>
-            //const firstLi = await this.getRandomVisibleItem(`ul[role="menu"] > li:has-text("${randomCategory}")`);
-            const firstLi = await this.getRandomVisibleItem('ul[role="menu"] > li');
-            if (!firstLi) {
-                console.log('No items found in the first <ul>');
-                return;
-            }
-
-            // Click the first visible item in the first <ul>
-            await firstLi.hover();
-            // await firstLi.waitFor({ state: 'visible', timeout: 5000 });
-            // Get the second visible item in the second <ul>
-            const secondLi = await this.getRandomVisibleItem(firstLi, 'div.customtablescrollbar > ul > li > div');
-            if (!secondLi) {
-                console.log('No items found in the second <ul>');
-                return;
-            }
-            await secondLi.hover();
-            // Ensure the secondLi is clickable with a timeout
-            await secondLi.waitFor({ state: 'visible', timeout: 5000 });
-            // Click the second visible item in the second <ul>
-            await secondLi.click();
-            // Wait for the expected URL and the network to be idle
-            const expectedURL = new RegExp(/.*\/(categories)\/[^\/]+/);
-            await this.page.waitForURL(expectedURL);
-            //await expect(this.page).toHaveURL(expectedURL);
-            console.log('Successfully navigated to the subcategory page.');
+          const randomCategory = expectedCategories[Math.floor(Math.random() * expectedCategories.length)];
+          // Click the homepage category
+          await this.homepage_category.click();
+      
+          // Get the first visible item in the first <ul> that matches the randomCategory
+          const firstLi = await this.getRandomVisibleItem(`ul[role="menu"] > li:has-text("${randomCategory}")`);
+          if (!firstLi) {
+            console.log(`No items found in the first <ul> that match "${randomCategory}"`);
+            return;
+          }
+      
+          // Click the first visible item in the first <ul>
+          await firstLi.hover();
+          await firstLi.waitFor({ state: 'visible', timeout: 5000 });
+          // Get the second visible item in the second <ul>
+          const secondLi = await this.getRandomVisibleItem(firstLi, 'div.customtablescrollbar > ul > li > div');
+          if (!secondLi) {
+            console.log('No items found in the second <ul>');
+            return;
+          }
+          await secondLi.hover();
+          // Ensure the secondLi is clickable with a timeout
+          await secondLi.waitFor({ state: 'visible', timeout: 5000 });
+          // Click the second visible item in the second <ul>
+          await secondLi.click();
+          // Wait for the expected URL and the network to be idle
+          const expectedURL = new RegExp(`.*\/(categories)\/[^\/]+`);
+          await this.page.waitForURL(expectedURL);
+          console.log('Successfully navigated to the subcategory page.');
         } catch (error) {
-            console.error('An error occurred while selecting a subcategory:', error);
+          console.error('An error occurred while selecting a subcategory:', error);
         }
-    }
-
-    async getRandomVisibleItem(baseLocator, nestedSelector = null) {
+      }
+      
+      async getRandomVisibleItem(baseLocator, nestedSelector = null) {
         const locator = nestedSelector ? baseLocator.locator(nestedSelector) : this.page.locator(baseLocator);
         await locator.first().waitFor({ state: 'visible' });
-
+      
         const itemCount = await locator.count();
         if (itemCount > 0) {
-            const randomIndex = Math.floor(Math.random() * itemCount);
-            return locator.nth(randomIndex);
+          const randomIndex = Math.floor(Math.random() * itemCount);
+          return locator.nth(randomIndex);
         }
-
+      
         return null;
-    }
+      }
 
     // async getRandomVisibleItem(baseLocator, nestedSelector = null) {
     //     try {

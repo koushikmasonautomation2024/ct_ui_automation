@@ -230,7 +230,7 @@ const orderConfCreateAccountText ='Create an account to save time checking out f
             const paymentMethodText = await paymentSection.locator('p').nth(0).textContent();
             expect(paymentMethodText.trim()).toBeTruthy();
 
-            await expect(paymentSection.locator('svg')).toBeVisible();
+            await expect(paymentSection.locator('img')).toBeVisible();
 
             const paymentCardNumberText = await paymentSection.locator('p').nth(1).textContent();
             expect(paymentCardNumberText.trim()).toBeTruthy();

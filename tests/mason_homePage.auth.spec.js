@@ -13,7 +13,12 @@ const signinpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_sig
 const myaccountpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_sb_myaccount_page_data.json')));
 const savedAddress = myaccountpage_data.myaccount_newaddress_firstname +" "+ myaccountpage_data.myaccount_newaddress_lastname +" "+ myaccountpage_data.myaccount_newaddress_addressline1;
 const editAddress = myaccountpage_data.myaccount_editaddress_firstname +" "+ myaccountpage_data.myaccount_editaddress_lastname +" "+ myaccountpage_data.myaccount_editaddress_addressline1;
-
+const expectedCategories = [
+  'Furniture',
+  'Health + Beauty',
+  'Clothing, Shoes + Bags',
+  'Kitchen + Dining'
+];
 test.describe("Mason HomePage Scenarios", ()=>{
 
    test.beforeEach(async({page,isMobile},testInfo)=>{
@@ -81,7 +86,7 @@ test("MegaNav - Validate User is redirected to L2 when clicked on the hyperlink"
   //test.slow();
   const homePage = new HomePage(page);
   await homePage.displayCategory();
-  await homePage.selectSubCategoryFromMegaMenu();
+  await homePage.selectSubCategoryFromMegaMenu(expectedCategories);
 
 })
 
@@ -90,7 +95,7 @@ test("MegaNav - Validate User is redirected to L3 when clicked on the hyperlink"
   //test.slow();
   const homePage = new HomePage(page);
   await homePage.displayCategory();
-  await homePage.selectSubCategoryFromMegaMenu();
+  await homePage.selectSubCategoryFromMegaMenu(expectedCategories);
 })
 
 //Ensure that clicking any area outside of the Mega Menu collapses it.

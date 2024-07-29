@@ -12,6 +12,12 @@ const signinpage_data = JSON.parse(JSON.stringify(require('../test_data/mason_si
 const myaccountpage_data = JSON.parse(JSON.stringify(require('../test_data/mason_sb_myaccount_page_data.json')));
 const savedAddress = myaccountpage_data.myaccount_newaddress_firstname + " " + myaccountpage_data.myaccount_newaddress_lastname + " " + myaccountpage_data.myaccount_newaddress_addressline1;
 const editAddress = myaccountpage_data.myaccount_editaddress_firstname + " " + myaccountpage_data.myaccount_editaddress_lastname + " " + myaccountpage_data.myaccount_editaddress_addressline1;
+const expectedCategories = [
+  'Furniture',
+  'Health + Beauty',
+  'Clothing, Shoes + Bags',
+  'Kitchen + Dining'
+];
 
 test.describe("Mason Guest User Home Page", () => {
 
@@ -205,7 +211,7 @@ test.describe("Mason Guest User Home Page", () => {
   })
 
   //Home Page (Guest) - Top Brands Image Tiles-SB-HMP020/SB-HMP021/SB-HMP012/SB-HMP022
-  test.only("HP-Top Brands Image Tiles - Verify the display and functionality of the top brands image tiles, including image, title, and hyperlinks", async ({ page }, testInfo) => {
+  test("HP-Top Brands Image Tiles - Verify the display and functionality of the top brands image tiles, including image, title, and hyperlinks", async ({ page }, testInfo) => {
     //test.slow();
     const homePage = new HomePageNew(page);
     await homePage.getTopBrandsImageTilesCount();
@@ -248,7 +254,7 @@ test.describe("Mason Guest User Home Page", () => {
     //test.slow();
     const homePage = new HomePageNew(page);
     await homePage.displayCategory();
-    await homePage.selectSubCategoryFromMegaMenu();
+    await homePage.selectSubCategoryFromMegaMenu(expectedCategories);
     const cartDrawerPage = new CartDrawerPage(page);
     await cartDrawerPage.clickAddtoCartPLP();
   })
