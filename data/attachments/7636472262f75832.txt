@@ -1,0 +1,60 @@
+Clicked button with index: 3
+No buttons found
+Product Name: Casual Home 4-Shelf Corner Folding Bookcase
+Product image is visible
+Detail: Honey/Oak
+Detail: No Size
+Detail: 
+Detail: $69.99
+Detail: $7.99/month*
+Product Name: Under Armour Men's Under Armour Rival Fleece Logo Jogger
+Product image is visible
+Detail: Castlerock Light Heather
+Detail: XXL-Regular
+Detail: 
+Detail: $54.99
+Detail: $7.99/month*
+Product Name: Casual Home 4-Shelf Corner Folding Bookcase
+Product image is visible
+Detail: Natural
+Detail: No Size
+Detail: 
+Detail: $69.99
+Detail: $7.99/month*
+Product Name: Under Armour Men's Under Armour Rival Fleece Logo Jogger
+Product image is visible
+Detail: Photon Blue
+Detail: M-Regular
+Detail: 
+Detail: $54.99
+Detail: $7.99/month*
+Product Name: Hanes® Men's Ultimate Core Stretch Brief 6-Pack
+Product image is visible
+Detail: Black/Red/Green
+Detail: XL
+Detail: 
+Detail: $40.00
+Detail: $5.99/month*
+Product Name: Crosley Furniture Helena Etagere Bookcase
+Product image is visible
+Detail: Gold
+Detail: No Size
+Detail: 
+Detail: $544.99
+Detail: $33.99/month*
+Product Name: Hanes® Men's Ultimate Core Stretch Brief 6-Pack
+Product image is visible
+Detail: Black/Red/Green
+Detail: M
+Detail: 
+Detail: $40.00
+Detail: $5.99/month*
+Product Name: Sauder 3-Door Viabella Storage Cabinet
+Product image is visible
+Detail: Cherry
+Detail: No Size
+Detail: 
+Detail: $459.99
+Detail: $33.99/month*
+Promo code already applied
+Error Message: Error: Some line items are out of stock at the time of placing the order: 1083781-1-1,1333626-1-4,1364274-1-1,1333626-1-2.
