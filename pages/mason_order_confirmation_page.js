@@ -56,6 +56,8 @@ const orderConfCreateAccountText ='Create an account to save time checking out f
             this.orderConfCreateAccountEmailID = this.orderConfCreateAccountEmail.locator('xpath=following-sibling::p');
             this.orderConfCreateAccountPassword = page.getByText('*Password');
             this.orderConfCreateAccountButton = page.getByRole('button', { name: 'Create Account' });
+            this.orderConfShippingHeaderText = page.getByRole('heading', { name: orderConfirmationShippingSectionText });
+            this.orderConfFullWidthBannerImg = page.locator('section.mb-20.mt-6.w-full.md\\:mb-14.md\\:mt-10.md\\:px-4 img');
 
         }
 
@@ -156,7 +158,8 @@ const orderConfCreateAccountText ='Create an account to save time checking out f
         }
 
         async validateOrderConfirmationShippingDetails() {
-            await expect(this.page.getByText(orderConfirmationShippingSectionText, { exact: true })).toBeVisible();
+            //await expect(this.page.getByText(orderConfirmationShippingSectionText, { exact: true })).toBeVisible();
+            await expect(this.orderConfShippingHeaderText).toBeVisible();
             await expect(this.page.getByText(orderConfirmationShippingSectionAddressText, { exact: true })).toBeVisible();
             await expect(this.page.getByText(orderConfirmationShippingSectionShippingMethodText, { exact: true })).toBeVisible();
             const shippingAddressSection = this.page.locator(orderConfirmationShippingAddress);
@@ -300,6 +303,7 @@ const orderConfCreateAccountText ='Create an account to save time checking out f
             await this.validateOrderConfPlacedOnDate();
             await this.validateOrderConfThankYouText();
             console.log(await this.orderConfOrderNumber.textContent());
+            await expect(this.orderConfFullWidthBannerImg).toBeVisible();
         }
         async validateOrderConfPlacedOnDate() {
             // Wait for the element to be visible

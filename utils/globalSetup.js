@@ -25,6 +25,7 @@ const savedCardUser = './savedCardUser.json';
 const creditUser2 = './creditUser2.json';
 const creditUser3 = './creditUser3.json';
 const creditUser4 = './creditUser4.json';
+const downPaymentUser = './dpUser.json';
 
 async function globalSetup(config) {
   const browser = await chromium.launch();
@@ -32,13 +33,13 @@ async function globalSetup(config) {
 
   // Authenticate as user1
   const page1 = await browser.newPage();
-  await authenticateUser(page1, process.env.CREDIT_USER_3, creditUser3);
+  await authenticateUser(page1, process.env.DOWN_PAYMENT_USER, downPaymentUser);
   await page1.close();
 
-  // Authenticate as user2
-  const page2 = await browser.newPage();
-  await authenticateUser(page2, process.env.CREDIT_USER_4, creditUser4);
-  await page2.close();
+  // // Authenticate as user2
+  // const page2 = await browser.newPage();
+  // await authenticateUser(page2, process.env.CREDIT_USER_4, creditUser4);
+  // await page2.close();
 
   await browser.close();
 }
@@ -66,32 +67,3 @@ async function authenticateUser(page, userEmail, storageFile) {
 }
 
 export default globalSetup;
-
-// export default async () => {
-//   const browser = await chromium.launch();
-//   const page = await browser.newPage();
-
-//   try {
-//     // Authenticate as new user
-//     await page.goto(process.env.WEB_URL);
-//     await page.waitForLoadState('networkidle');
-//     await page.getByRole('button', { name: 'My Account Sign In' }).click();
-//     await page.getByRole('button', { name: 'Sign In' }).click();
-//     await page.getByLabel('*Email Address').click();
-//     await page.getByLabel('*Email Address').fill(process.env.MY_PROFILE_USER);
-//     await page.getByLabel('*Password').click();
-//     await page.getByLabel('*Password').fill(process.env.PROFILE_PASSWORD);
-//     await page.getByRole('button', { name: 'Sign In' }).click({timeout:10000});
-//     //await expect(page.getByRole('heading', { name: 'My Account' })).toBeVisible();
-//     const signinPage = new SignInPageNew(page);
-//     await signinPage.waitForMyAccountDashboardLoad();
-//     await signinPage.validateSignInMessage(signinpage_data.signin_success_text);
-//     await page.waitForLoadState('networkidle');
-//     //await page.waitForURL(process.env.WEB_URL + '/dashboard');
-//     await page.context().storageState({ path: profileUserFile });
-//   } catch (error) {
-//     console.error("Admin login failed:", error);
-//   }
-
-//    await browser.close();
-// };

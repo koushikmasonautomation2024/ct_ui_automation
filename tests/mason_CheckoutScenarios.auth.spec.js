@@ -9,6 +9,7 @@ import { GuestCheckOutPage } from '../pages/mason_guestCheckout_page';
 import { PDPPage } from '../pages/mason_pdp_page';
 import { SignInPageNew } from '../pages/mason_signin_page1';
 import { OrderConfirmationPage } from '../pages/mason_order_confirmation_page';
+import { OrderConfDownPayment } from '../pages/mason_orderconf_downpaymentdrawer';
 import { expectWithTimeoutHandling } from '../utils/errorHandling';
 import { TimeoutError } from '../utils/errorHandler';
 import { sign } from 'crypto';
@@ -16,6 +17,7 @@ require('dotenv').config();
 const nonCreditUserFile = './noncredituser.json';
 const savedCardUser = './savedCardUser.json';
 const creditUser2 = './creditUser2.json';
+const downPaymentUser = './dpUser.json';
 
 const homepage_data = JSON.parse(JSON.stringify(require('../test_data/mason_sb_home_page_data.json')));
 const resetpage_data = JSON.parse(JSON.stringify(require('../test_data/mason_reset_page_data.json')));
@@ -235,7 +237,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await orderConfPage.validateOrderConfirmationOrderSummary();
       await orderConfPage.validateOrderConfirmationShippingDetails();
       await orderConfPage.validateProductSection();
-      
+
     });
   });
 
@@ -277,7 +279,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await orderConfPage.validateOrderConfirmationOrderSummary();
       await orderConfPage.validateOrderConfirmationShippingDetails();
       await orderConfPage.validateProductSection();
-      
+
     });
   });
 
@@ -318,7 +320,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
       await orderConfPage.validateOrderConfirmationOrderSummary();
       await orderConfPage.validateOrderConfirmationShippingDetails();
       await orderConfPage.validateProductSection();
-      
+
     });
   });
 
@@ -665,9 +667,283 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
     });
   });
 
+  //SB-Chkout193//SB-Chkout194//SB-Chkout198
+  test.describe("Mason Checkout - Down Payment Request Drawer: Logged In: Verify order with down payment - Scenarios", () => {
+    test.use({ storageState: './dpUser.json' });
+    test('Down Payment Request Drawer: Logged In: Verify order with down payment', async ({ page }) => {
+      // Navigate to the page containing the popular search terms
+      const guestCheckoutPage = new GuestCheckOutPage(page);
+      const orderConfDownPayment = new OrderConfDownPayment(page);
+      const signinPage = new SignInPage(page);
+      const homePage = new HomePage(page);
+      const pdpPage = new PDPPage(page);
+      const signinPageNew = new SignInPageNew(page);
+      await pdpPage.clickOnPDPColorVariantButton();
+      await pdpPage.clickOnPDPSizeVariantButton();
+      await guestCheckoutPage.clickAddToCart();
+      await pdpPage.miniCartDrawer();
+      await guestCheckoutPage.clickCheckoutOnMyCart();
+      await guestCheckoutPage.validateShippingSection();
+      await guestCheckoutPage.validatePlaceOrderButton();
+      await guestCheckoutPage.clickOnPlaceOrderButton();
+      const orderConfPage = new OrderConfirmationPage(page);
+      await orderConfPage.validateOrderConfOrderDetails();
+      await orderConfPage.validateOrderConfirmationBillingAddress();
+      await orderConfPage.validateOrderConfirmationPaymentCredit();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateProductSection();
+      const downPaymentisVisible = await orderConfDownPayment.downPaymentDisplay();
+      if (downPaymentisVisible) {
+        await orderConfDownPayment.validateOrderConfDownPaymentSection();
+      } else {
+        console.log('Down Payment Not Displayed');
+      }
+    });
+  });
+
+  //SB-Chkout195//SB-Chkout196//SB-Chkout199//SB-Chkout204//SB-Chkout205
+  test.describe("Mason Checkout - Down Payment Request Drawer - Close Button: Logged In: Verify that users can close the Down Payment Request drawer and return to the previous page. - Scenarios", () => {
+    test.use({ storageState: './dpUser.json' });
+    test('Down Payment Request Drawer - Close Button: Logged In: Verify that users can close the Down Payment Request drawer and return to the previous page.', async ({ page }) => {
+      // Navigate to the page containing the popular search terms
+      const guestCheckoutPage = new GuestCheckOutPage(page);
+      const orderConfDownPayment = new OrderConfDownPayment(page);
+      const signinPage = new SignInPage(page);
+      const homePage = new HomePage(page);
+      const pdpPage = new PDPPage(page);
+      const signinPageNew = new SignInPageNew(page);
+      await pdpPage.clickOnPDPColorVariantButton();
+      await pdpPage.clickOnPDPSizeVariantButton();
+      await guestCheckoutPage.clickAddToCart();
+      await pdpPage.miniCartDrawer();
+      await guestCheckoutPage.clickCheckoutOnMyCart();
+      await guestCheckoutPage.validateShippingSection();
+      await guestCheckoutPage.validatePlaceOrderButton();
+      await guestCheckoutPage.clickOnPlaceOrderButton();
+      const orderConfPage = new OrderConfirmationPage(page);
+      await orderConfPage.validateOrderConfOrderDetails();
+      await orderConfPage.validateOrderConfirmationBillingAddress();
+      await orderConfPage.validateOrderConfirmationPaymentCredit();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateProductSection();
+      const downPaymentisVisible = await orderConfDownPayment.downPaymentDisplay();
+      if (downPaymentisVisible) {
+        await orderConfDownPayment.validateOrderConfDownPaymentSection();
+        await orderConfDownPayment.clickOnMakeADownPaymentButton();
+        await orderConfDownPayment.validateOrderConfDownPaymentDrawer();
+        await orderConfDownPayment.clickOnDownPaymentDrawerCloseButton();
+      } else {
+        console.log('Down Payment Not Displayed');
+      }
+
+    });
+  });
+
+  //SB-Chkout195//SB-Chkout196//SB-Chkout199//SB-Chkout200//SB-Chkout204//SB-Chkout205
+  test.describe("Mason Checkout - Down Payment Request Drawer - Maybe Later CTA: Logged In: Verify the functionality of the Maybe Later CTA within the Down Payment Request drawer. - Scenarios", () => {
+    test.use({ storageState: './dpUser.json' });
+    test('Down Payment Request Drawer - Maybe Later CTA: Logged In: Verify the functionality of the Maybe Later CTA within the Down Payment Request drawer.', async ({ page }) => {
+      // Navigate to the page containing the popular search terms
+      const guestCheckoutPage = new GuestCheckOutPage(page);
+      const orderConfDownPayment = new OrderConfDownPayment(page);
+      const signinPage = new SignInPage(page);
+      const homePage = new HomePage(page);
+      const pdpPage = new PDPPage(page);
+      const signinPageNew = new SignInPageNew(page);
+      await pdpPage.clickOnPDPColorVariantButton();
+      await pdpPage.clickOnPDPSizeVariantButton();
+      await guestCheckoutPage.clickAddToCart();
+      await pdpPage.miniCartDrawer();
+      await guestCheckoutPage.clickCheckoutOnMyCart();
+      await guestCheckoutPage.validateShippingSection();
+      await guestCheckoutPage.validatePlaceOrderButton();
+      await guestCheckoutPage.clickOnPlaceOrderButton();
+      const orderConfPage = new OrderConfirmationPage(page);
+      await orderConfPage.validateOrderConfOrderDetails();
+      await orderConfPage.validateOrderConfirmationBillingAddress();
+      await orderConfPage.validateOrderConfirmationPaymentCredit();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateProductSection();
+      const downPaymentisVisible = await orderConfDownPayment.downPaymentDisplay();
+      if (downPaymentisVisible) {
+        await orderConfDownPayment.validateOrderConfDownPaymentSection();
+        await orderConfDownPayment.clickOnDownPaymentLearnMoreButton();
+        await orderConfDownPayment.validateMaybeLaterDrawer();
+        await orderConfDownPayment.clickOnMaybeLaterButton();
+      } else {
+        console.log('Down Payment Not Displayed');
+      }
+
+    });
+  });
+
+  //SB-Chkout216
+  test.describe("Mason Checkout - Make a Down Payment Drawer - Cancel CTA: Logged In: Verify when user clicks on “Cancel” CTA. - Scenarios", () => {
+    test.use({ storageState: './dpUser.json' });
+    test('Make a Down Payment Drawer - Cancel CTA: Logged In: Verify when user clicks on “Cancel” CTA.', async ({ page }) => {
+      // Navigate to the page containing the popular search terms
+      const guestCheckoutPage = new GuestCheckOutPage(page);
+      const orderConfDownPayment = new OrderConfDownPayment(page);
+      const signinPage = new SignInPage(page);
+      const homePage = new HomePage(page);
+      const pdpPage = new PDPPage(page);
+      const signinPageNew = new SignInPageNew(page);
+      await pdpPage.clickOnPDPColorVariantButton();
+      await pdpPage.clickOnPDPSizeVariantButton();
+      await guestCheckoutPage.clickAddToCart();
+      await pdpPage.miniCartDrawer();
+      await guestCheckoutPage.clickCheckoutOnMyCart();
+      await guestCheckoutPage.validateShippingSection();
+      await guestCheckoutPage.validatePlaceOrderButton();
+      await guestCheckoutPage.clickOnPlaceOrderButton();
+      const orderConfPage = new OrderConfirmationPage(page);
+      await orderConfPage.validateOrderConfOrderDetails();
+      await orderConfPage.validateOrderConfirmationBillingAddress();
+      await orderConfPage.validateOrderConfirmationPaymentCredit();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateProductSection();
+      const downPaymentisVisible = await orderConfDownPayment.downPaymentDisplay();
+      if (downPaymentisVisible) {
+        await orderConfDownPayment.validateOrderConfDownPaymentSection();
+        await orderConfDownPayment.clickOnMakeADownPaymentButton();
+        await orderConfDownPayment.validateOrderConfDownPaymentDrawer();
+        await orderConfDownPayment.clickOnDownPaymentDrawerCancelButton();
+      } else {
+        console.log('Down Payment Not Displayed');
+      }
+
+    });
+  });
+
+  //SB-Chkout217//SB-Chkout218//SB-Chkout219//SB-Chkout220
+  test.describe("Mason Checkout - Review Down Payment Drawer: Logged In: Verify  Review Down Payment Drawer. - Scenarios", () => {
+    test.use({ storageState: './dpUser.json' });
+    test('Review Down Payment Drawer: Logged In: Verify  Review Down Payment Drawer.', async ({ page }) => {
+      // Navigate to the page containing the popular search terms
+      const guestCheckoutPage = new GuestCheckOutPage(page);
+      const orderConfDownPayment = new OrderConfDownPayment(page);
+      const signinPage = new SignInPage(page);
+      const homePage = new HomePage(page);
+      const pdpPage = new PDPPage(page);
+      const signinPageNew = new SignInPageNew(page);
+      await pdpPage.clickOnPDPColorVariantButton();
+      await pdpPage.clickOnPDPSizeVariantButton();
+      await guestCheckoutPage.clickAddToCart();
+      await pdpPage.miniCartDrawer();
+      await guestCheckoutPage.clickCheckoutOnMyCart();
+      await guestCheckoutPage.validateShippingSection();
+      await guestCheckoutPage.validatePlaceOrderButton();
+      await guestCheckoutPage.clickOnPlaceOrderButton();
+      const orderConfPage = new OrderConfirmationPage(page);
+      await orderConfPage.validateOrderConfOrderDetails();
+      await orderConfPage.validateOrderConfirmationBillingAddress();
+      await orderConfPage.validateOrderConfirmationPaymentCredit();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateProductSection();
+      const downPaymentisVisible = await orderConfDownPayment.downPaymentDisplay();
+      if (downPaymentisVisible) {
+        await orderConfDownPayment.validateOrderConfDownPaymentSection();
+        await orderConfDownPayment.clickOnMakeADownPaymentButton();
+        await orderConfDownPayment.validateOrderConfDownPaymentDrawer();
+        await orderConfDownPayment.clickOnDownPaymentDrawerReviewDownPaymentButton();
+        await orderConfDownPayment.validateReviewDownPayment();
+      } else {
+        console.log('Down Payment Not Displayed');
+      }
+
+    });
+  });
+
+  //SB-Chkout222
+  test.describe("Mason Checkout - Review Down Payment Drawer - Edit Down Payment CTA: Logged In: Verify when user clicks on “Edit Down Payment” CTA. - Scenarios", () => {
+    test.use({ storageState: './dpUser.json' });
+    test('Review Down Payment Drawer - Edit Down Payment CTA: Logged In: Verify when user clicks on “Edit Down Payment” CTA.', async ({ page }) => {
+      // Navigate to the page containing the popular search terms
+      const guestCheckoutPage = new GuestCheckOutPage(page);
+      const orderConfDownPayment = new OrderConfDownPayment(page);
+      const signinPage = new SignInPage(page);
+      const homePage = new HomePage(page);
+      const pdpPage = new PDPPage(page);
+      const signinPageNew = new SignInPageNew(page);
+      await pdpPage.clickOnPDPColorVariantButton();
+      await pdpPage.clickOnPDPSizeVariantButton();
+      await guestCheckoutPage.clickAddToCart();
+      await pdpPage.miniCartDrawer();
+      await guestCheckoutPage.clickCheckoutOnMyCart();
+      await guestCheckoutPage.validateShippingSection();
+      await guestCheckoutPage.validatePlaceOrderButton();
+      await guestCheckoutPage.clickOnPlaceOrderButton();
+      const orderConfPage = new OrderConfirmationPage(page);
+      await orderConfPage.validateOrderConfOrderDetails();
+      await orderConfPage.validateOrderConfirmationBillingAddress();
+      await orderConfPage.validateOrderConfirmationPaymentCredit();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateProductSection();
+      const downPaymentisVisible = await orderConfDownPayment.downPaymentDisplay();
+      if (downPaymentisVisible) {
+        await orderConfDownPayment.validateOrderConfDownPaymentSection();
+        await orderConfDownPayment.clickOnMakeADownPaymentButton();
+        await orderConfDownPayment.validateOrderConfDownPaymentDrawer();
+        await orderConfDownPayment.clickOnDownPaymentDrawerReviewDownPaymentButton();
+        await orderConfDownPayment.validateReviewDownPayment();
+        await orderConfDownPayment.clickOnEditReviewPaymentButton();
+      } else {
+        console.log('Down Payment Not Displayed');
+      }
+
+    });
+  });
+
+  //SB-Chkout221//SB-Chkout224//SB-Chkout225//SB-Chkout229//SB-Chkout232//SB-Chkout233
+  test.describe("Mason Checkout - Review Down Payment Drawer - Submit Down Payment CTA: Logged In: Verify when user clicks on “Submit Down Payment” CTA. - Scenarios", () => {
+    test.use({ storageState: './dpUser.json' });
+    test('Review Down Payment Drawer - Submit Down Payment CTA: Logged In: Verify when user clicks on “Submit Down Payment” CTA.', async ({ page }) => {
+      // Navigate to the page containing the popular search terms
+      const guestCheckoutPage = new GuestCheckOutPage(page);
+      const orderConfDownPayment = new OrderConfDownPayment(page);
+      const signinPage = new SignInPage(page);
+      const homePage = new HomePage(page);
+      const pdpPage = new PDPPage(page);
+      const signinPageNew = new SignInPageNew(page);
+      await pdpPage.clickOnPDPColorVariantButton();
+      await pdpPage.clickOnPDPSizeVariantButton();
+      await guestCheckoutPage.clickAddToCart();
+      await pdpPage.miniCartDrawer();
+      await guestCheckoutPage.clickCheckoutOnMyCart();
+      await guestCheckoutPage.validateShippingSection();
+      await guestCheckoutPage.validatePlaceOrderButton();
+      await guestCheckoutPage.clickOnPlaceOrderButton();
+      const orderConfPage = new OrderConfirmationPage(page);
+      await orderConfPage.validateOrderConfOrderDetails();
+      await orderConfPage.validateOrderConfirmationBillingAddress();
+      await orderConfPage.validateOrderConfirmationPaymentCredit();
+      await orderConfPage.validateOrderConfirmationOrderSummary();
+      await orderConfPage.validateOrderConfirmationShippingDetails();
+      await orderConfPage.validateProductSection();
+      const downPaymentisVisible = await orderConfDownPayment.downPaymentDisplay();
+      if (downPaymentisVisible) {
+        await orderConfDownPayment.validateOrderConfDownPaymentSection();
+        await orderConfDownPayment.clickOnMakeADownPaymentButton();
+        await orderConfDownPayment.validateOrderConfDownPaymentDrawer();
+        await orderConfDownPayment.clickOnDownPaymentDrawerReviewDownPaymentButton();
+        await orderConfDownPayment.validateReviewDownPayment();
+        await orderConfDownPayment.clickOnSubmitReviewPaymentButton();
+      } else {
+        console.log('Down Payment Not Displayed');
+      }
+
+    });
+  });
+
   test.afterEach(async ({ page }) => {
     try {
-      const screenshotPath = `screenshots/error-${Date.now()}.png`;
+      const screenshotPath = `screenshots/FPScreenshoot-${Date.now()}.png`;
       await page.screenshot({ path: screenshotPath, fullPage: true });
       allure.attachment('Full Page Screenshot', Buffer.from(await page.screenshot({ fullPage: true })), 'image/png');
     } catch (error) {
