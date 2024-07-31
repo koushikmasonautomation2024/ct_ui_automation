@@ -1,0 +1,6 @@
+Discounted Price Section Found:
+Discounted Price: $79.97
+Original Price Range: 99.99 - 109.99
+Savings Amount: 20.02
+Savings Percentage: 20.02%
+---

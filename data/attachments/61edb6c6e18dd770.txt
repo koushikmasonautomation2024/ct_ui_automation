@@ -1,0 +1,15 @@
+Order Date Count :10
+Number of "Order #" elements: 10
+Order #ZB144410008
+Order #ZB122255222
+Order #ZB120638174
+Order #ZB112188854
+Order #ZX4590664631
+Order #ZB793641424
+Order #ZB784052837
+Order #ZB660955583
+Order #ZB703447019
+Order #ZX4590664363
+Order Date and Price:July 24, 2024 | $0.00
+Order Date and Price:July 24, 2024 | $51.82
+Order Date and Price:July 24, 2024 | $51.82

@@ -1,0 +1,38 @@
+Clicked button with index: 1
+Clicked button with index: 2
+Add to Cart button is enabled.
+Product Name: Under Armour Men's Under Armour Rival Fleece Logo Jogger
+Product image is visible
+Detail: Photon Blue
+Detail: L-Regular
+Detail: 
+Detail: $54.99
+Detail: $7.99/month*
+Product Name: Under Armour Men's Under Armour Rival Fleece Logo Jogger
+Product image is visible
+Detail: Midnight Navy
+Detail: XXL-Regular
+Detail: 
+Detail: $54.99
+Detail: $7.99/month*
+Product Name: Under Armour Men's Under Armour Rival Fleece Logo Jogger
+Product image is visible
+Detail: Castlerock Light Heather
+Detail: XXL-Regular
+Detail: 
+Detail: $54.99
+Detail: $7.99/month*
+Product Name: Under Armour Men's Under Armour Rival Fleece Logo Jogger
+Product image is visible
+Detail: Dark Maroon
+Detail: XXXL-Regular
+Detail: 
+Detail: $48.97 $54.99
+Detail: $5.99/month*
+Product Name: Casual Home 4-Shelf Corner Folding Bookcase
+Product image is visible
+Detail: Honey/Oak
+Detail: No Size
+Detail: 
+Detail: $69.99
+Detail: $7.99/month*

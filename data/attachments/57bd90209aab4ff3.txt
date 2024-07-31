@@ -1,0 +1,6 @@
+Item 1: Image and name "Shop Sofas" are valid.
+Item 2: Image and name "Shop Electronic" are valid.
+Item 3: Image and name "Shop Accessories" are valid.
+Item 4: Image and name "Shop Housekeeping" are valid.
+Item 5: Image and name "Shop Furniture" are valid.
+Item 6: Image and name "Shop Laptops" are valid.

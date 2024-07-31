@@ -1,0 +1,14 @@
+An error occurred while selecting a subcategory: TypeError: Cannot read properties of undefined (reading 'length')
+    at HomePageNew.selectSubCategoryFromMegaMenu (/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_home_page1.js:509:99)
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_sb_minicart_drawer_auth.spec.js:59:20
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/workerMain.js:339:15
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/testInfo.js:296:17
+    at TimeoutManager.withRunnable (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/timeoutManager.js:53:34)
+    at TestInfoImpl._runAsStage (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/testInfo.js:294:34)
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/workerMain.js:331:22
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/testInfo.js:296:11
+    at TimeoutManager.withRunnable (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/timeoutManager.js:41:27)
+    at TestInfoImpl._runAsStage (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/testInfo.js:294:7)
+    at WorkerMain._runTest (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/workerMain.js:281:5)
+    at WorkerMain.runTestGroup (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/worker/workerMain.js:205:11)
+    at process.<anonymous> (/home/runner/work/ct_ui_automation/ct_ui_automation/node_modules/playwright/lib/common/process.js:95:22)

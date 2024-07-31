@@ -1,0 +1,9 @@
+Product Name: Under Armour Boys' Prototype 2.0 Logo Shorts
+Product image is visible
+Detail: Black-White
+Detail: S
+Detail: 
+Detail: $19.99
+Detail: $5.99/month*
+Remove button is not visible, proceeding to the next action...
+AfterHooks completed in 11ms

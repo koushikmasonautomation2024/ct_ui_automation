@@ -1,0 +1,81 @@
+An error occurred in test.beforeEach: page.goto: net::ERR_ABORTED; maybe frame was detached?
+Call log:
+  - navigating to "https://stage--stoneberry-masoncompanies.netlify.app/", waiting until "load"
+
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_plp.spec.js:35:18 {
+  name: 'Error',
+  [Symbol(step)]: {
+    stepId: 'pw:api@9',
+    location: {
+      file: '/home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_plp.spec.js',
+      line: 35,
+      column: 18,
+      function: undefined
+    },
+    category: 'pw:api',
+    title: 'page.goto(https://stage--stoneberry-masoncompanies.netlify.app/)',
+    apiName: 'page.goto',
+    params: {
+      url: 'https://stage--stoneberry-masoncompanies.netlify.app/',
+      waitUntil: 'load'
+    },
+    boxedStack: undefined,
+    steps: [],
+    complete: [Function: complete],
+    endWallTime: 1722409475373,
+    error: {
+      message: 'Error: page.goto: net::ERR_ABORTED; maybe frame was detached?\n' +
+        'Call log:\n' +
+        '  \x1B[2m- navigating to "https://stage--stoneberry-masoncompanies.netlify.app/", waiting until "load"\x1B[22m\n',
+      stack: 'Error: page.goto: net::ERR_ABORTED; maybe frame was detached?\n' +
+        'Call log:\n' +
+        '  \x1B[2m- navigating to "https://stage--stoneberry-masoncompanies.netlify.app/", waiting until "load"\x1B[22m\n' +
+        '\n' +
+        '    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_plp.spec.js:35:18'
+    }
+  }
+}
+Error capturing screenshot: page.screenshot: Test timeout of 120000ms exceeded.
+Call log:
+  - taking page screenshot
+  - waiting for fonts to load...
+  - fonts loaded
+
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_plp.spec.js:334:18 {
+  [Symbol(step)]: {
+    stepId: 'pw:api@13',
+    location: {
+      file: '/home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_plp.spec.js',
+      line: 334,
+      column: 18,
+      function: undefined
+    },
+    category: 'pw:api',
+    title: 'page.screenshot',
+    apiName: 'page.screenshot',
+    params: {
+      path: 'screenshots/FPScreenshot-1722409360336.png',
+      fullPage: true,
+      mask: undefined,
+      type: 'png'
+    },
+    boxedStack: undefined,
+    steps: [],
+    complete: [Function: complete],
+    endWallTime: 1722409475377,
+    error: {
+      message: 'Error: page.screenshot: Test timeout of 120000ms exceeded.\n' +
+        'Call log:\n' +
+        '  \x1B[2m- taking page screenshot\x1B[22m\n' +
+        '\x1B[2m  - waiting for fonts to load...\x1B[22m\n' +
+        '\x1B[2m  - fonts loaded\x1B[22m\n',
+      stack: 'Error: page.screenshot: Test timeout of 120000ms exceeded.\n' +
+        'Call log:\n' +
+        '  \x1B[2m- taking page screenshot\x1B[22m\n' +
+        '\x1B[2m  - waiting for fonts to load...\x1B[22m\n' +
+        '\x1B[2m  - fonts loaded\x1B[22m\n' +
+        '\n' +
+        '    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_plp.spec.js:334:18'
+    }
+  }
+}

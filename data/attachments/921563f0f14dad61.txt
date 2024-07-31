@@ -1,0 +1,10 @@
+Clicked button with index: 2
+Clicked button with index: 5
+Add to Cart button is enabled.
+Product Name: Under Armour Men's Under Armour Rival Fleece Logo Jogger
+Product image is visible
+Detail: Royal
+Detail: XXXL-Regular
+Detail: 
+Detail: $48.97 $54.99
+Detail: $5.99/month*

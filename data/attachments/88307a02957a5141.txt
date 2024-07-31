@@ -1,0 +1,9 @@
+Product Name: Evertone Platinum Nails Ultimate Manicure and Pedicure Care Kit
+Product image is visible
+Detail: White
+Detail: No Size
+Detail: 
+Detail: $39.99
+Detail: $5.99/month*
+Remove button is not visible, proceeding to the next action...
+AfterHooks completed in 9ms

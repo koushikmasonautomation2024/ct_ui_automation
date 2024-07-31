@@ -1,0 +1,44 @@
+Error during test execution: locator.waitFor: Test timeout of 210000ms exceeded.
+Call log:
+  - waiting for getByText('Promo code SALE50 has been applied to your order') to be visible
+
+    at GuestCheckOutPage.validateValidPromoCode (/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_guestCheckout_page.js:1118:85)
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_CheckoutScenarios.auth.spec.js:95:11
+    at expectWithTimeoutHandling (/home/runner/work/ct_ui_automation/ct_ui_automation/utils/errorHandling.js:7:5)
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_CheckoutScenarios.auth.spec.js:93:9 {
+  [Symbol(step)]: {
+    stepId: 'pw:api@69',
+    location: {
+      file: '/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_guestCheckout_page.js',
+      line: 1118,
+      column: 85,
+      function: 'GuestCheckOutPage.validateValidPromoCode'
+    },
+    category: 'pw:api',
+    title: "locator.getByText('Promo code SALE50 has been applied to your order').waitFor",
+    apiName: 'locator.waitFor',
+    params: {
+      selector: 'internal:text="Promo code SALE50 has been applied to your order"i',
+      strict: true,
+      omitReturnValue: true,
+      state: 'visible'
+    },
+    boxedStack: undefined,
+    steps: [],
+    complete: [Function: complete],
+    endWallTime: 1722406867530,
+    error: {
+      message: 'Error: locator.waitFor: Test timeout of 210000ms exceeded.\n' +
+        'Call log:\n' +
+        "  \x1B[2m- waiting for getByText('Promo code SALE50 has been applied to your order') to be visible\x1B[22m\n",
+      stack: 'Error: locator.waitFor: Test timeout of 210000ms exceeded.\n' +
+        'Call log:\n' +
+        "  \x1B[2m- waiting for getByText('Promo code SALE50 has been applied to your order') to be visible\x1B[22m\n" +
+        '\n' +
+        '    at GuestCheckOutPage.validateValidPromoCode (/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_guestCheckout_page.js:1118:85)\n' +
+        '    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_CheckoutScenarios.auth.spec.js:95:11\n' +
+        '    at expectWithTimeoutHandling (/home/runner/work/ct_ui_automation/ct_ui_automation/utils/errorHandling.js:7:5)\n' +
+        '    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_CheckoutScenarios.auth.spec.js:93:9'
+    }
+  }
+}

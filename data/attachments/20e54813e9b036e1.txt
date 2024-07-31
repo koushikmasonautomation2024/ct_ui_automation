@@ -1,0 +1,5 @@
+Address Element Value: 67 Brown Cir
+City Element Value: Abbeville
+State Element Value: GA
+ZipCode Element Value: 31001-2208
+PhoneNumber Element Value: (432) 536-4564

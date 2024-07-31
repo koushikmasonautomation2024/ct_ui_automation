@@ -1,0 +1,11 @@
+Clicked button with index: 2
+Clicked button with index: 2
+Clicked button with index: 6
+Add to Cart button is enabled.
+Product Name: Under Armour Men's Under Armour Rival Fleece Logo Jogger
+Product image is visible
+Detail: Castlerock Light Heather
+Detail: XXXXL-Regular
+Detail: 
+Detail: $54.99
+Detail: $7.99/month*
