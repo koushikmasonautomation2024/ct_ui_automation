@@ -186,7 +186,7 @@ exports.CreateAccountPage = class CreateAccountPage{
     //await expect(this.page).toHaveURL(/.*dashboard/);
     //await new Promise(resolve => setTimeout(resolve, 3000)).then(() => expect(this.page).toHaveURL(/.*dashboard/));
     await this.page.waitForURL(/.*dashboard/);
-    await expect(this.page.getByText(`Hi, ${firstName}!`)).toBeVisible();
+    await expect(this.page.getByText(`Hi, ${firstName}!`).first()).toBeVisible();
     const currentURL = await this.page.url();
     expect(currentURL).toContain(dashboard_url);
     

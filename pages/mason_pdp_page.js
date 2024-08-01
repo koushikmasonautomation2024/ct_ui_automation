@@ -429,7 +429,7 @@ exports.PDPPage = class PDPPage {
     }
 
     async validateCreditMessageSection() {
-        await this.page.waitForLoadState('networkidle');
+        //await this.page.waitForSelector('section.mt-4.py-5', { state: 'visible' });
         // Check if the section is visible
         const creditMessageVisible = await this.creditMessageLocator.isVisible();
         if (creditMessageVisible) {

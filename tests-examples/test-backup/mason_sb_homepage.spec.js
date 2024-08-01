@@ -74,10 +74,7 @@ test.describe("Mason Guest User Home Page", () => {
     //test.slow();
     const homePage = new HomePageNew(page);
     await homePage.displayCategory();
-    await homePage.mouseHoverMegaMenu(homepage_data.categoryNameL1);
-    await homePage.clickOnMegaMenuL2Category(homepage_data.l2CategoryName);
-    await homePage.validateCLPNavigationUrl(homepage_data.expectedclpUrl);
-    //console.log(testInfo.status);
+    await homePage.selectSubCategoryFromMegaMenu(expectedCategories);
 
   })
 

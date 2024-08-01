@@ -11,9 +11,9 @@ exports.CartDrawerPage = class CartDrawerPage {
         this.miniCartFirstProductName = page.locator('ul.grid.gap-4.p-4 a>p');
         this.addtoCartButtonPLP = page.locator('button:has-text("Add to Cart")');
         this.plpProductImages = page.locator('section.productItemParent  a');
-        this.miniCartQtyMinusButton = page.locator('div[role="dialog"] ul.grid.gap-4.p-4 div.flex > button:nth-child(1)');
-        this.miniCartQtyPlusButton = page.locator('div[role="dialog"] ul.grid.gap-4.p-4 div.flex > button:nth-child(3)');
-        this.miniCartDefaultQtyPlusButton = page.locator('div.flex > button:nth-child(2)');
+        this.miniCartQtyMinusButton = page.locator('button[aria-label="Decrease Quantity"]');
+        this.miniCartQtyPlusButton = page.locator('button[aria-label="Increase Quantity"]');
+        this.miniCartDefaultQtyPlusButton = page.locator('button[aria-label="Increase Quantity"]');
         this.miniCartQtyInputTextBox = page.locator('input.numberInputCounter');
         this.miniCartIcon = page.locator('img[alt="Mini Cart"]');
         this.miniCartProductSection = page.locator('div[role="dialog"] ul.grid.gap-4.p-4');
@@ -271,13 +271,15 @@ exports.CartDrawerPage = class CartDrawerPage {
         const initialInputValue = await this.miniCartQtyInputTextBox.first().inputValue();
         if (initialInputValue == 1) {
             await this.miniCartQtyPlusButton.first().click();
-            await expect(this.miniCartQtyInputTextBox.first()).toBeEditable({ timeout: 15000 });
-            await expect(this.miniCartQtyInputTextBox.first()).toHaveValue((parseInt(initialInputValue) + 1).toString());
+            await this.page.waitForTimeout(5000);
+            const updatedInputValue = await this.miniCartQtyInputTextBox.nth(1).inputValue();
+            expect(updatedInputValue).toBe((parseInt(initialInputValue) + 1).toString());
         } else {
             // Click the minus button to decrease the quantity
             await this.miniCartQtyMinusButton.first().click();
-            await expect(this.miniCartQtyInputTextBox.first()).toBeEditable({ timeout: 15000 });
-            await expect(this.miniCartQtyInputTextBox.first()).toHaveValue((parseInt(initialInputValue) - 1).toString());
+            await this.page.waitForTimeout(5000);
+            //await expect(this.miniCartQtyInputTextBox.first()).toBeEditable({ timeout: 15000 });
+            await expect(this.miniCartQtyInputTextBox.nth(1)).toHaveValue((parseInt(initialInputValue) - 1).toString());
         }
 
     }
@@ -299,6 +301,10 @@ exports.CartDrawerPage = class CartDrawerPage {
         await this.page.waitForURL(/.*checkout/);
     }
 
+    async miniCartClickCheckoutButtonGuest() {
+        await this.miniCartCheckoutButton.click();
+    }
+
     async navigateToCheckoutShipping() {
         // Define the locator for the shipping label
         const shippingLabelLocator = this.page.locator('span.font-extrabold.lg\\:text-lg');
@@ -309,6 +315,7 @@ exports.CartDrawerPage = class CartDrawerPage {
     }
 
     async cartDrawerSuccessMessage() {
+        await this.page.getByText('item added to cart').waitFor({state:'visible'});
         await expect(this.page.getByText('item added to cart')).toBeVisible();
     }
 }

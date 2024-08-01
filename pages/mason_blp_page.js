@@ -137,6 +137,7 @@ exports.MasonBLPPage = class MasonBLPPage {
         const textAfterShopAll = shopAllText.substring(startIndex + searchText.length).trim();
 
         console.log(`Text after "Shop All": ${textAfterShopAll}`);
+        await this.page.getByLabel('Breadcrumb').getByText(textAfterShopAll).waitFor({state:'visible'});
         await expect(this.page.getByLabel('Breadcrumb').getByText(textAfterShopAll)).toBeVisible();
         await expect(this.page.locator('div').filter({ hasText: /^Global Banner Stoneberry$/ }).first()).toBeVisible();
         await expect(this.page.locator('strong').filter({ hasText: textAfterShopAll })).toBeVisible();

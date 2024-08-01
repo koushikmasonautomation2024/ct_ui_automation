@@ -24,6 +24,7 @@ exports.HomePageNew = class HomePageNew {
         this.minicart_drawer_checkout_button = page.getByRole('button', { name: homepage_locator.minicart_drawer_checkout_button });
         this.footer_signupemail_textbox = page.getByPlaceholder(homepage_locator.footer_signupemail_textbox);
         this.footer_signup_button = page.getByRole('button', { name: homepage_locator.footer_signup_button });
+        this.StoneberryLogo = page.locator('a[title="Stoneberry"] img[alt="Stoneberry"]');
 
     }
 
@@ -54,12 +55,12 @@ exports.HomePageNew = class HomePageNew {
         await expect(this.homepage_category).toBeVisible();
     }
     async displaySiteLogo() {
-        await expect(this.page.locator('a.flex img.max-w-full')).toBeVisible();
+        await expect(this.StoneberryLogo).toBeVisible();
     }
 
     async clickSiteLogo() {
         //await this.page.getByRole('link', { name: brandLogoName, exact: true }).click();
-        await this.page.locator('a.flex img.max-w-full').click();
+        await this.StoneberryLogo.click();
         //await this.page.waitForNavigation();
 
     }
@@ -75,7 +76,8 @@ exports.HomePageNew = class HomePageNew {
     }
 
     async displayBanner2(bannerName) {
-        await this.page.locator('section.seasonalSavings section.auc-Recommend').first().scrollIntoViewIfNeeded();
+        //await this.page.locator('section.seasonalSavings section.auc-Recommend').first().scrollIntoViewIfNeeded();
+        await this.page.getByText('Top Brands').scrollIntoViewIfNeeded();
         await this.page.getByRole('link', { name: bannerName }).waitFor({ state: 'visible' });
         await expect(this.page.locator(`a img[alt="${bannerName}"]`).first()).toBeVisible();
 
@@ -395,7 +397,8 @@ exports.HomePageNew = class HomePageNew {
 
     async validateSeasonalSavings() {
         // Scroll to the carousel section
-        await this.page.locator('section.seasonalSavings section.auc-Recommend').first().scrollIntoViewIfNeeded();
+        //await this.page.locator('section.seasonalSavings section.auc-Recommend').first().scrollIntoViewIfNeeded();
+        await this.page.getByText('Top Brands').scrollIntoViewIfNeeded();
         await expect(this.page.getByText('Seasonal Savings')).toBeVisible();
 
         // Select the product items within the carousel

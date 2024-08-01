@@ -45,9 +45,12 @@ exports.CartPage = class CartPage {
         this.priceSectionLocator = page.locator('section.flex.items-center.gap-x-1.pt-30');
         this.paymentSectionLocator = page.locator('section.flex.items-center.gap-1.pt-5');
         this.creditMessageLocator = page.locator('section.mt-4.py-5');
-        this.qtyMinusButton = page.locator('div.flex > button:nth-child(1)');
-        this.qtyPlusButton = page.locator('div.flex > button:nth-child(3)');
-        this.defaultQtyPlusButton = page.locator('div.flex > button:nth-child(2)');
+        //this.qtyMinusButton = page.locator('div.flex > button:nth-child(1)');
+        this.qtyMinusButton = page.locator('button[aria-label="Decrease Quantity"]');
+        this.qtyPlusButton = page.locator('button[aria-label="Increase Quantity"]'); 
+        //this.qtyPlusButton = page.locator('div.flex > button:nth-child(3)');
+        //this.defaultQtyPlusButton = page.locator('div.flex > button:nth-child(2)');
+        this.defaultQtyPlusButton = page.locator('button[aria-label="Increase Quantity"]'); 
         this.qtyInputTextBox = page.locator('input.numberInputCounter');
         this.qtyText = page.getByText('Qty:');
         this.availabilityText = page.getByText('Availability:');
@@ -188,8 +191,8 @@ exports.CartPage = class CartPage {
 
         // Locate the quantity input and plus/minus buttons
         const quantityInput = firstProductItem.locator(cartQtyInputLocator).first();
-        const plusButton = firstProductItem.locator('button').nth(1);
-        const minusButton = firstProductItem.locator('button').nth(0);
+        const plusButton = firstProductItem.locator('button[aria-label="Increase Quantity"]');
+        const minusButton = firstProductItem.locator('button[aria-label="Decrease Quantity"]');
 
         // Get initial quantity
         const initialQuantity = await quantityInput.inputValue();
