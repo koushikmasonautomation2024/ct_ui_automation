@@ -1,4 +1,4 @@
-name: Run playwright tests and publish report
+name: Run Mason Automation Tests and Publish Report
 on:
   push:
     branches: [ main, master ]
@@ -39,3 +39,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-report
+          keep_files: true
