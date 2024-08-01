@@ -670,7 +670,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   //SB-Chkout193//SB-Chkout194//SB-Chkout198//SB-CCA002//SB-CCA003
   test.describe("Mason Checkout - Down Payment Request Drawer: Logged In: Verify order with down payment - Scenarios", () => {
     test.use({ storageState: './dpUser.json' });
-    test.only('Down Payment Request Drawer: Logged In: Verify order with down payment', async ({ page }) => {
+    test('Down Payment Request Drawer: Logged In: Verify order with down payment', async ({ page }) => {
       // Navigate to the page containing the popular search terms
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const orderConfDownPayment = new OrderConfDownPayment(page);
@@ -705,7 +705,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   //SB-Chkout195//SB-Chkout196//SB-Chkout199//SB-Chkout204//SB-Chkout205//SB-CCA004//SB-CCA005//SB-CCA006
   test.describe("Mason Checkout - Down Payment Request Drawer - Close Button: Logged In: Verify that users can close the Down Payment Request drawer and return to the previous page. - Scenarios", () => {
     test.use({ storageState: './dpUser.json' });
-    test.only('Down Payment Request Drawer - Close Button: Logged In: Verify that users can close the Down Payment Request drawer and return to the previous page.', async ({ page }) => {
+    test('Down Payment Request Drawer - Close Button: Logged In: Verify that users can close the Down Payment Request drawer and return to the previous page.', async ({ page }) => {
       // Navigate to the page containing the popular search terms
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const orderConfDownPayment = new OrderConfDownPayment(page);
@@ -744,7 +744,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   //SB-Chkout195//SB-Chkout196//SB-Chkout199//SB-Chkout200//SB-Chkout204//SB-Chkout205//SB-CCA007//SB-CCA008//SB-CCA009//SB-CCA017//SB-CCA018//SB-CCA019
   test.describe("Mason Checkout - Down Payment Request Drawer - Maybe Later CTA: Logged In: Verify the functionality of the Maybe Later CTA within the Down Payment Request drawer. - Scenarios", () => {
     test.use({ storageState: './dpUser.json' });
-    test.only('Down Payment Request Drawer - Maybe Later CTA: Logged In: Verify the functionality of the Maybe Later CTA within the Down Payment Request drawer.', async ({ page }) => {
+    test('Down Payment Request Drawer - Maybe Later CTA: Logged In: Verify the functionality of the Maybe Later CTA within the Down Payment Request drawer.', async ({ page }) => {
       // Navigate to the page containing the popular search terms
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const orderConfDownPayment = new OrderConfDownPayment(page);
@@ -783,7 +783,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   //SB-Chkout216
   test.describe("Mason Checkout - Make a Down Payment Drawer - Cancel CTA: Logged In: Verify when user clicks on “Cancel” CTA. - Scenarios", () => {
     test.use({ storageState: './dpUser.json' });
-    test.only('Make a Down Payment Drawer - Cancel CTA: Logged In: Verify when user clicks on “Cancel” CTA.', async ({ page }) => {
+    test('Make a Down Payment Drawer - Cancel CTA: Logged In: Verify when user clicks on “Cancel” CTA.', async ({ page }) => {
       // Navigate to the page containing the popular search terms
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const orderConfDownPayment = new OrderConfDownPayment(page);
@@ -822,7 +822,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   //SB-Chkout217//SB-Chkout218//SB-Chkout219//SB-Chkout220
   test.describe("Mason Checkout - Review Down Payment Drawer: Logged In: Verify  Review Down Payment Drawer. - Scenarios", () => {
     test.use({ storageState: './dpUser.json' });
-    test.only('Review Down Payment Drawer: Logged In: Verify  Review Down Payment Drawer.', async ({ page }) => {
+    test('Review Down Payment Drawer: Logged In: Verify  Review Down Payment Drawer.', async ({ page }) => {
       // Navigate to the page containing the popular search terms
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const orderConfDownPayment = new OrderConfDownPayment(page);
@@ -862,7 +862,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   //SB-Chkout222
   test.describe("Mason Checkout - Review Down Payment Drawer - Edit Down Payment CTA: Logged In: Verify when user clicks on “Edit Down Payment” CTA. - Scenarios", () => {
     test.use({ storageState: './dpUser.json' });
-    test.only('Review Down Payment Drawer - Edit Down Payment CTA: Logged In: Verify when user clicks on “Edit Down Payment” CTA.', async ({ page }) => {
+    test('Review Down Payment Drawer - Edit Down Payment CTA: Logged In: Verify when user clicks on “Edit Down Payment” CTA.', async ({ page }) => {
       // Navigate to the page containing the popular search terms
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const orderConfDownPayment = new OrderConfDownPayment(page);
@@ -903,7 +903,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   //SB-Chkout221//SB-Chkout224//SB-Chkout225//SB-Chkout229//SB-Chkout232//SB-Chkout233
   test.describe("Mason Checkout - Review Down Payment Drawer - Submit Down Payment CTA: Logged In: Verify when user clicks on “Submit Down Payment” CTA. - Scenarios", () => {
     test.use({ storageState: './dpUser.json' });
-    test.only('Review Down Payment Drawer - Submit Down Payment CTA: Logged In: Verify when user clicks on “Submit Down Payment” CTA.', async ({ page }) => {
+    test('Review Down Payment Drawer - Submit Down Payment CTA: Logged In: Verify when user clicks on “Submit Down Payment” CTA.', async ({ page }) => {
       // Navigate to the page containing the popular search terms
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const orderConfDownPayment = new OrderConfDownPayment(page);
