@@ -1,4 +1,0 @@
-Surcharge information is not displayed.
-Order Total: $0.00
-Shipping: FREE
-AfterHooks completed in 60ms

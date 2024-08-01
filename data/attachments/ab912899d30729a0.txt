@@ -1,3 +1,0 @@
-Alphabet 'M' is not present.
-Selected Link: JSHandle@<a href="pretty-in-pink"> Pretty In Pink</a>
-Selected Brand: Pretty In Pink

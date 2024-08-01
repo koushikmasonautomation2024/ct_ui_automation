@@ -1,1 +1,0 @@
-An error occurred during order placement: Order failed with message: Error: The discountCode 'cb5f05b2-40ea-4abe-a3e0-fb0d59af0000' cannot be applied to the cart.
