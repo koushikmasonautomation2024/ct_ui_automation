@@ -1,0 +1,15 @@
+Clicked button with index: 3
+Clicked button with index: 1
+Add to Cart button is enabled.
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Aqua
+Detail: Queen
+Detail: 
+Detail: $79.99
+Detail: $9.99/month*
+Order placed successfully, redirected to the thank-you page.
+Order Confirmation #ZB653775798
+All elements are validated successfully.
+All validations passed successfully.
+All SVG and p tag text validations passed successfully.

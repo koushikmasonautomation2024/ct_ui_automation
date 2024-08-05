@@ -1,0 +1,111 @@
+Clicked button with index: 1
+Clicked button with index: 1
+Add to Cart button is enabled.
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Pink
+Detail: Queen
+Detail: 
+Detail: $79.99
+Detail: $9.99/month*
+Product Name: K Jordan Embellished Pocket Bootcut Jean
+Product image is visible
+Detail: Dark Wash
+Detail: 18W-Regular
+Detail: 
+Detail: $60.77 $69.99
+Detail: $7.99/month*
+Product Name: Stainless Steel Black Leather Bracelet (Men's)
+Product image is visible
+Detail: Stainless/Steel/Black
+Detail: No Size
+Detail: 
+Detail: $49.99
+Detail: $5.99/month*
+Product Name: Lace Flounce Hem Dress
+Product image is visible
+Detail: Black
+Detail: M
+Detail: 
+Detail: $56.99 $59.99
+Detail: $7.99/month*
+Product Name: Lace Flounce Hem Dress
+Product image is visible
+Detail: Black
+Detail: 1X
+Detail: 
+Detail: $56.99 $59.99
+Detail: $7.99/month*
+Product Name: Lace Flounce Hem Dress
+Product image is visible
+Detail: Black
+Detail: L
+Detail: 
+Detail: $56.99 $59.99
+Detail: $7.99/month*
+Product Name: Lace Flounce Hem Dress
+Product image is visible
+Detail: Black
+Detail: XL
+Detail: 
+Detail: $56.99 $59.99
+Detail: $7.99/month*
+Product Name: Lace Flounce Hem Dress
+Product image is visible
+Detail: Black
+Detail: 3X
+Detail: 
+Detail: $56.99 $59.99
+Detail: $7.99/month*
+Product Name: Lace Flounce Hem Dress
+Product image is visible
+Detail: Black
+Detail: S
+Detail: 
+Detail: $56.99 $59.99
+Detail: $7.99/month*
+Product Name: Lace Flounce Hem Dress
+Product image is visible
+Detail: Black
+Detail: 2X
+Detail: 
+Detail: $56.99 $59.99
+Detail: $7.99/month*
+Product Name: Nesco Vacuum Sealer Bags 50-Count 11" x 15.75"
+Product image is visible
+Detail: Clear
+Detail: No Size
+Detail: 
+Detail: $19.99
+Detail: $5.99/month*
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Lilac
+Detail: Full
+Detail: 
+Detail: $69.99
+Detail: $7.99/month*
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Blue
+Detail: Queen
+Detail: 
+Detail: $79.99
+Detail: $9.99/month*
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Pink
+Detail: Twin
+Detail: 
+Detail: $59.99
+Detail: $7.99/month*
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Aqua
+Detail: Twin
+Detail: 
+Detail: $59.99
+Detail: $7.99/month*
+Clicked on Credit/Debit Card button.
+Order placed successfully, redirected to the thank-you page.
+Order Confirmation #ZB644933686
