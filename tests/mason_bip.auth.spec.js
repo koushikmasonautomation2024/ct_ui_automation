@@ -31,7 +31,7 @@ test.describe("Mason Commerce Tool Site", () => {
   })
 
 
-  //SB-BIP002
+  //SB - BIP002
   test("Validate Home -> Brand breadcrumbs are shown in BIP", async ({ page }, testInfo) => {
     const bipPage = new MasonBIPPage(page);
     await bipPage.validateBrandBreadCrumb();
