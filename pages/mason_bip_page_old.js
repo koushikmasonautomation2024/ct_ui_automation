@@ -22,16 +22,16 @@ exports.MasonBIPPage = class MasonBIPPage{
 
     
     async validateBrandBreadCrumb(){
-        await (this.brand_breadcrumb).waitFor({state:"visible"});
+        await expect(this.brand_breadcrumb).toBeVisible();
     }
 
     async validateBrandPageTitle(){
-        await (this.brand_title).waitFor({state:"visible"});
+        await expect(this.brand_title).toBeVisible();
     }
 
     async validateBannerSection(){
         // Locate the banner section
-        const bannerSection = this.page.locator('.mt-6').first();
+        const bannerSection = this.page.locator('.mt-6');
 
         // Verify the banner section is visible
         await expect(bannerSection).toBeVisible();

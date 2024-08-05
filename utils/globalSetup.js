@@ -25,7 +25,15 @@ const savedCardUser = './savedCardUser.json';
 const creditUser2 = './creditUser2.json';
 const creditUser3 = './creditUser3.json';
 const creditUser4 = './creditUser4.json';
+const creditUser5 = './creditUser5.json';
+const creditUser6 = './creditUser6.json';
+const creditUser7 = './creditUser7.json';
 const downPaymentUser = './dpUser.json';
+const nonCreditUserFile1 = './noncredituser1.json';
+const nonCreditUserFile2 = './noncredituser2.json';
+const nonCreditUserFile3 = './noncredituser3.json';
+const nonCreditUserFile4 = './noncredituser4.json';
+const savedCardUser2 = './savedCardUser2.json';
 
 async function globalSetup(config) {
   const browser = await chromium.launch();
@@ -33,13 +41,27 @@ async function globalSetup(config) {
 
   // Authenticate as user1
   const page1 = await browser.newPage();
-  await authenticateUser(page1, process.env.DOWN_PAYMENT_USER, downPaymentUser);
+  await authenticateUser(page1, process.env.CREDIT_USER_5, creditUser5);
   await page1.close();
 
   // // Authenticate as user2
   // const page2 = await browser.newPage();
-  // await authenticateUser(page2, process.env.CREDIT_USER_4, creditUser4);
+  // await authenticateUser(page2, process.env.CREDIT_USER_6, creditUser6);
   // await page2.close();
+
+  // Authenticate as user2
+  const page3 = await browser.newPage();
+  await authenticateUser(page3, process.env.CREDIT_USER_7, creditUser7);
+  await page3.close();
+
+  // // Authenticate as user2
+  // const page4 = await browser.newPage();
+  // await authenticateUser(page4, process.env.NON_CREDIT_USER4, nonCreditUserFile4);
+  // await page4.close();
+  // // Authenticate as user2
+  // const page5 = await browser.newPage();
+  // await authenticateUser(page5, process.env.SAVE_CC_USER1, savedCardUser2);
+  // await page5.close();
 
   await browser.close();
 }
@@ -47,7 +69,8 @@ async function globalSetup(config) {
 async function authenticateUser(page, userEmail, storageFile) {
   try {
     await page.goto(process.env.WEB_URL);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
+    await page.getByRole('button', { name: 'My Account Sign In' }).waitFor({state:'visible'});
     await page.getByRole('button', { name: 'My Account Sign In' }).click();
     await page.getByRole('button', { name: 'Sign In' }).click();
     await page.getByLabel('*Email Address').click();
@@ -55,7 +78,7 @@ async function authenticateUser(page, userEmail, storageFile) {
     await page.getByLabel('*Password').click();
     await page.getByLabel('*Password').fill(process.env.CREDIT_USER_PASSWORD);
     await page.getByRole('button', { name: 'Sign In' }).click({ timeout: 10000 });
-    
+    await page.goto('https://stage--stoneberry-masoncompanies.netlify.app/account/dashboard/');
     const signinPage = new SignInPageNew(page);
     await signinPage.waitForMyAccountDashboardLoad();
     await signinPage.validateSignInMessage(signinpage_data.signin_success_text);

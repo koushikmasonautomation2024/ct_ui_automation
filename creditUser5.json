@@ -1,0 +1,469 @@
+{
+  "cookies": [
+    {
+      "name": "cee",
+      "value": "aEZ7HhKqIPYJDN0%2BboGRIXMYEizHlfxFhkQQdGC%2BL0o%3D.%7B%7D",
+      "domain": ".capig.shoemall.com",
+      "path": "/events/8198415454b19484ddcea29217235f26d99983c02cad2fbfec0cca52c33b5c9f",
+      "expires": 1730623251.806113,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "locale",
+      "value": "en",
+      "domain": "www-stg2.stoneberry.com",
+      "path": "/",
+      "expires": 1725266459.111574,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__cf_bm",
+      "value": "TgXVYzGnlorX.eRhYP2Dd1SfgVHIubmAtm1fY69qLyY-1722847225-1.0.1.1-IGCg2abOcWileV84r2mqoedNIwIfLLkH8.BwZ2Y.5MVY7_Pg0SiSNefL3rAZKqlH_6v5SIl8OBatIk18.P_5mnkmPhz_wHU5VYIFRWy0IsA",
+      "domain": ".stoneberry.com",
+      "path": "/",
+      "expires": 1722849025.931075,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_ALGOLIA",
+      "value": "anonymous-b04cf083-8f47-4cc1-9fe7-9d6a6c07e47f",
+      "domain": "www-stg2.stoneberry.com",
+      "path": "/",
+      "expires": 1738399227,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__cf_bm",
+      "value": "rBRgWaQntLIapLTXx14fpe.ShPGcuouSg053AuGjHT4-1722847231-1.0.1.1-N3iBlZg4A17tuZ53NS6UgRvk9ktpON5L0hjiUfpt3GHvj7fYa_.xm5GVIVvXlxeQjjH6s5UWhP68hyZDUqsDBg",
+      "domain": ".cordial.io",
+      "path": "/",
+      "expires": 1722849031.943004,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_cfuvid",
+      "value": "1fEz_aRXp_aRw2WA1LfnQtad2o_FtNfLY9RpfQ2eQCI-1722847232232-0.0.1.1-604800000",
+      "domain": ".lightboxcdn.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "v2_stoneberry-sandbox",
+      "value": "{%22bid%22:%22ad036ab1-30ab-42aa-8002-3f1dcc3a448e%22}",
+      "domain": ".cordial.io",
+      "path": "/",
+      "expires": 1754383232,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_uetsid",
+      "value": "60f2e700530611ef94fcef9090934e78",
+      "domain": ".www-stg2.stoneberry.com",
+      "path": "/",
+      "expires": 1722933633,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_uetvid",
+      "value": "60f30770530611ef8dfcf76ac203e5ed",
+      "domain": ".www-stg2.stoneberry.com",
+      "path": "/",
+      "expires": 1756543233,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "receive-cookie-deprecation",
+      "value": "1",
+      "domain": ".criteo.com",
+      "path": "/",
+      "expires": 1756543234.496293,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "uid",
+      "value": "adb04cde-8902-4e38-b1e3-694ff43646df",
+      "domain": ".criteo.com",
+      "path": "/",
+      "expires": 1756543234.496355,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "cto_bundle",
+      "value": "EiPYx19VZDEwNWN0VzBzNGRaTkJkV2taa0h1WTRaajJzc2x6ZXI1OUhkQVdHVlJzNmFoVGclMkI0UUJmZHNDd0FjanZFJTJGbkE2aWZyeVFxWFRXUCUyRmszSTZsRW1JOFVjJTJCYmZtbkF1VFBVSGp6UEVBVDIzakV2ZmRvWjdDcWx4eTZTM0M4YTZJYzBqM1hoQU5pcnRjTDREayUyRjNFMzBiT3Fhc3pKeEVpTkhVWjlyM0lHelZlNDJEaFZPeUtNejN1UzhWUjhyVmZ2",
+      "domain": ".www-stg2.stoneberry.com",
+      "path": "/",
+      "expires": 1757011234,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "MUID",
+      "value": "1DE7C86F6FFE6FD51A5ADCBD6E8B6ED8",
+      "domain": ".bing.com",
+      "path": "/",
+      "expires": 1756543263.226813,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "MR",
+      "value": "0",
+      "domain": ".bat.bing.com",
+      "path": "/",
+      "expires": 1723452041.995937,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_fbp",
+      "value": "fb.2.1722847241539.109729349131284760",
+      "domain": ".www-stg2.stoneberry.com",
+      "path": "/",
+      "expires": 1730623251,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_cc-x",
+      "value": "NTM2NjRjZDEtNDRjZi00NDk5LTk2ZmYtNmZlYmUxOGIxNzUzOjE3MjI4NDcyNDE4OTc",
+      "domain": "staging.cdn-net.com",
+      "path": "/",
+      "expires": 1738399254.320351,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "TiPMix",
+      "value": "98.40182540515171",
+      "domain": ".api.lightboxcdn.com",
+      "path": "/",
+      "expires": 1722850842.507861,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "x-ms-routing-name",
+      "value": "self",
+      "domain": ".api.lightboxcdn.com",
+      "path": "/",
+      "expires": 1722850842.508009,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "ar_debug",
+      "value": "1",
+      "domain": "measurement-api.criteo.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_cc",
+      "value": "Af2w1SC2uvrY1utaNRdZIlkJ",
+      "domain": "www-stg2.stoneberry.com",
+      "path": "/",
+      "expires": 1754403055,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_cid_cc",
+      "value": "Af2w1SC2uvrY1utaNRdZIlkJ",
+      "domain": "www-stg2.stoneberry.com",
+      "path": "/",
+      "expires": 1754403055,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "zipCode",
+      "value": "73632-3036",
+      "domain": "www-stg2.stoneberry.com",
+      "path": "/",
+      "expires": 1722933649,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_ga_6XPQGM9HP5",
+      "value": "GS1.1.1722847252.1.0.1722847252.60.0.0",
+      "domain": ".www-stg2.stoneberry.com",
+      "path": "/",
+      "expires": 1757407252.487056,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_ga",
+      "value": "GA1.1.1964024190.1722847232",
+      "domain": ".www-stg2.stoneberry.com",
+      "path": "/",
+      "expires": 1757407252.48811,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "frontastic-session",
+      "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhbm9ueW1vdXNJZCI6ImNmY2MzM2Y2LWI5NTEtNDE0Yy05YjY0LTA1NmRlZGVmY2QxZSIsImNoZWNrb3V0VG9rZW4iOnsidG9rZW4iOiJqb3VvcWRFcjFuVDdZekpiYXhZVVl6OElVY2lxVjhObiIsImV4cGlyYXRpb25UaW1lIjoxNzIyODU4MDI5MjA3LCJyZWZyZXNoVG9rZW4iOiJtYXNvbi1jb21wYW5pZXMtc3RhZ2luZy0wMDE6WnB4RHBTbTVObGdxME9LSmoxZmd4ckxNRWVhTGZKQ25Fa2NUc3JDS2VlSSJ9LCJjYXJ0SWQiOiJkNGQxNTgyMy01YWVkLTRjNzEtOWJkOC05OTBlYWQxM2Q3NWIiLCJ2ZXJzaW9uSWQiOjEsImlzQ3JlZGl0Q3VzdG9tZXIiOnRydWUsImFjY291bnQiOnsiYWNjb3VudElkIjoiYzVlNTk0ZDItMzkwZC00Njk4LTkzODUtMDk0MTEzOTI4NGU4IiwiZW1haWwiOiJoeXVuZGFpMzlAdmVyaXpvbi5tYXNvbi5uZXQiLCJmaXJzdE5hbWUiOiJDYXJvbHluIiwibGFzdE5hbWUiOiJQYXJrZXJyIiwiY29uZmlybWVkIjpmYWxzZSwiYWRkcmVzc2VzIjpbXSwiYXRnUHJvZmlsZUlkIjoidTMzNjU4MTI4OSJ9LCJsYXN0T3JkZXJJZCI6bnVsbCwicmVjZW50bHlWaWV3ZWRQcm9kdWN0SWRzIjoie1wicHJvZHVjdElkc1wiOltcIjEzMTUxMDUtMVwiLFwiMTMwMjU0Ni0xXCIsXCIxMzE2NDgwLTFcIixcIjEzNjQwOTQtMVwiLFwiMTI4NzMyMy0yXCIsXCIxMzc1NTY4LTFcIixcIjEzNzUyMDEtM1wiLFwiMTI0MDcwNi0xXCIsXCIxMTcyMDE3LTJcIixcIjEyNjE2NDktMVwiLFwiMTIzMjA5Ny0yXCJdfSIsImN1c3RvbWVySWQiOiIxNDQ3Mjg4MCIsImF2YWlsYWJsZUNyZWRpdCI6IjUwMC4wMCIsIndpc2hsaXN0SWQiOiJkMDI0OTA1ZS03NmQ5LTQwODYtODYzMC01OTVhNWZjMzk1MmIiLCJzYXZlRm9yTGF0ZXJJZCI6IjJjNjI1ODBiLTlkOTUtNDRmYi1iMTdkLTIzOWI2Y2E4MDhiOSJ9.2p65nQpfXmT-t6KOeS-HNgPGNP1pW6ImBQtjzlhZuy4",
+      "domain": "www-stg2.stoneberry.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "cto_bundle",
+      "value": "SKRC8V91dE45eFpvMklxbHhGc3g1dXpsTnB6YiUyQjY3M29qQnQwNlBvbjM4TFBoaHdNQTlDSEEzM2VNam5NMDhhNmwwQ3M",
+      "domain": ".criteo.com",
+      "path": "/",
+      "expires": 1756543260.133045,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "pid",
+      "value": "1893186469042899413",
+      "domain": ".smartadserver.com",
+      "path": "/",
+      "expires": 1757061660.31124,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "TestIfCookieP",
+      "value": "ok",
+      "domain": ".smartadserver.com",
+      "path": "/",
+      "expires": 1757061660.311306,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "csync",
+      "value": "79:k-ZynkN1hvDkdvEOyw-J3cGL8jDipVJ3p0rLY-YQ",
+      "domain": ".smartadserver.com",
+      "path": "/",
+      "expires": 1754383260.311322,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "t_gid",
+      "value": "78ff7bf1-84aa-4b66-ac73-381759332826-tuctdaa159c",
+      "domain": ".taboola.com",
+      "path": "/",
+      "expires": 1754383260.556189,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "t_pt_gid",
+      "value": "78ff7bf1-84aa-4b66-ac73-381759332826-tuctdaa159c",
+      "domain": ".taboola.com",
+      "path": "/",
+      "expires": 1754383260.556258,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "IDE",
+      "value": "AHWqTUnUwTaNMnEBebXul7HWpy03I58ni0Px9e_fvKBb2rIUg97-FvpMXW8_z3POBHA",
+      "domain": ".doubleclick.net",
+      "path": "/",
+      "expires": 1757407260.639402,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "bkdc",
+      "value": "phx",
+      "domain": ".bluekai.com",
+      "path": "/",
+      "expires": 1738399261.332808,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "bkpa",
+      "value": "KJpEnXTLu5DlLMxy1BxFgLhn+Mzruik/nY3onYNmnzo1LEUt5AtwelJpLDQoe6FlvdzlE1k6p9y616XtvYL+uY6BOQYd0HRc",
+      "domain": ".bluekai.com",
+      "path": "/",
+      "expires": 1738399261.332987,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "bku",
+      "value": "uUW99OtxLsq3cVDZ",
+      "domain": ".bluekai.com",
+      "path": "/",
+      "expires": 1738399261.333051,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "CMID",
+      "value": "ZrCQHdHM4VsAAH7MAVGcLgAA",
+      "domain": ".casalemedia.com",
+      "path": "/",
+      "expires": 1754383261.942714,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "CMPS",
+      "value": "2409",
+      "domain": ".casalemedia.com",
+      "path": "/",
+      "expires": 1730623261.587269,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "CMPRO",
+      "value": "2409",
+      "domain": ".casalemedia.com",
+      "path": "/",
+      "expires": 1730623261.942817,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "MR",
+      "value": "0",
+      "domain": ".c.bing.com",
+      "path": "/",
+      "expires": 1723452063.226895,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "UID",
+      "value": "ef077713b022af1b1b6bc190e1b860",
+      "domain": ".ads.stickyadstv.com",
+      "path": "/",
+      "expires": 1725439262.33038,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "uid-bp-11554",
+      "value": "k-jlyAYlhvDkdvEOyw-J3cGL8jDiqvr8qDHkYwaw",
+      "domain": ".ads.stickyadstv.com",
+      "path": "/",
+      "expires": 1728031262.330582,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://www-stg2.stoneberry.com",
+      "localStorage": [
+        {
+          "name": "_bcnctkn",
+          "value": "13320d0f9ce8bf282b65960bd56d6339eda3"
+        },
+        {
+          "name": "cto_bundle",
+          "value": "EiPYx19VZDEwNWN0VzBzNGRaTkJkV2taa0h1WTRaajJzc2x6ZXI1OUhkQVdHVlJzNmFoVGclMkI0UUJmZHNDd0FjanZFJTJGbkE2aWZyeVFxWFRXUCUyRmszSTZsRW1JOFVjJTJCYmZtbkF1VFBVSGp6UEVBVDIzakV2ZmRvWjdDcWx4eTZTM0M4YTZJYzBqM1hoQU5pcnRjTDREayUyRjNFMzBiT3Fhc3pKeEVpTkhVWjlyM0lHelZlNDJEaFZPeUtNejN1UzhWUjhyVmZ2"
+        },
+        {
+          "name": "_cid_cc_ck",
+          "value": "Af2w1SC2uvrY1utaNRdZIlkJ"
+        },
+        {
+          "name": "_cc_ck",
+          "value": "Af2w1SC2uvrY1utaNRdZIlkJ"
+        },
+        {
+          "name": "lastExternalReferrer",
+          "value": "empty"
+        },
+        {
+          "name": "algoliasearch-client-js-4.22.1-E07W2V3ZN1",
+          "value": "{\"{\\\"protocol\\\":\\\"https\\\",\\\"url\\\":\\\"E07W2V3ZN1-dsn.algolia.net\\\",\\\"accept\\\":1}\":{\"timestamp\":1722847228637,\"value\":{\"protocol\":\"https\",\"url\":\"E07W2V3ZN1-dsn.algolia.net\",\"accept\":1,\"status\":3,\"lastUpdate\":1722847228637}}}"
+        },
+        {
+          "name": "_uetsid_exp",
+          "value": "Tue, 06 Aug 2024 08:40:33 GMT"
+        },
+        {
+          "name": "lastExternalReferrerTime",
+          "value": "1722847241533"
+        },
+        {
+          "name": "_uetvid",
+          "value": "60f30770530611ef8dfcf76ac203e5ed"
+        },
+        {
+          "name": "_uetvid_exp",
+          "value": "Sat, 30 Aug 2025 08:40:33 GMT"
+        },
+        {
+          "name": "xdibx",
+          "value": "N4Ig-mBGAeDGCuAnRIBcoAOGAuBnNAjAOwBMJAHACymUkCsBlANCBgG6wB22hLu-qYmSo16jFu1xcegloiQAbNCBAsFi5QHpVIBXkKkK1ErQbNWG1AG0Q2gLoBfFhBgZEAUzZpQAEwCGAJ4CVkJGogwAbI7OUNCe7twCoCQRBOR0JN4gXuggsLwgMiGGIiZ0AMwEJNEgSXloAAwsRTUoufmoTYVoVjU-WR1dLU717Y3NPY4OIy5wAJb9qCCQPgCc7mQ-BAC0JOV0ftuUBATl25DkDSTbRLCwlOSrkKtEPnSU26GllA2X5SAOIA__"
+        },
+        {
+          "name": "_uetsid",
+          "value": "60f2e700530611ef94fcef9090934e78"
+        }
+      ]
+    }
+  ]
+}

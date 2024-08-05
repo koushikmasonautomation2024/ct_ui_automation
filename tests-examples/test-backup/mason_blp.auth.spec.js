@@ -42,8 +42,7 @@ test.describe("Mason BLP Page", () => {
   //SB-BLP002
   test("Validate navigation to BLP from PDP and ensure breadcrumbs are shown in BLP", async ({ page }, testInfo) => {
     const blpPage = new MasonBLPPage(page);
-    await page.goto(checkout_data.add_to_cart_pdp_url);
-    //await page.goto(process.env.BIP_URL);
+    await page.goto(process.env.BLP_PDP_URL);
     await blpPage.validateNavigationFromPDP();
 
   })

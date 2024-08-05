@@ -46,10 +46,11 @@ const email_us = 'Email Us:';
 const email_text = 'Email your question to';
 const mail_id = "service@stoneberry.com";
 const dropdownSelector = '#addressId';
-const gift_message = 'Gift Message (optional)';
+const gift_message = 'Gift Message';
 const create_account_text = 'To use Stoneberry Credit,you must create a new account here or Sign In to an existing account'
 const edit_credituser_address_message = 'If you need to change the credit account holder’s name, please call us at 1-800-704-5480'
 const different_address_message = 'Your order may be canceled if your shipping and billing addresses are different';
+const address_line_2='Show Address Line 2';
 const items_in_cart_texts = [
   'Items in Your Order',
   'Item in Your Order'
@@ -115,7 +116,7 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     this.makepayment_newaddress_fname = page.getByLabel(myaccountpage_locator.myaccount_addnewaddress_firstname);
     this.makepayment_newaddress_lname = page.getByLabel(myaccountpage_locator.myaccount_addnewaddress_lastname);
     this.makepayment_newaddress_address1 = page.getByLabel(myaccountpage_locator.myaccount_addnewaddress_addressline1);
-    this.makepayment_newaddress_address2 = page.getByRole('button', { name: myaccountpage_locator.makepayment_newAddress_address2 });
+    this.makepayment_newaddress_address2 = page.getByRole('button', { name: address_line_2});
     this.makepayment_addnewaddress_city = page.getByLabel(myaccountpage_locator.myaccount_addnewaddress_city);
     this.makepayment_newAddress_state = page.locator(myaccountpage_locator.makepayment_newAddress_state);
     this.makepayment_addnewaddress_zipcode = page.getByLabel(myaccountpage_locator.myaccount_addnewaddress_zipcode);
@@ -214,7 +215,8 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
 
   async validateReturnToCart() {
     await this.page.getByText(return_to_cart_link).click();
-    await expect(this.page.getByText("Shopping Cart")).toBeVisible({ timeout: 10000 });
+    const shoppingCartElement = this.page.locator('strong:has-text("Shopping Cart")');
+    await expect(shoppingCartElement).toBeVisible({ timeout: 10000 });
   }
 
   async validatePaymentSection() {
@@ -660,8 +662,7 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
   }
 
   async validatePaymentMethods() {
-    await (this.page.getByLabel('Credit/Debit Card')).waitFor({ state: "visible" });
-    //await this.page.waitForSelector('text="Credit/Debit Card"', { state: 'visible' });
+    await this.page.waitForSelector('label:has-text("Credit/Debit Card")', { state: 'visible' });
     await expect(this.page.getByLabel('My Stoneberry Credit')).toBeVisible();
   }
 
@@ -866,8 +867,8 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
 
   async validateCreditCardOptions() {
     // await this.page.getByLabel('Credit/Debit Card').click();
-    await expect(this.page.locator('#newCreditCard')).toBeVisible();
-    await expect(this.page.locator('#savedCreditCard')).toBeVisible();
+    await expect(this.page.locator('button#newCreditCard')).toBeVisible();
+    await expect(this.page.locator('button#savedCreditCard')).toBeVisible();
   }
 
 

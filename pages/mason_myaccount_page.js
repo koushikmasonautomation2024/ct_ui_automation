@@ -54,6 +54,7 @@ exports.MyAccountPage = class MyAccountPage {
         this.myaccount_wishlist_link = page.getByRole('link', { name: myaccountpage_locator.myaccount_wishlist_link, exact: true }).first();
         this.myaccount_needhelp_link = page.getByRole('link', { name: myaccountpage_locator.myaccount_needhelp_link });
         this.myaccount_myprofile_link = page.getByRole('link', { name: myaccountpage_locator.myaccount_myprofile_link, exact: true });
+        this.myaccount_myprofile_clicklink = page.locator('a[title="My Profile"]').nth(1);
         this.myaccount_orders_section = page.getByRole('heading', { name: myaccountpage_locator.myaccount_orders_section }).nth(1);
         this.myaccount_viewmyprofile_link = page.getByRole('link', { name: myaccountpage_locator.myaccount_viewmyprofile_link });
         this.myaccount_viewsavedcc_link = page.getByRole('link', { name: myaccountpage_locator.myaccount_viewsavedcc_link });
@@ -125,11 +126,13 @@ exports.MyAccountPage = class MyAccountPage {
         this.myaccount_sbc_creditstatement_saveaddressbutton = page.getByRole('button', { name: myaccountpage_locator.myaccount_sbc_creditstatement_saveaddressbutton });
         this.myaccount_sbc_creditstatement_canceladdressbutton = page.getByRole('button', { name: myaccountpage_locator.myaccount_sbc_creditstatement_canceladdressbutton });
         this.myaccount_orderStatus_link = page.getByRole('link', { name: myaccountpage_locator.myaccount_orderStatus_link, exact: true });
+        this.myaccount_myprofile_contactinformation = page.getByText('Contact Information');
 
     }
 
     async displayMyAccountLeftNavigationLink() {
-        await this.page.waitForLoadState('networkidle');
+        //await this.page.waitForLoadState('networkidle');
+        await this.myaccount_credit_link.waitFor({state:'visible'});
         await expect(this.myaccount_credit_link).toBeVisible();
         await expect(this.myaccount_makepayment_link).toBeVisible();
         await expect(this.myaccount_orders_link).toBeVisible();
@@ -142,7 +145,8 @@ exports.MyAccountPage = class MyAccountPage {
     }
 
     async validatedSignedInAccountDrawerItems() {
-        await this.page.waitForLoadState('networkidle');
+        //await this.page.waitForLoadState('networkidle');
+        await this.myaccount_myaccount_link.waitFor({state:'visible'});
         await expect(this.myaccount_myaccount_link).toBeVisible();
         await expect(this.myaccount_addresses_link).toBeVisible();
         await expect(this.myaccount_savedcreditcards_link).toBeVisible();
@@ -202,25 +206,34 @@ exports.MyAccountPage = class MyAccountPage {
     }
     async clickMyAccountMyProfileLink() {
         await this.myaccount_myprofile_link.click();
+        //await expect(this.page).toHaveURL(/.*\/account\/myprofile\//);
+        await this.page.waitForURL('**/account/myprofile/');
+        //await this.page.waitForLoadState('networkidle');
+        await this.myaccount_myprofile_contactinformation.waitFor({state:'visible'});
     }
     async clickMyAccountViewSavedCCLink() {
         await this.myaccount_viewsavedcc_link.click();
+        await this.page.waitForURL('**/account/savedcreditcard/');
         await expect(this.page).toHaveURL(/.*\/account\/savedcreditcard\//);
     }
     async clickMyAccountViewMyProfileLink() {
         await this.myaccount_viewmyprofile_link.click();
+        await this.page.waitForURL('**/account/myprofile/');
         await expect(this.page).toHaveURL(/.*\/account\/myprofile\//);
     }
     async clickMyAccountViewOrderLink() {
         await this.myaccount_vieworders_link.click();
+        await this.page.waitForURL('**/account/orders/');
         await expect(this.page).toHaveURL(/.*\/account\/orders\//);
     }
     async clickMyAccountViewAddressLink() {
         await this.myaccount_viewaddresses_link.click();
+        await this.page.waitForURL('**/account/addresses/');
         await expect(this.page).toHaveURL(/.*\/account\/addresses\//);
     }
     async clickMyAccountViewWishListLink() {
         await this.myaccount_viewwishlist_link.click();
+        await this.page.waitForURL('**/account/wishlist/');
         await expect(this.page).toHaveURL(/.*\/account\/wishlist\//);
     }
     async clickAddNewAddressButton() {
@@ -235,6 +248,9 @@ exports.MyAccountPage = class MyAccountPage {
     }
     async clickOnMyAccountLink() {
         await this.myaccount_myaccount_link.click();
+        //await this.page.waitForLoadState('networkidle');
+        await this.myaccount_credit_link.waitFor({state:'visible'});
+        //await this.page.locator('h1.ml-2\\.5.text-25.font-bold.leading-8').waitFor({state:'visible'});
         await this.page.waitForURL('**/account/dashboard/');
     }
     async viewMyAccountCreditDetails() {

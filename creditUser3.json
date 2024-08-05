@@ -13,7 +13,7 @@
     {
       "name": "locale",
       "value": "en",
-      "domain": "stage--stoneberry-masoncompanies.netlify.app",
+      "domain": "www-stg2.stoneberry.com",
       "path": "/",
       "expires": 1723192876.879472,
       "httpOnly": false,
@@ -23,7 +23,7 @@
     {
       "name": "_ALGOLIA",
       "value": "anonymous-adfa5328-97df-49fb-8296-37ce26f7a02d",
-      "domain": "stage--stoneberry-masoncompanies.netlify.app",
+      "domain": "www-stg2.stoneberry.com",
       "path": "/",
       "expires": 1736325639,
       "httpOnly": false,
@@ -33,7 +33,7 @@
     {
       "name": "zipCode",
       "value": "93101",
-      "domain": "stage--stoneberry-masoncompanies.netlify.app",
+      "domain": "www-stg2.stoneberry.com",
       "path": "/",
       "expires": 1720860067,
       "httpOnly": false,
@@ -43,7 +43,7 @@
     {
       "name": "_uetsid",
       "value": "6d0ff7b0402a11ef83b7bd6b265b28cb",
-      "domain": ".stage--stoneberry-masoncompanies.netlify.app",
+      "domain": ".www-stg2.stoneberry.com",
       "path": "/",
       "expires": 1720860043,
       "httpOnly": false,
@@ -53,7 +53,7 @@
     {
       "name": "_uetvid",
       "value": "6d1059d0402a11efa57cc5b37463261b",
-      "domain": ".stage--stoneberry-masoncompanies.netlify.app",
+      "domain": ".www-stg2.stoneberry.com",
       "path": "/",
       "expires": 1754469643,
       "httpOnly": false,
@@ -113,7 +113,7 @@
     {
       "name": "_fbp",
       "value": "fb.2.1720773644734.300781615465557533",
-      "domain": ".stage--stoneberry-masoncompanies.netlify.app",
+      "domain": ".www-stg2.stoneberry.com",
       "path": "/",
       "expires": 1728549669,
       "httpOnly": false,
@@ -463,7 +463,7 @@
     {
       "name": "_cc",
       "value": "AVIT%2BrV4xJlcloR3ji7SqOLs",
-      "domain": "stage--stoneberry-masoncompanies.netlify.app",
+      "domain": "www-stg2.stoneberry.com",
       "path": "/",
       "expires": 1752329469,
       "httpOnly": false,
@@ -473,7 +473,7 @@
     {
       "name": "_cid_cc",
       "value": "AVIT%2BrV4xJlcloR3ji7SqOLs",
-      "domain": "stage--stoneberry-masoncompanies.netlify.app",
+      "domain": "www-stg2.stoneberry.com",
       "path": "/",
       "expires": 1752329469,
       "httpOnly": false,
@@ -483,7 +483,7 @@
     {
       "name": "_ga_6XPQGM9HP5",
       "value": "GS1.1.1720773670.1.0.1720773670.60.0.0",
-      "domain": ".stage--stoneberry-masoncompanies.netlify.app",
+      "domain": ".www-stg2.stoneberry.com",
       "path": "/",
       "expires": 1755333670.545273,
       "httpOnly": false,
@@ -493,7 +493,7 @@
     {
       "name": "_ga",
       "value": "GA1.1.1816471625.1720773640",
-      "domain": ".stage--stoneberry-masoncompanies.netlify.app",
+      "domain": ".www-stg2.stoneberry.com",
       "path": "/",
       "expires": 1755333670.546543,
       "httpOnly": false,
@@ -503,7 +503,7 @@
     {
       "name": "frontastic-session",
       "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhbm9ueW1vdXNJZCI6IjM2Y2U4ODM4LTBmY2UtNGRkNC0zMjIyLTBjNjgzMGMwMmYzOCIsImNoZWNrb3V0VG9rZW4iOnsidG9rZW4iOiJXSzZYSUFyZk5GWW9HZGpPM0tOeUxjRy1zUE9NQ0lDZiIsImV4cGlyYXRpb25UaW1lIjoxNzIwNzg0NDUxNDIxLCJyZWZyZXNoVG9rZW4iOiJtYXNvbi1jb21wYW5pZXMtc3RhZ2luZy0wMDE6WW1qRWxleG5XSl95UDcteXpFTGo2VE51QnNCOWhCVWNZck96MGthelp0TSJ9LCJjYXJ0SWQiOiI0YmQ3MzRiZC0zNTNjLTRlZWUtYTAxYy03Nzg5M2VjNGUxZTQiLCJ2ZXJzaW9uSWQiOjEsImlzQ3JlZGl0Q3VzdG9tZXIiOnRydWUsImFjY291bnQiOnsiYWNjb3VudElkIjoiZjMxN2IxZTAtOTJhOC00Y2UwLTg3NDMtODk5NGMxNWEzMDRkIiwiZW1haWwiOiJsaXNhY293aW5zQHlhaG9vLm1hc29uLmNvbSIsImZpcnN0TmFtZSI6Ikxpc2EiLCJsYXN0TmFtZSI6IkNvd2lucyIsImNvbmZpcm1lZCI6ZmFsc2UsImFkZHJlc3NlcyI6W10sImF0Z1Byb2ZpbGVJZCI6InVaQjk0MjYzNTIyIn0sImN1c3RvbWVySWQiOiI2MjE0NTExNyIsImF2YWlsYWJsZUNyZWRpdCI6IjMwMDAuMDAiLCJ3aXNobGlzdElkIjoiZmM4MzU3YmItNDdmYi00YmQyLTk4ODktN2E5ZTliNzNiYjhmIiwic2F2ZUZvckxhdGVySWQiOiIzOTNjM2Y1ZS1hYjMzLTRiMmMtYjUyNi03MTY3YzhlZWU5YWQifQ.eIMD1ru_Zw3Wj4lFE3GYlk55pVFpHMggCMZokCDNLeY",
-      "domain": "stage--stoneberry-masoncompanies.netlify.app",
+      "domain": "www-stg2.stoneberry.com",
       "path": "/",
       "expires": -1,
       "httpOnly": false,
@@ -513,7 +513,7 @@
   ],
   "origins": [
     {
-      "origin": "https://stage--stoneberry-masoncompanies.netlify.app",
+      "origin": "https://www-stg2.stoneberry.com",
       "localStorage": [
         {
           "name": "261852_display",

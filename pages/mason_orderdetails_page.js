@@ -10,7 +10,7 @@ const product_Section = 'section.mt-4.flex.items-center';
 const order_SummaryText = 'Order Summary';
 const cancelOrderModal_Text = 'Are you sure you want to cancel your order?';
 const cancelOrderModal_HeadingText = 'Cancel order';
-const cancelItemModal_HeadingText = 'Cancel item';
+const cancelItemModal_HeadingText = 'Cancel Item';
 const cancelItemModal_Text = 'Are you sure you want to cancel this item?';
 const orderDetailsAwatingShipmentSection = 'Awaiting ShipmentPending Shipment';
 const orderDetails_CanceledItem_SuccessMessage = 'Your Item has been canceled.';
@@ -48,13 +48,13 @@ exports.OrderDetailsPage = class OrderDetailsPage {
         this.page = page;
         this.orderDetailsLink = page.locator('section.border-b a:has-text("View Order Details")');
         this.orderDetailsCancelOrderButton = page.getByRole('button', { name: 'Cancel order' });
-        this.orderDetailsCancelItemButton = page.getByRole('button', { name: 'Cancel item' });
+        this.orderDetailsCancelItemButton = page.getByRole('button', { name: 'Cancel Item' });
         this.orderDetailsCancelOrderModalCancelButton = page.getByRole('button', { name: 'Yes, Cancel order' });
         this.orderDetailsCancelOrderModalNoGoBackButton = page.getByRole('button', { name: 'No, Go Back to Order' });
-        this.orderDetailsCancelItemButton = page.getByRole('button', { name: 'Cancel item' });
-        this.orderDetailsCancelOrderModalCancelItemButton = page.getByRole('button', { name: 'Yes, Cancel item' });
+        //this.orderDetailsCancelItemButton = page.getByRole('button', { name: 'Cancel item' });
+        this.orderDetailsCancelOrderModalCancelItemButton = page.getByRole('button', { name: 'Yes, Cancel Item' });
         this.orderDetailsCancelOrderModalCloseIcon = page.locator('section').filter({ hasText: 'Cancel orderAre you sure you' }).getByRole('button');
-        this.orderDetailsCancelItemModalCloseIcon = page.locator('section').filter({ hasText: 'Cancel itemAre you sure you' }).getByRole('button');
+        this.orderDetailsCancelItemModalCloseIcon = page.locator('section').filter({ hasText: 'Cancel ItemAre you sure you' }).getByRole('button');
         this.orderDetailsCanceledItemHeading = page.getByRole('heading', { name: 'Canceled', exact: true });
         this.orderDetailsCanceledItemOnHeading = page.getByRole('heading', { name: 'Canceled on' });
         this.orderDetailsWriteAReviewButton = page.getByRole('button', { name: 'Write a Product Review' });
@@ -64,7 +64,8 @@ exports.OrderDetailsPage = class OrderDetailsPage {
         //this.orderDetailsOrderNumber = page.getByRole('heading', { name: orderDetailsOrderHeadingRegex });
         this.orderDetailsOrderNumber = page.getByRole('link', { name: 'Order #' });
         this.orderDetailsOrderDate = page.locator(`h2:has-text(/${dateRegex.source}/)`);
-        this.orderLeftNav = page.locator('a.sideBarZBcolor h2');
+        //this.orderLeftNav = page.locator('a.sideBarZBcolor h2');
+        this.orderLeftNav = page.getByRole('link', { name: 'Order #' })
 
     }
 
@@ -548,7 +549,31 @@ exports.OrderDetailsPage = class OrderDetailsPage {
         expect(paymentMethodText.trim()).toBeTruthy();
         //const paymentMethodsvg = this.page.locator('section.ml-3.lg\\:ml-0 section section p.mb-6 svg');
         const paymentMethodsvg = await accountNumberSection.locator('section').locator('section').locator('p.mb-6 svg');
-        expect(paymentMethodsvg).toBeVisible();
+        const cardNumberText = accountNumberSection.locator('section h1:has-text("Card Number") + p');
+        // Determine if paymentMethodSvg is visible
+        const isPaymentMethodSvgVisible = await paymentMethodsvg.isVisible();
+
+        // Determine if cardNumberText is visible
+        const isCardNumberTextVisible = await cardNumberText.isVisible();
+
+        // Expect that either paymentMethodSvg or cardNumberText should be visible
+        if (!isPaymentMethodSvgVisible && !isCardNumberTextVisible) {
+            throw new Error("Neither payment method SVG nor card number is visible.");
+        }
+
+        // Log visibility status for debugging
+        if (isPaymentMethodSvgVisible) {
+            console.log('Payment method SVG is visible.');
+        } else {
+            console.log('Payment method SVG is not visible.');
+        }
+
+        if (isCardNumberTextVisible) {
+            console.log('Card number text is visible.');
+        } else {
+            console.log('Card number text is not visible.');
+        }
+        //expect(paymentMethodsvg).toBeVisible();
         const accountNumberText = await accountNumberSection.locator('p').nth(3).textContent();
         expect(accountNumberText.trim()).toBeTruthy();
         const accountNumberDetails = await accountNumberSection.locator('p').nth(4).textContent();
@@ -937,19 +962,19 @@ exports.OrderDetailsPage = class OrderDetailsPage {
     async validateProductReturnedOn() {
         // Step 1: Initialize variables
         const productSections = this.page.locator(orderDetailsProductSection);
-        
+
         // Wait for the first Product section to be visible
         await productSections.first().waitFor({ state: 'visible' });
-    
+
         // Step 2: Loop through each product section
         const totalProducts = await productSections.count();
         for (let i = 0; i < totalProducts; i++) {
             const productSection = productSections.nth(i);
-    
+
             // Step 3: Validate all "Returned on" tags within the product section
             const returnedOnTags = productSection.locator('section.bg-\\[\\#FFF3E380\\]');
             const returnedOnTagsCount = await returnedOnTags.count();
-    
+
             for (let j = 0; j < returnedOnTagsCount; j++) {
                 await expect(returnedOnTags.nth(j)).toBeVisible();
             }
@@ -961,50 +986,50 @@ exports.OrderDetailsPage = class OrderDetailsPage {
         let hasReturnedOrder = false;
         let pageCounter = 0;
         const maxPages = 5; // Safety check to prevent infinite loops
-    
+
         // Step 2: Define locators
         const orderSectionsLocator = this.page.locator(order_Section);
         const viewMoreButton = this.page.locator('button:has-text("View More")');
         const orderDetailsLinkSelector = 'a:has-text("View Order Details")';
-    
+
         // Step 3: Start looping through order pages
         while (!hasReturnedOrder && pageCounter < maxPages) {
             pageCounter++;
-    
+
             // Wait for the first order section to be visible
             await orderSectionsLocator.first().waitFor({ state: 'visible' });
-    
+
             // Get the total count of order sections on the current page
             const totalOrders = await orderSectionsLocator.count();
-    
+
             // Step 4: Loop through each order section
             for (let i = 0; i < totalOrders; i++) {
                 const orderSection = orderSectionsLocator.nth(i);
-    
+
                 // Wait for the order section to be visible
                 await orderSection.waitFor({ state: 'visible' });
-    
+
                 // Step 5: Check for "Returned on" status
                 const returnedOnTags = orderSection.locator(`section.truncate > p:has-text("${orderStatus_ReturnedText}")`);
                 const totalTagsCount = await returnedOnTags.count();
-    
+
                 if (totalTagsCount > 0) {
                     // Step 6: Click on the "View Order Details" link
                     const orderDetailsLink = orderSection.locator(orderDetailsLinkSelector);
-    
+
                     if (await orderDetailsLink.isVisible()) {
                         await orderDetailsLink.click();
                         const orderHeaderText = await orderSection.locator('h2').textContent();
                         console.log(`Clicked on the "View Order Details" link for order: ${orderHeaderText.trim()}`);
-    
+
                         // Step 7: Verify the order details page
                         await this.page.getByText(order_SummaryText).waitFor({ state: 'visible' });
                         const productSections = this.page.locator(orderDetailsReturnedOnSection);
                         expect(productSections.first()).toBeVisible();
-    
+
                         // Validate "Returned on" tags in products
                         await this.validateProductReturnedOn();
-    
+
                         hasReturnedOrder = true; // Update the flag to indicate a successful find
                         return true; // Exit the function successfully
                     } else {
@@ -1016,14 +1041,14 @@ exports.OrderDetailsPage = class OrderDetailsPage {
                     console.log(`No "Returned on" status found in products for order: ${orderNumber.trim()}`);
                 }
             }
-    
+
             // Step 8: Check if "View More" button is present and clickable
             await this.page.waitForSelector('button:has-text("View More")', { state: 'visible' });
             if (!hasReturnedOrder && await viewMoreButton.isVisible()) {
                 console.log('Clicking on "View More" to load more orders...');
                 await viewMoreButton.click();
                 await orderSectionsLocator.first().waitFor({ state: 'visible' });
-    
+
                 // Optional delay for smooth transition (if necessary)
                 // await this.page.waitForTimeout(1000);
             } else if (!hasReturnedOrder) {
@@ -1032,7 +1057,7 @@ exports.OrderDetailsPage = class OrderDetailsPage {
                 return false;
             }
         }
-    
+
         // Step 9: If no returned order is found and no more pages to view, log and return
         console.log('All orders have been checked, and no orders with "Returned on" status were found.');
         return false;

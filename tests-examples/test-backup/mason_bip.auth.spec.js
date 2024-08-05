@@ -23,27 +23,6 @@ test.describe("Mason Commerce Tool Site", () => {
       //await page.goto(process.env.WEB_URL);
       await page.goto(process.env.BIP_URL);
       await page.waitForLoadState('networkidle');
-      if (isMobile == true) {
-        // const signinPage = new SignInPage(page);  
-        // await signinPage.clickSignInImage();
-        // await signinPage.clickSignIn();
-        // await signinPage.validateSignInDialog();
-        // await signinPage.login(process.env.USERNAME,process.env.PASSWORD);
-        // await signinPage.clickSignIn();
-      } else {
-        // const homePage = new HomePage(page);
-        // await homePage.clickOnHomePageSignIn();
-        // const signinPage = new SignInPage(page);
-        // await signinPage.validateWelcomeTextSignInDialog(signinpage_data.signin_dailog_text);
-        // await signinPage.validateWelcomeSignInDialog();
-        // await signinPage.clickSignIn();
-        // await signinPage.validateSignInDialog();
-        // await signinPage.login(process.env.NON_CREDIT_USER,process.env.NON_CREDIT_PASSWORD);
-        // await signinPage.clickSignIn();
-      }
-      const masonHomePageScreenshot = await page.screenshot();
-      await testInfo.attach('screenshot', { body: masonHomePageScreenshot, contentType: 'image/png' });
-      //await page.screenshot({ path: './screenshots/MasonHomePage.png', fullPage: true });
     } catch (error) {
       // Handle the error here
       console.error("An error occurred in test.beforeEach:", error);

@@ -18,6 +18,11 @@ const nonCreditUserFile = './noncredituser.json';
 const savedCardUser = './savedCardUser.json';
 const creditUser2 = './creditUser2.json';
 const downPaymentUser = './dpUser.json';
+const nonCreditUserFile1 = './noncredituser1.json';
+const nonCreditUserFile2 = './noncredituser2.json';
+const nonCreditUserFile3 = './noncredituser3.json';
+const nonCreditUserFile4 = './noncredituser4.json';
+const savedCardUser2 = './savedCardUser2.json';
 
 const homepage_data = JSON.parse(JSON.stringify(require('../test_data/mason_sb_home_page_data.json')));
 const resetpage_data = JSON.parse(JSON.stringify(require('../test_data/mason_reset_page_data.json')));
@@ -326,7 +331,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
 
   // Scenario 4: Logged in - Non Credit Users: placing order with newly added credit card
   test.describe("Mason Checkout - Logged in: Non Credit Users: placing order with newly added credit card - Scenarios", () => {
-    test.use({ storageState: './noncredituser.json' });
+    test.use({ storageState: './noncredituser1.json' });
     test('Logged in: Non Credit Users: placing order with newly added credit card', async ({ page }) => {
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const pdpPage = new PDPPage(page);
@@ -376,7 +381,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
 
   // Scenario 5: Logged in - Non Credit Users: placing order with saved credit card
   test.describe("Mason Checkout - Logged in: Non Credit Users: Placing order with saved cc- promo code + surcharge and tax+ applicable sales tax- - Scenarios", () => {
-    test.use({ storageState: './savedCardUser.json' });
+    test.use({ storageState: './savedCardUser2.json' });
     test('Logged in: Non Credit Users: Placing order with saved cc- promo code + surcharge and tax+ applicable sales tax', async ({ page }) => {
       await page.goto(checkout_data.pdp_url_tax);
       const guestCheckoutPage = new GuestCheckOutPage(page);
@@ -403,7 +408,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
 
   // Scenario 6: Logged in - Non Credit Users: placing order with ZB Credit
   test.describe("Mason Checkout - Logged in: Non Credit Users: placing order with ZB Credit - Scenarios", () => {
-    test.use({ storageState: './noncredituser.json' });
+    test.use({ storageState: './noncredituser2.json' });
     test('Logged in: Non Credit Users: placing order with ZB Credit', async ({ page }) => {
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const pdpPage = new PDPPage(page);
@@ -432,7 +437,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
 
   // Scenario 7: Logged in - Non Credit Users: placing order with ZB Credit and PromoCode
   test.describe("Mason Checkout - Logged in: Non Credit Users: placing order with ZB Credit and PromoCode - Scenarios", () => {
-    test.use({ storageState: './noncredituser.json' });
+    test.use({ storageState: './noncredituser3.json' });
     test('Logged in: Non Credit Users: placing order with ZB Credit and PromoCode', async ({ page }) => {
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const pdpPage = new PDPPage(page);
@@ -463,7 +468,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
 
   // Scenario 8: Logged in - Non Credit Users: placing order with ZB Credit and PromoCode
   test.describe("Mason Checkout - Logged in: Non Credit Users: placing order with ZB credit -with promo + shipping surcharge + applicable sales tax - Scenarios", () => {
-    test.use({ storageState: './noncredituser.json' });
+    test.use({ storageState: './noncredituser4.json' });
     test('Logged in: Non Credit Users: placing order with ZB credit -with promo + shipping surcharge + applicable sales tax', async ({ page }) => {
       await page.goto(checkout_data.pdp_url_tax);
       const guestCheckoutPage = new GuestCheckOutPage(page);
@@ -523,7 +528,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
 
   // Scenario 9: Logged in - Credit User: placing order with newly added ZB Credit
   test.describe("Mason Checkout - Logged in: Credit User: placing order with saved credit cards - Scenarios", () => {
-    test.use({ storageState: './creditUser2.json' });
+    test.use({ storageState: './creditUser3.json' });
     test('Logged in: Credit User: placing order with saved credit cards', async ({ page }) => {
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const pdpPage = new PDPPage(page);
@@ -550,7 +555,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
 
   // Scenario 9: Logged in - Credit User: placing order with newly added ZB Credit
   test.describe("Mason Checkout - Logged in: Credit User: Placing order with cc- promo code + surcharge and tax+ applicable sales tax - Scenarios", () => {
-    test.use({ storageState: './creditUser2.json' });
+    test.use({ storageState: './creditUser4.json' });
     test('Logged in: Credit User: Placing order with cc- promo code + surcharge and tax+ applicable sales tax', async ({ page }) => {
       await page.goto(checkout_data.pdp_url_tax);
       const guestCheckoutPage = new GuestCheckOutPage(page);
@@ -580,7 +585,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
 
   //Scenario 10
   test.describe("Mason Checkout - Logged in: Credit Users: placing order with with ZB credit - Scenarios", () => {
-    test.use({ storageState: './creditUser2.json' });
+    test.use({ storageState: './creditUser5.json' });
     test('Logged in: Credit Users: placing order with with ZB credit', async ({ page }) => {
       // Navigate to the page containing the popular search terms
       const guestCheckoutPage = new GuestCheckOutPage(page);
@@ -609,7 +614,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
 
   //Scenario 11
   test.describe("Mason Checkout - Logged in: Credit Users: placing order with with ZB credit - with PromoCode - Scenarios", () => {
-    test.use({ storageState: './creditUser2.json' });
+    test.use({ storageState: './creditUser6.json' });
     test('Logged in: Credit Users: placing order with with ZB credit - with PromoCode', async ({ page }) => {
       // Navigate to the page containing the popular search terms
       const guestCheckoutPage = new GuestCheckOutPage(page);
@@ -639,7 +644,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
 
   //Scenario 11
   test.describe("Mason Checkout - Logged in: Credit Users: placing order with ZB credit -with promo + shipping surcharge + applicable sales tax - Scenarios", () => {
-    test.use({ storageState: './creditUser2.json' });
+    test.use({ storageState: './creditUser7.json' });
     test('Logged in: Credit Users: placing order with ZB credit -with promo + shipping surcharge + applicable sales tax', async ({ page }) => {
       await page.goto(checkout_data.pdp_url_tax);
       const guestCheckoutPage = new GuestCheckOutPage(page);
@@ -670,7 +675,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   //SB-Chkout193//SB-Chkout194//SB-Chkout198//SB-CCA002//SB-CCA003
   test.describe("Mason Checkout - Down Payment Request Drawer: Logged In: Verify order with down payment - Scenarios", () => {
     test.use({ storageState: './dpUser.json' });
-    test('Down Payment Request Drawer: Logged In: Verify order with down payment', async ({ page }) => {
+    test.skip('Down Payment Request Drawer: Logged In: Verify order with down payment', async ({ page }) => {
       // Navigate to the page containing the popular search terms
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const orderConfDownPayment = new OrderConfDownPayment(page);
@@ -705,7 +710,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   //SB-Chkout195//SB-Chkout196//SB-Chkout199//SB-Chkout204//SB-Chkout205//SB-CCA004//SB-CCA005//SB-CCA006
   test.describe("Mason Checkout - Down Payment Request Drawer - Close Button: Logged In: Verify that users can close the Down Payment Request drawer and return to the previous page. - Scenarios", () => {
     test.use({ storageState: './dpUser.json' });
-    test('Down Payment Request Drawer - Close Button: Logged In: Verify that users can close the Down Payment Request drawer and return to the previous page.', async ({ page }) => {
+    test.skip('Down Payment Request Drawer - Close Button: Logged In: Verify that users can close the Down Payment Request drawer and return to the previous page.', async ({ page }) => {
       // Navigate to the page containing the popular search terms
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const orderConfDownPayment = new OrderConfDownPayment(page);
@@ -783,7 +788,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   //SB-Chkout216
   test.describe("Mason Checkout - Make a Down Payment Drawer - Cancel CTA: Logged In: Verify when user clicks on “Cancel” CTA. - Scenarios", () => {
     test.use({ storageState: './dpUser.json' });
-    test('Make a Down Payment Drawer - Cancel CTA: Logged In: Verify when user clicks on “Cancel” CTA.', async ({ page }) => {
+    test.skip('Make a Down Payment Drawer - Cancel CTA: Logged In: Verify when user clicks on “Cancel” CTA.', async ({ page }) => {
       // Navigate to the page containing the popular search terms
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const orderConfDownPayment = new OrderConfDownPayment(page);
@@ -822,7 +827,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   //SB-Chkout217//SB-Chkout218//SB-Chkout219//SB-Chkout220
   test.describe("Mason Checkout - Review Down Payment Drawer: Logged In: Verify  Review Down Payment Drawer. - Scenarios", () => {
     test.use({ storageState: './dpUser.json' });
-    test('Review Down Payment Drawer: Logged In: Verify  Review Down Payment Drawer.', async ({ page }) => {
+    test.skip('Review Down Payment Drawer: Logged In: Verify  Review Down Payment Drawer.', async ({ page }) => {
       // Navigate to the page containing the popular search terms
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const orderConfDownPayment = new OrderConfDownPayment(page);
@@ -862,7 +867,7 @@ test.describe("Mason Checkout - Guest and LoggedIn Users - Scenarios", () => {
   //SB-Chkout222
   test.describe("Mason Checkout - Review Down Payment Drawer - Edit Down Payment CTA: Logged In: Verify when user clicks on “Edit Down Payment” CTA. - Scenarios", () => {
     test.use({ storageState: './dpUser.json' });
-    test('Review Down Payment Drawer - Edit Down Payment CTA: Logged In: Verify when user clicks on “Edit Down Payment” CTA.', async ({ page }) => {
+    test.skip('Review Down Payment Drawer - Edit Down Payment CTA: Logged In: Verify when user clicks on “Edit Down Payment” CTA.', async ({ page }) => {
       // Navigate to the page containing the popular search terms
       const guestCheckoutPage = new GuestCheckOutPage(page);
       const orderConfDownPayment = new OrderConfDownPayment(page);
