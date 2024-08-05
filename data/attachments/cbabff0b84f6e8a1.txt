@@ -1,0 +1,19 @@
+Clicked button with index: 3
+No buttons found
+Product Name: Casual Home 4-Shelf Corner Folding Bookcase
+Product image is visible
+Detail: Honey/Oak
+Detail: No Size
+Detail: 
+Detail: $69.99
+Detail: $7.99/month*
+Product Name: Rockport Total Motion Sheehan Ornamented Loafer (Women's)
+Product image is visible
+Detail: Black
+Detail: 5
+Detail: M   Medium
+Detail: $113.99 $119.99
+Detail: $14.99/month*
+Promo code already applied
+Clicked on Credit/Debit Card button.
+Error Message: Error: The custom line item with slug 'shipping-surcharge' is missing an external tax amount and rate.
