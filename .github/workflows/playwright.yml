@@ -6,7 +6,7 @@ on:
     branches: [ main, master ]
 jobs:
   test:
-    name: Mason Checkout Scenarios
+    name: Mason Other Module Scenarios
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
