@@ -36,7 +36,7 @@ exports.OrderConfDownPayment = class OrderConfDownPayment {
         await expect(this.downPaymentHeaderText).toBeVisible();
         await expect(this.downPaymentSectionText1).toBeVisible();
         await expect(this.downPaymentSectionText2.first()).toBeVisible();
-        await expect(this.downPaymentSectionText3).toBeVisible();
+        await expect(this.downPaymentSectionText3.first()).toBeVisible();
         await expect(this.downPaymentMakeADownPaymentButton).toBeVisible();
         await expect(this.downPaymentLearnMoreButton).toBeVisible();
     }

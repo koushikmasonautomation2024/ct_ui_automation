@@ -44,10 +44,10 @@ async function globalSetup(config) {
   await authenticateUser(page1, process.env.CREDIT_USER_5, creditUser5);
   await page1.close();
 
-  // // Authenticate as user2
-  // const page2 = await browser.newPage();
-  // await authenticateUser(page2, process.env.CREDIT_USER_6, creditUser6);
-  // await page2.close();
+  // Authenticate as user2
+  const page2 = await browser.newPage();
+  await authenticateUser(page2, process.env.CREDIT_USER_6, creditUser6);
+  await page2.close();
 
   // Authenticate as user2
   const page3 = await browser.newPage();
@@ -78,11 +78,12 @@ async function authenticateUser(page, userEmail, storageFile) {
     await page.getByLabel('*Password').click();
     await page.getByLabel('*Password').fill(process.env.CREDIT_USER_PASSWORD);
     await page.getByRole('button', { name: 'Sign In' }).click({ timeout: 10000 });
-    await page.goto('https://stage--stoneberry-masoncompanies.netlify.app/account/dashboard/');
+    await page.waitForURL('**/account/dashboard/');
+    //await page.goto('https://www-stg2.stoneberry.com/account/dashboard/');
     const signinPage = new SignInPageNew(page);
     await signinPage.waitForMyAccountDashboardLoad();
     await signinPage.validateSignInMessage(signinpage_data.signin_success_text);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await page.context().storageState({ path: storageFile });
   } catch (error) {
     console.error(`Authentication failed for ${userEmail}:`, error);
