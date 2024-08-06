@@ -1,0 +1,33 @@
+Clicked button with index: 2
+Clicked button with index: 0
+Add to Cart button is enabled.
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Lilac
+Detail: Full
+Detail: 
+Detail: $69.99
+Detail: $7.99/month*
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Aqua
+Detail: Queen
+Detail: 
+Detail: $79.99
+Detail: $9.99/month*
+Clicked on Credit/Debit Card button.
+10
+[
+  '*Select Credit Card',
+  'Visa **** 7777',
+  'Visa **** 7777',
+  'Visa **** 7777',
+  'Visa **** 7777',
+  'Visa **** 7777',
+  'Visa **** 7777',
+  'Visa **** 7777',
+  'Visa **** 7777',
+  'Visa **** 7777'
+]
+Selected option: Visa **** 7777
+Visa **** 7777

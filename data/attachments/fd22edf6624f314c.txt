@@ -1,0 +1,4 @@
+Successfully navigated to the subcategory page.
+0 items
+Filter "Glass" applied successfully.
+[ 'Glass  (1)' ]

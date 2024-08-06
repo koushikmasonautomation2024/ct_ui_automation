@@ -1,0 +1,4 @@
+Alphabet 'I' is not present.
+Alphabet 'T' is not present.
+Selected Link: JSHandle@<a href="vevo-active"> Vevo Active</a>
+Selected Brand: Vevo Active

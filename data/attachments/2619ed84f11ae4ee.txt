@@ -1,0 +1,188 @@
+Clicked button with index: 3
+Clicked button with index: 1
+Add to Cart button is enabled.
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Aqua
+Detail: Queen
+Detail: 
+Detail: $79.99
+Detail: $9.99/month*
+Product Name: Lace Flounce Hem Dress
+Product image is visible
+Detail: Black
+Detail: 2X
+Detail: 
+Detail: $56.99 $59.99
+Detail: $7.99/month*
+Product Name: Lace Flounce Hem Dress
+Product image is visible
+Detail: Black
+Detail: S
+Detail: 
+Detail: $56.99 $59.99
+Detail: $7.99/month*
+Product Name: Lace Flounce Hem Dress
+Product image is visible
+Detail: Black
+Detail: 3X
+Detail: 
+Detail: $56.99 $59.99
+Detail: $7.99/month*
+Product Name: Lace Flounce Hem Dress
+Product image is visible
+Detail: Black
+Detail: XL
+Detail: 
+Detail: $56.99 $59.99
+Detail: $7.99/month*
+Product Name: Lace Flounce Hem Dress
+Product image is visible
+Detail: Black
+Detail: M
+Detail: 
+Detail: $56.99 $59.99
+Detail: $7.99/month*
+Product Name: Lace Flounce Hem Dress
+Product image is visible
+Detail: Black
+Detail: 1X
+Detail: 
+Detail: $56.99 $59.99
+Detail: $7.99/month*
+Product Name: Lace Flounce Hem Dress
+Product image is visible
+Detail: Black
+Detail: L
+Detail: 
+Detail: $56.99 $59.99
+Detail: $7.99/month*
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Lilac
+Detail: Queen
+Detail: 
+Detail: $79.99
+Detail: $9.99/month*
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Pink
+Detail: Full
+Detail: 
+Detail: $69.99
+Detail: $7.99/month*
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Aqua
+Detail: Full
+Detail: 
+Detail: $69.99
+Detail: $7.99/month*
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Lilac
+Detail: Full
+Detail: 
+Detail: $69.99
+Detail: $7.99/month*
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Blue
+Detail: Queen
+Detail: 
+Detail: $79.99
+Detail: $9.99/month*
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Aqua
+Detail: Twin
+Detail: 
+Detail: $59.99
+Detail: $7.99/month*
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Blue
+Detail: Twin
+Detail: 
+Detail: $59.99
+Detail: $7.99/month*
+Product Name: Franchise Club Men's Walk-On Hooded Jacket
+Product image is visible
+Detail: Wisconsin Badgers/Red
+Detail: S
+Detail: 
+Detail: $109.99
+Detail: $14.99/month*
+Product Name: Under Armour Men's Under Armour Rival Fleece Logo Jogger
+Product image is visible
+Detail: Marine OD Green
+Detail: XL-Regular
+Detail: 
+Detail: $54.99
+Detail: $7.99/month*
+Product Name: Under Armour Men's Under Armour Rival Fleece Logo Jogger
+Product image is visible
+Detail: Black
+Detail: XXXL-Regular
+Detail: 
+Detail: $54.99
+Detail: $7.99/month*
+Product Name: Under Armour Men's Under Armour Rival Fleece Logo Jogger
+Product image is visible
+Detail: Midnight Navy
+Detail: XXL-Regular
+Detail: 
+Detail: $54.99
+Detail: $7.99/month*
+Product Name: Under Armour Men's Under Armour Rival Fleece Logo Jogger
+Product image is visible
+Detail: Marine OD Green
+Detail: XXXXL-Regular
+Detail: 
+Detail: $54.99
+Detail: $7.99/month*
+Product Name: Under Armour Men's Under Armour Rival Fleece Logo Jogger
+Product image is visible
+Detail: Photon Blue
+Detail: S-Regular
+Detail: 
+Detail: $54.99
+Detail: $7.99/month*
+Product Name: Under Armour Men's Under Armour Rival Fleece Logo Jogger
+Product image is visible
+Detail: Photon Blue
+Detail: L-Regular
+Detail: 
+Detail: $54.99
+Detail: $7.99/month*
+Product Name: Under Armour Men's Under Armour Rival Fleece Logo Jogger
+Product image is visible
+Detail: Midnight Navy
+Detail: S-Regular
+Detail: 
+Detail: $54.99
+Detail: $7.99/month*
+Product Name: Under Armour Men's Under Armour Rival Fleece Logo Jogger
+Product image is visible
+Detail: Dark Maroon
+Detail: XXXL-Regular
+Detail: 
+Detail: $48.97 $54.99
+Detail: $5.99/month*
+Product Name: Under Armour Men's Under Armour Rival Fleece Logo Jogger
+Product image is visible
+Detail: Castlerock Light Heather
+Detail: XXXXL-Regular
+Detail: 
+Detail: $54.99
+Detail: $7.99/month*
+Product Name: Under Armour Boys' Prototype 2.0 Logo Shorts
+Product image is visible
+Detail: Black-White
+Detail: S
+Detail: 
+Detail: $19.99
+Detail: $5.99/month*
+Validation failed: Shipping is not highlighted with bluish and bold text.
+Validation passed: Review is greyed out.
+Validation passed: Payment is greyed out.
