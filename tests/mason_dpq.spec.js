@@ -48,7 +48,7 @@ test.describe("Mason DPQ Scenarios", () => {
 
   })
 
-  //SB-DPQ001 //SB-DPQ002 //SB-DPQ003
+  //SB-DPQ001 //SB-DPQ002//SB-DPQ003
   test('Verify DPQ Navigation from the link and Logo with it at centre check', async ({ page }) => {
     // Navigate to the page containing the popular search terms
     const dpqPage = new MasonDPQPage(page);
