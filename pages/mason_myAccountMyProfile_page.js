@@ -7,7 +7,8 @@ const createAccountpage_data =JSON.parse(JSON.stringify(require('../test_data/ma
 exports.MyAccountMyProfilePage = class MyAccountMyProfilePage{
     constructor(page){
         this.page=page;
-        this.myaccount_changepassword_currentpassword=page.getByRole('textbox', { name: myaccountpage_locator.myaccount_changepassword_currentpassword });
+        this.myaccount_changepassword_currentpassword=page.getByLabel(myaccountpage_locator.myaccount_changepassword_currentpassword);
+        this.myaccount_changepassword_passwordonemail=page.getByLabel('*Password');
         this.myaccount_myprofile_contactinformation=page.getByRole('heading', { name: myaccountpage_locator.myaccount_myprofile_contactinformation });
         this.myaccount_myprofile_savechanges_button=page.getByRole('button', { name: myaccountpage_locator.myaccount_myprofile_savechanges_button });
         this.myaccount_myprofile_changepassword=page.locator(myaccountpage_locator.myaccount_myprofile_changepassword);
@@ -173,7 +174,7 @@ exports.MyAccountMyProfilePage = class MyAccountMyProfilePage{
     }
 
     async enterPasswordOnEmailModal(password){
-        this.myaccount_changepassword_currentpassword.click();
+        this.myaccount_changepassword_passwordonemail.click();
         this.myaccount_changepassword_currentpassword.fill(password);
     }
 
@@ -191,7 +192,7 @@ exports.MyAccountMyProfilePage = class MyAccountMyProfilePage{
     }
 
     async readPasswordFromTextboxAndValidate(password){
-        await expect(this.myaccount_changepassword_currentpassword).toHaveValue(password);
+        await expect(this.myaccount_changepassword_passwordonemail).toHaveValue(password);
     }
 
     async readPasswordFromTextboxAndValidateProfile(password){
@@ -227,7 +228,7 @@ exports.MyAccountMyProfilePage = class MyAccountMyProfilePage{
     }
 
     async validatePasswordIsShown(){
-        const passwordTextbox=this.myaccount_changepassword_currentpassword;
+        const passwordTextbox=this.myaccount_changepassword_passwordonemail;
         const shown_password = await passwordTextbox.getAttribute('type') === 'text';
         // console.log(shown_password);
         // console.log(passwordTextbox.getAttribute('type'));

@@ -97,7 +97,7 @@ exports.NewUserMyAccountPage = class NewUserMyAccountPage{
         // Verify "Learn More" button navigation
         await learnMoreButton.click();
         await this.page.waitForNavigation();
-        expect(this.page).toHaveURL(/.*buynowpaylater/);
+        expect(this.page).toHaveURL(/.*buy-now-pay-later/);
     }
 
     async enterCustomerAccountNumber(enterCustomerAccountNumber){

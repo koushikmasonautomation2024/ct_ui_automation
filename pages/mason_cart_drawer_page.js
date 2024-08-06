@@ -3,6 +3,7 @@ import { allowedNodeEnvironmentFlags } from 'process';
 import { PDPPage } from '../pages/mason_pdp_page';
 
 const productStockLeft = 'strong.text-stoneberry-onlyLeft';
+const pdp_colorvariant_button_locator = 'section.flex.flex-wrap.items-center.gap-5 button[aria-label="choose color button"]';
 
 exports.CartDrawerPage = class CartDrawerPage {
     constructor(page) {
@@ -24,6 +25,7 @@ exports.CartDrawerPage = class CartDrawerPage {
         this.miniCartCheckoutButton = page.getByRole('button', { name: 'Check Out' });
         this.addtoCartButton = page.getByRole('button', { name: 'Add to Cart' });
         this.chooseOptions = page.getByText('Choose Options');
+        this.pdp_colorvariant_button = page.locator(pdp_colorvariant_button_locator);
 
     }
 
@@ -119,6 +121,36 @@ exports.CartDrawerPage = class CartDrawerPage {
             }
         } else {
             console.log('No buttons found on the PLP page');
+        }
+    }
+
+    async navigateToPDPFromPLP() {
+        await this.addtoCartButtonPLP.first().waitFor({ state: 'visible' });
+        // Wait for the product list to be visible
+        await this.page.waitForSelector('.ais-Hits');
+
+        // Get all product items on the PLP
+        const productItems = await this.page.$$('.ais-Hits-item');
+
+        // Check if there are any product items
+        if (productItems.length > 0) {
+            // Select a random product index
+            const randomIndex = Math.floor(Math.random() * productItems.length);
+
+            // Click on the product name or image
+            const product = productItems[randomIndex];
+            const productLink = await product.$('a[href]'); // Finds the anchor tag
+
+            // Check if the link exists and click it
+            if (productLink) {
+                await productLink.click();
+                await this.pdp_colorvariant_button.first().waitFor({ state: 'visible' });
+                console.log('Product clicked successfully');
+            } else {
+                console.log('No clickable product link found');
+            }
+        } else {
+            console.log('No products found on the PLP');
         }
     }
 
@@ -315,7 +347,7 @@ exports.CartDrawerPage = class CartDrawerPage {
     }
 
     async cartDrawerSuccessMessage() {
-        await this.page.getByText('item added to cart').waitFor({state:'visible'});
+        await this.page.getByText('item added to cart').waitFor({ state: 'visible' });
         await expect(this.page.getByText('item added to cart')).toBeVisible();
     }
 }

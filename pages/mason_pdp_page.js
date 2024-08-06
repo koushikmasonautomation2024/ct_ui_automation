@@ -33,8 +33,11 @@ exports.PDPPage = class PDPPage {
         this.priceSectionLocator = page.locator('section.flex.items-center.gap-x-1.pt-30');
         this.paymentSectionLocator = page.locator('section.flex.gap-1.pt-5');
         this.creditMessageLocator = page.locator('section.mt-4.py-5');
-        this.qtyMinusButton = page.locator('div.flex > button:nth-child(1)');
-        this.qtyPlusButton = page.locator('div.flex > button:nth-child(3)');
+        // this.qtyMinusButton = page.locator('button[aria-label="Decrease Quantity"]');
+        // this.qtyPlusButton = page.locator('button[aria-label="Increase Quantity"]');
+        // this.defaultQtyPlusButton = page.locator('button[aria-label="Increase Quantity"]');
+        this.qtyMinusButton = page.locator('.whitespace-nowrap').first();
+        this.qtyPlusButton = page.getByRole('button', { name: '+' });
         this.defaultQtyPlusButton = page.locator('div.flex > button:nth-child(3)').first();
         this.qtyInputTextBox = page.locator('input.numberInputCounter');
         this.qtyText = page.getByText('Qty:');
@@ -581,9 +584,10 @@ exports.PDPPage = class PDPPage {
 
     async validateProductQTYIncreaseDecrease() {
         await this.qtyText.waitFor({ state: 'visible' });
-        // Check if both buttons are disabled
-        const isMinusButtonDisabled = await this.qtyMinusButton.isDisabled();
-        const isPlusButtonDisabled = await this.defaultQtyPlusButton.isDisabled();
+        // Check if both buttons are disabled    
+        const isPlusButtonDisabled =  await this.page.getByRole('button', { name: '+' }).isDisabled();
+        const isMinusButtonDisabled = await this.page.locator('.whitespace-nowrap').first().isDisabled();
+        
 
         // If both buttons are disabled, assert that the quantity cannot be updated
         if (isMinusButtonDisabled && isPlusButtonDisabled) {
@@ -722,6 +726,38 @@ exports.PDPPage = class PDPPage {
             console.log('Cart count element is not visible:', error);
             return '0';
         }
+    }
+
+    async validateSimilarItem() {
+        await this.page.waitForSelector('section.auc-Recommend');
+        // Locate the 'Similar Items' section
+        const similarItemsSection = this.page.locator('section.auc-Recommend');
+
+        // Assert that the 'Similar Items' header is present
+        const similarItemsHeader = this.page.locator('strong:text("Similar Items")');
+        await expect(similarItemsHeader).toBeVisible();
+
+        
+        const products = await this.page.$$eval('.swiper-slide', (items) =>
+            items.map((item) => {
+                try {
+                    const titleElement = item.querySelector('p');
+                    const priceElement = item.querySelector('strong.text-[#DF2429]');
+                    const linkElement = item.querySelector('a');
+
+                    const title = titleElement ? titleElement.textContent.trim() : 'No title';
+                    const price = priceElement ? priceElement.textContent.trim() : 'No price';
+                    const link = linkElement ? linkElement.href : 'No link';
+
+                    return { title, price, link };
+                } catch (error) {
+                    console.error('Error extracting product data:', error);
+                    return { title: 'Error', price: 'Error', link: 'Error' };
+                }
+            })
+        );
+
+        console.log(products);
     }
 
 }

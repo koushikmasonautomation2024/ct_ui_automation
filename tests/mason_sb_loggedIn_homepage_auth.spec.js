@@ -8,7 +8,7 @@ import fs from 'fs';
 require('dotenv').config();
 const creditUserFile = './credituser.json';
 const nonCreditUserFile = './noncredituser.json';
-const newUserFile = './newuser.json';
+const newUserFile = './newuseremptycart.json';
 const profileUserFile = './profileuser.json';
 
 const homepage_data = JSON.parse(JSON.stringify(require('../test_data/mason_sb_home_page_data.json')));
