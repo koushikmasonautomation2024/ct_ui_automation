@@ -1,4 +1,5 @@
 name: Run Mason Automation Tests and Publish Report
+run-name: Mason Other Module Scenarios
 on:
   push:
     branches: [ main, master ]

@@ -585,9 +585,9 @@ exports.PDPPage = class PDPPage {
     async validateProductQTYIncreaseDecrease() {
         await this.qtyText.waitFor({ state: 'visible' });
         // Check if both buttons are disabled    
-        const isPlusButtonDisabled =  await this.page.getByRole('button', { name: '+' }).isDisabled();
+        const isPlusButtonDisabled = await this.page.getByRole('button', { name: '+' }).isDisabled();
         const isMinusButtonDisabled = await this.page.locator('.whitespace-nowrap').first().isDisabled();
-        
+
 
         // If both buttons are disabled, assert that the quantity cannot be updated
         if (isMinusButtonDisabled && isPlusButtonDisabled) {
@@ -737,27 +737,135 @@ exports.PDPPage = class PDPPage {
         const similarItemsHeader = this.page.locator('strong:text("Similar Items")');
         await expect(similarItemsHeader).toBeVisible();
 
-        
-        const products = await this.page.$$eval('.swiper-slide', (items) =>
-            items.map((item) => {
-                try {
-                    const titleElement = item.querySelector('p');
-                    const priceElement = item.querySelector('strong.text-[#DF2429]');
-                    const linkElement = item.querySelector('a');
+        // Locate all similar item products
+        const similarItems = similarItemsSection.locator('.swiper-slide');
 
-                    const title = titleElement ? titleElement.textContent.trim() : 'No title';
-                    const price = priceElement ? priceElement.textContent.trim() : 'No price';
-                    const link = linkElement ? linkElement.href : 'No link';
+        // Count the number of similar items
+        const itemCount = await similarItems.count();
 
-                    return { title, price, link };
-                } catch (error) {
-                    console.error('Error extracting product data:', error);
-                    return { title: 'Error', price: 'Error', link: 'Error' };
-                }
-            })
-        );
+        // Log the item count for debugging
+        console.log(`Number of similar items: ${itemCount}`);
 
-        console.log(products);
+        // Iterate through each similar item and validate its contents
+        for (let i = 0; i < itemCount; i++) {
+            const item = similarItems.nth(i);
+
+            // Extract the product title
+            const productTitle = await item.locator('p[class*="min-h-10"]').innerText();
+            console.log(`Product Title: ${productTitle}`);
+
+            // Validate the product title is not empty
+            await expect(productTitle).not.toBe('');
+
+            // Extract the product link
+            const productLink = await item.locator('a[href]').first().getAttribute('href');
+            console.log(`Product Link: ${productLink}`);
+
+            // Validate the product link is a valid URL
+            await expect(productLink).toMatch(/^\/product\/.+$/);
+
+            // Check if the product has a price (if applicable)
+            const priceElement = item.locator('strong[class*="text-[#DF2429]"]');
+            if (await priceElement.count() > 0) {
+                const price = await priceElement.innerText();
+                console.log(`Price: ${price}`);
+
+                // Validate the price format (optional)
+                await expect(price).toMatch(/^\$\d+(\.\d{2})?$/);
+            }
+
+            // Validate rating and number of reviews
+            const ratingElement = item.locator('section.flex.items-center svg');
+            const ratingCount = await ratingElement.count();
+            console.log(`Rating Count: ${ratingCount}`);
+
+            // Assert the rating count is within the expected range (e.g., 0 to 5 stars)
+            await expect(ratingCount).toBeGreaterThanOrEqual(0);
+            await expect(ratingCount).toBeLessThanOrEqual(5);
+
+            // Validate the additional attributes (e.g., product ID)
+            const additionalInfo = await item.evaluate((node) => {
+                const data = node.querySelector('a')?.getAttribute('href');
+                const id = data ? data.split('/')[3] : null;
+                return { id };
+            });
+
+            // Log the additional information for debugging
+            console.log(`Product ID: ${additionalInfo.id}`);
+
+            // Validate the extracted product ID
+            await expect(additionalInfo.id).not.toBeNull();
+        }
+    }
+
+    async validateRecentlyViewedItem() {
+        await this.page.waitForSelector('section.auc-Recommend');
+        // Locate the 'Similar Items' section
+        const similarItemsSection = this.page.locator('section.auc-Recommend');
+
+        // Assert that the 'Similar Items' header is present
+        const similarItemsHeader = this.page.locator('strong:text("Recently Viewed")');
+        await expect(similarItemsHeader).toBeVisible();
+
+        // Locate all similar item products
+        const similarItems = similarItemsSection.locator('.swiper-slide');
+
+        // Count the number of similar items
+        const itemCount = await similarItems.count();
+
+        // Log the item count for debugging
+        console.log(`Number of similar items: ${itemCount}`);
+
+        // Iterate through each similar item and validate its contents
+        for (let i = 0; i < itemCount; i++) {
+            const item = similarItems.nth(i);
+
+            // Extract the product title
+            const productTitle = await item.locator('p[class*="min-h-10"]').innerText();
+            console.log(`Product Title: ${productTitle}`);
+
+            // Validate the product title is not empty
+            await expect(productTitle).not.toBe('');
+
+            // Extract the product link
+            const productLink = await item.locator('a[href]').first().getAttribute('href');
+            console.log(`Product Link: ${productLink}`);
+
+            // Validate the product link is a valid URL
+            await expect(productLink).toMatch(/^\/product\/.+$/);
+
+            // Check if the product has a price (if applicable)
+            const priceElement = item.locator('strong[class*="text-[#DF2429]"]');
+            if (await priceElement.count() > 0) {
+                const price = await priceElement.innerText();
+                console.log(`Price: ${price}`);
+
+                // Validate the price format (optional)
+                await expect(price).toMatch(/^\$\d+(\.\d{2})?$/);
+            }
+
+            // Validate rating and number of reviews
+            const ratingElement = item.locator('section.flex.items-center svg');
+            const ratingCount = await ratingElement.count();
+            console.log(`Rating Count: ${ratingCount}`);
+
+            // Assert the rating count is within the expected range (e.g., 0 to 5 stars)
+            await expect(ratingCount).toBeGreaterThanOrEqual(0);
+            await expect(ratingCount).toBeLessThanOrEqual(5);
+
+            // Validate the additional attributes (e.g., product ID)
+            const additionalInfo = await item.evaluate((node) => {
+                const data = node.querySelector('a')?.getAttribute('href');
+                const id = data ? data.split('/')[3] : null;
+                return { id };
+            });
+
+            // Log the additional information for debugging
+            console.log(`Product ID: ${additionalInfo.id}`);
+
+            // Validate the extracted product ID
+            await expect(additionalInfo.id).not.toBeNull();
+        }
     }
 
 }

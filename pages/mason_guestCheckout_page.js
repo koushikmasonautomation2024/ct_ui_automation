@@ -315,7 +315,8 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
 
 
   async validateNeedHelpSection() {
-    await expect(this.page.getByText('Need Help?')).toBeVisible({ timeout: 10000 });
+    await this.page.getByText('Need Help?').waitFor({state:'visible'});
+    await expect(this.page.getByText('Need Help?')).toBeVisible();
     await expect(this.page.getByText('View FAQs:')).toBeVisible();
     await expect(this.page.getByText('Find your answer by visiting')).toBeVisible();
     await expect(this.page.getByText('Chat With Us:')).toBeVisible();
