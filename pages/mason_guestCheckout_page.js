@@ -1091,7 +1091,7 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     await expect(this.page.locator('li').filter({ hasText: 'Estimated Sales Tax:$' }).getByLabel('tooltip')).toBeVisible();
     await expect(this.page.locator('li').filter({ hasText: 'Shipping Surcharge:$' }).getByLabel('tooltip')).toBeVisible();
     await expect(this.page.getByRole('button', { name: 'Apply Promo Code (optional)' })).toBeVisible();
-    await expect(this.page.getByRole('button', { name: 'Apply Promo Code (optional)' }).getByLabel('tooltip')).toBeVisible();
+    await expect(this.page.locator('.absolute > button')).toBeVisible();
 
   }
 
