@@ -1,0 +1,202 @@
+Error validating brands under alphabet 'P': ExpectError: expect(received).toEqual(expected) // deep equality
+
+- Expected  - 1
++ Received  + 1
+
+@@ -1,6 +1,7 @@
+  Array [
++   "PÜR",
+    "P3 International",
+    "Pacific Accents",
+    "Pacific Casual",
+    "Pacific Play Tents",
+    "Paco Rabanne",
+@@ -116,11 +117,10 @@
+    "Proxy",
+    "Pullman-Holt",
+    "Pulsar",
+    "Pulse Performance",
+    "PUMA",
+-   "PÜR",
+    "Pure Daily Care",
+    "Pure Elegance",
+    "Pure Enrichment",
+    "Pure Form",
+    "Pure Rest",
+    at MasonBIPPage.validateBrandsUnderRandomAlphabet (/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_bip_page.js:165:50)
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_bip.auth.spec.js:71:5 {
+  matcherResult: {
+    actual: [
+      'PÜR',                 'P3 International',     'Pacific Accents',
+      'Pacific Casual',      'Pacific Play Tents',   'Paco Rabanne',
+      'Pajama Jeans',        "Palmer's",             'Paloma Picasso',
+      'Palomino',            'Panama Jack',          'Panasonic',
+      'Pantene Gold',        'Paperlike',            'Paramount',
+      'Parfums Belcam',      'Parfums Chloe',        'Parfums De Coeur',
+      'Parfums Gres',        'Parfums Rivera',       'PARIKHS',
+      'Paris Hilton',        'Parlophone',           'Patchology',
+      'Patio Premier',       'Patio Wise',           'Patriot Viper',
+      'Paul Mitchell',       'Paul Sebastian',       'Paula Deen',
+      'Pause Well Aging',    'Paw Patrol',           'Payot',
+      'PBS',                 'Peak By Ashley',       'Peanuts',
+      'Pearl Records',       'Peavey',               'Ped Egg',
+      'Penn',                'Pepe Jeans',           'Performance Tool',
+      "Perfumer's Workshop", 'Perricone',            'Perry Ellis',
+      'Personal Pedi',       'Peter Thomas Roth',    'Pfaltzgraff',
+      'Pflueger',            'Phantom Chef',         'Philco',
+      'Philips',             'Philips Avent',        'Philips Norelco',
+      'Philips Sonicare',    'Philosophy',           'Phonex Ready Net',
+      'Physicians Formula',  'Pic',                  'Picnic Time',
+      'Pierre Cardin',       'Pillow Pets',          'Pink Floyd',
+      'Pink Floyd Records',  'Pino Silvestre',       'Pixar',
+      'Plaion',              'Plano',                'Play 24-7',
+      'Play-Doh',            'Playmobil',            'Playtex®',
+      'PlayWheels',          'Polaroid',             'Polydor',
+      'PonyLand Toys',       'Pool Central',         'Popband',
+      'Pore Renew',          'Portasol',             'Porter-Cable',
+      'POSH',                'Powell Home Fashions', 'Power Acoustik',
+      'Power Bright',        'Power To Go',          'PowerBass',
+      'PowerFit',            'Powermax',             'PowerXL',
+      'Prada',               'Precious Moments',     'Premium',
+      'Prepac',              'Press Play',           'Pressman',
+      'Presto',              'Presto Plug',          'Pretty In Pink',
+      'Preval',
+      ... 31 more items
+    ],
+    expected: [
+      'P3 International',     'Pacific Accents',  'Pacific Casual',
+      'Pacific Play Tents',   'Paco Rabanne',     'Pajama Jeans',
+      "Palmer's",             'Paloma Picasso',   'Palomino',
+      'Panama Jack',          'Panasonic',        'Pantene Gold',
+      'Paperlike',            'Paramount',        'Parfums Belcam',
+      'Parfums Chloe',        'Parfums De Coeur', 'Parfums Gres',
+      'Parfums Rivera',       'PARIKHS',          'Paris Hilton',
+      'Parlophone',           'Patchology',       'Patio Premier',
+      'Patio Wise',           'Patriot Viper',    'Paul Mitchell',
+      'Paul Sebastian',       'Paula Deen',       'Pause Well Aging',
+      'Paw Patrol',           'Payot',            'PBS',
+      'Peak By Ashley',       'Peanuts',          'Pearl Records',
+      'Peavey',               'Ped Egg',          'Penn',
+      'Pepe Jeans',           'Performance Tool', "Perfumer's Workshop",
+      'Perricone',            'Perry Ellis',      'Personal Pedi',
+      'Peter Thomas Roth',    'Pfaltzgraff',      'Pflueger',
+      'Phantom Chef',         'Philco',           'Philips',
+      'Philips Avent',        'Philips Norelco',  'Philips Sonicare',
+      'Philosophy',           'Phonex Ready Net', 'Physicians Formula',
+      'Pic',                  'Picnic Time',      'Pierre Cardin',
+      'Pillow Pets',          'Pink Floyd',       'Pink Floyd Records',
+      'Pino Silvestre',       'Pixar',            'Plaion',
+      'Plano',                'Play 24-7',        'Play-Doh',
+      'Playmobil',            'Playtex®',         'PlayWheels',
+      'Polaroid',             'Polydor',          'PonyLand Toys',
+      'Pool Central',         'Popband',          'Pore Renew',
+      'Portasol',             'Porter-Cable',     'POSH',
+      'Powell Home Fashions', 'Power Acoustik',   'Power Bright',
+      'Power To Go',          'PowerBass',        'PowerFit',
+      'Powermax',             'PowerXL',          'Prada',
+      'Precious Moments',     'Premium',          'Prepac',
+      'Press Play',           'Pressman',         'Presto',
+      'Presto Plug',          'Pretty In Pink',   'Preval',
+      'PREVENTION',
+      ... 31 more items
+    ],
+    message: '\x1B[2mexpect(\x1B[22m\x1B[31mreceived\x1B[39m\x1B[2m).\x1B[22mtoEqual\x1B[2m(\x1B[22m\x1B[32mexpected\x1B[39m\x1B[2m) // deep equality\x1B[22m\n' +
+      '\n' +
+      '\x1B[32m- Expected  - 1\x1B[39m\n' +
+      '\x1B[31m+ Received  + 1\x1B[39m\n' +
+      '\n' +
+      '\x1B[33m@@ -1,6 +1,7 @@\x1B[39m\n' +
+      '\x1B[2m  Array [\x1B[22m\n' +
+      '\x1B[31m+   "PÜR",\x1B[39m\n' +
+      '\x1B[2m    "P3 International",\x1B[22m\n' +
+      '\x1B[2m    "Pacific Accents",\x1B[22m\n' +
+      '\x1B[2m    "Pacific Casual",\x1B[22m\n' +
+      '\x1B[2m    "Pacific Play Tents",\x1B[22m\n' +
+      '\x1B[2m    "Paco Rabanne",\x1B[22m\n' +
+      '\x1B[33m@@ -116,11 +117,10 @@\x1B[39m\n' +
+      '\x1B[2m    "Proxy",\x1B[22m\n' +
+      '\x1B[2m    "Pullman-Holt",\x1B[22m\n' +
+      '\x1B[2m    "Pulsar",\x1B[22m\n' +
+      '\x1B[2m    "Pulse Performance",\x1B[22m\n' +
+      '\x1B[2m    "PUMA",\x1B[22m\n' +
+      '\x1B[32m-   "PÜR",\x1B[39m\n' +
+      '\x1B[2m    "Pure Daily Care",\x1B[22m\n' +
+      '\x1B[2m    "Pure Elegance",\x1B[22m\n' +
+      '\x1B[2m    "Pure Enrichment",\x1B[22m\n' +
+      '\x1B[2m    "Pure Form",\x1B[22m\n' +
+      '\x1B[2m    "Pure Rest",\x1B[22m',
+    name: 'toEqual',
+    pass: false
+  },
+  [Symbol(step)]: {
+    stepId: 'expect@302',
+    category: 'expect',
+    title: 'expect.toEqual',
+    params: { expected: [Array] },
+    infectParentStepsWithError: undefined,
+    boxedStack: undefined,
+    location: {
+      file: '/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_bip_page.js',
+      line: 165,
+      column: 50,
+      function: 'MasonBIPPage.validateBrandsUnderRandomAlphabet'
+    },
+    steps: [],
+    complete: [Function: complete],
+    endWallTime: 1723016410960,
+    error: {
+      message: 'Error: \x1B[2mexpect(\x1B[22m\x1B[31mreceived\x1B[39m\x1B[2m).\x1B[22mtoEqual\x1B[2m(\x1B[22m\x1B[32mexpected\x1B[39m\x1B[2m) // deep equality\x1B[22m\n' +
+        '\n' +
+        '\x1B[32m- Expected  - 1\x1B[39m\n' +
+        '\x1B[31m+ Received  + 1\x1B[39m\n' +
+        '\n' +
+        '\x1B[33m@@ -1,6 +1,7 @@\x1B[39m\n' +
+        '\x1B[2m  Array [\x1B[22m\n' +
+        '\x1B[31m+   "PÜR",\x1B[39m\n' +
+        '\x1B[2m    "P3 International",\x1B[22m\n' +
+        '\x1B[2m    "Pacific Accents",\x1B[22m\n' +
+        '\x1B[2m    "Pacific Casual",\x1B[22m\n' +
+        '\x1B[2m    "Pacific Play Tents",\x1B[22m\n' +
+        '\x1B[2m    "Paco Rabanne",\x1B[22m\n' +
+        '\x1B[33m@@ -116,11 +117,10 @@\x1B[39m\n' +
+        '\x1B[2m    "Proxy",\x1B[22m\n' +
+        '\x1B[2m    "Pullman-Holt",\x1B[22m\n' +
+        '\x1B[2m    "Pulsar",\x1B[22m\n' +
+        '\x1B[2m    "Pulse Performance",\x1B[22m\n' +
+        '\x1B[2m    "PUMA",\x1B[22m\n' +
+        '\x1B[32m-   "PÜR",\x1B[39m\n' +
+        '\x1B[2m    "Pure Daily Care",\x1B[22m\n' +
+        '\x1B[2m    "Pure Elegance",\x1B[22m\n' +
+        '\x1B[2m    "Pure Enrichment",\x1B[22m\n' +
+        '\x1B[2m    "Pure Form",\x1B[22m\n' +
+        '\x1B[2m    "Pure Rest",\x1B[22m',
+      stack: 'Error: \x1B[2mexpect(\x1B[22m\x1B[31mreceived\x1B[39m\x1B[2m).\x1B[22mtoEqual\x1B[2m(\x1B[22m\x1B[32mexpected\x1B[39m\x1B[2m) // deep equality\x1B[22m\n' +
+        '\n' +
+        '\x1B[32m- Expected  - 1\x1B[39m\n' +
+        '\x1B[31m+ Received  + 1\x1B[39m\n' +
+        '\n' +
+        '\x1B[33m@@ -1,6 +1,7 @@\x1B[39m\n' +
+        '\x1B[2m  Array [\x1B[22m\n' +
+        '\x1B[31m+   "PÜR",\x1B[39m\n' +
+        '\x1B[2m    "P3 International",\x1B[22m\n' +
+        '\x1B[2m    "Pacific Accents",\x1B[22m\n' +
+        '\x1B[2m    "Pacific Casual",\x1B[22m\n' +
+        '\x1B[2m    "Pacific Play Tents",\x1B[22m\n' +
+        '\x1B[2m    "Paco Rabanne",\x1B[22m\n' +
+        '\x1B[33m@@ -116,11 +117,10 @@\x1B[39m\n' +
+        '\x1B[2m    "Proxy",\x1B[22m\n' +
+        '\x1B[2m    "Pullman-Holt",\x1B[22m\n' +
+        '\x1B[2m    "Pulsar",\x1B[22m\n' +
+        '\x1B[2m    "Pulse Performance",\x1B[22m\n' +
+        '\x1B[2m    "PUMA",\x1B[22m\n' +
+        '\x1B[32m-   "PÜR",\x1B[39m\n' +
+        '\x1B[2m    "Pure Daily Care",\x1B[22m\n' +
+        '\x1B[2m    "Pure Elegance",\x1B[22m\n' +
+        '\x1B[2m    "Pure Enrichment",\x1B[22m\n' +
+        '\x1B[2m    "Pure Form",\x1B[22m\n' +
+        '\x1B[2m    "Pure Rest",\x1B[22m\n' +
+        '    at MasonBIPPage.validateBrandsUnderRandomAlphabet (/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_bip_page.js:165:50)\n' +
+        '    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_bip.auth.spec.js:71:5'
+    }
+  }
+}
