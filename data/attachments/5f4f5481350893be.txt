@@ -1,0 +1,5 @@
+Address Element Value: 138C Gg25 Rd
+City Element Value: Fall River
+State Element Value: KS
+ZipCode Element Value: 67047-4721
+PhoneNumber Element Value: (183) 276-6503

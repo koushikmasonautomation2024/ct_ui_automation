@@ -1,0 +1,6 @@
+Successfully navigated to the subcategory page.
+0 items
+Filter "Silver" applied successfully.
+Selected filter: [ 'Silver  (1)' ]
+4 items
+Selected filter: [ 'White  (3)' ]

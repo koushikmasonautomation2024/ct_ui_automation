@@ -1,0 +1,302 @@
+Error validating brands under alphabet 'A': ExpectError: expect(received).toEqual(expected) // deep equality
+
+- Expected  - 1
++ Received  + 1
+
+@@ -1,10 +1,10 @@
+  Array [
+    "A Plus",
+-   "A-iPower",
+    "A&E Home Video",
+    "A&M",
++   "A-iPower",
+    "Aavix",
+    "ABC Studios",
+    "Abercrombie & Fitch",
+    "Abkco",
+    "Above TEK",
+    at MasonBIPPage.validateBrandsUnderRandomAlphabet (/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_bip_page.js:165:50)
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_bip.auth.spec.js:71:5 {
+  matcherResult: {
+    actual: [
+      'A Plus',
+      'A&E Home Video',
+      'A&M',
+      'A-iPower',
+      'Aavix',
+      'ABC Studios',
+      'Abercrombie & Fitch',
+      'Abkco',
+      'Above TEK',
+      'ACDC',
+      'ACDelco',
+      'Ace Bayou',
+      'Acer',
+      'Achim',
+      'Acorn',
+      'Acorn Media',
+      'Acoustic Armor',
+      'Acoustic Research',
+      'Activision',
+      'Adam Levine',
+      'Adams Mfg',
+      'Addison Rae',
+      'Adesso',
+      'adidas',
+      'Adora Dolls',
+      'Adrienne Vittidini',
+      'AEE',
+      'AF Lighting',
+      "Africa's Best",
+      'Aftershokz',
+      'AG Hair Cosmetics',
+      'Agent Provocateur',
+      'Ahava',
+      'Air Val International',
+      'AIRCARE',
+      'AireMax',
+      'AirTherapy',
+      'Aksys Games',
+      'AL Haramain',
+      'Alba Botanica',
+      'Alegria',
+      'Alesis',
+      'Alex',
+      'Alexandra De Markoff',
+      'Alfred Dunhill',
+      'Alfred Sung',
+      'Algenist',
+      'Alienware',
+      'ALL BLACK',
+      'All Power America',
+      'All Star',
+      'Allied',
+      'Allsop',
+      'Almay',
+      'Aloha',
+      'Alpen',
+      'Altec',
+      'Alterna',
+      'Alyssa Ashley',
+      'Amana',
+      'Amazon',
+      "America's Gold",
+      'American Coin Treasures',
+      'American Crew',
+      'American Flyer',
+      'American Gourmet',
+      'American Harvest',
+      'American Kitchen',
+      'American Lawn Mower',
+      'American Plastic Toys',
+      'American Tourister',
+      'American Trading House',
+      'American Trails',
+      'Americana',
+      'AmeriHome',
+      'Amika',
+      'Amloid',
+      'Ammo Content',
+      'Amped Wireless',
+      'Ampere',
+      'Ampro',
+      'Anastasia Beverly Hills',
+      'Anchor',
+      'Anchor Hocking',
+      'AND 1',
+      'Andis',
+      'Angels',
+      'Angry Birds',
+      'Animale',
+      'Anne Klein',
+      'Anti',
+      'Antonio Banderas',
+      'Antonio Puig',
+      'Antop',
+      'Aoji',
+      'Ape Case',
+      'Apeman',
+      'Apollo Tools',
+      'Apple',
+      'AQUA PLUMB',
+      ... 50 more items
+    ],
+    expected: [
+      'A Plus',
+      'A-iPower',
+      'A&E Home Video',
+      'A&M',
+      'Aavix',
+      'ABC Studios',
+      'Abercrombie & Fitch',
+      'Abkco',
+      'Above TEK',
+      'ACDC',
+      'ACDelco',
+      'Ace Bayou',
+      'Acer',
+      'Achim',
+      'Acorn',
+      'Acorn Media',
+      'Acoustic Armor',
+      'Acoustic Research',
+      'Activision',
+      'Adam Levine',
+      'Adams Mfg',
+      'Addison Rae',
+      'Adesso',
+      'adidas',
+      'Adora Dolls',
+      'Adrienne Vittidini',
+      'AEE',
+      'AF Lighting',
+      "Africa's Best",
+      'Aftershokz',
+      'AG Hair Cosmetics',
+      'Agent Provocateur',
+      'Ahava',
+      'Air Val International',
+      'AIRCARE',
+      'AireMax',
+      'AirTherapy',
+      'Aksys Games',
+      'AL Haramain',
+      'Alba Botanica',
+      'Alegria',
+      'Alesis',
+      'Alex',
+      'Alexandra De Markoff',
+      'Alfred Dunhill',
+      'Alfred Sung',
+      'Algenist',
+      'Alienware',
+      'ALL BLACK',
+      'All Power America',
+      'All Star',
+      'Allied',
+      'Allsop',
+      'Almay',
+      'Aloha',
+      'Alpen',
+      'Altec',
+      'Alterna',
+      'Alyssa Ashley',
+      'Amana',
+      'Amazon',
+      "America's Gold",
+      'American Coin Treasures',
+      'American Crew',
+      'American Flyer',
+      'American Gourmet',
+      'American Harvest',
+      'American Kitchen',
+      'American Lawn Mower',
+      'American Plastic Toys',
+      'American Tourister',
+      'American Trading House',
+      'American Trails',
+      'Americana',
+      'AmeriHome',
+      'Amika',
+      'Amloid',
+      'Ammo Content',
+      'Amped Wireless',
+      'Ampere',
+      'Ampro',
+      'Anastasia Beverly Hills',
+      'Anchor',
+      'Anchor Hocking',
+      'AND 1',
+      'Andis',
+      'Angels',
+      'Angry Birds',
+      'Animale',
+      'Anne Klein',
+      'Anti',
+      'Antonio Banderas',
+      'Antonio Puig',
+      'Antop',
+      'Aoji',
+      'Ape Case',
+      'Apeman',
+      'Apollo Tools',
+      'Apple',
+      'AQUA PLUMB',
+      ... 50 more items
+    ],
+    message: '\x1B[2mexpect(\x1B[22m\x1B[31mreceived\x1B[39m\x1B[2m).\x1B[22mtoEqual\x1B[2m(\x1B[22m\x1B[32mexpected\x1B[39m\x1B[2m) // deep equality\x1B[22m\n' +
+      '\n' +
+      '\x1B[32m- Expected  - 1\x1B[39m\n' +
+      '\x1B[31m+ Received  + 1\x1B[39m\n' +
+      '\n' +
+      '\x1B[33m@@ -1,10 +1,10 @@\x1B[39m\n' +
+      '\x1B[2m  Array [\x1B[22m\n' +
+      '\x1B[2m    "A Plus",\x1B[22m\n' +
+      '\x1B[32m-   "A-iPower",\x1B[39m\n' +
+      '\x1B[2m    "A&E Home Video",\x1B[22m\n' +
+      '\x1B[2m    "A&M",\x1B[22m\n' +
+      '\x1B[31m+   "A-iPower",\x1B[39m\n' +
+      '\x1B[2m    "Aavix",\x1B[22m\n' +
+      '\x1B[2m    "ABC Studios",\x1B[22m\n' +
+      '\x1B[2m    "Abercrombie & Fitch",\x1B[22m\n' +
+      '\x1B[2m    "Abkco",\x1B[22m\n' +
+      '\x1B[2m    "Above TEK",\x1B[22m',
+    name: 'toEqual',
+    pass: false
+  },
+  [Symbol(step)]: {
+    stepId: 'expect@338',
+    category: 'expect',
+    title: 'expect.toEqual',
+    params: { expected: [Array] },
+    infectParentStepsWithError: undefined,
+    boxedStack: undefined,
+    location: {
+      file: '/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_bip_page.js',
+      line: 165,
+      column: 50,
+      function: 'MasonBIPPage.validateBrandsUnderRandomAlphabet'
+    },
+    steps: [],
+    complete: [Function: complete],
+    endWallTime: 1723022679042,
+    error: {
+      message: 'Error: \x1B[2mexpect(\x1B[22m\x1B[31mreceived\x1B[39m\x1B[2m).\x1B[22mtoEqual\x1B[2m(\x1B[22m\x1B[32mexpected\x1B[39m\x1B[2m) // deep equality\x1B[22m\n' +
+        '\n' +
+        '\x1B[32m- Expected  - 1\x1B[39m\n' +
+        '\x1B[31m+ Received  + 1\x1B[39m\n' +
+        '\n' +
+        '\x1B[33m@@ -1,10 +1,10 @@\x1B[39m\n' +
+        '\x1B[2m  Array [\x1B[22m\n' +
+        '\x1B[2m    "A Plus",\x1B[22m\n' +
+        '\x1B[32m-   "A-iPower",\x1B[39m\n' +
+        '\x1B[2m    "A&E Home Video",\x1B[22m\n' +
+        '\x1B[2m    "A&M",\x1B[22m\n' +
+        '\x1B[31m+   "A-iPower",\x1B[39m\n' +
+        '\x1B[2m    "Aavix",\x1B[22m\n' +
+        '\x1B[2m    "ABC Studios",\x1B[22m\n' +
+        '\x1B[2m    "Abercrombie & Fitch",\x1B[22m\n' +
+        '\x1B[2m    "Abkco",\x1B[22m\n' +
+        '\x1B[2m    "Above TEK",\x1B[22m',
+      stack: 'Error: \x1B[2mexpect(\x1B[22m\x1B[31mreceived\x1B[39m\x1B[2m).\x1B[22mtoEqual\x1B[2m(\x1B[22m\x1B[32mexpected\x1B[39m\x1B[2m) // deep equality\x1B[22m\n' +
+        '\n' +
+        '\x1B[32m- Expected  - 1\x1B[39m\n' +
+        '\x1B[31m+ Received  + 1\x1B[39m\n' +
+        '\n' +
+        '\x1B[33m@@ -1,10 +1,10 @@\x1B[39m\n' +
+        '\x1B[2m  Array [\x1B[22m\n' +
+        '\x1B[2m    "A Plus",\x1B[22m\n' +
+        '\x1B[32m-   "A-iPower",\x1B[39m\n' +
+        '\x1B[2m    "A&E Home Video",\x1B[22m\n' +
+        '\x1B[2m    "A&M",\x1B[22m\n' +
+        '\x1B[31m+   "A-iPower",\x1B[39m\n' +
+        '\x1B[2m    "Aavix",\x1B[22m\n' +
+        '\x1B[2m    "ABC Studios",\x1B[22m\n' +
+        '\x1B[2m    "Abercrombie & Fitch",\x1B[22m\n' +
+        '\x1B[2m    "Abkco",\x1B[22m\n' +
+        '\x1B[2m    "Above TEK",\x1B[22m\n' +
+        '    at MasonBIPPage.validateBrandsUnderRandomAlphabet (/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_bip_page.js:165:50)\n' +
+        '    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_bip.auth.spec.js:71:5'
+    }
+  }
+}

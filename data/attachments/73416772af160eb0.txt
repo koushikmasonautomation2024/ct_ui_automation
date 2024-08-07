@@ -1,0 +1,46 @@
+Clicked button with index: 0
+Clicked button with index: 2
+Add to Cart button is enabled.
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Blue
+Detail: Twin
+Detail: 
+Detail: $59.99
+Detail: $7.99/month*
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Lilac
+Detail: Queen
+Detail: 
+Detail: $79.99
+Detail: $9.99/month*
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Pink
+Detail: Twin
+Detail: 
+Detail: $59.99
+Detail: $7.99/month*
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Pink
+Detail: Full
+Detail: 
+Detail: $69.99
+Detail: $7.99/month*
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Lilac
+Detail: Twin
+Detail: 
+Detail: $59.99
+Detail: $7.99/month*
+Product Name: Stoneberry Sherpa Dyed Comforter Set
+Product image is visible
+Detail: Aqua
+Detail: Queen
+Detail: 
+Detail: $79.99
+Detail: $9.99/month*
+Clicked on Credit/Debit Card button.

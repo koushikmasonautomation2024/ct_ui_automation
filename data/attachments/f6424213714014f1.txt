@@ -1,0 +1,30 @@
+An error occurred during address verification: page.waitForTimeout: Test timeout of 90000ms exceeded.
+    at MyAccountPage.verifyAddressSuggestionModal (/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_myaccount_page.js:2014:29)
+    at MyAccountPage.validateUpdateSavedAddress (/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_myaccount_page.js:1672:20)
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_sb_myaccount_addresses_standardwithaddresses_auth.spec.js:93:5 {
+  [Symbol(step)]: {
+    stepId: 'pw:api@51',
+    location: {
+      file: '/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_myaccount_page.js',
+      line: 2014,
+      column: 29,
+      function: 'MyAccountPage.verifyAddressSuggestionModal'
+    },
+    category: 'pw:api',
+    title: 'page.waitForTimeout',
+    apiName: 'page.waitForTimeout',
+    params: { timeout: 5000 },
+    canNestByTime: true,
+    boxedStack: undefined,
+    steps: [],
+    complete: [Function: complete],
+    endWallTime: 1723024940638,
+    error: {
+      message: 'Error: page.waitForTimeout: Test timeout of 90000ms exceeded.',
+      stack: 'Error: page.waitForTimeout: Test timeout of 90000ms exceeded.\n' +
+        '    at MyAccountPage.verifyAddressSuggestionModal (/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_myaccount_page.js:2014:29)\n' +
+        '    at MyAccountPage.validateUpdateSavedAddress (/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_myaccount_page.js:1672:20)\n' +
+        '    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_sb_myaccount_addresses_standardwithaddresses_auth.spec.js:93:5'
+    }
+  }
+}
