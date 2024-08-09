@@ -1,0 +1,2 @@
+Alphabet 'I' is not present.
+Alphabet 'T' is not present.
