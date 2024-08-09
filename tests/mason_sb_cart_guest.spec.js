@@ -51,9 +51,9 @@ test.describe("Mason Cart Page Guest User", () => {
 
     // Perform tasks in parallel
     await Promise.all([
-        process.env.TAKE_SCREENSHOTS && page.screenshot({ path: 'screenshot.png' }),
-        page.close(),
-        //context.close()
+      process.env.TAKE_SCREENSHOTS && page.screenshot({ path: 'screenshot.png' }),
+      page.close(),
+      //context.close()
     ]);
 
     console.log(`AfterHooks completed in ${Date.now() - start}ms`);
@@ -61,7 +61,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Display Order Total - Test Cases ID-
   test("Cart - Display Order Total - Verify that the order total is displayed to the right of the page title.", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url_limitedStock);
@@ -82,7 +82,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Display Product Details - Test Cases ID-SB-Cart061
   test("Cart - Display Product Details - Verify that each product is displayed as a separate line item with relevant details.", async ({ page }, testInfo) => {
-  
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url_limitedStock);
@@ -103,7 +103,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Quantity Field Functionality - Test Cases ID-SB-Cart061
   test("Cart - Quantity Field Functionality - Verify total price gets updated if user increases/decreases the quantity or applies a valid promo code.", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
@@ -125,7 +125,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Edit Item Functionality - Test Cases ID-SB-Cart088/SB-Cart089/SB-Cart090
   test("Cart - Edit Item Functionality - Verify that the Edit Item Drawer functions correctly, allowing users to modify variant options.", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
@@ -152,7 +152,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Remove Item from Cart - Test Cases ID-SB-Cart078
   test("Cart - Remove Item from Cart - Verify application shows a success message '<Product Name> was successfully removed from your cart. Undo' at the top of the cart when user removes item from the cart.", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
@@ -177,7 +177,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Remove Item from Cart - Test Cases ID-SB-Cart078
   test("Cart - Remove Item from Cart - Verify clicking on Undo at the end of the success message, application adds product back in the cart.", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
@@ -205,7 +205,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Save Item for Later Functionality - Test Cases ID-SB-Cart193
   test("Cart - Save Item for Later Functionality - Verify application shows a success message when product is added to the cart <Product Name> was successfully moved to saved for later'.", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
@@ -231,7 +231,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Save Item for Later Functionality - Test Cases ID-SB-Cart170
   test("Cart - Save Item for Later Functionality - Verify application following details against every line item:- Product Name- Item number- Total price- Thumbnail image of product or product variant added to the cart- When applicable: Color, Size, Width- Pricing- Quantity- Availability- Arrives by- Remove button (when applicable)- Personalization (when applicable)- Protection plan (when applicable).", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
@@ -264,7 +264,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Save Item for Later Functionality - Test Cases ID-SB-Cart192
   test("Cart - Save Item for Later Functionality - Verify Move to cart button is shown and clicking on it product moves from save for later to cart section.", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     await page.goto(pdp_data.pdp_url);
     const cartDrawerPage = new CartDrawerPage(page);
@@ -293,7 +293,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Apply Promo Code Functionality - Test Cases ID-SB-Cart133
   test("Cart - Apply Promo Code Functionality- Verify clicking on Apply promo code, application shows a text box to enter the code.", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
@@ -315,7 +315,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Apply Promo Code Functionality - Test Cases ID-SB-Cart136/SB-Cart137
   test("Cart - Apply Promo Code Functionality- Verify application shows: 'Promo code <CODE> applied to order' in place of apply promo code", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
@@ -343,7 +343,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Apply Promo Code Functionality - Test Cases ID-SB-Cart137
   test("Cart - Apply Promo Code Functionality- Verify application shows following success message on top: 'Promo code <promo code> has been applied to your order.'", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
@@ -370,7 +370,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Apply Promo Code Functionality - Test Cases ID-SB-Cart138
   test("Cart - Apply Promo Code Functionality- Verify the applied promo code shows in red and Remove option is shown as well", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
@@ -398,7 +398,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Apply Promo Code Functionality - Test Cases ID-SB-Cart139
   test("Cart - Apply Promo Code Functionality- Verify order total gets updated when valid promo code is applied", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
@@ -428,7 +428,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Apply Promo Code Functionality - Test Cases ID-SB-Cart144
   test("Cart - Apply Promo Code Functionality- Verify application shows a message when promo code is removed: 'Promo code <CODE> has been removed from your order'", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
@@ -460,7 +460,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Display Order Summary Section - Test Cases ID-SB-Cart126
   test("Cart - Display Order Summary Section- Verify order summary shows:- Subtotal- Estimated Shipping- Shipping Surcharge- Estimated Sales tax- Apply promo code (optional) - if not applied to cart - Applied promo code - if applied to cart'", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
@@ -483,7 +483,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Need Help Section Functionality - Test Cases ID-SB-Cart150
   test("Cart - Need Help Section Functionality- Verify that the Need Help section provides relevant information and functionalities.", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
@@ -506,7 +506,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Display "Saved for Later" Section - Test Cases ID-SB-Cart106/SB-Cart168/SB-Cart169
   test("Cart - Display Saved for Later Section - Verify Save for Later option is shown against applicable products.", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
@@ -532,7 +532,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Display Product Data - Test Cases ID-SB-Cart170
   test("Cart - Display Product Data - Verify application following details against every line item:- Product Name,Item number,Total price,Thumbnail image of product or product variant added to the cart- When applicable: Color, Size, Width- Pricing- Quantity- Availability- Arrives by- Remove button (when applicable)- Personalization (when applicable)- Protection plan (when applicable).", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
@@ -565,7 +565,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Display "Move to Cart" CTA Functionality - Test Cases ID-SB-Cart192/SB-Cart193
   test("Cart - Display Move to Cart CTA Functionality - Verify application shows a success message when product is added to the cart:'<Product Name> was successfully moved to your cart'.", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
@@ -594,7 +594,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Redirect to PDP on Product Name Click - Test Cases ID-SB-Cart188
   test("Cart - Redirect to PDP on Product Name Click - Verify clicking on <Product Name>, application redirects user to the associated PDP.", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
@@ -623,7 +623,7 @@ test.describe("Mason Cart Page Guest User", () => {
 
   //Cart - Display "Remove" CTA Functionality - Test Cases ID-SB-Cart186/SB-Cart187
   test("Cart - Display Remove CTA Functionality - Verify clicking on Remove btn, application removes the item from the Saved for Later section.", async ({ page }, testInfo) => {
-    
+
     const pdpPage = new PDPPage(page);
     const cartDrawerPage = new CartDrawerPage(page);
     await page.goto(pdp_data.pdp_url);
@@ -648,6 +648,16 @@ test.describe("Mason Cart Page Guest User", () => {
     //await cartPage.cartRemoveSaveForLaterSuccessMessage(`${saveForLaterProdName} was successfully removed from save for later wishlist.`);
 
   })
+
+  test.afterEach(async ({ page }) => {
+    try {
+      const screenshotPath = `screenshots/GuestCart-Screenshoot-${Date.now()}.png`;
+      await page.screenshot({ path: screenshotPath, fullPage: true });
+      allure.attachment('Full Page Screenshot', Buffer.from(await page.screenshot({ fullPage: true })), 'image/png');
+    } catch (error) {
+      console.error('Error capturing screenshot:', error);
+    }
+  });
 
 })
 

@@ -42,7 +42,7 @@ test.describe("Mason MyAccount - Credit Cards - Standard With Saved Cards", () =
 
   })
 
-  
+
   //Account - Credit Cards - Standard With Saved Cards - Test Cases ID-SB-My307/SB-My308
   test("Account - Credit Cards - Standard With Saved Cards - Verify on adding a new card successfully, application shows the newly added card in the list.", async ({ page }, testInfo) => {
     ////test.slow();
@@ -180,6 +180,14 @@ test.describe("Mason MyAccount - Credit Cards - Standard With Saved Cards", () =
     await myaccountPage.updateCreditCardSuccessMessage();
 
   })
-
+  test.afterEach(async ({ page }) => {
+    try {
+      const screenshotPath = `screenshots/SavedCC-Screenshoot-${Date.now()}.png`;
+      await page.screenshot({ path: screenshotPath, fullPage: true });
+      allure.attachment('Full Page Screenshot', Buffer.from(await page.screenshot({ fullPage: true })), 'image/png');
+    } catch (error) {
+      console.error('Error capturing screenshot:', error);
+    }
+  });
 
 })

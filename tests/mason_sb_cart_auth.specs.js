@@ -51,9 +51,9 @@ test.describe("Mason Cart Page", () => {
 
     // Perform tasks in parallel
     await Promise.all([
-        process.env.TAKE_SCREENSHOTS && page.screenshot({ path: 'screenshot.png' }),
-        page.close(),
-        //context.close()
+      process.env.TAKE_SCREENSHOTS && page.screenshot({ path: 'screenshot.png' }),
+      page.close(),
+      //context.close()
     ]);
 
     console.log(`AfterHooks completed in ${Date.now() - start}ms`);
@@ -692,6 +692,16 @@ test.describe("Mason Cart Page", () => {
     //await cartPage.cartRemoveSaveForLaterSuccessMessage(`${saveForLaterProdName} was successfully removed from save for later wishlist.`);
 
   })
+
+  test.afterEach(async ({ page }) => {
+    try {
+      const screenshotPath = `screenshots/LoggedCart-Screenshoot-${Date.now()}.png`;
+      await page.screenshot({ path: screenshotPath, fullPage: true });
+      allure.attachment('Full Page Screenshot', Buffer.from(await page.screenshot({ fullPage: true })), 'image/png');
+    } catch (error) {
+      console.error('Error capturing screenshot:', error);
+    }
+  });
 
 })
 

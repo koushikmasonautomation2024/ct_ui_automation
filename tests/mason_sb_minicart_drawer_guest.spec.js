@@ -267,5 +267,37 @@ test.describe("Mason Cart Drawer", () => {
     await pdpPage.closeMiniCartDrawer();
   })
 
+  //Cart Drawer - Handling protection plans - Test Cases ID SB-Cart033//SB-Cart034//SB-Cart035//SB-Cart036//SB-Cart037
+  test("Cart Drawer - Handling protection plans - Verify if user has added a protection plan, application shows it below the quantity field.", async ({ page }, testInfo) => {
+    const pdpPage = new PDPPage(page);
+    const cartDrawerPage = new CartDrawerPage(page);
+    await page.goto(pdp_data.pdp_url_protectionplan);
+    await pdpPage.addtoCart();
+    await pdpPage.miniCartDrawer();
+    await cartDrawerPage.validateProtectionPlanCartDrawer();
+
+  })
+
+  //Cart Drawer - Handling Personalization - Test Cases ID SB-Cart033//SB-Cart034//SB-Cart035//SB-Cart036//SB-Cart037
+  test("Cart Drawer - Handling Personalization - Verify if personalization is available then application displays a label 'Personalization'.", async ({ page }, testInfo) => {
+    const pdpPage = new PDPPage(page);
+    const cartDrawerPage = new CartDrawerPage(page);
+    await page.goto(pdp_data.pdp_url_personalization);
+    await pdpPage.validatePersonalization();
+    await pdpPage.validatePersonalizationContent();
+    //await pdpPage.miniCartDrawer();
+    // await pdpPage.validateMiniCartPersonalizationContent();
+    //await cartDrawerPage.validateProtectionPlanCartDrawer();
+
+  })
+  test.afterEach(async ({ page }) => {
+    try {
+      const screenshotPath = `screenshots/CartDrawer-Screenshoot-${Date.now()}.png`;
+      await page.screenshot({ path: screenshotPath, fullPage: true });
+      allure.attachment('Full Page Screenshot', Buffer.from(await page.screenshot({ fullPage: true })), 'image/png');
+    } catch (error) {
+      console.error('Error capturing screenshot:', error);
+    }
+  });
 
 })

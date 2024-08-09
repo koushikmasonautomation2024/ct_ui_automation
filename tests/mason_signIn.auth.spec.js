@@ -23,30 +23,30 @@ test.describe("Mason SignIn Scenarios", () => {
 
   test.beforeEach(async ({ page, isMobile }, testInfo) => {
     test.slow();
-    try{  
-    await page.goto(process.env.WEB_URL);
-    //await page.waitForLoadState('networkidle');
-    if(isMobile==true){
-      const signinPage = new SignInPage(page);  
-      await signinPage.clickSignInImage();
-      await signinPage.clickSignIn();
-      await signinPage.validateSignInDialog();
-      await signinPage.login(process.env.USERNAME,process.env.PASSWORD);
-      await signinPage.clickSignIn();
-    } else {
-      const homePage = new HomePage(page);
-      await homePage.clickOnHomePageSignIn();
-      const signinPage = new SignInPage(page);
-      await signinPage.validateWelcomeTextSignInDialog(signinpage_data.signin_dailog_text);
-      await signinPage.validateWelcomeSignInDialog();
-      await signinPage.clickSignIn();
-      await signinPage.validateSignInDialog();
-      
+    try {
+      await page.goto(process.env.WEB_URL);
+      //await page.waitForLoadState('networkidle');
+      if (isMobile == true) {
+        const signinPage = new SignInPage(page);
+        await signinPage.clickSignInImage();
+        await signinPage.clickSignIn();
+        await signinPage.validateSignInDialog();
+        await signinPage.login(process.env.USERNAME, process.env.PASSWORD);
+        await signinPage.clickSignIn();
+      } else {
+        const homePage = new HomePage(page);
+        await homePage.clickOnHomePageSignIn();
+        const signinPage = new SignInPage(page);
+        await signinPage.validateWelcomeTextSignInDialog(signinpage_data.signin_dailog_text);
+        await signinPage.validateWelcomeSignInDialog();
+        await signinPage.clickSignIn();
+        await signinPage.validateSignInDialog();
+
+      }
+    } catch (error) {
+      // Handle the error here
+      console.error("An error occurred in test.beforeEach:", error);
     }
-  }catch (error) {
-    // Handle the error here
-    console.error("An error occurred in test.beforeEach:", error);
-}
   })
 
 
@@ -89,7 +89,7 @@ test.describe("Mason SignIn Scenarios", () => {
 
   //SB-LOGREG014
   test("Account - Sign In (Drawer)/Sign In Page - Validate proper message when login fails", async ({ page }) => {
-    
+
     const signinPage = new SignInPage(page);
     await signinPage.clickSignIn();
     //await signinPage.validateSignInDialog();
@@ -104,7 +104,7 @@ test.describe("Mason SignIn Scenarios", () => {
     //test.slow();
     // const homePage = new HomePage(page);
     // await homePage.clickOnHomePageSignIn();
-    
+
     const signinPage = new SignInPage(page);
 
     await signinPage.clickOnForgotPassword();
@@ -115,7 +115,7 @@ test.describe("Mason SignIn Scenarios", () => {
 
 
   test("Account - SignIn - Validate the Password Hide/Show in Sign-In ", async ({ page }) => {
-    
+
     const signinPage = new SignInPage(page);
     //const createAccountPage = new CreateAccountPage(page);
     //await signinPage.clickCreateAnAccount();
@@ -132,6 +132,14 @@ test.describe("Mason SignIn Scenarios", () => {
     await signinPage.validatePasswordIsHidden();
 
   })
-
+  test.afterEach(async ({ page }) => {
+    try {
+      const screenshotPath = `screenshots/Signin-Screenshoot-${Date.now()}.png`;
+      await page.screenshot({ path: screenshotPath, fullPage: true });
+      allure.attachment('Full Page Screenshot', Buffer.from(await page.screenshot({ fullPage: true })), 'image/png');
+    } catch (error) {
+      console.error('Error capturing screenshot:', error);
+    }
+  });
 
 })

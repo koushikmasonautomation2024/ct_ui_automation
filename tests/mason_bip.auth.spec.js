@@ -72,6 +72,15 @@ test.describe("Mason Commerce Tool Site", () => {
 
   })
 
+  test.afterEach(async ({ page }) => {
+    try {
+      const screenshotPath = `screenshots/BIP-Screenshoot-${Date.now()}.png`;
+      await page.screenshot({ path: screenshotPath, fullPage: true });
+      allure.attachment('Full Page Screenshot', Buffer.from(await page.screenshot({ fullPage: true })), 'image/png');
+    } catch (error) {
+      console.error('Error capturing screenshot:', error);
+    }
+  });
 
 
 })

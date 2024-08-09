@@ -219,4 +219,25 @@ test.describe("Mason PDP", () => {
     await pdpPage.validateSimilarItem();
   })
 
+  //PDP - Handling protection plans - Test Cases ID
+  test("PDP - Handling protection plans - Verify the protection plans in PDP.", async ({ page }, testInfo) => {
+    if (!loginSuccessful) {
+      test.skip('Skipping test due to failed login');
+    }
+    const pdpPage = new PDPPage(page);
+    await page.goto(pdp_data.pdp_url_protectionplan);
+    await pdpPage.validateProtectionPlanPDP();
+    
+  })
+
+  test.afterEach(async ({ page }) => {
+    try {
+      const screenshotPath = `screenshots/PDP-Screenshoot-${Date.now()}.png`;
+      await page.screenshot({ path: screenshotPath, fullPage: true });
+      allure.attachment('Full Page Screenshot', Buffer.from(await page.screenshot({ fullPage: true })), 'image/png');
+    } catch (error) {
+      console.error('Error capturing screenshot:', error);
+    }
+  });
+
 })

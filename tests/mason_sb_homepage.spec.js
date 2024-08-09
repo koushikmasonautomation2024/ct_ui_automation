@@ -258,7 +258,7 @@ test.describe("Mason Guest User Home Page", () => {
 
   test.afterEach(async ({ page }) => {
     try {
-      const screenshotPath = `screenshots/Stoneberry-${Date.now()}.png`;
+      const screenshotPath = `screenshots/HomePage-Screenshot-${Date.now()}.png`;
       await page.screenshot({ path: screenshotPath, fullPage: true });
       allure.attachment('Full Page Screenshot', Buffer.from(await page.screenshot({ fullPage: true })), 'image/png');
     } catch (error) {

@@ -53,7 +53,9 @@
 
     "wishlist_remove_success_message":"You have successfully removed (.+) from your Wish List",
     "wishlist_remove_partMessage":"You have successfully removed",
-    "navhighlighted_color" : "a.text-stoneberry-highlightColor"
+    "navhighlighted_color" : "a.text-stoneberry-highlightColor",
+    "valid_order":"99559197",
+    "valid_zip":"06451"
     
     
     

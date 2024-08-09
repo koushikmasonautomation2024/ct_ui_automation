@@ -1,6 +1,7 @@
 import test, { expect } from 'playwright/test';
 const myaccountpage_locator =JSON.parse(JSON.stringify(require('../object_repositories/mason_myaccount_page_repo.json')));
 const accountpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_sb_myaccount_page_data.json')));
+const expectedMessage = 'There are no recent orders in your account, but let’s see if we can find the order you’re looking for.';   
 
 exports.MyAccountOrderPage = class MyAccountOrderPage{
     constructor(page){
@@ -53,6 +54,12 @@ exports.MyAccountOrderPage = class MyAccountOrderPage{
 
     async validateSingleOrderNavigation(){
         await expect(this.page).toHaveURL(/.*orderstatus/);
+    }
+
+    async validateNoOrderMessage(){
+        const messageElement = this.page.locator('p.my-6');
+        const messageText = await messageElement.textContent();
+        expect(messageText.trim()).toBe(expectedMessage);
     }
 
     

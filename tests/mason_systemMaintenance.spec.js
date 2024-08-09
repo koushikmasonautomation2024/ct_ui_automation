@@ -72,4 +72,13 @@ test.describe("Mason System Maintenance Tests", () => {
     await sysMainPage.clickOnMail();
 
   })
+  test.afterEach(async ({ page }) => {
+    try {
+      const screenshotPath = `screenshots/SystemMaintenance-Screenshoot-${Date.now()}.png`;
+      await page.screenshot({ path: screenshotPath, fullPage: true });
+      allure.attachment('Full Page Screenshot', Buffer.from(await page.screenshot({ fullPage: true })), 'image/png');
+    } catch (error) {
+      console.error('Error capturing screenshot:', error);
+    }
+  });
 })

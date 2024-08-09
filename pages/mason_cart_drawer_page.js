@@ -4,6 +4,9 @@ import { PDPPage } from '../pages/mason_pdp_page';
 
 const productStockLeft = 'strong.text-stoneberry-onlyLeft';
 const pdp_colorvariant_button_locator = 'section.flex.flex-wrap.items-center.gap-5 button[aria-label="choose color button"]';
+const oneYearPlanName = '1 Year Protection Plan';
+const twoYearPlanName = '2 Year Protection Plan';
+const protectPurchaseText = 'Protect Your Purchase';
 
 exports.CartDrawerPage = class CartDrawerPage {
     constructor(page) {
@@ -349,5 +352,112 @@ exports.CartDrawerPage = class CartDrawerPage {
     async cartDrawerSuccessMessage() {
         await this.page.getByText('item added to cart').waitFor({ state: 'visible' });
         await expect(this.page.getByText('item added to cart')).toBeVisible();
+    }
+
+    async validateProtectionPlanCartDrawer() {
+        // Locate the "Add Protection Plan" section using the accordion button
+        const accordionButton = this.page.locator('button:has-text("Add Protection Plan")');
+
+        // Ensure the accordion button is visible and expanded
+        await expect(accordionButton).toBeVisible();
+        //await expect(accordionButton).toHaveAttribute('aria-expanded', 'true');
+
+        // Click on the accordion to ensure it's open (if needed)
+        if ((await accordionButton.getAttribute('aria-expanded')) === 'false') {
+            await accordionButton.click();
+        }
+
+        // Validate the "Protect Your Purchase" section header
+        const sectionHeader = await this.page.getByText(protectPurchaseText, { exact: true });
+        await expect(sectionHeader).toBeVisible();
+
+        // Validate the "Learn More" button
+        const learnMoreButton = await this.page.getByRole('button', { name: 'Learn More' });
+        await expect(learnMoreButton).toBeVisible();
+        await expect(learnMoreButton).toHaveAttribute('aria-haspopup', 'dialog');
+
+        // Locate all protection plans inside the accordion
+        const protectionPlans = this.page.locator('ul.grid.grid-cols-2.gap-5 > li');
+        const numberOfPlans = await protectionPlans.count();
+
+        console.log(`Number of protection plans found: ${numberOfPlans}`);
+
+        // Validate the total number of protection plans
+        await expect(numberOfPlans).toBeGreaterThan(0);
+        // Locate the Subtotal price and extract its value
+        const subtotalElement = this.page.locator('ul.flex.justify-between li:last-child > strong');
+        const itemPriceText = await subtotalElement.innerText();
+        // Convert the item price to a float for calculation
+        const itemPrice = parseFloat(itemPriceText.replace('$', '').replace(',', ''));
+        // Define expected plans titles and regex patterns for price
+        const expectedPlans = [
+            {
+                title: oneYearPlanName,
+                pricePattern: /^\$?\d+(\.\d{1,2})?$/,
+                monthlyCostPattern: /^Only \$\d+(\.\d{1,2})? more per month\*$/,
+            },
+            {
+                title: twoYearPlanName,
+                pricePattern: /^\$?\d+(\.\d{1,2})?$/,
+                monthlyCostPattern: /^Only \$\d+(\.\d{1,2})? more per month\*$/,
+            }
+        ];
+
+        // Iterate through each protection plan and perform validation
+        for (let i = 0; i < numberOfPlans; i++) {
+            const plan = protectionPlans.nth(i);
+
+            // Validate the title of each plan
+            const planTitle = plan.locator('h3.text-lg.font-bold');
+            const titleText = await planTitle.innerText();
+            console.log(`Plan Title: ${titleText}`);
+
+            await expect(planTitle).toBeVisible();
+            await expect(titleText).toBe(expectedPlans[i].title);
+
+            // Validate the price of each plan using regex
+            const planPrice = plan.locator('p.text-sm.leading-\\[18\\.2px\\]').first();
+            const priceText = await planPrice.innerText();
+            console.log(`Plan Price: ${priceText}`);
+
+            await expect(planPrice).toBeVisible();
+            await expect(priceText).toMatch(expectedPlans[i].pricePattern);
+
+            // Validate the monthly cost information using regex
+            const monthlyCostInfo = plan.locator('p.text-stoneberry-linkColor');
+            const monthlyCostText = await monthlyCostInfo.innerText();
+            console.log(`Monthly Cost Info: ${monthlyCostText}`);
+
+            await expect(monthlyCostInfo).toBeVisible();
+            await expect(monthlyCostText).toMatch(expectedPlans[i].monthlyCostPattern);
+
+            // Click on the protection plan to select it
+            await plan.click();
+            await this.page.locator('section.mt-1 strong').waitFor({ state: 'visible' });
+            const selectedPlan = await this.page.getByText(titleText, { exact: true });
+            await expect(selectedPlan).toBeVisible();
+
+            const subtotalElementPP = this.page.locator('ul.flex.justify-between li:last-child > strong');
+            const itemPriceTextWithPP = await subtotalElementPP.innerText();
+            const subTotalPriceTextWithPP = parseFloat(itemPriceTextWithPP.replace('$', '').replace(',', ''));
+
+            // Log the initial subtotal price for debugging
+            console.log(`Item Price: ${itemPrice}`);
+            // Calculate the expected subtotal
+            const planPriceText = parseFloat(priceText.replace('$', '').replace(',', ''));
+            const expectedSubtotal = itemPrice + planPriceText;
+
+            // Log the expected subtotal for debugging
+            console.log(`Expected Subtotal: ${expectedSubtotal.toFixed(2)}`);
+
+            // Define a regex pattern to match the subtotal price format
+            const pricePattern = /^\$?\d+(?:,\d{3})*(?:\.\d{2})?$/;
+
+            // Validate that the subtotal matches the expected value
+            expect(subTotalPriceTextWithPP.toFixed(2)).toBe(expectedSubtotal.toFixed(2));
+            break;
+
+        }
+
     }
 }

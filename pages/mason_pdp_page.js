@@ -11,6 +11,9 @@ const thumbnailimg_rightArrowButtonLocator = 'button.absolute.right-0';
 const thumbnailimg_leftArrowButtonLocator = 'button.absolute.left-0';
 const selected_thumbnail_blackborderlocator = 'div.min-w-0[aria-roledescription="slide"] img.border-black';
 const sizechart_button_text = 'Size Chart';
+const oneYearPlanName = '1 Year Protection Plan';
+const twoYearPlanName = '2 Year Protection Plan';
+const protectPurchaseText = 'Protect Your Purchase';
 
 
 
@@ -46,6 +49,13 @@ exports.PDPPage = class PDPPage {
         this.addtoWishListButton = page.getByRole('button', { name: 'Add to Wish List' });
         this.miniCartHeaderText = page.getByRole('button', { name: 'My Cart' });
         this.miniCart = page.locator('img[alt="Mini Cart"]');
+        this.personalizeButton = page.getByRole('button', { name: 'Personalize' });
+        this.personalizeGiftLink = page.frameLocator('#artifiPersonalization iframe').getByRole('link', { name: 'Personalize this Gift' });
+        this.personalizationParagraph = page.frameLocator('#artifiPersonalization iframe').getByRole('paragraph');
+        this.personalizationTextBox = page.frameLocator('#artifiPersonalization iframe').getByPlaceholder('Placeholder Text');
+        this.personalizationLabel = page.frameLocator('#artifiPersonalization iframe').locator('#text-controls').getByText('Name');
+        this.personalizationAddtoCartButton = page.frameLocator('#artifiPersonalization iframe').getByRole('button', { name: ' Add To Cart' });
+        this.miniCartPersonalizationText = page.getByText('Personalization:');
 
     }
 
@@ -866,6 +876,100 @@ exports.PDPPage = class PDPPage {
             // Validate the extracted product ID
             await expect(additionalInfo.id).not.toBeNull();
         }
+    }
+
+    async validateProtectionPlanPDP() {
+        // Wait for the "Protect Your Purchase" section to be visible
+        const protectSection = await this.page.locator('section.rounded-sm');
+        await protectSection.waitFor({ state: 'visible' });
+
+        // Verify the "Protect Your Purchase" header
+        const header = protectSection.locator('h2.text-22.font-bold');
+        await expect(header).toBeVisible();
+        await expect(header).toHaveText(protectPurchaseText);
+
+        // Validate the "Learn More" button
+        const learnMoreButton = protectSection.locator('button:has-text("Learn More")');
+        await expect(learnMoreButton).toBeVisible();
+        await expect(learnMoreButton).toHaveAttribute('aria-haspopup', 'dialog');
+
+        // Locate all protection plans
+        const protectionPlans = protectSection.locator('ul.grid > div');
+        const planCount = await protectionPlans.count();
+
+        console.log(`Number of protection plans available: ${planCount}`);
+
+        // Iterate through each protection plan to validate its content
+        for (let i = 0; i < planCount; i++) {
+            const plan = protectionPlans.nth(i);
+
+            // Check if the plan's title is visible and not empty
+            const planTitle = plan.locator('h2.text-xl.font-bold');
+            await expect(planTitle).toBeVisible();
+            const planTitleText = await planTitle.innerText();
+            await expect(planTitleText).not.toBe('');
+
+            console.log(`Protection Plan Title: ${planTitleText}`);
+
+            // Validate price if available
+            const priceElement = plan.locator('p');
+            if (await priceElement.count() > 0) {
+                const price = await priceElement.innerText();
+                console.log(`Price: ${price}`);
+
+                // Validate the price format
+                await expect(price).toMatch(/^\$\d+(\.\d{2})?$/);
+            }
+
+            // Validate the checkbox input for the protection plan
+            const checkboxInput = await this.page.locator('input[type="checkbox"]').nth(i);
+            await expect(checkboxInput).toBeHidden();
+            await expect(checkboxInput).toHaveAttribute('type', 'checkbox');
+
+        }
+        // Validate specific protection plans 
+        const oneYearPlan = await this.page.locator('h2').filter({ hasText: oneYearPlanName });
+        const twoYearPlan = await this.page.locator('h2').filter({ hasText: twoYearPlanName });
+
+        // Check the "1 Year Protection Plan"
+        await oneYearPlan.check();
+        await expect(oneYearPlan).toBeChecked();
+
+        // Verify the checkmark for the "1 Year Protection Plan"
+        const oneYearCheckmark = protectSection.locator('section.absolute > svg').first();
+        await expect(oneYearCheckmark).toBeVisible();
+
+        // Check the "2 Year Protection Plan"
+        await twoYearPlan.check();
+        await expect(twoYearPlan).toBeChecked();
+
+        // Verify the checkmark for the "2 Year Protection Plan"
+        const twoYearCheckmark = protectSection.locator('section.absolute > svg').nth(1);
+        await expect(twoYearCheckmark).toBeVisible();
+    }
+
+    async validatePersonalization() {
+        await this.personalizeButton.waitFor({ state: 'visible' });
+        await this.personalizeButton.click();
+        await this.personalizeGiftLink.waitFor({ state: 'visible' });
+        await expect(this.personalizeGiftLink).toBeVisible();
+        await expect(this.personalizationParagraph).toBeVisible();
+        await expect(this.personalizationTextBox).toBeVisible();
+        await expect(this.personalizationLabel).toBeVisible();
+    }
+
+    async validatePersonalizationContent() {
+        await this.personalizationTextBox.click();
+        await this.personalizationTextBox.fill('Happy');
+        await this.personalizationAddtoCartButton.click();
+        await expect(this.page.locator('div.loading-msg')).toBeHidden();
+        await this.miniCartDrawer();
+
+    }
+
+    async validateMiniCartPersonalizationContent() {
+        await this.miniCartPersonalizationText.waitFor({ state: 'visible' });
+        await expect(this.miniCartPersonalizationText).toBeVisible();
     }
 
 }

@@ -381,8 +381,18 @@ test.describe("Mason Order Details Page", () => {
     const orderDetailsPage = new OrderDetailsPage(page);
     await orderDetailsPage.clickViewOrderDetailsLink();
     await orderDetailsPage.validateOrderDetailsOrderNumberSection();
-
+    await orderDetailsPage.validatePlacedOnDate();
   })
+
+  test.afterEach(async ({ page }) => {
+    try {
+      const screenshotPath = `screenshots/OrderDetails-Screenshoot-${Date.now()}.png`;
+      await page.screenshot({ path: screenshotPath, fullPage: true });
+      allure.attachment('Full Page Screenshot', Buffer.from(await page.screenshot({ fullPage: true })), 'image/png');
+    } catch (error) {
+      console.error('Error capturing screenshot:', error);
+    }
+  });
 
 })
 
