@@ -1,0 +1,11 @@
+2
+Number of div elements containing 'Best-Seller': 0
+Regular Price - '$64.95'
+Regular Price - '$64.95'
+Regular Price - '$39.95'
+Regular Price - '$74.95'
+Promo Price - '$78.97'
+Formatted Promo Price - '$78.97'
+Formatted Regular Price - '$99.95'
+Formatted Promo Price Color - 'rgb(223, 36, 41)'
+Formatted Promo Price Font Weight - '700'
