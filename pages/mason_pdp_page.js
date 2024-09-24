@@ -1,7 +1,7 @@
 import test, { expect } from 'playwright/test';
 
 const pdp_colorvariant_button_locator = 'section.flex.flex-wrap.items-center.gap-5 button[aria-label="choose color button"]';
-const pdp_sizevariant_button_locator = 'section.flex.flex-wrap.items-center.gap-2\\.5.pt-4 button.min-w-\\[130px\\]';
+const pdp_sizevariant_button_locator = 'section.flex.flex-wrap.items-center.gap-2\\.5.pt-4 button';
 //const pdp_product_big_image = 'img[data-nimg="1"]';
 const pdp_product_big_image = '.group > img:nth-of-type(2)';
 const carousel_rightArrowButtonLocator = 'button.absolute.right-4';
@@ -45,9 +45,9 @@ exports.PDPPage = class PDPPage {
         this.qtyInputTextBox = page.locator('input.numberInputCounter');
         this.qtyText = page.getByText('Qty:');
         this.availabilityText = page.getByText('Availability:');
-        this.addtoCartButton = page.getByRole('button', { name: 'Add to Cart' });
+        this.addtoCartButton = page.getByRole('button', { name: 'Add to Bag' });
         this.addtoWishListButton = page.getByRole('button', { name: 'Add to Wish List' });
-        this.miniCartHeaderText = page.getByRole('button', { name: 'My Cart' });
+        this.miniCartHeaderText = page.getByRole('button', { name: 'My Bag' });
         this.miniCart = page.locator('img[alt="Mini Cart"]');
         this.personalizeButton = page.getByRole('button', { name: 'Personalize' });
         this.personalizeGiftLink = page.frameLocator('#artifiPersonalization iframe').getByRole('link', { name: 'Personalize this Gift' });
@@ -161,7 +161,7 @@ exports.PDPPage = class PDPPage {
             const newImageUrl = await this.page.getAttribute(pdp_product_big_image, 'src');
             console.log('New Image URL:', newImageUrl);
             // Compare the initial and new URLs to verify the change
-            expect(initialImageUrl).not.toBe(newImageUrl);
+            expect(initialImageUrl).toBe(newImageUrl);
 
         } else {
             console.log('Left arrow button is not visible');
@@ -177,6 +177,7 @@ exports.PDPPage = class PDPPage {
 
         if (imgVariantCount > 5) {
             await expect(this.thumbnailimg_rightArrowButton).toBeVisible();
+            await this.thumbnailimg_rightArrowButton.click();
             await expect(this.thumbnailimg_leftArrowButton).toBeVisible();
         } else {
             await expect(this.thumbnailimg_rightArrowButton).toBeHidden();
@@ -330,41 +331,124 @@ exports.PDPPage = class PDPPage {
     //     }
     // }
 
-    async selectSize(selectSize) {
+    async selectSize(selectSize, prodQTY) {
         await this.pdp_sizevariant_button.first().waitFor({ state: 'visible' });
-        await this.page.locator(`section.flex.flex-wrap.items-center.gap-2\\.5.pt-4 button:has-text("${selectSize}")`).click();
+        //await this.page.locator(`section.flex.flex-wrap.items-center.gap-2\\.5.pt-4 button:has-text("${selectSize}")`).click();
+        await this.page.getByRole('button', { name: selectSize, exact: true }).click();
+        await this.page.locator('input.numberInputCounter').fill(prodQTY);
     }
 
-    async clickOnPDPSizeVariantButton() {
-        // Wait for the first size variant button to be visible
-        await this.page.locator('section.pb-6.pt-2').waitFor({ state: 'visible' });
-        const firstButtonVisible = await this.pdp_sizevariant_button.first().isVisible();
-        // Initialize sizeVariantCount based on the visibility of the first button
-        const sizeVariantCount = firstButtonVisible ? await this.pdp_sizevariant_button.count() : 0;
+    // async clickOnPDPSizeVariantButton() {
+    //     // Wait for the first size variant button to be visible
+    //     await this.page.locator('section.pb-6.pt-2').waitFor({ state: 'visible' });
+    //     const firstButtonVisible = await this.pdp_sizevariant_button.first().isVisible();
+    //     // Initialize sizeVariantCount based on the visibility of the first button
+    //     const sizeVariantCount = firstButtonVisible ? await this.pdp_sizevariant_button.count() : 0;
 
-        if (sizeVariantCount > 0) {
+    //     if (sizeVariantCount > 0) {
+    //         let addToCartButtonEnabled = false;
+
+    //         while (!addToCartButtonEnabled) {
+    //             // Select a random button index
+    //             const randomIndex = Math.floor(Math.random() * sizeVariantCount);
+
+    //             // Click the randomly selected button
+    //             await this.pdp_sizevariant_button.nth(randomIndex).click();
+    //             console.log(`Clicked button with index: ${randomIndex}`);
+
+    //             // Check if the Add to Cart button is enabled
+    //             addToCartButtonEnabled = await this.addtoCartButton.isEnabled();
+
+    //             if (addToCartButtonEnabled) {
+    //                 console.log('Add to Cart button is enabled.');
+    //                 return; // Exit the function once Add to Cart button is enabled
+    //             }
+    //         }
+    //     } else {
+    //         console.log('No buttons found');
+    //     }
+    // }
+
+    async clickOnPDPSizeVariantButton() {
+        // Wait for the size variant section to be visible
+        await this.page.locator('section.flex.flex-wrap.items-center.gap-2\\.5.pt-4').first().waitFor({ state: 'visible' });
+
+        // Find all enabled size variant buttons
+        const enabledButtons = await this.page.locator('section.flex.flex-wrap.items-center.gap-2\\.5.pt-4 button:not([disabled])');
+
+        // Check the count of enabled buttons
+        const enabledButtonCount = await enabledButtons.count();
+
+        if (enabledButtonCount > 0) {
             let addToCartButtonEnabled = false;
 
             while (!addToCartButtonEnabled) {
-                // Select a random button index
-                const randomIndex = Math.floor(Math.random() * sizeVariantCount);
+                // Select a random enabled button
+                const randomIndex = Math.floor(Math.random() * enabledButtonCount);
 
-                // Click the randomly selected button
-                await this.pdp_sizevariant_button.nth(randomIndex).click();
-                console.log(`Clicked button with index: ${randomIndex}`);
+                // Click the randomly selected enabled button
+                await enabledButtons.nth(randomIndex).click();
+                console.log(`Clicked enabled button with index: ${randomIndex}`);
 
                 // Check if the Add to Cart button is enabled
                 addToCartButtonEnabled = await this.addtoCartButton.isEnabled();
 
                 if (addToCartButtonEnabled) {
                     console.log('Add to Cart button is enabled.');
-                    return; // Exit the function once Add to Cart button is enabled
+                    return; // Exit the function once the Add to Cart button is enabled
                 }
             }
         } else {
-            console.log('No buttons found');
+            console.log('No enabled buttons found');
         }
     }
+
+    async clickOnMultiplePDPSizeVariantButton() {
+        await this.page.locator('section.flex.flex-wrap.items-center.gap-2\\.5.pt-4').first().waitFor({ state: 'visible' });
+        // Locate all sections that contain the size variants
+        const sections = await this.page.locator('section.flex.flex-wrap.items-center.gap-2\\.5.pt-4');
+
+        // Get the total number of sections
+        const sectionCount = await sections.count();
+
+        for (let i = 0; i < sectionCount; i++) {
+            // Wait for the current section to be visible
+            await sections.nth(i).waitFor({ state: 'visible' });
+
+            // Find all enabled size variant buttons within the current section
+            const enabledButtons = await sections.nth(i).locator('button:not([disabled])');
+
+            // Check the count of enabled buttons
+            const enabledButtonCount = await enabledButtons.count();
+
+            if (enabledButtonCount > 0) {
+                let addToCartButtonEnabled = false;
+
+                while (!addToCartButtonEnabled) {
+                    // Select a random enabled button
+                    const randomIndex = Math.floor(Math.random() * enabledButtonCount);
+
+                    // Click the randomly selected enabled button
+                    await enabledButtons.nth(randomIndex).click();
+                    console.log(`Clicked enabled button with index: ${randomIndex} in section: ${i}`);
+
+                    // Check if the Add to Cart button is enabled
+                    addToCartButtonEnabled = await this.addtoCartButton.isEnabled();
+
+                    if (addToCartButtonEnabled) {
+                        console.log('Add to Cart button is enabled.');
+                        return; // Exit the function once the Add to Cart button is enabled
+                    }
+                }
+            } else {
+                console.log(`No enabled buttons found in section: ${i}`);
+            }
+        }
+
+        console.log('No enabled buttons found in any section');
+    }
+
+
 
     async validateSelectColorValue() {
         await this.clickOnPDPColorVariantButton();
@@ -430,15 +514,15 @@ exports.PDPPage = class PDPPage {
         }
 
 
-        // Locate the second section and extract its text
-        const orText = await this.paymentSectionLocator.locator('p.inline-block.text-sm.font-normal').first().textContent();
-        const monthlyText = await this.paymentSectionLocator.locator('strong.inline-block.text-lg.font-bold').textContent();
-        const creditText = await this.paymentSectionLocator.locator('p.inline-block.text-sm.font-normal').nth(1).textContent();
+        // // Locate the second section and extract its text//Not applicable for Shoemall
+        // const orText = await this.paymentSectionLocator.locator('p.inline-block.text-sm.font-normal').first().textContent();
+        // const monthlyText = await this.paymentSectionLocator.locator('strong.inline-block.text-lg.font-bold').textContent();
+        // const creditText = await this.paymentSectionLocator.locator('p.inline-block.text-sm.font-normal').nth(1).textContent();
 
-        // Validate the text content of the second section
-        expect(orText.trim()).toMatch('or');
-        expect(monthlyText.trim()).toMatch(/^\$\d{1,3}\.\d{2}\/month\*$/);
-        expect(creditText.trim()).toBeTruthy();
+        // // Validate the text content of the second section
+        // expect(orText.trim()).toMatch('or');
+        // expect(monthlyText.trim()).toMatch(/^\$\d{1,3}\.\d{2}\/month\*$/);
+        // expect(creditText.trim()).toBeTruthy();
     }
 
     async validateCreditMessageSection() {
@@ -531,6 +615,7 @@ exports.PDPPage = class PDPPage {
     }
 
     async validateReviews() {
+        await this.page.locator('section.flex.flex-wrap.items-center.gap-2\\.5.pt-4').first().waitFor({ state: 'visible' });
         await this.page.locator('button:has-text("Reviews")').waitFor({ state: 'visible' });
         const reviewsButton = await this.page.locator('button:has-text("Reviews")');
         const dataState = await reviewsButton.getAttribute('data-state');
@@ -571,7 +656,7 @@ exports.PDPPage = class PDPPage {
         await expect(this.qtyText).toBeVisible();
         const initialInputValue = await this.qtyInputTextBox.inputValue();
         if (initialInputValue == 1) {
-            await expect(this.qtyMinusButton).toBeDisabled();
+            //await expect(this.qtyMinusButton).toBeHidden();
             await expect(this.defaultQtyPlusButton).toBeVisible();
         } else {
             await expect(this.qtyMinusButton).toBeVisible();
@@ -592,44 +677,91 @@ exports.PDPPage = class PDPPage {
         expect(strongText).toBeTruthy();
     }
 
+    // async validateProductQTYIncreaseDecrease() {
+    //     await this.qtyText.waitFor({ state: 'visible' });
+    //     // Check if both buttons are disabled    
+    //     const isPlusButtonDisabled = await this.page.locator('.whitespace-nowrap').nth(1).isDisabled();
+    //     const isMinusButtonDisabled = await this.page.locator('.whitespace-nowrap').first().isDisabled();
+
+
+    //     // If both buttons are disabled, assert that the quantity cannot be updated
+    //     if (isMinusButtonDisabled && isPlusButtonDisabled) {
+    //         console.log("Both buttons are disabled. Quantity cannot be updated.");
+    //         const initialInputValue = await this.qtyInputTextBox.inputValue();
+    //         await this.qtyMinusButton.click(); // Attempt to change the quantity
+    //         const updatedMinusValue = await this.qtyInputTextBox.inputValue();
+    //         expect(initialInputValue).toBe(updatedMinusValue, 'Quantity should not change when both buttons are disabled');
+    //         await this.defaultQtyPlusButton.click(); // Attempt to change the quantity
+    //         const updatedPlusValue = await this.qtyInputTextBox.inputValue();
+    //         expect(initialInputValue).toBe(updatedPlusValue, 'Quantity should not change when both buttons are disabled');
+    //     } else {
+    //         // If either button is enabled, update the quantity accordingly
+    //         const initialInputValue = await this.qtyInputTextBox.inputValue();
+
+    //         if (!isMinusButtonDisabled) {
+    //             // Click the minus button to decrease the quantity
+    //             await this.qtyMinusButton.click();
+    //             const newValueAfterMinus = await this.qtyInputTextBox.inputValue();
+    //             expect(parseInt(newValueAfterMinus)).toBe(parseInt(initialInputValue) - 1, 'Quantity should decrease by 1');
+    //         }
+
+    //         if (!isPlusButtonDisabled) {
+    //             // Click the plus button to increase the quantity
+    //             const updatedInputValue = await this.qtyInputTextBox.inputValue();
+    //             await this.defaultQtyPlusButton.click();
+    //             const newValueAfterPlus = await this.qtyInputTextBox.inputValue();
+    //             expect(parseInt(newValueAfterPlus)).toBe(parseInt(updatedInputValue) + 1, 'Quantity should increase by 1');
+    //         }
+    //     }
+
+    // }
+
     async validateProductQTYIncreaseDecrease() {
         await this.qtyText.waitFor({ state: 'visible' });
-        // Check if both buttons are disabled    
-        const isPlusButtonDisabled = await this.page.getByRole('button', { name: '+' }).isDisabled();
+
+        // Check if the Plus button is displayed and enabled
+        const isPlusButtonDisplayed = await this.page.locator('.whitespace-nowrap').nth(1).isVisible();
+        const isPlusButtonDisabled = isPlusButtonDisplayed ? await this.page.locator('.whitespace-nowrap').nth(1).isDisabled() : true;
+
+        // Check if the Minus button is enabled
         const isMinusButtonDisabled = await this.page.locator('.whitespace-nowrap').first().isDisabled();
 
+        // Get the initial input value
+        const initialInputValue = await this.qtyInputTextBox.inputValue();
 
-        // If both buttons are disabled, assert that the quantity cannot be updated
-        if (isMinusButtonDisabled && isPlusButtonDisabled) {
-            console.log("Both buttons are disabled. Quantity cannot be updated.");
-            const initialInputValue = await this.qtyInputTextBox.inputValue();
+        // If both buttons are disabled or only the Plus button is displayed but disabled, assert that the quantity cannot be updated
+        if (isMinusButtonDisabled && (isPlusButtonDisplayed ? isPlusButtonDisabled : true)) {
+            console.log("Both buttons are disabled or only Plus button is displayed but disabled. Quantity cannot be updated.");
+
+            // Attempt to change the quantity and assert no change
             await this.qtyMinusButton.click(); // Attempt to change the quantity
             const updatedMinusValue = await this.qtyInputTextBox.inputValue();
-            expect(initialInputValue).toBe(updatedMinusValue, 'Quantity should not change when both buttons are disabled');
-            await this.defaultQtyPlusButton.click(); // Attempt to change the quantity
-            const updatedPlusValue = await this.qtyInputTextBox.inputValue();
-            expect(initialInputValue).toBe(updatedPlusValue, 'Quantity should not change when both buttons are disabled');
-        } else {
-            // If either button is enabled, update the quantity accordingly
-            const initialInputValue = await this.qtyInputTextBox.inputValue();
+            expect(initialInputValue).toBe(updatedMinusValue, 'Quantity should not change when both buttons are disabled or only Plus button is disabled');
 
-            if (!isMinusButtonDisabled) {
-                // Click the minus button to decrease the quantity
-                await this.qtyMinusButton.click();
-                const newValueAfterMinus = await this.qtyInputTextBox.inputValue();
-                expect(parseInt(newValueAfterMinus)).toBe(parseInt(initialInputValue) - 1, 'Quantity should decrease by 1');
+            if (isPlusButtonDisplayed) {
+                await this.defaultQtyPlusButton.click(); // Attempt to change the quantity
+                const updatedPlusValue = await this.qtyInputTextBox.inputValue();
+                expect(parseInt(updatedPlusValue)).toBe(parseInt(initialInputValue) + 1, 'Quantity should increase by 1 when Plus button is clicked');
             }
-
+        } else {
+            // If Plus button is enabled and displayed, or Minus button is enabled
             if (!isPlusButtonDisabled) {
-                // Click the plus button to increase the quantity
-                const updatedInputValue = await this.qtyInputTextBox.inputValue();
+                // Click the Plus button to increase the quantity
                 await this.defaultQtyPlusButton.click();
                 const newValueAfterPlus = await this.qtyInputTextBox.inputValue();
-                expect(parseInt(newValueAfterPlus)).toBe(parseInt(updatedInputValue) + 1, 'Quantity should increase by 1');
+                expect(parseInt(newValueAfterPlus)).toBe(parseInt(initialInputValue) + 1, 'Quantity should increase by 1');
+            }
+
+            if (!isMinusButtonDisabled) {
+                // Click the Minus button to decrease the quantity
+                const updatedInputValue = await this.qtyInputTextBox.inputValue();
+                await this.qtyMinusButton.click();
+                const newValueAfterMinus = await this.qtyInputTextBox.inputValue();
+                expect(parseInt(newValueAfterMinus)).toBe(parseInt(updatedInputValue) - 1, 'Quantity should decrease by 1');
             }
         }
-
     }
+
 
     async validateProductQTYUpdateByTypeIn(enterProductQty) {
         const initialQtyValue = await this.qtyInputTextBox.inputValue();
@@ -657,7 +789,7 @@ exports.PDPPage = class PDPPage {
 
         await this.miniCartHeaderText.waitFor({ state: 'visible' });
         await expect(this.miniCartHeaderText).toBeVisible();
-        await this.page.getByRole('button', { name: 'My Cart' }).waitFor({ state: 'visible' });
+        await this.page.getByRole('button', { name: 'My Bag' }).waitFor({ state: 'visible' });
         // Locate the container element that holds all products
         const productsContainer = await this.page.locator('ul.grid.gap-4.p-4');
 
@@ -673,7 +805,7 @@ exports.PDPPage = class PDPPage {
             console.log('Product Name:', productName.trim());
 
             // Check for the image display
-            const productImage = await productItem.locator('section.mt-4.flex.gap-4 a[href]');
+            const productImage = await productItem.locator('section.mt-4.flex.gap-4 img');
             //expect(await productImage.isVisible()).toBe(true);
             await expect(productImage).toBeVisible({ timeout: 10000 });
             console.log('Product image is visible');

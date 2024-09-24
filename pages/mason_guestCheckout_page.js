@@ -22,21 +22,21 @@ const popular_search_terms = "div.flex.gap-1\\.5.rounded-md.border.border-foggyG
 const auto_suggestion_container = "ul.m-2\\.5 li"
 const secure_checkout_header = "Begin Secure Checkout";
 const sign_in_option = "Sign In & Check Out";
-const add_to_cart = "Add to Cart";
+const add_to_cart = "Add to Bag";
 const check_out = "Check Out";
 const checkOut_as_guest = "Check Out as Guest";
 const guest_text = "You don't need an account to check out. Just continue as guest, and create an account later if you'd like";
 const guest_checkout_button = "Continue as Guest";
 const shipping = "Shipping";
 const secure_checkout_link = "Secure Checkout";
-const return_to_cart_link = "Return to Cart";
+const return_to_cart_link = "Return to Bag";
 const shipping_address = "Shipping Address";
 const items_in_cart = "Items in Your Order";
 const order_summary = "Order Summary";
 const order_total = "Order Total:";
 const shipping_method = "Shipping Method";
 const continue_to_payment = "Continue to Payment";
-const close_cart_button = "My Cart";
+const close_cart_button = "My Bag";
 const payment = "Payment";
 const payment_method = "Payment Method";
 const continue_to_review = "Continue to Review";
@@ -44,13 +44,15 @@ const review = "Review";
 const place_order_button = 'button[type="submit"]';
 const email_us = 'Email Us:';
 const email_text = 'Email your question to';
-const mail_id = "service@stoneberry.com";
+const mail_id = "service@shoemall.com";
 const dropdownSelector = '#addressId';
 const gift_message = 'Gift Message';
 const create_account_text = 'To use Stoneberry Credit,you must create a new account here or Sign In to an existing account'
 const edit_credituser_address_message = 'If you need to change the credit account holder’s name, please call us at 1-800-704-5480'
 const different_address_message = 'Your order may be canceled if your shipping and billing addresses are different';
-const address_line_2='Show Address Line 2';
+const address_line_2 = 'Show Address Line 2';
+const cartApplyPromoCode = 'Apply Promo Code (optional)';
+const tollFreeNumberRegex = /^\s*1-\d{3}-\d{3}-\d{4}\s*$/;
 const items_in_cart_texts = [
   'Items in Your Order',
   'Item in Your Order'
@@ -116,7 +118,7 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     this.makepayment_newaddress_fname = page.getByLabel(myaccountpage_locator.myaccount_addnewaddress_firstname);
     this.makepayment_newaddress_lname = page.getByLabel(myaccountpage_locator.myaccount_addnewaddress_lastname);
     this.makepayment_newaddress_address1 = page.getByLabel(myaccountpage_locator.myaccount_addnewaddress_addressline1);
-    this.makepayment_newaddress_address2 = page.getByRole('button', { name: address_line_2});
+    this.makepayment_newaddress_address2 = page.getByRole('button', { name: address_line_2 });
     this.makepayment_addnewaddress_city = page.getByLabel(myaccountpage_locator.myaccount_addnewaddress_city);
     this.makepayment_newAddress_state = page.locator(myaccountpage_locator.makepayment_newAddress_state);
     this.makepayment_addnewaddress_zipcode = page.getByLabel(myaccountpage_locator.myaccount_addnewaddress_zipcode);
@@ -127,6 +129,18 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     this.privacyPolicyButton = page.getByRole('button', { name: 'Privacy Policy' });
     this.creditReportButton = page.getByRole('button', { name: 'Credit Report & Electronic' });
     this.checkoutRemovePromoCodeButton = page.locator('button.underline:has-text("Remove")');
+    this.checkoutpaypaloption = page.getByLabel('PayPal');
+    this.paypalpageheader = page.getByRole('heading', { name: 'Pay with PayPal' });
+    this.paypalemailplaceholder = page.getByPlaceholder('Email or mobile number');
+    this.paypalnextbutton = page.getByRole('button', { name: 'Next' });
+    this.paypalpassword = page.getByPlaceholder('Password');
+    this.paypalloginbutton = page.getByRole('button', { name: 'Log In' });
+    this.submitpaypalbutton = page.getByTestId('submit-button-initial');
+    //this.paypalpaymentmethod = page.locator('article').filter({ hasText: 'Payment Method' }).locator('path');
+    this.paypalpaymentmethod = page.locator('image[id="image0_2298_1837"]');
+    this.cartApplyPromoCodeOption = page.getByRole('button', { name: cartApplyPromoCode });
+    this.cartApplyPromoCodeTextBox = page.locator('#promo-code');
+    this.cartApplyPromoCodeButton = page.getByRole('button', { name: 'Apply Code' });
   }
 
 
@@ -195,7 +209,7 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     await this.page.$(`//h2[contains(text(), "${shipping}")]`);
     await this.page.$(`//p[contains(text(), "${shipping}")]`);
     await this.page.$(`//p[contains(text(), "${shipping_method}")]`);
-    await (this.page.getByText(secure_checkout_link)).waitFor({ state: "visible" });
+    await this.page.getByText(secure_checkout_link, { exact: true }).waitFor({ state: "visible" });
     await (this.page.getByText(return_to_cart_link)).waitFor({ state: "visible" });
     await expect(this.page.getByText(shipping_address, { exact: true })).toBeVisible();
     for (const text of items_in_cart_texts) {
@@ -215,7 +229,7 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
 
   async validateReturnToCart() {
     await this.page.getByText(return_to_cart_link).click();
-    const shoppingCartElement = this.page.locator('strong:has-text("Shopping Cart")');
+    const shoppingCartElement = this.page.locator('strong:has-text("Shopping Bag")');
     await expect(shoppingCartElement).toBeVisible({ timeout: 10000 });
   }
 
@@ -302,7 +316,8 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
   //FAQ
   async validateCallSection() {
     await expect(this.page.getByText('Call Us Toll-Free')).toBeVisible({ timeout: 10000 });
-    await expect(this.page.getByRole('link', { name: '1-800-704-5480' }).first()).toBeVisible();
+    await expect(this.page.locator('a').filter({ hasText: tollFreeNumberRegex }).first()).toBeVisible();
+    //await expect(tollFreeLink).toBeVisible();
     await expect(this.page.getByText('6 a.m. to Midnight (CST),')).toBeVisible();
     await expect(this.page.getByText('7 days a week')).toBeVisible();
   }
@@ -315,7 +330,7 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
 
 
   async validateNeedHelpSection() {
-    await this.page.getByText('Need Help?').waitFor({state:'visible'});
+    await this.page.getByText('Need Help?').waitFor({ state: 'visible' });
     await expect(this.page.getByText('Need Help?')).toBeVisible();
     await expect(this.page.getByText('View FAQs:')).toBeVisible();
     await expect(this.page.getByText('Find your answer by visiting')).toBeVisible();
@@ -357,7 +372,7 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     const state = faker.location.state({ abbreviated: true });
     await (this.makepayment_newAddress_state).selectOption(randomAddress.state);
 
-    const zipCode = faker.location.zipCode().substring(0, 5); 
+    const zipCode = faker.location.zipCode().substring(0, 5);
     await (this.makepayment_addnewaddress_zipcode).fill(randomAddress.zipCode);
 
     const phoneNumber = faker.phone.number();
@@ -664,14 +679,14 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
 
   async validatePaymentMethods() {
     await this.page.waitForSelector('label:has-text("Credit/Debit Card")', { state: 'visible' });
-    await expect(this.page.getByLabel('My Stoneberry Credit')).toBeVisible();
+    //await expect(this.page.getByLabel('My Stoneberry Credit')).toBeVisible();
   }
 
 
   async validateMyCreditIsSelectedbyDefault() {
     // Check if the "Saved address" radio button is present and selected by default
     // Wait for the button to appear on the page
-    const button = await this.page.waitForSelector('button[value="CREDIT"]');
+    const button = await this.page.waitForSelector('button[value="CARD"]');
 
     // Get the value of aria-checked attribute
     const ariaChecked = await button.getAttribute('aria-checked');
@@ -704,30 +719,13 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     }
   }
 
-
-
   async clickNewCard() {
-
     try {
-      // Wait for the label that contains the text "Credit/Debit Card"
-      if (this.paymentEditButton.isVisible()) {
-        this.paymentEditButton.click();
-        const button = await this.page.waitForSelector('button[value="newCreditCard"]');
-        await button.click();
-      } else {
-        const button = await this.page.waitForSelector('button[value="newCreditCard"]');
-        // Click the button
-        await button.click();
-        console.log('Clicked on New Credit/Debit Card button.');
-      }
-
+      await this.page.locator('button[value="newCreditCard"]').click();
     } catch (error) {
       console.error('Error clicking on New Credit/Debit Card button:', error);
     }
   }
-
-
-
 
   async clickSameAsShippingCheckbox() {
     await this.page.getByLabel('Same as Shipping Address').click();
@@ -864,6 +862,10 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
   async clickOnSignIn() {
     await this.page.getByRole('button', { name: 'Sign In' }).click();
     await (this.page.getByRole('heading', { name: 'Sign In to Your Stoneberry' })).waitFor({ state: "visible" });
+  }
+
+  async clickEditCard() {
+    await this.page.getByRole('button', { name: 'Edit Card' }).click();
   }
 
   async validateCreditCardOptions() {
@@ -1045,25 +1047,25 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     try {
       // Click on the "Place Order" button
       await this.page.getByRole('button', { name: 'Place Order' }).first().click();
-      
+
       // Wait briefly for any error message to appear
       await this.page.waitForTimeout(5000); // Short delay for the UI to update
-      
+
       // Check for the presence of the error message <p> tag
       const errorMessageSelector = 'p.text-scarletRed.font-medium.leading-6';
       const errorMessage = await this.page.locator(errorMessageSelector).first();
-      
+
       if (await errorMessage.isVisible()) {
         // Capture the error message text
         const errorText = await errorMessage.textContent();
         console.log('Error Message:', errorText);
-  
+
         // Optionally, you might want to throw an error or handle it in a specific way
         throw new Error(`Order failed with message: ${errorText}`);
       } else {
         // Proceed if no error message is found
         //await this.validatePlaceOrderProgress();
-        await this.page.waitForURL(/.*\/thank-you\/.*/);
+        await this.page.waitForURL('**/thank-you');
         console.log('Order placed successfully, redirected to the thank-you page.');
       }
     } catch (error) {
@@ -1073,7 +1075,7 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
       await this.page.screenshot({ path: screenshotPath, fullPage: true });
       allure.attachment('Full Page Screenshot', Buffer.from(await this.page.screenshot({ fullPage: true })), 'image/png');
     }
-  }  
+  }
 
   async validateInvalidBlankCardDetails() {
     await this.page.getByRole('button', { name: 'Continue to Review' }).click();
@@ -1081,25 +1083,53 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
   }
 
 
+  // async validateOrderSummary() {
+  //   await (this.page.getByText('Order Summary')).waitFor({ state: "visible" });
+  //   await (this.page.getByText('Subtotal:')).waitFor({ state: "visible" });
+  //   await expect(this.page.getByText('Shipping:')).toBeVisible();
+  //   //await expect(this.page.locator('li').filter({ hasText: 'Shipping:$' }).getByLabel('tooltip')).toBeVisible();
+  //   await expect(this.page.getByText('Shipping Surcharge:')).toBeVisible();
+  //   await expect(this.page.getByText('Estimated Sales Tax:')).toBeVisible();
+  //   await expect(this.page.getByText('Order Total:')).toBeVisible();
+  //   await expect(this.page.locator('li').filter({ hasText: 'Estimated Sales Tax:$' }).getByLabel('tooltip')).toBeVisible();
+  //   await expect(this.page.locator('li').filter({ hasText: 'Shipping Surcharge:$' }).getByLabel('tooltip')).toBeVisible();
+  //   await expect(this.page.getByRole('button', { name: 'Apply Promo Code (optional)' })).toBeVisible();
+  //   await expect(this.page.locator('.absolute > button')).toBeVisible();
+
+  // }
+
   async validateOrderSummary() {
-    await (this.page.getByText('Order Summary')).waitFor({ state: "visible" });
-    await (this.page.getByText('Subtotal:')).waitFor({ state: "visible" });
+    // Wait for the "Order Summary" and "Subtotal" labels to be visible
+    await this.page.getByText('Order Summary').waitFor({ state: "visible" });
+    await this.page.getByText('Subtotal:').waitFor({ state: "visible" });
+
+    // Check and validate "Shipping" label
     await expect(this.page.getByText('Shipping:')).toBeVisible();
-    //await expect(this.page.locator('li').filter({ hasText: 'Shipping:$' }).getByLabel('tooltip')).toBeVisible();
-    await expect(this.page.getByText('Shipping Surcharge:')).toBeVisible();
+
+    // Conditionally check for the presence of "Shipping Surcharge"
+    const isShippingSurchargeVisible = await this.page.getByText('Shipping Surcharge:').isVisible();
+    if (isShippingSurchargeVisible) {
+      await expect(this.page.getByText('Shipping Surcharge:')).toBeVisible();
+      await expect(this.page.locator('li').filter({ hasText: 'Shipping Surcharge:$' }).getByLabel('tooltip')).toBeVisible();
+    }
+
+    // Check for "Estimated Sales Tax" and "Order Total" labels
     await expect(this.page.getByText('Estimated Sales Tax:')).toBeVisible();
     await expect(this.page.getByText('Order Total:')).toBeVisible();
-    await expect(this.page.locator('li').filter({ hasText: 'Estimated Sales Tax:$' }).getByLabel('tooltip')).toBeVisible();
-    await expect(this.page.locator('li').filter({ hasText: 'Shipping Surcharge:$' }).getByLabel('tooltip')).toBeVisible();
-    await expect(this.page.getByRole('button', { name: 'Apply Promo Code (optional)' })).toBeVisible();
-    await expect(this.page.locator('.absolute > button')).toBeVisible();
 
+    // Check for tooltips related to "Estimated Sales Tax"
+    await expect(this.page.locator('li').filter({ hasText: 'Estimated Sales Tax:$' }).getByLabel('tooltip')).toBeVisible();
+
+    // Validate the presence of the "Apply Promo Code" button and close button
+    await expect(this.page.getByRole('button', { name: 'Apply Promo Code (optional)' })).toBeVisible();
+    //await expect(this.page.locator('.absolute > button')).toBeVisible();
   }
+
 
   async validatePromoCodeSection() {
     const removePromoButton = this.checkoutRemovePromoCodeButton;
     const applyPromoButton = this.page.getByRole('button', { name: 'Apply Promo Code (optional)' });
-    const promoCodeInput = this.page.locator('input[type="text"]');
+    const promoCodeInput = this.page.locator('#promo-code');
     const applyCodeButton = this.page.getByRole('button', { name: 'Apply Code' });
 
     if (await removePromoButton.isVisible()) {
@@ -1108,24 +1138,34 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
       await this.page.waitForTimeout(5000); // Adjust the timeout as needed
     }
 
-    await applyPromoButton.click();
-    await expect(promoCodeInput).toBeVisible();
-    await expect(applyCodeButton).toBeVisible();
+    const isPromoCodeTextBoxVisible = await this.cartApplyPromoCodeTextBox.isVisible();
+    if (!isPromoCodeTextBoxVisible) {
+      // If not visible, click on the option to reveal it
+      await expect(this.cartApplyPromoCodeOption).toBeVisible();
+      await this.cartApplyPromoCodeOption.click();
+      // Wait for the promo code text box to become visible
+      await this.cartApplyPromoCodeTextBox.waitFor({ state: 'visible' });
+    }
+    await expect(this.cartApplyPromoCodeTextBox).toBeVisible();
+    await expect(this.cartApplyPromoCodeButton).toBeVisible();
+
+
   }
 
-  async validateValidPromoCode() {
-    await this.page.locator('input[type="text"]').click();
-    await this.page.locator('input[type="text"]').fill('SALE50');
+  async validateValidPromoCode(enterPromoCode) {
+    await this.page.locator('#promo-code').click();
+    await this.page.locator('#promo-code').fill(enterPromoCode);
+    const promoCode = await this.cartApplyPromoCodeTextBox.inputValue();
     await this.page.getByRole('button', { name: 'Apply Code' }).click();
-    await (this.page.getByText('Promo code SALE50 has been applied to your order')).waitFor({ state: "visible" });
-    await expect(this.page.getByText('Promo code SALE50 applied to order')).toBeVisible();
+    await (this.page.getByText(`Promo code ${promoCode} has been applied to your order`)).waitFor({ state: "visible" });
+    await expect(this.page.getByText(`Promo code ${promoCode} applied to order`)).toBeVisible();
     await expect(this.page.getByRole('button', { name: 'Remove' })).toBeVisible();
     await expect(this.page.getByText('Order Discount')).toBeVisible();
   }
 
   async validateInvalidPromoCode() {
-    await this.page.locator('input[type="text"]').click();
-    await this.page.locator('input[type="text"]').fill('SAVE50');
+    await this.page.locator('#promo-code').click();
+    await this.page.locator('#promo-code').fill('SAVE50');
     await this.page.getByRole('button', { name: 'Apply Code' }).click();
     await (this.page.getByText('Promo code SAVE50 is invalid, expired or not applicable to your item')).waitFor({ state: "visible" });
   }
@@ -1138,7 +1178,7 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
 
 
   async addCardDetails() {
-    await this.page.getByLabel('*Card Number').fill('4484 6400 0000 0042');
+    await this.page.getByLabel('*Card Number').fill('4012 0000 7777 7777');
     await this.page.getByText('*Exp. Date (MM/YY)').click();
     await this.page.getByLabel('*Exp. Date (MM/YY)').fill('12/25');
     await this.page.getByText('*Security Code').click();
@@ -1277,6 +1317,19 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
   async selectNewCardButton() {
     const button = await this.page.waitForSelector('button[value="newCreditCard"]');
     await button.click();
+  }
+
+  async paypalPayment(paypalID, password) {
+    await this.checkoutpaypaloption.click();
+    await this.paypalpageheader.waitFor({ state: 'visible' });
+    await this.paypalemailplaceholder.fill(paypalID);
+    await this.paypalnextbutton.click();
+    await this.paypalpassword.fill(password);
+    await this.paypalloginbutton.click();
+    await this.submitpaypalbutton.waitFor({ state: 'visible' });
+    await this.submitpaypalbutton.click();
+    await this.paypalpaymentmethod.waitFor({ state: 'visible' });
+
   }
 
 

@@ -52,10 +52,12 @@ exports.SignInPage = class SignInPage{
 
     async clickSignIn(){
         await this.signin_button_name.click();
+        await this.signin_emailaddress_textbox.waitFor({state:'visible'});
     }
 
     async clickSignInImage(){
         await this.signin_img_button.click();
+        await this.create_an_account_button.waitFor({state:'visible'});
     }
 
     async validateSignedInMessage(SignedInMessage){
@@ -80,11 +82,13 @@ exports.SignInPage = class SignInPage{
     }
 
     async loginFailMessage(){
+        await this.failed_message.waitFor({state:'visible'});
         await expect(this.failed_message).toContainText(signinpage_data.login_fail_message);
     }
 
     //Account - Reset/Forgot Password : SB-LOGREG024
     async clickOnForgotPassword(){
+        await this.forgot_password_button.waitFor({state:'visible'});
         await expect(this.forgot_password_button).toBeVisible();
         await this.forgot_password_button.click();
     }
@@ -131,6 +135,7 @@ exports.SignInPage = class SignInPage{
     }
 
     async clickCreateAnAccount(){
+        await this.create_an_account_button.waitFor({state:'visible'});
         await expect(this.create_an_account_button).toBeVisible();
         await this.create_an_account_button.click();
     }

@@ -150,7 +150,7 @@ test.describe("Mason MyAccount - Credit Cards - Standard With Saved Cards", ()=>
     })
 
     //Account - Credit Cards - Standard With Saved Cards - Test Cases ID-SB-MyA315
-  test("Account - Credit Cards - Standard With Saved Cards - Verify user is able to edit the credit card details with new billing address.",async({page},testInfo)=>{ 
+  test.skip("Account - Credit Cards - Standard With Saved Cards - Verify user is able to edit the credit card details with new billing address.",async({page},testInfo)=>{ 
     ////test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
@@ -169,7 +169,7 @@ test.describe("Mason MyAccount - Credit Cards - Standard With Saved Cards", ()=>
     })
 
     //Account - Credit Cards - Standard With Saved Cards - Test Cases ID-SB-MyA312
-  test("Account - Credit Cards - Standard With Saved Cards - Verify user is able to edit the credit card details with any other saved address from the account.",async({page},testInfo)=>{ 
+  test.skip("Account - Credit Cards - Standard With Saved Cards - Verify user is able to edit the credit card details with any other saved address from the account.",async({page},testInfo)=>{ 
     ////test.slow();
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');

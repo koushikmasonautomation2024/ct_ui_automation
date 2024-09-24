@@ -6,7 +6,7 @@ const system_maintenance_subtitle="We\'re currently in the process of performing
 const system_maintenance_text="Please try again later, or contact one of our Customer Service Representatives in";
 const email='Email Us:';
 const email_text='Email your question to';
-const mail_id="service@stoneberry.com";
+const mail_id="service@shoemall.com";
 const thank_you_text="Thank you for your patience! Your business is very important to us!";
 
 exports.SystemMaintenancePage = class SystemMaintenancePage{

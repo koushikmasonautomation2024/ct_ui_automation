@@ -8,7 +8,7 @@ const cartDeleviringTo = 'section.-ml-1.mt-1.flex p';
 const cartEditButton = 'button:has-text("Edit")';
 const cartRemoveButton = 'button:has-text("Remove")';
 const cartSaveForLaterButton = 'button:has-text("Save for Later")';
-const cartMovetoCartButton = 'button:has-text("Move to Cart")';
+const cartMovetoCartButton = 'button:has-text("Move to Bag")';
 const cartQtyInputLocator = 'input.numberInputCounter';
 const cartEditItemDrawerHeader = 'strong:has-text("Edit Item")';
 const cartEditItemDrawerCloseButton = 'section.z-10.flex button';
@@ -30,7 +30,7 @@ const cartNeedHelp = 'Need Help?';
 exports.CartPage = class CartPage {
     constructor(page) {
         this.page = page;
-        this.cartShoppingCartHeaderText = page.locator('strong', { hasText: 'Shopping Cart' });
+        this.cartShoppingCartHeaderText = page.locator('strong', { hasText: 'Shopping Bag' });
         this.cartTotalItems = this.cartShoppingCartHeaderText.locator('xpath=following-sibling::p[1]');
         this.cartOrderTotalText = page.locator('p.text-base.font-normal.leading-\\[22\\.4px\\]', { hasText: 'Order Total' });
         this.cartOrderTotal = this.cartOrderTotalText.locator('xpath=preceding-sibling::strong[1]');
@@ -47,16 +47,16 @@ exports.CartPage = class CartPage {
         this.creditMessageLocator = page.locator('section.mt-4.py-5');
         //this.qtyMinusButton = page.locator('div.flex > button:nth-child(1)');
         this.qtyMinusButton = page.locator('button[aria-label="Decrease Quantity"]');
-        this.qtyPlusButton = page.locator('button[aria-label="Increase Quantity"]'); 
+        this.qtyPlusButton = page.locator('button[aria-label="Increase Quantity"]');
         //this.qtyPlusButton = page.locator('div.flex > button:nth-child(3)');
         //this.defaultQtyPlusButton = page.locator('div.flex > button:nth-child(2)');
-        this.defaultQtyPlusButton = page.locator('button[aria-label="Increase Quantity"]'); 
+        this.defaultQtyPlusButton = page.locator('button[aria-label="Increase Quantity"]');
         this.qtyInputTextBox = page.locator('input.numberInputCounter');
         this.qtyText = page.getByText('Qty:');
         this.availabilityText = page.getByText('Availability:');
         this.pdp_colorvariant_button = page.locator(pdp_colorvariant_button_locator);
         this.pdp_sizevariant_button = page.locator(pdp_sizevariant_button_locator);
-        this.updateCartButton = page.getByRole('button', { name: 'Update Cart' });
+        this.updateCartButton = page.getByRole('button', { name: 'Update Bag' });
         this.cancelUpdateCartButton = page.getByRole('button', { name: 'Cancel' });
         this.removeCartButton = page.getByRole('button', { name: 'Remove' });
         this.cartSuccessMessage = page.locator('p.text-forestGreen.font-medium.leading-6');
@@ -65,10 +65,10 @@ exports.CartPage = class CartPage {
         this.cartSavedForLaterText = page.locator('section.mb-5.grid strong');
         this.cartSavedForLaterItems = page.locator('section.mb-5.grid p').nth(1);
         this.cartSaveForLaterButton = page.getByRole('button', { name: 'Save for Later' });
-        this.cartMoveToCartButton = page.getByRole('button', { name: 'Move to Cart' });
+        this.cartMoveToCartButton = page.getByRole('button', { name: 'Move to Bag' });
         this.cartRemoveButtonSaveLater = page.locator(`section.mt-4.flex ${cartRemoveButton}`);
-        this.cartApplyPromoCodeOption = page.getByRole('button', { name: cartApplyPromoCode }).first();
-        this.cartApplyPromoCodeTextBox = page.getByLabel(cartApplyPromoCode).getByRole('textbox');
+        this.cartApplyPromoCodeOption = page.getByRole('button', { name: cartApplyPromoCode });
+        this.cartApplyPromoCodeTextBox = page.locator('#promo-code');
         this.cartApplyPromoCodeButton = page.getByRole('button', { name: 'Apply Code' });
         this.cartRemovePromoCodeButton = page.locator('section.mt-5.border-t.border-silverGray button');
         this.cartPromoCodeRedColor = page.locator('p:has-text("Promo code") strong.text-scarletRed');
@@ -286,9 +286,9 @@ exports.CartPage = class CartPage {
 
     async clickRemoveCartButton() {
         const removedProdName = await this.getCartFirstItemProductName();
-        const removedItemMessage = `${removedProdName} was successfully removed from your cart`;
+        const removedItemMessage = `${removedProdName} was successfully removed from your Bag`;
         await this.removeCartButton.first().click();
-        await this.page.getByText(removedItemMessage).waitFor({state:'visible'});
+        await this.page.getByText(removedItemMessage).waitFor({ state: 'visible' });
         await expect(this.page.getByText(removedItemMessage)).toBeVisible();
 
     }
@@ -350,15 +350,15 @@ exports.CartPage = class CartPage {
         const saveForLaterProdName = await this.getCartFirstItemProductName();
         const saveForLaterMessage = `${saveForLaterProdName} was successfully saved for later.`;
         await this.cartSaveForLaterButton.first().click();
-        await this.page.getByText(saveForLaterMessage).waitFor({state:'visible'});
+        await this.page.getByText(saveForLaterMessage).waitFor({ state: 'visible' });
         await expect(this.page.getByText(saveForLaterMessage)).toBeVisible();
     }
 
     async clickMoveToCartButton() {
         const moveToCartProdName = await this.getCartSavedForLaterFirstItemProductName();
-        const moveToCartMessage = `${moveToCartProdName} was successfully moved to your cart`;
+        const moveToCartMessage = `${moveToCartProdName} was successfully moved to your Bag`;
         await this.cartMoveToCartButton.first().click();
-        await this.page.getByText(moveToCartMessage).waitFor({state:'visible'});
+        await this.page.getByText(moveToCartMessage).waitFor({ state: 'visible' });
         await expect(this.page.getByText(moveToCartMessage)).toBeVisible();
     }
 
@@ -366,7 +366,7 @@ exports.CartPage = class CartPage {
         const saveForLaterProdName = await this.getCartSavedForLaterFirstItemProductName();
         const saveForLaterItemRemoveMessage = `${saveForLaterProdName} was successfully removed from save for later wishlist.`;
         await this.cartRemoveButtonSaveLater.first().click();
-        await this.page.getByText(saveForLaterItemRemoveMessage).waitFor({state:'visible'});
+        await this.page.getByText(saveForLaterItemRemoveMessage).waitFor({ state: 'visible' });
         await expect(this.page.getByText(saveForLaterItemRemoveMessage)).toBeVisible();
     }
 
@@ -481,11 +481,11 @@ exports.CartPage = class CartPage {
     }
 
     async validatePromoCode() {
-        const promoSection = this.page.locator('section:has-text("Promo code")').nth(3);
+        const promoSection = await this.page.locator('section:has-text("Promo code")').nth(3);
         await promoSection.waitFor({ state: 'visible' });
 
         // Locate the "Remove" button within the promo section
-        const removeButton = promoSection.locator('button:has-text("Remove")');
+        const removeButton = await promoSection.locator('button:has-text("Remove")');
         //await this.cartPromoSection.waitFor({ state: 'visible' });
         const isRemoveButtonVisible = await removeButton.isVisible({ timeout: 5000 });
         if (isRemoveButtonVisible) {
@@ -501,7 +501,14 @@ exports.CartPage = class CartPage {
             console.log('Remove button is not visible, proceeding to the next action...');
             // Proceed to the next action
             await expect(this.cartApplyPromoCodeOption).toBeVisible();
-            await this.cartApplyPromoCodeOption.click();
+            const isPromoCodeTextBoxVisible = await this.cartApplyPromoCodeTextBox.isVisible();
+            if (!isPromoCodeTextBoxVisible) {
+                // If not visible, click on the option to reveal it
+                await expect(this.cartApplyPromoCodeOption).toBeVisible();
+                await this.cartApplyPromoCodeOption.click();
+                // Wait for the promo code text box to become visible
+                await this.cartApplyPromoCodeTextBox.waitFor({ state: 'visible' });
+            }
             await expect(this.cartApplyPromoCodeTextBox).toBeVisible();
             await expect(this.cartApplyPromoCodeButton).toBeVisible();
         }
@@ -509,6 +516,8 @@ exports.CartPage = class CartPage {
     }
 
     async enterPromoCode(enterCode) {
+        await this.cartApplyPromoCodeTextBox.waitFor({ state: 'visible' });
+        //await this.cartApplyPromoCodeTextBox.click();
         await this.cartApplyPromoCodeTextBox.fill(enterCode);
     }
 
@@ -534,7 +543,7 @@ exports.CartPage = class CartPage {
         const promoCodeMessage = `Promo code ${promoCode} applied to order`;
         const promoCodeTopMessage = `Promo code ${promoCode} has been applied to your order`;
         await this.cartApplyPromoCodeButton.click();
-        await this.page.getByText(promoCodeMessage).waitFor({state:'visible'});
+        await this.page.getByText(promoCodeMessage).waitFor({ state: 'visible' });
         await expect(this.page.getByText(promoCodeMessage)).toBeVisible();
         await expect(this.page.getByText(promoCodeTopMessage)).toBeVisible();
     }
@@ -556,8 +565,14 @@ exports.CartPage = class CartPage {
             await this.cartApplyPromoCodeOption.click();
         } else {
             console.log('Remove button is not visible, proceeding to the next action...');
-            // Proceed to the next action
-            await this.cartApplyPromoCodeOption.click();
+            const isPromoCodeTextBoxVisible = await this.cartApplyPromoCodeTextBox.isVisible();
+            if (!isPromoCodeTextBoxVisible) {
+                // If not visible, click on the option to reveal it
+                await this.cartApplyPromoCodeOption.click();
+                // Wait for the promo code text box to become visible
+                await this.cartApplyPromoCodeTextBox.waitFor({ state: 'visible' });
+            }
+
         }
 
     }
@@ -582,31 +597,52 @@ exports.CartPage = class CartPage {
         const expectedLabels = [
             cartOrderSummarySubTotal,
             cartOrderSummaryEstShipping,
-            cartOrderSummaryEstSurcharge,
             cartOrderSummaryEstSalesTax,
             cartOrderSummaryOrderTotal
         ];
 
-        // Check visibility for each label
+        // Check visibility and extract text content for mandatory labels
         for (const label of expectedLabels) {
             await expect(this.page.getByText(label)).toBeVisible();
         }
 
-        // Extract and validate text content
+        // Extract and validate text content for mandatory labels
         const subTotalText = await this.page.getByText(cartOrderSummarySubTotal).locator('..').locator('p:last-child').textContent();
-        const estShippingText = await this.page.getByText(cartOrderSummaryEstShipping).locator('..').locator('p:last-child').textContent();
-        const estSurchargeText = await this.page.getByText(cartOrderSummaryEstSurcharge).locator('..').locator('p:last-child').textContent();
+        //const estShippingText = await this.page.getByText(cartOrderSummaryEstShipping).locator('..').locator('p:last-child').textContent();
         const estSalesTaxText = await this.page.getByText(cartOrderSummaryEstSalesTax).locator('..').locator('p:last-child').textContent();
         const orderTotalText = await this.page.getByText(cartOrderSummaryOrderTotal).locator('..').locator('strong:last-child').textContent();
 
         // Match each value against the currency format regex
         expect(subTotalText.trim()).toMatch(/^\$\d+(\.\d{2})?$/);
-        expect(estShippingText.trim()).toMatch(/^\$\d+(\.\d{2})?$/);
-        expect(estSurchargeText.trim()).toMatch(/^\$\d+(\.\d{2})?$/);
+        //expect(estShippingText.trim()).toMatch(/^\$\d+(\.\d{2})?$/);
         expect(estSalesTaxText.trim()).toMatch(/^\$\d+(\.\d{2})?$/);
         expect(orderTotalText.trim()).toMatch(/^\$\d+(\.\d{2})?$/);
 
+        // Handle Est. Shipping label
+        const estShippingLocator = this.page.getByText(cartOrderSummaryEstShipping).locator('..');
+
+        // Check if the shipping cost is provided as a price or "FREE"
+        const isFreeShipping = await estShippingLocator.locator('strong.text-scarletRed').isVisible();
+
+        if (isFreeShipping) {
+            const freeShippingText = await estShippingLocator.locator('strong.text-scarletRed').textContent();
+            expect(freeShippingText.trim()).toBe('FREE');
+        } else {
+            const estShippingText = await estShippingLocator.locator('p:last-child').textContent();
+            expect(estShippingText.trim()).toMatch(/^\$\d+(\.\d{2})?$/);
+        }
+
+        // Handle optional Est. Surcharge label
+        const isSurchargeVisible = await this.page.getByText(cartOrderSummaryEstSurcharge).isVisible();
+
+        if (isSurchargeVisible) {
+            const estSurchargeText = await this.page.getByText(cartOrderSummaryEstSurcharge).locator('..').locator('p:last-child').textContent();
+            expect(estSurchargeText.trim()).toMatch(/^\$\d+(\.\d{2})?$/);
+        } else {
+            console.log('Est. Surcharge label is not visible.');
+        }
     }
+
 
     async validateNeedHelp() {
         const expectedLabels = [
@@ -619,7 +655,7 @@ exports.CartPage = class CartPage {
 
         // Check visibility for each label
         for (const label of expectedLabels) {
-            await this.page.getByText(label).waitFor({state:'visible'});
+            await this.page.getByText(label).waitFor({ state: 'visible' });
             await expect(this.page.getByText(label)).toBeVisible();
         }
 

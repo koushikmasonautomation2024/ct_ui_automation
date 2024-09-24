@@ -4,42 +4,42 @@ import { fakerEN_US } from '@faker-js/faker';
 const myaccountpage_locator = JSON.parse(JSON.stringify(require('../object_repositories/mason_myaccount_page_repo.json')));
 const addresses = [
     {
-      streetAddress: '100 Irish Ivy Ct',
-      city: 'Boyd',
-      state: 'TX',
-      zipCode: '76023-4067'
+        streetAddress: '100 Irish Ivy Ct',
+        city: 'Boyd',
+        state: 'TX',
+        zipCode: '76023-4067'
     },
     {
-      streetAddress: '11 Falmouth Pl',
-      city: 'Albertson',
-      state: 'NY',
-      zipCode: '11507-2003'
+        streetAddress: '11 Falmouth Pl',
+        city: 'Albertson',
+        state: 'NY',
+        zipCode: '11507-2003'
     },
     {
-      streetAddress: '138C Gg25 Rd',
-      city: 'Fall River',
-      state: 'KS',
-      zipCode: '67047-4721'
+        streetAddress: '138C Gg25 Rd',
+        city: 'Fall River',
+        state: 'KS',
+        zipCode: '67047-4721'
     },
     {
-      streetAddress: '7 Yo Yo Rd',
-      city: 'Cana',
-      state: 'VA',
-      zipCode: '24317-3987'
+        streetAddress: '7 Yo Yo Rd',
+        city: 'Cana',
+        state: 'VA',
+        zipCode: '24317-3987'
     },
     {
-      streetAddress: '2 JJ Rd',
-      city: 'Charlotte',
-      state: 'AR',
-      zipCode: '72522-9645'
+        streetAddress: '2 JJ Rd',
+        city: 'Charlotte',
+        state: 'AR',
+        zipCode: '72522-9645'
     },
     {
-      streetAddress: '103 Nnptc Cir',
-      city: 'Goose Creek',
-      state: 'SC',
-      zipCode: '29445-6324'
+        streetAddress: '103 Nnptc Cir',
+        city: 'Goose Creek',
+        state: 'SC',
+        zipCode: '29445-6324'
     }
-  ];
+];
 
 exports.MyAccountPage = class MyAccountPage {
     constructor(page) {
@@ -104,11 +104,12 @@ exports.MyAccountPage = class MyAccountPage {
         this.myaccount_savedcc_addccdebitcard_button = page.getByRole('heading', { name: myaccountpage_locator.myaccount_savedcc_addccdebitcard_button }).getByRole('button');
         this.myaccount_cc_savecard_number = page.locator(myaccountpage_locator.myaccount_cc_savecard_number);
         this.myaccount_cc_savecard_expdate = page.locator(myaccountpage_locator.myaccount_cc_savecard_expdate).first();
-        this.myaccount_cc_cardnumber_textbox = page.getByLabel(myaccountpage_locator.myaccount_cc_cardnumber_textbox);
-        this.myaccount_cc_expirydate_textbox = page.getByLabel(myaccountpage_locator.myaccount_cc_expirydate_textbox);
-        this.myaccount_cc_securitycode_textbox = page.getByLabel(myaccountpage_locator.myaccount_cc_securitycode_textbox);
+        this.myaccount_cc_cardnumber_textbox = page.getByText(myaccountpage_locator.myaccount_cc_cardnumber_textbox);
+        this.myaccount_cc_expirydate_textbox = page.getByText(myaccountpage_locator.myaccount_cc_expirydate_textbox);
+        this.myaccount_cc_securitycode_textbox = page.getByText(myaccountpage_locator.myaccount_cc_securitycode_textbox);
+        this.myaccount_CC_requiredFields = page.getByText('*Required fields');
         this.myaccount_cc_savecard_button = page.getByRole('button', { name: myaccountpage_locator.myaccount_cc_savecard_button });
-        this.myaccount_savedefaultcc_checkbox = page.locator('form').getByRole(myaccountpage_locator.myaccount_savedefaultcc_checkbox);
+        this.myaccount_savedefaultcc_checkbox = page.locator('form').filter({ hasText: '*Card Number*Exp. Date (MM/YY' }).getByRole('checkbox');
         this.myaccount_signout_button = page.getByRole('button', { name: myaccountpage_locator.myaccount_signout_button });
         this.myaccount_makeapayment_acctinformation_headertext = page.getByRole('heading', { name: myaccountpage_locator.myaccount_makeapayment_acctinformation_headertext });
         this.myaccount_makeapayment_acctinformation_custaccountnum = page.getByText(myaccountpage_locator.myaccount_makeapayment_acctinformation_custaccountnum);
@@ -131,10 +132,6 @@ exports.MyAccountPage = class MyAccountPage {
     }
 
     async displayMyAccountLeftNavigationLink() {
-        //await this.page.waitForLoadState('networkidle');
-        await this.myaccount_credit_link.waitFor({state:'visible'});
-        await expect(this.myaccount_credit_link).toBeVisible();
-        await expect(this.myaccount_makepayment_link).toBeVisible();
         await expect(this.myaccount_orders_link).toBeVisible();
         await expect(this.myaccount_addresses_link).toBeVisible();
         await expect(this.myaccount_savedcreditcards_link).toBeVisible();
@@ -146,7 +143,7 @@ exports.MyAccountPage = class MyAccountPage {
 
     async validatedSignedInAccountDrawerItems() {
         //await this.page.waitForLoadState('networkidle');
-        await this.myaccount_myaccount_link.waitFor({state:'visible'});
+        await this.myaccount_myaccount_link.waitFor({ state: 'visible' });
         await expect(this.myaccount_myaccount_link).toBeVisible();
         await expect(this.myaccount_addresses_link).toBeVisible();
         await expect(this.myaccount_savedcreditcards_link).toBeVisible();
@@ -195,46 +192,47 @@ exports.MyAccountPage = class MyAccountPage {
     }
     async clickMyAccountSavedCCLink() {
         await this.myaccount_savedcreditcards_link.click();
-        await this.page.waitForLoadState('networkidle');
+        await this.myaccount_savedcc_addccdebitcard_button.waitFor({ state: 'visible' });
+        await this.page.waitForTimeout(5000);
     }
     async clickMyAccountWishListLink() {
         await this.myaccount_wishlist_link.click();
-        await expect(this.page).toHaveURL(/.*wishlist/);
+        await this.page.waitForURL(/.*wishlist/);
     }
     async clickMyAccountNeedHelpLink() {
         await this.myaccount_needhelp_link.click();
     }
     async clickMyAccountMyProfileLink() {
         await this.myaccount_myprofile_link.click();
-        //await expect(this.page).toHaveURL(/.*\/account\/myprofile\//);
-        await this.page.waitForURL('**/account/myprofile/');
-        //await this.page.waitForLoadState('networkidle');
-        await this.myaccount_myprofile_contactinformation.waitFor({state:'visible'});
+        await this.page.waitForLoadState('networkidle');
+        await this.myaccount_myprofile_contactinformation.waitFor({ state: 'visible' });
+        await this.page.waitForURL('**/account/myprofile');
+
     }
     async clickMyAccountViewSavedCCLink() {
         await this.myaccount_viewsavedcc_link.click();
-        await this.page.waitForURL('**/account/savedcreditcard/');
-        await expect(this.page).toHaveURL(/.*\/account\/savedcreditcard\//);
+        await this.page.waitForURL('**/account/savedcreditcard');
+        await expect(this.page).toHaveURL(/.*\/account\/savedcreditcard/);
     }
     async clickMyAccountViewMyProfileLink() {
         await this.myaccount_viewmyprofile_link.click();
-        await this.page.waitForURL('**/account/myprofile/');
-        await expect(this.page).toHaveURL(/.*\/account\/myprofile\//);
+        await this.page.waitForURL('**/account/myprofile');
+        await expect(this.page).toHaveURL(/.*\/account\/myprofile/);
     }
     async clickMyAccountViewOrderLink() {
         await this.myaccount_vieworders_link.click();
-        await this.page.waitForURL('**/account/orders/');
-        await expect(this.page).toHaveURL(/.*\/account\/orders\//);
+        await this.page.waitForURL('**/account/orders');
+        await expect(this.page).toHaveURL(/.*\/account\/orders/);
     }
     async clickMyAccountViewAddressLink() {
         await this.myaccount_viewaddresses_link.click();
-        await this.page.waitForURL('**/account/addresses/');
-        await expect(this.page).toHaveURL(/.*\/account\/addresses\//);
+        await this.page.waitForURL('**/account/addresses');
+        await expect(this.page).toHaveURL(/.*\/account\/addresses/);
     }
     async clickMyAccountViewWishListLink() {
         await this.myaccount_viewwishlist_link.click();
-        await this.page.waitForURL('**/account/wishlist/');
-        await expect(this.page).toHaveURL(/.*\/account\/wishlist\//);
+        await this.page.waitForURL('**/account/wishlist');
+        await expect(this.page).toHaveURL(/.*\/account\/wishlist/);
     }
     async clickAddNewAddressButton() {
         await this.myaccount_addnewaddress_button.click();
@@ -248,8 +246,6 @@ exports.MyAccountPage = class MyAccountPage {
     }
     async clickOnMyAccountLink() {
         await this.myaccount_myaccount_link.click();
-        //await this.page.waitForLoadState('networkidle');
-        await this.myaccount_credit_link.waitFor({state:'visible'});
         //await this.page.locator('h1.ml-2\\.5.text-25.font-bold.leading-8').waitFor({state:'visible'});
         await this.page.waitForURL('**/account/dashboard/');
     }
@@ -454,7 +450,7 @@ exports.MyAccountPage = class MyAccountPage {
     async validatedOrderNumberDisplaySection(orderNumberPrefix) {
         await expect(this.page).toHaveURL(/.*orders/);
         await expect(this.page.getByText('HomeMy AccountOrders')).toBeVisible();
-        await this.page.locator('section.border-b h2.font-semibold').first().waitFor({state:'visible'});
+        await this.page.locator('section.border-b h2.font-semibold').first().waitFor({ state: 'visible' });
         await expect(this.page.locator('section.border-b h2.font-semibold').first()).toBeVisible();
         //await expect(this.page.locator(`h2.font-semibold:has-text("${orderNumberPrefix}")`).first()).toBeVisible();
         //const orderLocators = this.page.locator(`h2.font-semibold:has-text("${orderNumberPrefix}")`);
@@ -527,96 +523,96 @@ exports.MyAccountPage = class MyAccountPage {
         await expect(this.page.getByText('HomeMy AccountOrders')).toBeVisible();
         await this.page.locator('section.border-b h2.font-semibold').first().waitFor({ state: 'visible' });
         await expect(this.page.locator('section.border-b h2.font-semibold').first()).toBeVisible();
-    
+
         const orderLocators = this.page.locator('section.border-b h2.font-semibold');
         const orderLocatorsCount = await orderLocators.count();
         console.log('Order Date Count :' + orderLocatorsCount);
-    
+
         const aTextPattern = /View Order Details/;
-        const aHrefPattern = /\/account\/orders\/orderdetails\/\?orderId=\d+/;
-    
+        const aHrefPattern = /\/account\/orders\/orderdetails\?orderId=\d+(&.*)?/;
+
         const orderElements = await orderLocators.all();
         expect(orderElements.length).toBeGreaterThan(0);
-    
+
         console.log(`Number of "Order #" elements: ${orderElements.length}`);
-    
+
         for (const element of orderElements) {
             console.log(await element.innerText());
         }
-    
+
         const limit = Math.min(orderLocatorsCount, 3);
-    
+
         for (let i = 0; i < limit; i++) {
             const h2Element = orderLocators.nth(i);
             const pElement = await h2Element.locator('xpath=following-sibling::p');
             const pText = await pElement.textContent();
             console.log('Order Date and Price:' + pText);
-    
+
             expect(pText).toMatch(/^[A-Z][a-z]+\s\d{1,2},\s\d{4}\s\|\s\$?-?\d+(?:\.\d{1,2})?$/);
-    
+
             const aElement = await h2Element.locator('xpath=following-sibling::a');
             const aText = await aElement.textContent();
             const aHref = await aElement.getAttribute('href');
             expect(aText).toMatch(aTextPattern);
             expect(aHref).toMatch(aHrefPattern);
-    
+
             await Promise.all([
                 this.page.waitForNavigation(),
                 aElement.click(),
             ]);
-    
-            await expect(this.page).toHaveURL(/.*\/account\/orders\/orderdetails\/\?orderId=\d+&zipCode=\d+$/);
-    
+
+            await expect(this.page).toHaveURL(/https:\/\/.*\/account\/orders\/orderdetails\?orderId=\d+&zipCode=\d+$/);
+
             await this.page.goBack();
         }
     }
-    
+
 
     async validatedOrderNumberDisplaySectionWithLimitedOrder(orderNumberPrefix) {
         await expect(this.page).toHaveURL(/.*orders/);
         await expect(this.page.getByText('HomeMy AccountOrders')).toBeVisible();
         await this.page.locator('section.border-b h2.font-semibold').first().waitFor({ state: 'visible' });
         await expect(this.page.locator('section.border-b h2.font-semibold').first()).toBeVisible();
-    
+
         const orderLocators = this.page.locator('section.border-b h2.font-semibold');
         const orderLocatorsCount = await orderLocators.count();
         console.log('Order Date Count :' + orderLocatorsCount);
-    
+
         const aTextPattern = /View Order Details/;
-        const aHrefPattern = /\/account\/orders\/orderdetails\/\?orderId=\d+/;
-    
+        const aHrefPattern = /\/account\/orders\/orderdetails\?orderId=\d+(&.*)?/;
+
         const orderElements = await orderLocators.all();
         expect(orderElements.length).toBeGreaterThan(0);
-    
+
         console.log(`Number of "Order #" elements: ${orderElements.length}`);
-    
+
         for (const element of orderElements) {
             console.log(await element.innerText());
         }
-    
+
         const limit = Math.min(orderLocatorsCount, 3);
-    
+
         for (let i = 0; i < limit; i++) {
             const h2Element = orderLocators.nth(i);
             const pElement = await h2Element.locator('xpath=following-sibling::p');
             const pText = await pElement.textContent();
             console.log('Order Date and Price:' + pText);
-    
+
             expect(pText).toMatch(/^[A-Z][a-z]+\s\d{1,2},\s\d{4}\s\|\s\$?-?\d+(?:\.\d{1,2})?$/);
-    
+
             const aElement = await h2Element.locator('xpath=following-sibling::a');
             const aText = await aElement.textContent();
             const aHref = await aElement.getAttribute('href');
             expect(aText).toMatch(aTextPattern);
             expect(aHref).toMatch(aHrefPattern);
-    
+
             await Promise.all([
                 this.page.waitForNavigation(),
                 aElement.click(),
             ]);
-    
-            await expect(this.page).toHaveURL(/.*\/account\/orders\/orderdetails\/\?orderId=\d+&zipCode=\d+$/);
-    
+
+            await expect(this.page).toHaveURL(/https:\/\/.*\/account\/orders\/orderdetails\?orderId=\d+&zipCode=\d+$/);
+
             await this.page.goBack();
         }
     }
@@ -665,10 +661,20 @@ exports.MyAccountPage = class MyAccountPage {
         await expect(this.page.locator('section').filter({ hasText: regex })).toBeVisible();
     }
 
-    async clickAddNewCC() {
-        await this.myaccount_savedcc_addccdebitcard_button.click();
+    // async clickAddNewCC() {
+    //     await this.myaccount_savedcc_addccdebitcard_button.click();
 
+    // }
+
+    async clickAddNewCC() {
+        // Check if the card number textbox is visible
+        const isCardNumberTextboxVisible = await this.myaccount_CC_requiredFields.isVisible();
+        if (!isCardNumberTextboxVisible) {
+            // If the card number textbox is not visible, click the button
+            await this.myaccount_savedcc_addccdebitcard_button.click();
+        }
     }
+
 
     async validateSaveCreditCardPage() {
         this.displaySavedCCHeaderText();
@@ -735,9 +741,11 @@ exports.MyAccountPage = class MyAccountPage {
 
     async clickSaveCardButton() {
         await this.myaccount_cc_savecard_button.click();
+        await this.updateCreditCardSuccessMessage();
     }
 
     async validateNewCCSection() {
+        await this.myaccount_cc_cardnumber_textbox.waitFor({ state: 'visible' });
         await expect(this.myaccount_cc_cardnumber_textbox).toBeVisible();
         await expect(this.myaccount_cc_expirydate_textbox).toBeVisible();
         await expect(this.myaccount_cc_securitycode_textbox).toBeVisible();
@@ -763,7 +771,7 @@ exports.MyAccountPage = class MyAccountPage {
     }
 
     async validateAccountStatusUpdateText() {
-        const loggedInUserName = await this.page.locator('p.block.w-full.translate-y-1.truncate.text-xs>span').textContent();
+        const loggedInUserName = await this.page.locator('p.header-signed-in>span').textContent();
         await expect(this.page.getByRole('button', { name: new RegExp(`My Account Hi, ${loggedInUserName}!`) })).toBeVisible();
 
     }
@@ -795,8 +803,8 @@ exports.MyAccountPage = class MyAccountPage {
     async clickAndVerifyHighlightedLink() {
         const locators = this.page.locator('nav section nav a').first();
         await locators.click();
-        await expect(this.page.locator('a.text-stoneberry-highlightColor')).toBeVisible();
-        const isHighlighted = await locators.evaluate(link => link.classList.contains('a.text-stoneberry-highlightColor'));
+        await expect(this.page.locator('a.text-shoemall-highlightColor')).toBeVisible();
+        const isHighlighted = await locators.evaluate(link => link.classList.contains('a.text-shoemall-highlightColor'));
         //console.log(`Is Highlighted: ${isHighlighted}`);
     }
 
@@ -1410,7 +1418,7 @@ exports.MyAccountPage = class MyAccountPage {
 
     async validateOrdersSortDropdown() {
         // Array of menu items to check
-        await this.page.locator('section.border-b h2.font-semibold').first().waitFor({state:'visible'});
+        await this.page.locator('section.border-b h2.font-semibold').first().waitFor({ state: 'visible' });
         const menuItems = ['Last 12 Months', 'Last 2 Years', 'Last 3 Years'];
         await expect(this.page.getByRole('button', { name: 'Last 12 Months' })).toBeVisible();
         await this.page.getByRole('button', { name: 'Last 12 Months' }).click();
@@ -1530,9 +1538,9 @@ exports.MyAccountPage = class MyAccountPage {
             expect(firstNameValue).toBeTruthy();
             const lastNameValue = await this.page.locator('strong').filter({ hasText: lastName }).textContent();
             expect(lastNameValue).toBeTruthy();
-            const addressValue = await this.page.locator('p').filter({ hasText: address }).textContent();
+            const addressValue = await this.page.locator('p').filter({ hasText: address }).first().textContent();
             expect(addressValue).toBeTruthy();
-            const zipCityStateValue = await this.page.locator('p').filter({ hasText: fullAddress }).textContent();
+            const zipCityStateValue = await this.page.locator('p').filter({ hasText: fullAddress }).first().textContent();
             expect(zipCityStateValue).toBeTruthy();
             //const phoneNumberValue = await this.page.locator('p').filter({ hasText: phoneNumber }).textContent();
             //expect(phoneNumberValue).toMatch(phoneNumberPattern);
@@ -1554,7 +1562,7 @@ exports.MyAccountPage = class MyAccountPage {
         const deleteAddressCount = (addressSectionsCount - 1);
         console.log('Total Saved Address Count:', addressSectionsCount);
         console.log('Total Delete Address Count:', deleteAddressCount);
-
+        await this.page.getByRole('button', { name: myaccountpage_locator.myaccount_savedaddress_remove_button }).nth(deleteAddressCount).waitFor({ state: 'visible' });
         await this.page.getByRole('button', { name: myaccountpage_locator.myaccount_savedaddress_remove_button }).nth(deleteAddressCount).click();
         await expect(this.page.locator('.text-forestGreen').filter({ hasText: 'Address deleted successfully' })).toBeVisible();
         await this.page.locator('.text-forestGreen').filter({ hasText: 'Address deleted successfully' }).waitFor({ state: 'hidden' });
@@ -1819,7 +1827,7 @@ exports.MyAccountPage = class MyAccountPage {
         await this.page.selectOption('#state', state);
         await this.page.type('#zipCode', zipCode);
         await this.page.type('#phoneNumber', phoneNumber);
-        
+
         await this.selectSaveDefaultaddressCheckbox();
         // Click the "Save Address" button
         await this.myaccount_addnewaddress_saveaddressbutton.click();
@@ -1872,8 +1880,8 @@ exports.MyAccountPage = class MyAccountPage {
         while (!buttonVisible && retries < maxRetries) {
             await this.clickAddNewCC();
             await this.validateNewCCSection();
-            await this.enterCCNumber('4111111111111111');
-            await this.enterCCExpDate('12/34');
+            await this.enterCCNumber('4012000077777777');
+            await this.enterCCExpDate('12/25');
             await this.enterCCSecurityCode('123');
             await this.clickSaveCardButton();
             //await this.validatedSuccessMessage();
@@ -1992,22 +2000,55 @@ exports.MyAccountPage = class MyAccountPage {
         await this.page.type('#phoneNumber', phoneNumber);
     }
 
-    async updateCreditCardSuccessMessage() {
-        await this.page.waitForSelector('div[role="dialog"]', { timeout: 15000 });
-        const addressModalVisible = await this.page.locator('div[role="dialog"][data-state="open"]').isVisible();
+    // async updateCreditCardSuccessMessage() {
+    //     await this.page.waitForSelector('div[role="dialog"]', { timeout: 15000 });
+    //     const addressModalVisible = await this.page.locator('div[role="dialog"][data-state="open"]').isVisible();
 
-        //console.log('modal visible' + addressModalVisible);
-        if (addressModalVisible) {
-            await this.page.getByLabel('Use Original Address').click();
-            await this.page.getByRole('button', { name: 'Continue' }).click();
-            await this.page.getByText('Card details have been updated successfully').waitFor({ state: 'visible' });
-            await expect(this.page.getByText('Card details have been updated successfully')).toBeVisible();
-        } else {
-            // Address suggestion modal is not visible, verify the success message and then proceed
-            await this.page.getByText('Card details have been updated successfully').waitFor({ state: 'visible' });
-            await expect(this.page.getByText('Card details have been updated successfully')).toBeVisible();
+    //     //console.log('modal visible' + addressModalVisible);
+    //     if (addressModalVisible) {
+    //         await this.page.getByLabel('Use Original Address').click();
+    //         await this.page.getByRole('button', { name: 'Continue' }).click();
+    //         await this.page.getByText('Card details have been updated successfully').waitFor({ state: 'visible' });
+    //         await expect(this.page.getByText('Card details have been updated successfully')).toBeVisible();
+    //     } else {
+    //         // Address suggestion modal is not visible, verify the success message and then proceed
+    //         await this.page.getByText('Card details have been updated successfully').waitFor({ state: 'visible' });
+    //         await expect(this.page.getByText('Card details have been updated successfully')).toBeVisible();
+    //     }
+    // }
+
+    async updateCreditCardSuccessMessage() {
+        const successMessageText = 'Card details have been updated successfully';
+
+        try {
+            // Check if the success message is visible
+            await this.page.getByText(successMessageText).waitFor({ state: 'visible' });
+            // If the message is visible, validate it
+            await expect(this.page.getByText(successMessageText)).toBeVisible();
+        } catch (error) {
+            // If the success message is not found within the timeout period, check for the modal
+            console.log('Success message not found, checking for the modal');
+
+            // Wait for the dialog to appear
+            await this.page.waitForSelector('div[role="dialog"]', { timeout: 2000 });
+            const addressModalVisible = await this.page.locator('div[role="dialog"][data-state="open"]').isVisible();
+
+            if (addressModalVisible) {
+                // If the address modal is visible, interact with it
+                await this.page.getByLabel('Use Original Address').click();
+                await this.page.getByRole('button', { name: 'Continue' }).click();
+
+                // After interacting with the modal, check for the success message again
+                await this.page.getByText(successMessageText).waitFor({ state: 'visible' });
+                await expect(this.page.getByText(successMessageText)).toBeVisible();
+            } else {
+                // If the modal is not visible, log an error or handle the case as needed
+                throw new Error('Success message not found and address modal not visible');
+            }
         }
     }
+
+
 
     async verifyAddressSuggestionModal() {
         try {

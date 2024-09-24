@@ -13,7 +13,7 @@ exports.CartDrawerPage = class CartDrawerPage {
         this.page = page;
         this.miniCartPricingSection = page.locator('section.flex.flex-col.gap-1');
         this.miniCartFirstProductName = page.locator('ul.grid.gap-4.p-4 a>p');
-        this.addtoCartButtonPLP = page.locator('button:has-text("Add to Cart")');
+        //this.addtoCartButtonPLP = page.locator('button:has-text("Add to Cart")');
         this.plpProductImages = page.locator('section.productItemParent  a');
         this.miniCartQtyMinusButton = page.locator('button[aria-label="Decrease Quantity"]');
         this.miniCartQtyPlusButton = page.locator('button[aria-label="Increase Quantity"]');
@@ -24,11 +24,13 @@ exports.CartDrawerPage = class CartDrawerPage {
         this.miniCartRemoveButton = page.locator('button:has-text("Remove")');
         this.miniCartLimitedStockMessage = page.locator('section.mt-4.flex.gap-2');
         this.miniCartSubTotal = page.locator('strong.text-base.leading-\\[20\\.8px\\].text-black', { hasText: 'Subtotal' });
-        this.miniCartViewCartButton = page.getByRole('button', { name: 'View Cart' });
+        this.miniCartViewCartButton = page.getByRole('button', { name: 'View Bag' });
         this.miniCartCheckoutButton = page.getByRole('button', { name: 'Check Out' });
-        this.addtoCartButton = page.getByRole('button', { name: 'Add to Cart' });
+        this.addtoCartButton = page.getByRole('button', { name: 'Add to Bag' });
         this.chooseOptions = page.getByText('Choose Options');
         this.pdp_colorvariant_button = page.locator(pdp_colorvariant_button_locator);
+        this.plpQuickViewButton = page.getByRole('button', { name: 'Quick View' });
+        this.plpProducts = page.locator('div.swiper-wrapper');
 
     }
 
@@ -93,15 +95,18 @@ exports.CartDrawerPage = class CartDrawerPage {
 
     async clickAddtoCartPLP() {
         // Get the count of buttons on the PLP page
-        await this.addtoCartButtonPLP.first().waitFor({ state: 'visible' });
-        const buttonCountPLP = await this.addtoCartButtonPLP.count();
+        //await this.addtoCartButtonPLP.first().waitFor({ state: 'visible' });
+        await this.plpProducts.first().waitFor({ state: 'visible' });
+        // await this.plpProducts.first().hover();
+        // await this.plpQuickViewButton.click();
+        const buttonCountPLP = await this.plpProducts.count();
         const pdpPage = new PDPPage(this.page);
         if (buttonCountPLP > 0) {
             // Select a random button index on the PLP page
             const randomIndexPLP = Math.floor(Math.random() * buttonCountPLP);
-
+            await this.plpProducts.nth(randomIndexPLP).hover();
             // Click the randomly selected button on the PLP page
-            await this.addtoCartButtonPLP.nth(randomIndexPLP).click();
+            await this.plpQuickViewButton.click();
 
             // Wait for the choose cart drawer to appear
             await this.chooseOptions.waitFor({ state: 'visible' });
@@ -112,13 +117,16 @@ exports.CartDrawerPage = class CartDrawerPage {
             // Check if the "Add to Cart" button in the cart drawer is enabled
             if (await addToCartButtonInDrawer.isEnabled()) {
                 // Click the "Add to Cart" button in the cart drawer
+                const pdpPage = new PDPPage(this.page);
+                await pdpPage.clickOnPDPColorVariantButton();
+                await pdpPage.clickOnMultiplePDPSizeVariantButton();
                 await addToCartButtonInDrawer.click();
                 await pdpPage.miniCartDrawer();
                 console.log('Item added to cart successfully');
             } else {
                 console.log('Add to Cart button in the cart drawer is disabled');
                 await pdpPage.clickOnPDPColorVariantButton();
-                await pdpPage.clickOnPDPSizeVariantButton();
+                await pdpPage.clickOnMultiplePDPSizeVariantButton();
                 await addToCartButtonInDrawer.click();
                 await pdpPage.miniCartDrawer();
             }
@@ -128,12 +136,12 @@ exports.CartDrawerPage = class CartDrawerPage {
     }
 
     async navigateToPDPFromPLP() {
-        await this.addtoCartButtonPLP.first().waitFor({ state: 'visible' });
+        await this.plpProductImages.first().waitFor({ state: 'visible' });
         // Wait for the product list to be visible
-        await this.page.waitForSelector('.ais-Hits');
+        //await this.page.waitForSelector('section.productItemParent');
 
         // Get all product items on the PLP
-        const productItems = await this.page.$$('.ais-Hits-item');
+        const productItems = await this.page.$$('section.productItemParent');
 
         // Check if there are any product items
         if (productItems.length > 0) {
@@ -350,8 +358,8 @@ exports.CartDrawerPage = class CartDrawerPage {
     }
 
     async cartDrawerSuccessMessage() {
-        await this.page.getByText('item added to cart').waitFor({ state: 'visible' });
-        await expect(this.page.getByText('item added to cart')).toBeVisible();
+        await this.page.getByText('item added to bag').waitFor({ state: 'visible' });
+        await expect(this.page.getByText('item added to bag')).toBeVisible();
     }
 
     async validateProtectionPlanCartDrawer() {

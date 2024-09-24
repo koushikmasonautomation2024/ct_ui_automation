@@ -14,6 +14,7 @@ exports.MyAccountOrderPage = class MyAccountOrderPage{
 
     
     async validateSingleOrderLookupSection(){
+        await this.myaccount_orders_singleorderlookup.waitFor({state:'visible'});
         await expect(this.myaccount_orders_singleorderlookup).toBeVisible();
         await expect(this.myaccount_singleorder_ordernumbertextbox).toBeVisible();
         await expect(this.myaccount_singleorder_billingzipcodetextbox).toBeVisible();

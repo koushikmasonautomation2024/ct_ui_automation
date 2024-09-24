@@ -115,7 +115,7 @@
     "wishlist_pricing": "section.flex.flex-wrap.items-center.gap-1 p",
     "wishlist_productReview":"section.flex.gap-x-0\\.5",
     "wishlist_out_of_stock":"Out of Stock",
-    "wishlist_add_to_cart":"Move to Cart",
+    "wishlist_add_to_cart":"Move to Bag",
     "wishlist_items":"li.max-w-48",
     "wishlist_remove_success":  "p.text-forestGreen:has-text(\"You have successfully removed\")",
     "myaccount_makeapayment_acctinformation_headertext" : "Account Information",

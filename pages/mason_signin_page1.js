@@ -69,12 +69,9 @@ exports.SignInPageNew = class SignInPageNew {
     async validateSignInAccountDrawer() {
         await expect(this.signin_button_name).toBeVisible();
         await expect(this.create_account_button_name).toBeVisible();
-        await expect(this.signin_stoneberrycredit_button).toBeVisible();
-        await expect(this.signin_makeapayment_button).toBeVisible();
         await expect(this.signin_orders_link_guest).toBeVisible();
         await expect(this.signin_wishlist_link).toBeVisible();
         await expect(this.signin_needhelp_link).toBeVisible();
-
     }
 
     async validateSignedInAccountDrawer() {

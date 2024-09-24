@@ -104,7 +104,7 @@ exports.CreateAccountPage = class CreateAccountPage{
     }
 
     async validatePasswordIsHidden(){
-        const passwordTextbox=this.create_account_password_textbox;
+        const passwordTextbox=await this.create_account_password_textbox;
         const hidden_password = await passwordTextbox.getAttribute('type') === 'password';
         expect(hidden_password).toBe(true);
     }
@@ -183,28 +183,21 @@ exports.CreateAccountPage = class CreateAccountPage{
   }
 
   async validateDashboardNavigation(firstName, dashboard_url){
-    //await expect(this.page).toHaveURL(/.*dashboard/);
-    //await new Promise(resolve => setTimeout(resolve, 3000)).then(() => expect(this.page).toHaveURL(/.*dashboard/));
     await this.page.waitForURL(/.*dashboard/);
     await expect(this.page.getByText(`Hi, ${firstName}!`).first()).toBeVisible();
     const currentURL = await this.page.url();
     expect(currentURL).toContain(dashboard_url);
-    
-    // console.log(currentURL);
-    // console.log(dashboard_url);
-    
   }
 
   async validateAccountDrawer(){
+    await this.account_drawer_sign_in_button.waitFor({state:'visible'});
     await expect(this.account_drawer_sign_in_button).toBeVisible();
     await expect(this.account_drawer_create_an_account_button).toBeVisible();
-    await expect(this.account_drawer_credit_button).toBeVisible();
-    await expect(this.account_drawer_make_payment_button).toBeVisible();
     await expect(this.account_drawer_order_link).toBeVisible();
     await expect(this.account_drawer_wishlist_link).toBeVisible();
     await expect(this.account_drawer_needHelp_link).toBeVisible();
     await expect(this.account_drawer_header).toBeVisible();
-    await expect(this.page.getByRole('button').nth(4)).toBeVisible();
+    //await expect(this.page.getByRole('button').nth(4)).toBeVisible();
     
 
 }

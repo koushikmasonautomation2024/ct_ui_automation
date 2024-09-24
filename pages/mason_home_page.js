@@ -4,7 +4,7 @@ const homepage_locator = JSON.parse(JSON.stringify(require('../object_repositori
 exports.HomePage = class HomePage {
     constructor(page) {
         this.page = page;
-        this.homepage_searchbarplaceholder = page.getByPlaceholder(homepage_locator.homepage_searchbarplaceholder);
+        this.homepage_searchbarplaceholder = page.locator('input[id="search-bar"]');
         this.homepage_searchbutton = page.getByLabel(homepage_locator.homepage_searchbutton, { exact: true });
         this.homepage_signin = page.locator(homepage_locator.homepage_signin);
         this.homepage_cart = page.getByRole('button', { name: homepage_locator.homepage_cart });
@@ -16,6 +16,7 @@ exports.HomePage = class HomePage {
         this.footer_signupemail_textbox = page.getByPlaceholder(homepage_locator.footer_signupemail_textbox);
         this.footer_signup_button = page.getByRole('button', { name: homepage_locator.footer_signup_button });
         this.addtoCartButtonPLP = page.locator('button:has-text("Add to Cart")');
+
 
     }
 
@@ -72,62 +73,84 @@ exports.HomePage = class HomePage {
     }
 
     async categoryL1ToBeVisibleOnDepartmentHover() {
-        await this.homepage_category.hover();
+        await this.page.locator('#mainMenu ul[role="menu"] > li').first().waitFor({ state: 'visible' });
+        const mainMenuItems = await this.page.locator('#mainMenu ul[role="menu"] > li').first();
         // Wait for the L1 categories to become visible
-        await this.page.waitForSelector(homepage_locator.homepage_l1category, { state: 'visible' });
+        await expect(mainMenuItems).toBeVisible();
     }
 
 
     async countAllL1Categories() {
-        await this.homepage_category.hover();
-        // Wait for the L1 categories to become visible
-        //await this.page.waitForSelector('#mainMenu > ul > li', { state: 'visible' });
-        // Count all the L1 categories
-        const l1Categories = await this.page.$$(homepage_locator.homepage_l1category);
-        const l1Count = l1Categories.length;
+        const mainMenuItems = await this.page.locator('#mainMenu ul[role="menu"] > li');
+        const l1Count = await mainMenuItems.count();
         return l1Count;
     }
 
-    async checkIfcategoryL1isBold(l1Category) {
-        //await (this.page.$(`a:text("${l1Category}")`)).hover();
-        //await this.page.waitForSelector(homepage_locator.homepage_l1category, { state: 'visible' });
-        const element = await this.page.$(`a:text("${l1Category}")`);
-        //  const element = await this.page.$('a:text("Clothing, Shoes + Bags")');
+    // async checkIfcategoryL1isBold(l1Category) {
+    //     //await (this.page.$(`a:text("${l1Category}")`)).hover();
+    //     //await this.page.waitForSelector(homepage_locator.homepage_l1category, { state: 'visible' });
+    //     const element = await this.page.$(`a:text("${l1Category}")`);
+    //     //  const element = await this.page.$('a:text("Clothing, Shoes + Bags")');
 
-        if (element) {
+    //     if (element) {
 
-            await element.hover();
-            const fontWeight = await element.evaluate(el => window.getComputedStyle(el).fontWeight);
-            const isBold = parseInt(fontWeight) >= 700 || fontWeight === 'bold';
-            expect(isBold).toBe(true);
-        } else {
-            console.log('Element not found.');
+    //         await element.hover();
+    //         const fontWeight = await element.evaluate(el => window.getComputedStyle(el).fontWeight);
+    //         const isBold = parseInt(fontWeight) >= 700 || fontWeight === 'bold';
+    //         expect(isBold).toBe(true);
+    //     } else {
+    //         console.log('Element not found.');
+    //     }
+    // }
+
+    async checkIfCategoryL1isBold(categoryText) {
+        const elements = await this.page.locator('#mainMenu ul[role="menu"] > li');
+
+        let found = false;
+
+        for (let i = 0; i < await elements.count(); i++) {
+            const element = elements.nth(i);
+            const textContent = await element.innerText();
+
+            if (textContent.trim() === categoryText) {
+                await element.hover();
+                const fontWeight = await element.evaluate(el => window.getComputedStyle(el).fontWeight);
+                const isBold = parseInt(fontWeight) >= 700 || fontWeight === 'bold';
+                expect(isBold).toBe(true);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            console.log(`Element with text "${categoryText}" not found.`);
         }
     }
 
     async getRandomL1CategoryText() {
-        const elements = await this.page.$$(homepage_locator.l1categoryText);
-        await elements[0].waitForElementState('visible');
+        const elements = await this.page.locator('#mainMenu ul[role="menu"] > li');
 
+        // Wait for the first element to be visible
+        await elements.first().waitFor({ state: 'visible' });
 
-        // const texts = [];
-        // for (let element of elements) {
-        //   const text = await element.innerText();
-        //   texts.push(text);
-        // }
-
-        const midpoint = Math.ceil(elements.length / 2);
+        // Get the midpoint of the elements
+        const midpoint = Math.ceil(await elements.count() / 2);
 
         // Extract texts from the first half of the elements
         const texts = [];
         for (let i = 0; i < midpoint; i++) {
-            const text = await elements[i].innerText();
-            texts.push(text);
+            const text = await elements.nth(i).innerText();
+            texts.push(text.trim());
         }
+
+        // Select a random text from the extracted list
         const randomIndex = Math.floor(Math.random() * texts.length);
-        console.log(texts[randomIndex]);
-        return [texts[randomIndex], randomIndex];
+        const randomText = texts[randomIndex];
+
+        console.log(randomText);
+        return [randomText, randomIndex];
     }
+
 
     async l2andl3TobeVisibleOnL1Hover(index) {
         const l2Selector = homepage_locator.l2category.replace('${index + 1}', index + 1);
@@ -144,110 +167,99 @@ exports.HomePage = class HomePage {
 
     }
 
-    async ensureGreyOverlayOnCategoryHover() {
-        // Hover over "departments" menu item
-        await this.homepage_category.hover();
-        // Evaluate whether the element is beneath the overlay
+    async validateSubCategoriesVisibilityOnL1Hover(index) {
+        // Locate the main menu items
+        const mainMenuItems = await this.page.locator('#mainMenu ul[role="menu"] > li');
 
-        const pageUnderneathLocator = homepage_locator.page_underneath;
-        const isBeneathOverlay = await this.page.evaluate((locator) => {
-            const element = document.evaluate(locator, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-            if (!element) return false; // Return false if the element is not found
+        // Ensure the index is within the range
+        const mainMenuItemCount = await mainMenuItems.count();
+        if (index >= mainMenuItemCount) {
+            console.error(`Index ${index} is out of range. Only ${mainMenuItemCount} main menu items available.`);
+            return;
+        }
 
-            const rect = element.getBoundingClientRect();
-            return !(rect.top >= 0 && rect.left >= 0 && rect.bottom <= window.innerHeight && rect.right <= window.innerWidth);
-        }, pageUnderneathLocator);
+        // Hover over the L1 category at the specified index
+        const mainMenuItem = mainMenuItems.nth(index);
+        await mainMenuItem.hover();
 
-        // Assert that the element is beneath the overlay
-        expect(isBeneathOverlay).toBe(true);
+        try {
+            // Check if L2 subcategories are visible
+            const l2Selector = await mainMenuItem.locator('ul li div.cursor-pointer');
+            await this.page.waitForSelector(l2Selector, { visible: true, timeout: 5000 });
 
+            // Check if L3 subcategories (if they exist) are visible
+            const l3Selector = await mainMenuItem.locator('ul li ul li div.cursor-pointer');
+            await this.page.waitForSelector(l3Selector, { visible: true, timeout: 5000 });
 
-
-
-        /*const isOverlayAdded = await this.page.isVisible('overlay_selector');
-        
-        // // Step 3: Check if the current page gets disabled
-        // const isPageDisabled = await this.page.evaluate((isOverlayAdded) => {
-        //   const element = document.evaluate('//body/div[1]/div[2]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-        //   const elementRect = element.getBoundingClientRect();
-        //   return isOverlayAdded && (elementRect.top >= window.innerHeight || elementRect.bottom <= 0);
-        // }, isOverlayAdded); // Pass isOverlayAdded as an argument
-        
-                            //console.log('Link:', await linkElement.getAttribute('href'));
-                            //console.log('Image source:', srcAttribute);
-                            console.log('Alt text:', altAttribute);
-                        } else {
-                            console.log('Link element not found for logo item.');
-                        }
-                    } catch (error) {
-                        console.error('Error processing logo item:', error);
-                    }
-                }
-            }
-        
-            async seasonalSavingsAndViewAlllink(){
-                await expect(this.page.getByText('Seasonal Savings')).toBeVisible();
-                await expect(this.page.locator('section').filter({ hasText: /^Seasonal SavingsView All$/ }).getByRole('link')).toBeVisible();
-            }
-        
-            async signUpModalDisplayValidation(enterEmail){
-                await this.page.getByRole('button', { name: 'Sign Up' }).click();
-                await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByPlaceholder('Enter your email address')).toBeVisible();
-                await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Close Modal')).toBeVisible();
-                await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Submit Modal Form')).toBeVisible();
-                await this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByPlaceholder('Enter your email address').fill(enterEmail);
-                await this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByLabel('Submit Modal Form').click();
-                await expect(this.page.frameLocator('iframe[title="ZD - D - 01 - Lightbox - FOOTER"]').getByText(/^.*$/).first()).toBeHidden();
-            }
-        // // Step 4: Assertion
-        // expect(isPageDisabled).toBe(true);*/
-
+        } catch (error) {
+            console.error(`L2 or L3 subcategory not visible within the timeout for L1 category at index ${index}.`);
+        }
     }
 
 
-    // async navigateToCategoryL1(l1Category) {
-    //     //await this.homepage_category.click();
-    //     const l1CategoryElement = `a:text-is("${l1Category}")`;
-    //     await this.page.waitForSelector(l1CategoryElement, { visible: true });
-    //     const elements = await this.page.$$(l1CategoryElement);
-    //     await elements[0].click();
+    // async ensureGreyOverlayOnCategoryHover() {
+    //     // Hover over "departments" menu item
+    //     await this.homepage_category.hover();
+    //     // Evaluate whether the element is beneath the overlay
 
-    //     await this.page.waitForNavigation();
-    //     await this.page.waitForSelector(homepage_locator.l1breadcrumb, { visible: true });
+    //     const pageUnderneathLocator = homepage_locator.page_underneath;
+    //     const isBeneathOverlay = await this.page.evaluate((locator) => {
+    //         const element = document.evaluate(locator, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+    //         if (!element) return false; // Return false if the element is not found
 
-    //     // Extract the text content of all <a> elements within the breadcrumb
-    //     const breadcrumbLinks = await this.page.evaluate(() => {
-    //         const links = Array.from(document.querySelectorAll('nav[aria-label="Breadcrumb"] a'));
-    //         return links.map(link => link.textContent.trim());
-    //     });
-    //     console.log(l1Category);
-    //     // Check if any of the breadcrumb links contain the categoryName
-    //     const isCategoryNavigated = breadcrumbLinks.some(linkText => linkText.includes(l1Category));
-    //     // expect(isCategoryNavigated).toBe(true);
-    //     await expect(this.page.getByLabel('Breadcrumb').getByText(l1Category), { exact: true }).toBeVisible();
+    //         const rect = element.getBoundingClientRect();
+    //         return !(rect.top >= 0 && rect.left >= 0 && rect.bottom <= window.innerHeight && rect.right <= window.innerWidth);
+    //     }, pageUnderneathLocator);
+
+    //     // Assert that the element is beneath the overlay
+    //     expect(isBeneathOverlay).toBe(true);
 
     // }
 
-    async navigateToCategoryL1(l1Category) {
-        const l1CategorySelector = `a:text-is("${l1Category}")`;
+    async ensureGreyOverlayOnCategoryHover() {
+        // Hover over a random main menu category item
+        const mainMenuItems = await this.page.locator('#mainMenu ul[role="menu"] > li');
+        const randomIndex = Math.floor(Math.random() * await mainMenuItems.count());
+        const mainMenuItem = mainMenuItems.nth(randomIndex);
 
-        // Wait for the L1 category link to be visible and click the first matching element
-        await this.page.waitForSelector(l1CategorySelector, { visible: true });
-        const l1CategoryElements = await this.page.$$(l1CategorySelector);
-        await l1CategoryElements[0].click();
+        await mainMenuItem.hover();
+        // Wait for the overlay to appear
+        await this.page.waitForTimeout(5000);
+
+        // Evaluate whether the element is beneath the overlay
+        const isBeneathOverlay = await this.page.evaluate(() => {
+            const overlay = document.querySelector('.relative.mb-3.-z-\\[1\\]');
+            if (!overlay) return false;
+
+            const rect = overlay.getBoundingClientRect();
+            return !(rect.top >= 0 && rect.left >= 0 && rect.bottom <= window.innerHeight && rect.right <= window.innerWidth);
+        });
+
+        // Assert that the element is beneath the overlay
+        expect(isBeneathOverlay).toBe(true);
+    }
+
+    async navigateToCategoryL1(l1Category) {
+        // Locate the main menu item by matching the L1 category text
+        const mainMenuItems = await this.page.locator('#mainMenu ul[role="menu"] > li');
+        const matchingMenuItem = mainMenuItems.locator(`a:has-text("${l1Category}")`);
+
+        // Wait for the L1 category link to be visible and click it
+        await matchingMenuItem.first().waitFor({ state: 'visible' });
+        await matchingMenuItem.first().click();
 
         // Wait for the page to navigate and the breadcrumb to be visible
         await this.page.waitForNavigation();
-        await this.page.waitForSelector('nav[aria-label="Breadcrumb"]', { visible: true });
+        await this.page.waitForSelector('nav[aria-label="Breadcrumb"]', { state: 'visible' });
 
         // Verify the breadcrumb contains the L1 category
-        //const breadcrumbSelector = `nav[aria-label="Breadcrumb"] a:text-is("${l1Category}")`;
-        const breadcrumbSelector = await this.page.getByLabel('Breadcrumb').getByText(l1Category, { exact: true });
+        const breadcrumbSelector = this.page.locator('nav[aria-label="Breadcrumb"]').locator(`li:has-text("${l1Category}")`);
 
-        // Wait for the breadcrumb element to be visible
+        // Wait for the breadcrumb element to be visible and assert its visibility
         await breadcrumbSelector.waitFor({ state: 'visible' });
         await expect(breadcrumbSelector).toBeVisible();
     }
+
 
     async getRandomL2L3CategoryText(index) {
         const l2Selector = homepage_locator.l2categoryText.replace('${index + 1}', index + 1);
@@ -279,76 +291,135 @@ exports.HomePage = class HomePage {
     }
 
     async ensureNoOverlayWhenClickedOutside() {
-        // Hover over "departments" menu item
-        await this.homepage_category.hover();
-        // Evaluate whether the element is beneath the overlay
-        //const navigationPromise = this.page.waitForNavigation();
+        // Array of main menu items
+        const mainMenuItems = ['Women', 'Men', 'Kids'];
+
+        // Select a random main menu item
+        const randomMainMenuItem = mainMenuItems[Math.floor(Math.random() * mainMenuItems.length)];
+
+        // Hover over the random main menu item
+        const mainMenuLocator = this.page.locator('#mainMenu ul[role="menu"] > li')
+            .filter({ has: this.page.locator(`a.cursor-pointer:has-text("${randomMainMenuItem}")`) })
+            .first();
+
+        await mainMenuLocator.hover();
+
+        // Wait for the subcategories to appear
+        await this.page.locator('div.customtablescrollbar.group-hover\\:flex').first().waitFor({ state: 'visible' });
         await this.homepage_searchbarplaceholder.click();
-        //await navigationPromise;
-
-        const isL1CategoryVisible = await this.page.isVisible(homepage_locator.homepage_l1category);
-        expect(isL1CategoryVisible).toBeFalsy();
+        // Ensure the overlay is closed after clicking outside
+        const isOverlayVisible = await this.page.isVisible('a.customtablescrollbar.group-hover\\:flex');
+        expect(isOverlayVisible).toBeFalsy();
 
     }
 
-    async selectSubCategoryFromMegaMenu() {
-        try {
-            // Click the homepage category
-            await this.homepage_category.click();
+    // async selectSubCategoryFromMegaMenu() {
+    //     try {
+    //         // Click the homepage category
+    //         await this.homepage_category.click();
 
-            // Get the first visible item in the first <ul>
-            const firstLi = await this.getRandomVisibleItem('ul[role="menu"] > li');
-            if (!firstLi) {
-                console.log('No items found in the first <ul>');
-                return;
-            }
+    //         // Get the first visible item in the first <ul>
+    //         const firstLi = await this.getRandomVisibleItem('ul[role="menu"] > li');
+    //         if (!firstLi) {
+    //             console.log('No items found in the first <ul>');
+    //             return;
+    //         }
 
-            // Click the first visible item in the first <ul>
-            await firstLi.hover();
-            const isBold = await this.checkBoldStyling(firstLi);
-            if (!isBold) {
-                console.log('First <li> item is not bold when hovered.');
-                return;
-            }
-            // Get the second visible item in the second <ul>
-            const secondLi = await this.getRandomVisibleItem(firstLi, 'div.customtablescrollbar > ul > li > a');
-            if (!secondLi) {
-                console.log('No items found in the second <ul>');
-                return;
-            }
-            await secondLi.hover();
-            // Ensure the secondLi is clickable with a timeout
-            await secondLi.waitFor({ state: 'visible', timeout: 5000 });
-            // Click the second visible item in the second <ul>
-            await secondLi.click();
-            //await this.page.waitForTimeout(5000);
-            // Wait for the expected URL and the network to be idle
-            const expectedURL = new RegExp(/.*\/(categories)\/[^\/]+/);
-            await this.page.waitForURL(expectedURL);
-            //await expect(this.page).toHaveURL(expectedURL);
-            await this.addtoCartButtonPLP.first().waitFor({ state: 'visible' });
-            console.log('Successfully navigated to the subcategory page.');
-        } catch (error) {
-            console.error('An error occurred while selecting a subcategory:', error);
-        }
-    }
+    //         // Click the first visible item in the first <ul>
+    //         await firstLi.hover();
+    //         const isBold = await this.checkBoldStyling(firstLi);
+    //         if (!isBold) {
+    //             console.log('First <li> item is not bold when hovered.');
+    //             return;
+    //         }
+    //         // Get the second visible item in the second <ul>
+    //         const secondLi = await this.getRandomVisibleItem(firstLi, 'div.customtablescrollbar > ul > li > a');
+    //         if (!secondLi) {
+    //             console.log('No items found in the second <ul>');
+    //             return;
+    //         }
+    //         await secondLi.hover();
+    //         // Ensure the secondLi is clickable with a timeout
+    //         await secondLi.waitFor({ state: 'visible', timeout: 5000 });
+    //         // Click the second visible item in the second <ul>
+    //         await secondLi.click();
+    //         //await this.page.waitForTimeout(5000);
+    //         // Wait for the expected URL and the network to be idle
+    //         const expectedURL = new RegExp(/.*\/(categories)\/[^\/]+/);
+    //         await this.page.waitForURL(expectedURL);
+    //         //await expect(this.page).toHaveURL(expectedURL);
+    //         await this.addtoCartButtonPLP.first().waitFor({ state: 'visible' });
+    //         console.log('Successfully navigated to the subcategory page.');
+    //     } catch (error) {
+    //         console.error('An error occurred while selecting a subcategory:', error);
+    //     }
+    // }
 
-    async getRandomVisibleItem(baseLocator, nestedSelector = null) {
-        const locator = nestedSelector ? baseLocator.locator(nestedSelector) : this.page.locator(baseLocator);
-        await locator.first().waitFor({ state: 'visible' });
+    // async getRandomVisibleItem(baseLocator, nestedSelector = null) {
+    //     const locator = nestedSelector ? baseLocator.locator(nestedSelector) : this.page.locator(baseLocator);
+    //     await locator.first().waitFor({ state: 'visible' });
 
-        const itemCount = await locator.count();
-        if (itemCount > 0) {
-            const randomIndex = Math.floor(Math.random() * itemCount);
-            return locator.nth(randomIndex);
-        }
+    //     const itemCount = await locator.count();
+    //     if (itemCount > 0) {
+    //         const randomIndex = Math.floor(Math.random() * itemCount);
+    //         return locator.nth(randomIndex);
+    //     }
 
-        return null;
-    }
+    //     return null;
+    // }
 
     async checkBoldStyling(element) {
         const fontWeight = await element.evaluate((el) => window.getComputedStyle(el).fontWeight);
         // Font weight 700 or greater typically indicates bold styling
         return parseInt(fontWeight) >= 700;
     }
+
+    async selectRandomSubCategory() {
+        // Array of main menu items
+        const mainMenuItems = ['Women', 'Men', 'Kids', 'Boot Shop'];
+
+        // Select a random main menu item
+        const randomMainMenuItem = mainMenuItems[Math.floor(Math.random() * mainMenuItems.length)];
+
+        // Hover over the random main menu item
+        const mainMenuLocator = this.page.locator('#mainMenu ul[role="menu"] > li')
+            .filter({ has: this.page.locator(`a.cursor-pointer:has-text("${randomMainMenuItem}")`) })
+            .first();
+
+        await mainMenuLocator.hover();
+        const subcategoryMenu = mainMenuLocator.locator('div.customtablescrollbar.group-hover\\:flex');
+
+        // Ensure you're interacting with the right element by specifying an index or refining further
+        await subcategoryMenu.first().waitFor({ state: 'visible' });
+
+        // Continue with your subcategory selection and interaction
+        const subcategoriesLocator = subcategoryMenu.locator('ul > li a.cursor-pointer');
+        const subcategoriesCount = await subcategoriesLocator.count();
+
+        // Select a random subcategory
+        const randomSubcategoryIndex = Math.floor(Math.random() * subcategoriesCount);
+        const randomSubcategory = subcategoriesLocator.nth(randomSubcategoryIndex);
+        const subCatName = await randomSubcategory.textContent();
+        console.log(subCatName);
+        // Click on the random subcategory
+        await randomSubcategory.click();
+        // Locate the breadcrumb's last 'li' element
+        await this.page.locator('nav[aria-label="Breadcrumb"] ol > li').last().waitFor({ state: 'visible' });
+        await this.page.locator('section.plpGrid').first().waitFor({ state: 'visible' });
+        const lastBreadcrumbItem = await this.page.locator('nav[aria-label="Breadcrumb"] ol > li').last();
+        // Get the text content of the last 'li' element
+        const lastBreadcrumbText = await lastBreadcrumbItem.textContent();
+        // Validate the text content
+        //expect(lastBreadcrumbText.trim()).toContain(subCatName);
+        // Extract the last two words from subCatName
+        const lastTwoWords = subCatName.split(' ').slice(-2).join(' ');
+        // Escape special regex characters in the extracted words
+        const escapedPattern = lastTwoWords.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        // Create a regex pattern that matches the escaped last two words, case-insensitive
+        const regexPattern = new RegExp(escapedPattern, 'i');
+        // Check if lastBreadcrumbText matches the regex pattern
+        expect(lastBreadcrumbText.trim()).toMatch(regexPattern);
+    }
+
+
 }

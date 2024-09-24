@@ -23,8 +23,8 @@
     "signedin_message" : "You have been successfully signed in to your account",
     "myaccount_defaultcc_updated_message" : "Your default billing card was successfully updated.",
     "myaccount_savedcc_newcardadded_message" : "A new card has been added to your account.",
-    "myaccount_newcc_cardnumber" : "4012888888881881",
-    "myaccount_newcc_cardexpdate" : "12/34",
+    "myaccount_newcc_cardnumber" : "4012-0000-7777-7777",
+    "myaccount_newcc_cardexpdate" : "12/25",
     "myaccount_newcc_cardseccode" : "123",
     "myaccount_tooltip_totalbalance" : "Total Balance:",
     "myaccount_tooltip_availablecredit" : "Available Credit:",
@@ -32,7 +32,7 @@
     "myaccount_makeapayment_accountstatus_tooltip" :"Account Status:",
     "myaccount_savedcc_nodeCard_message":"There are currently no cards saved to your account.",
     "myaccount_no_wishlist_message":"There are currently no items saved to your wish list.",
-    "email_change_modal_text1":"Please verify the information below, and enter your current password to change the email address on your Stoneberry account.",
+    "email_change_modal_text1":"Please verify the information below, and enter your current password to change the email address on your Shoemall account.",
     "email_change_modal_text2":"Please use this new email address next time you sign in or check out.",
     "password_updated_message":"Password changed successfully",
     "email_updated_message":"You have successfully updated your email address",
@@ -54,8 +54,8 @@
     "wishlist_remove_success_message":"You have successfully removed (.+) from your Wish List",
     "wishlist_remove_partMessage":"You have successfully removed",
     "navhighlighted_color" : "a.text-stoneberry-highlightColor",
-    "valid_order":"99559197",
-    "valid_zip":"06451"
+    "valid_order":"94804916",
+    "valid_zip":"87114"
     
     
     

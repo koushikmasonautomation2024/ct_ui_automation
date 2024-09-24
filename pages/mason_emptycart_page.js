@@ -1,9 +1,9 @@
 import test, { expect } from 'playwright/test';
 
-const emptyCartHeaderContent = 'Shopping Cart';
-const emptyCartContent = 'Your shopping Cart is empty.';
+const emptyCartHeaderContent = 'Shopping Bag';
+const emptyCartContent = 'Your shopping bag is empty.';
 const emptyCarAccountSignInButtonContent = 'Have an account? Sign in';
-const emptyCartAccountSignInContent = 'Have an account? Sign in to view items that were previously added to your Cart.';
+const emptyCartAccountSignInContent = 'Have an account? Sign in to view items that were previously added to your bag.';
 const emptyCartSignInButtonContent = 'Sign In';
 const emptyCartContinueShoppingButtonContent = 'Continue Shopping';
 
