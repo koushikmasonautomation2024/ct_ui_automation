@@ -1,7 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","17316","Validate under each alphabets the brand name starting with that letter is present","Mason","Fri Aug 09 10:30:00 UTC 2024","passed","Fri Aug 09 10:30:17 UTC 2024","Mason Commerce Tool Site","mason_bip.auth.spec.js","",""
-"","15012","Validate Home -> Brand breadcrumbs are shown in BIP","Mason","Fri Aug 09 10:29:45 UTC 2024","passed","Fri Aug 09 10:30:00 UTC 2024","Mason Commerce Tool Site","mason_bip.auth.spec.js","",""
-"","16409","Validate navigation to BLP from Top Brands in homepage and breadcrumbs are shown in BLP","Mason","Fri Aug 09 10:30:00 UTC 2024","failed","Fri Aug 09 10:30:16 UTC 2024","Mason BLP Page","mason_blp.auth.spec.js","",""
-"","13426","Validate the full-width banner present below the page title which supports images and videos","Mason","Fri Aug 09 10:29:45 UTC 2024","failed","Fri Aug 09 10:29:58 UTC 2024","Mason Commerce Tool Site","mason_bip.auth.spec.js","",""
-"","18638","Validate the row of alphabet links below the top brands present","Mason","Fri Aug 09 10:29:57 UTC 2024","passed","Fri Aug 09 10:30:15 UTC 2024","Mason Commerce Tool Site","mason_bip.auth.spec.js","",""
-"","12121","Validate the brands logos present below the full width banner","Mason","Fri Aug 09 10:29:45 UTC 2024","passed","Fri Aug 09 10:29:57 UTC 2024","Mason Commerce Tool Site","mason_bip.auth.spec.js","",""
