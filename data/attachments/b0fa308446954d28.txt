@@ -1,0 +1,17 @@
+Kids Boots
+Clicked button with index: 1
+Clicked enabled button with index: 6 in section: 0
+Add to Cart button is enabled.
+Product Name: Koolaburra by UGG® Koola Mini T (Girls' Infant-Toddler)
+Product image is visible
+Detail: Elderberry
+Detail: 11 Toddler
+Detail: M   Medium
+Detail: $51.97 $64.95
+Item added to cart successfully
+Product Name: Koolaburra by UGG® Koola Mini T (Girls' Infant-Toddler)
+Product image is visible
+Detail: Elderberry
+Detail: 11 Toddler
+Detail: M   Medium
+Detail: $51.97 $64.95

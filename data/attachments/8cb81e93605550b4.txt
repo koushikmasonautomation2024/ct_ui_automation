@@ -1,0 +1,11 @@
+Address verification modal did not appear or is not open.
+Address added successfully!
+First Name: Desmond Metz
+Last Name: Desmond Metz
+Address: 2 JJ Rd 
+City: Charlotte,  AR 72522-9645
+Default Address First Name:Caroline Kling
+First Non Default Address First Name:Robert John
+Is displayed: true
+Address verification modal did not appear or is not open.
+Is displayed: true
