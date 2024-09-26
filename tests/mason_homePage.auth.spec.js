@@ -66,7 +66,7 @@ test.describe("Mason HomePage Scenarios", () => {
 
     await homePage.categoryL1ToBeVisibleOnDepartmentHover();
     const [l1CategoryText, index] = await homePage.getRandomL1CategoryText();
-    await homePage.navigateToCategoryL1(l1CategoryText);
+    await homePage.selectRandomSubCategory();
 
   })
 

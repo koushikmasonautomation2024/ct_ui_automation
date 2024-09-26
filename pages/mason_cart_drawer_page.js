@@ -14,7 +14,7 @@ exports.CartDrawerPage = class CartDrawerPage {
         this.miniCartPricingSection = page.locator('section.flex.flex-col.gap-1');
         this.miniCartFirstProductName = page.locator('ul.grid.gap-4.p-4 a>p');
         //this.addtoCartButtonPLP = page.locator('button:has-text("Add to Cart")');
-        this.plpProductImages = page.locator('section.productItemParent  a');
+        this.plpProductImages = page.locator('div.swiper-slide.swiper-slide-active a img');
         this.miniCartQtyMinusButton = page.locator('button[aria-label="Decrease Quantity"]');
         this.miniCartQtyPlusButton = page.locator('button[aria-label="Increase Quantity"]');
         this.miniCartDefaultQtyPlusButton = page.locator('button[aria-label="Increase Quantity"]');
@@ -27,10 +27,10 @@ exports.CartDrawerPage = class CartDrawerPage {
         this.miniCartViewCartButton = page.getByRole('button', { name: 'View Bag' });
         this.miniCartCheckoutButton = page.getByRole('button', { name: 'Check Out' });
         this.addtoCartButton = page.getByRole('button', { name: 'Add to Bag' });
-        this.chooseOptions = page.getByText('Choose Options');
+        this.chooseOptions = page.locator('section.sticky.right-0');
         this.pdp_colorvariant_button = page.locator(pdp_colorvariant_button_locator);
-        this.plpQuickViewButton = page.getByRole('button', { name: 'Quick View' });
-        this.plpProducts = page.locator('div.swiper-wrapper');
+        this.plpQuickViewButton = page.getByRole('button', { name: 'Choose Options' });
+        this.plpProducts = page.locator('div.swiper-slide.swiper-slide-active a img');
 
     }
 
@@ -97,6 +97,7 @@ exports.CartDrawerPage = class CartDrawerPage {
         // Get the count of buttons on the PLP page
         //await this.addtoCartButtonPLP.first().waitFor({ state: 'visible' });
         await this.plpProducts.first().waitFor({ state: 'visible' });
+        //await this.page.waitForLoadState('networkidle');
         // await this.plpProducts.first().hover();
         // await this.plpQuickViewButton.click();
         const buttonCountPLP = await this.plpProducts.count();
@@ -112,7 +113,7 @@ exports.CartDrawerPage = class CartDrawerPage {
             await this.chooseOptions.waitFor({ state: 'visible' });
 
             // Get the "Add to Cart" button in the cart drawer
-            const addToCartButtonInDrawer = this.addtoCartButton;
+            const addToCartButtonInDrawer = await this.addtoCartButton;
 
             // Check if the "Add to Cart" button in the cart drawer is enabled
             if (await addToCartButtonInDrawer.isEnabled()) {
@@ -135,35 +136,61 @@ exports.CartDrawerPage = class CartDrawerPage {
         }
     }
 
+    // async navigateToPDPFromPLP() {
+    //     await this.plpProductImages.first().waitFor({ state: 'visible' });
+    //     // Wait for the product list to be visible
+    //     //await this.page.waitForSelector('section.productItemParent');
+
+    //     // Get all product items on the PLP
+    //     const productItems = await this.page.locator('div.swiper-slide.swiper-slide-active a');
+
+    //     // Check if there are any product items
+    //     if (productItems.length > 0) {
+    //         // Select a random product index
+    //         const randomIndex = Math.floor(Math.random() * productItems.length);
+
+    //         // Click on the product name or image
+    //         const product = productItems[randomIndex];
+    //         const productLink = await product.$('a[href]'); // Finds the anchor tag
+
+    //         // Check if the link exists and click it
+    //         if (productLink) {
+    //             await productLink.click();
+    //             await this.pdp_colorvariant_button.first().waitFor({ state: 'visible' });
+    //             console.log('Product clicked successfully');
+    //         } else {
+    //             console.log('No clickable product link found');
+    //         }
+    //     } else {
+    //         console.log('No products found on the PLP');
+    //     }
+    // }
+
     async navigateToPDPFromPLP() {
         await this.plpProductImages.first().waitFor({ state: 'visible' });
-        // Wait for the product list to be visible
-        //await this.page.waitForSelector('section.productItemParent');
-
-        // Get all product items on the PLP
-        const productItems = await this.page.$$('section.productItemParent');
-
+    
+        // Get all active swiper slides containing product items
+        const productItems = await this.page.locator('div.swiper-slide.swiper-slide-active a');
+    
         // Check if there are any product items
-        if (productItems.length > 0) {
+        const productCount = await productItems.count();
+    
+        if (productCount > 0) {
             // Select a random product index
-            const randomIndex = Math.floor(Math.random() * productItems.length);
-
-            // Click on the product name or image
-            const product = productItems[randomIndex];
-            const productLink = await product.$('a[href]'); // Finds the anchor tag
-
-            // Check if the link exists and click it
-            if (productLink) {
-                await productLink.click();
-                await this.pdp_colorvariant_button.first().waitFor({ state: 'visible' });
-                console.log('Product clicked successfully');
-            } else {
-                console.log('No clickable product link found');
-            }
+            const randomIndex = Math.floor(Math.random() * productCount);
+    
+            // Click on the random product item directly
+            await productItems.nth(randomIndex).click();
+    
+            // Wait for the PDP page to load and the color variant button to be visible
+            await this.pdp_colorvariant_button.first().waitFor({ state: 'visible' });
+    
+            console.log('Product clicked successfully');
         } else {
             console.log('No products found on the PLP');
         }
     }
+    
 
     async navigateToPLP(categoryName) {
         await this.page.getByRole('link', { name: categoryName }).first().click();

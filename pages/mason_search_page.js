@@ -66,6 +66,10 @@ exports.SearchPage = class SearchPage {
         this.validateSearchTips();
     }
 
+    async goToHomeViaLink(){
+        await this.page.getByRole('link', { name: 'ShoeMall' }).click();
+    }
+
     async validateWrongSearchPageTitle(search_value) {
         await this.no_search_result_text.waitFor({ state: 'visible', timeout: 120000 });
         // Get the inner text of the no search result text element
@@ -181,7 +185,8 @@ exports.SearchPage = class SearchPage {
     async validateRecentSearches(search_value) {
         await this.search_placeholder.click();
         await this.search_placeholder.fill('');
-        await (this.page.getByRole('link', { name: search_value, exact: true })).waitFor({state:'visible'});
+        //await (this.page.getByRole('link', { name: search_value, exact: true })).waitFor({state:'visible'});
+        await expect(this.page.locator('li').filter({ hasText: new RegExp(`^${search_value}$`) })).toBeVisible();
         await expect(this.page.locator('li').filter({ hasText: new RegExp(`^${search_value}$`) }).getByRole('button')).toBeVisible();
     }
 

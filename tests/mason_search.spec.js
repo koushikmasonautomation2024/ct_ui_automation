@@ -165,7 +165,7 @@ test.describe("Mason Commerce Tool Site", () => {
 
 
   //SB-Search003
-  test("Validate the suggestion search dropdown (recent searches and popular searches) should display.", async ({ page }, testInfo) => {
+  test("Validate the suggestion search dropdown (recent searches and popular searches) should display.",async({page},testInfo)=>{
     const search_value = [...Array(6)].map(() => String.fromCharCode(Math.random() * 26 + 97 | 0)).join('') + String.fromCharCode(Math.random() * 26 + 65 | 0) + (Math.random() * 10 | 0);
     const mySearchPage = new SearchPage(page);
     await mySearchPage.validateSearchField(search_value);
@@ -173,6 +173,7 @@ test.describe("Mason Commerce Tool Site", () => {
     await mySearchPage.validateWrongSearchPageTitle(search_value);
     await mySearchPage.validateSearchTips();
     await mySearchPage.validateNeedHelpsection();
+    await mySearchPage.goToHomeViaLink();
     await mySearchPage.validateRecentSearches(search_value);
     await mySearchPage.validatePopularSearch();
   })

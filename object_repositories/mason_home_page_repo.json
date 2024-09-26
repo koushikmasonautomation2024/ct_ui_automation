@@ -14,7 +14,7 @@
     "page_underneath":"//body/div[1]/div[2]",
     "stickyheader_pdp" : "//section[@class='fixed inset-x-0 top-0 z-30 flex justify-center bg-white py-5 shadow-md']",
     "minicart_drawer_heading" : "My Bag",
-    "minicart_drawer_subtotalsection" : "Subtotal0 Items$",
+    "minicart_drawer_subtotalsection" : "Subtotal0 Item$",
     "minicart_drawer_viewcart_button" : "View Bag",
     "minicart_drawer_checkout_button" : "Check Out",
     "footer_signupemail_textbox" : "Email Address",

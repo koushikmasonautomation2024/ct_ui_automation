@@ -423,7 +423,7 @@ async validateViewMore(){
    await expect(contentBlock).toBeVisible();
  
    // Verify "View More" text link should display in Global text block content at centered bottom
-   const viewMoreLink = await this.page.locator('a:has-text("View More")');
+   const viewMoreLink = await this.page.locator('u:has-text("View More")');
    await expect(viewMoreLink).toBeVisible();
    
    // Ensure it's centered at the bottom

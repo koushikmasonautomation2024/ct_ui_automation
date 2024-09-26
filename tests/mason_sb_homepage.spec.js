@@ -105,7 +105,7 @@ test.describe("Mason Guest User Home Page", () => {
   test("GPF-Newsletter Mailing List Widget - Verify the display of the newsletter widget, text, textbox, form field label, help text, and CTA functionality", async ({ page }, testInfo) => {
     //test.slow();
     const homePage = new HomePageNew(page);
-    await homePage.validateFooterNewsLetterSignUpContent(homepage_data.footer_newsletterSignUpContent);
+    await homePage.validateFooterNewsLetterSignUpContent();
     await homePage.displayFooterSignUpButton();
     //await homePage.signUpModalDisplayValidation(homepage_data.signup_email);
   })

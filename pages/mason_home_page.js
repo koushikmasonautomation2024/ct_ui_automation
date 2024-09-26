@@ -409,15 +409,19 @@ exports.HomePage = class HomePage {
         const lastBreadcrumbItem = await this.page.locator('nav[aria-label="Breadcrumb"] ol > li').last();
         // Get the text content of the last 'li' element
         const lastBreadcrumbText = await lastBreadcrumbItem.textContent();
-        // Validate the text content
-        //expect(lastBreadcrumbText.trim()).toContain(subCatName);
-        // Extract the last two words from subCatName
+        // Extract the last two words of the sub-category name
         const lastTwoWords = subCatName.split(' ').slice(-2).join(' ');
+
         // Escape special regex characters in the extracted words
         const escapedPattern = lastTwoWords.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        // Create a regex pattern that matches the escaped last two words, case-insensitive
-        const regexPattern = new RegExp(escapedPattern, 'i');
-        // Check if lastBreadcrumbText matches the regex pattern
+
+        // Create a flexible regex pattern to:
+        // 1. Match any starting word(s) (e.g., "All").
+        // 2. Match the escaped last two words.
+        // 3. Ignore case and apostrophes.
+        const regexPattern = new RegExp(`(?:.*\\b)?${escapedPattern.replace(/\\'/g, "")}`, 'i');
+
+        // Check if the last breadcrumb text matches the flexible regex pattern
         expect(lastBreadcrumbText.trim()).toMatch(regexPattern);
     }
 

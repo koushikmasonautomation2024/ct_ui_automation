@@ -30,10 +30,8 @@ exports.MasonPLPPage = class MasonPLPPage {
         this.qtyText = page.getByText('Qty:');
         this.qtyInputTextBox = page.locator('input.numberInputCounter');
         this.itemCountElement = page.locator(`section.mt-4 p:has-text("${item_count}")`);
-       // this.qtyMinusButton = page.locator('section.flex.items-center.gap-2 > div > button:nth-of-type(1)')
-       this.qtyMinusButton = page.getByRole('button', { name: 'Decrease quantity' });
-        this.qtyPlusButton = page.getByRole('button', { name: 'Increase quantity' });
-        //this.qtyPlusButton = page.locator('section.flex.items-center.gap-2 > div > button:nth-of-type(2)');
+        this.qtyMinusButton = page.locator('section.flex.items-center.gap-2 > div > button:nth-of-type(1)')
+        this.qtyPlusButton = page.locator('section.flex.items-center.gap-2 > div > button:nth-of-type(2)');
 
     }
 
@@ -433,7 +431,7 @@ exports.MasonPLPPage = class MasonPLPPage {
 
     async validateSortBy() {
         //await expect(this.page.getByText('Sort By:')).toBeVisible();
-        await (this.page.getByText('Sort By:')).waitFor({ state: "visible" });
+        await (this.page.getByText('Sort By:').nth(1)).waitFor({ state: "visible" });
         //await expect(this.page.getByRole('combobox')).toBeVisible();
     }
 
@@ -500,8 +498,7 @@ exports.MasonPLPPage = class MasonPLPPage {
         await firstImage.hover();
 
         // Wait for the 'Quick View' button to become visible after hover
-        //const quickViewButton = this.page.locator('button', { hasText: 'Quick View' }).first();
-        const quickViewButton = this.page.locator('button', { hasText: 'Choose Options' }).first();
+        const quickViewButton = this.page.locator('button', { hasText: 'Quick View' }).first();
         await quickViewButton.waitFor({ state: 'visible' });
 
         // Click the 'Quick View' button
@@ -552,12 +549,8 @@ exports.MasonPLPPage = class MasonPLPPage {
 
 
     async validateChooseOptionDrawer() {
-        //await (this.page.getByText('Choose Options')).waitFor({ State: "visible" });
+        await (this.page.getByText('Choose Options')).waitFor({ State: "visible" });
         //await (this.page.getByRole('button', { name: 'Add to Cart' })).waitFor({state:"visible"});
-        const button = await this.page.locator('section.sticky').getByText('Choose Options').locator('button');
-        await button.waitFor({ state: 'visible' });
-
-
         try {
             await this.page.waitForSelector('button:has-text("Add to Bag"), button:has-text("Personalize")', { state: 'visible' });
             console.log('Add to Bag or Personalize button found.');
@@ -786,7 +779,7 @@ exports.MasonPLPPage = class MasonPLPPage {
         await expect(this.qtyText).toBeVisible();
         const initialInputValue = await this.qtyInputTextBox.inputValue();
         if (initialInputValue == 1) {
-            //await expect(this.qtyMinusButton).toBeDisabled();
+            await expect(this.qtyMinusButton).toBeDisabled();
             await expect(this.qtyPlusButton).toBeVisible();
         } else {
             await expect(this.qtyMinusButton).toBeVisible();

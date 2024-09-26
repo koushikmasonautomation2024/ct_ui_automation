@@ -1,7 +1,7 @@
 {
-    "create_account_header_text":"Create Your Shoemall Account",
+    "create_account_header_text":"Create Your ShoeMall Account",
     "create_account_keepMe_signed_text":"^Keep me signed in$",
-    "create_account_send_email_updates_text":"^Yes, please send me email updates about new products and exclusive promotions from Shoemall.$",
+    "create_account_send_email_updates_text":"^Yes, please send me email updates about new products and exclusive promotions from ShoeMall.$",
     "create_account_already_have_an_account_text":"^Already have a Shoemall account?$",
     "create_account_if_no_existing_account_text":"If you do not currently have an account, please create one below. You\\'ll be able to save time checking out, view your orders, create a wish list, and more!",
     "password_criteria_text":"Your Password must contain at least",

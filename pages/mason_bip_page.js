@@ -14,7 +14,8 @@ exports.MasonBIPPage = class MasonBIPPage{
         this.page=page;
         this.brand_title=page.getByRole('heading', { name: brand_title, exact: true })
         this.brand_breadcrumb=page.getByText(brand_breadcrumb);
-        this.top_brands=page.locator('section').filter({ hasText: top_brands }).locator('section');
+        //this.top_brands=page.locator('section').filter({ hasText: top_brands }).locator('section');
+        this.top_brands=page.getByRole('link', { name: 'Top Brands' }).first();
         this.alphabets_link=page.getByText(alphabets);
         this.brand_index=page.getByRole('heading', { name: brand_index });
         

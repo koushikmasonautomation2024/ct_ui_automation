@@ -133,7 +133,7 @@ exports.CartPage = class CartPage {
             expect(individualPriceText).toMatch(/\$\d{1,3}(,\d{3})*(\.\d{2})?/); // Match dollar amount format
 
             // Verify the availability
-            const availability = productItem.locator(cartAvailabilityLocator).first();
+            const availability = await productItem.locator(cartAvailabilityLocator).first();
             await expect(availability).toBeVisible();
             const availabilityText = await availability.textContent();
             expect(availabilityText).toBeTruthy();
@@ -543,6 +543,7 @@ exports.CartPage = class CartPage {
         const promoCodeMessage = `Promo code ${promoCode} applied to order`;
         const promoCodeTopMessage = `Promo code ${promoCode} has been applied to your order`;
         await this.cartApplyPromoCodeButton.click();
+        await this.page.getByText(promoCodeTopMessage).waitFor({ state: 'visible' });
         await this.page.getByText(promoCodeMessage).waitFor({ state: 'visible' });
         await expect(this.page.getByText(promoCodeMessage)).toBeVisible();
         await expect(this.page.getByText(promoCodeTopMessage)).toBeVisible();

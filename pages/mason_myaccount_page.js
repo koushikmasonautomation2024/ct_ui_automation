@@ -1695,10 +1695,10 @@ exports.MyAccountPage = class MyAccountPage {
             const lastNameValue = await this.page.locator('strong').filter({ hasText: lastName }).textContent();
             //expect(lastNameValue).toMatch(lastName);
             expect(lastNameValue).toBeTruthy();
-            const addressValue = await this.page.locator('p').filter({ hasText: address }).textContent();
+            const addressValue = await this.page.locator('p').filter({ hasText: address }).first().textContent();
             //expect(addressValue).toMatch(address);
             expect(addressValue).toBeTruthy();
-            const zipCityStateValue = await this.page.locator('p').filter({ hasText: fullAddress }).textContent();
+            const zipCityStateValue = await this.page.locator('p').filter({ hasText: fullAddress }).first().textContent();
             //expect(zipCityStateValue).toMatch(fullAddress);
             expect(zipCityStateValue).toBeTruthy();
             //const phoneNumberValue = await this.page.locator('p').filter({ hasText: phoneNumber }).textContent();
@@ -1775,7 +1775,7 @@ exports.MyAccountPage = class MyAccountPage {
             retries++;
             //await this.page.reload(); // Optional: wait for a short time before rechecking
             buttonVisible = await setDefaultAddressButtonLocator.isVisible();
-            await this.page.reload();
+            //await this.page.reload();
         }
 
         if (!buttonVisible) {
@@ -1791,9 +1791,9 @@ exports.MyAccountPage = class MyAccountPage {
             await this.page.getByText('Primary address updated').waitFor({ state: 'visible' });
             await expect(this.page.getByText('Primary address updated')).toBeVisible();
             await expect(this.page.getByText('Default Billing & Shipping Address')).toBeVisible();
-            await this.page.reload({ timeout: 15000 });
+            //await this.page.reload({ timeout: 15000 });
             await this.displayAddressSection();
-            const defaultShippingFirstName = await this.page.locator('section.mb-4.rounded-md.border.border-foggyGray > strong').first().textContent();
+            const defaultShippingFirstName = await this.page.locator('section.gbmask strong').first().textContent();
             expect(defaultShippingFirstName).toMatch(noDefaultAddressFirstName);
 
         }
@@ -1836,7 +1836,7 @@ exports.MyAccountPage = class MyAccountPage {
         await expect(this.page.getByText('Address added successfully')).toBeVisible();
         await this.validateDefaultShippingFirstSection();
         await this.page.reload();
-        const defaultShippingFirstName = await this.page.locator('section.mb-4.rounded-md.border.border-foggyGray > strong').nth(0).textContent();
+        const defaultShippingFirstName = await this.page.locator('section.gbmask strong').nth(0).textContent();
         expect(defaultShippingFirstName).toMatch(firstName);
 
     }
@@ -1922,14 +1922,14 @@ exports.MyAccountPage = class MyAccountPage {
         console.log('Total Delete Address Count:', deleteAddressCount);
 
         await this.page.getByRole('button', { name: myaccountpage_locator.myaccount_savedaddress_remove_button }).nth(deleteAddressCount).click();
-        await expect(this.page.locator('.text-forestGreen').filter({ hasText: 'Credit card deleted successfully' })).toBeVisible();
-        await this.page.locator('.text-forestGreen').filter({ hasText: 'Credit card deleted successfully' }).waitFor({ state: 'hidden' });
+        await expect(this.page.locator('.text-forestGreen').filter({ hasText: 'Your credit card was successfully removed.' })).toBeVisible();
+        await this.page.locator('.text-forestGreen').filter({ hasText: 'Your credit card was successfully removed.' }).waitFor({ state: 'hidden' });
         const successMessage = await this.page.$('.text-forestGreen');
         if (successMessage) {
             const deletedAddressSections = await this.page.locator('section.m-4');
             const deletedAddressSectionsCount = await deletedAddressSections.count();
             //await expect(deletedAddressSections).toHaveCount(deleteAddressCount);
-            console.log('Credit card deleted successfully!');
+            console.log('Your credit card was successfully removed.!');
             console.log('Credit Card deleted Count!' + deletedAddressSectionsCount);
         } else {
             console.log('Failed to delete credit card.');
@@ -1952,10 +1952,10 @@ exports.MyAccountPage = class MyAccountPage {
         //console.log('Total Delete Credit Card Count:', deleteAddressCount);
 
         await this.page.getByRole('button', { name: myaccountpage_locator.myaccount_savedaddress_remove_button }).nth(nthIndex).click();
-        await expect(this.page.locator('.text-forestGreen').filter({ hasText: 'Credit card deleted successfully' })).toBeVisible();
+        await expect(this.page.locator('.text-forestGreen').filter({ hasText: 'Your credit card was successfully removed.' })).toBeVisible();
         await expect(this.page.getByRole('button', { name: 'Undo' })).toBeVisible();
         await this.page.getByRole('button', { name: 'Undo' }).click();
-        await this.page.locator('.text-forestGreen').filter({ hasText: 'Credit card deleted successfully' }).waitFor({ state: 'hidden' });
+        await this.page.locator('.text-forestGreen').filter({ hasText: 'Your credit card was successfully removed.' }).waitFor({ state: 'hidden' });
         //await expect(this.page.locator('section.m-4')).toHaveCount(addressSectionsCount);
 
     }
