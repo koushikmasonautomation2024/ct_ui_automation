@@ -1,0 +1,7 @@
+Address Element Value: 2 JJ Rd
+City Element Value: Charlotte
+State Element Value: AR
+ZipCode Element Value: 72522-9645
+PhoneNumber Element Value: (772) 345-4522
+Address verification modal did not appear or is not open.
+Address updated successfully!

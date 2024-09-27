@@ -1,0 +1,66 @@
+Mules
+Product clicked successfully
+Number of similar items: 15
+Product Title: Merrell Encore Breeze 5 (Women's)
+Product Link: /product/merrell-encore-breeze-5-women-s-/1323730-1
+Rating Count: 5
+Product ID: 1323730-1
+Product Title: Skechers Foamies Go Walk 5-Astonished (Women's)
+Product Link: /product/skechers-cali-gear-go-walk-5-astonished-women-s-/1267550-5
+Rating Count: 5
+Product ID: 1267550-5
+Product Title: Skechers Performance® Go Walk Joy™ Slip-On (Women's)
+Product Link: /product/skechers-performance-go-walk-joy-women-s-/1085553-5
+Rating Count: 5
+Product ID: 1085553-5
+Product Title: Skechers Sport Active Slip-Ins: Virtue-Sleek (Women's)
+Product Link: /product/skechers-sport-active-slip-ins-virtue-sleek-women-s-/1376493-4
+Rating Count: 5
+Product ID: 1376493-4
+Product Title: Bzees Charlie (Women's)
+Product Link: /product/bzees-charlie-women-s-/1245490-6
+Rating Count: 5
+Product ID: 1245490-6
+Product Title: Bella Vita Ramira (Women's)
+Product Link: /product/bella-vita-ramira-women-s-/1317838-3
+Price: $35.97
+Rating Count: 5
+Product ID: 1317838-3
+Product Title: Skechers Performance Slip-Ins: Go Walk Flex-Hands Up (Men's)
+Product Link: /product/skechers-performance-slip-ins-go-walk-flex-hands-up-men-s-/1375233-1
+Rating Count: 5
+Product ID: 1375233-1
+Product Title: Bzees Double Up (Women's)
+Product Link: /product/bzees-double-up-women-s-/1306236-3
+Rating Count: 5
+Product ID: 1306236-3
+Product Title: David Tate Milani (Women's)
+Product Link: /product/david-tate-milani-women-s-/1323800-3
+Price: $62.97
+Rating Count: 5
+Product ID: 1323800-3
+Product Title: Easy Spirit Aaron Clog (Men's)
+Product Link: /product/easy-spirit-aaron-men-s-/1320644-1
+Rating Count: 5
+Product ID: 1320644-1
+Product Title: JBU By Jambu Amelia Vegan (Women's)
+Product Link: /product/jbu-by-jambu-amelia-vegan-women-s-/1323854-1
+Rating Count: 0
+Product ID: 1323854-1
+Product Title: Naturalizer Lafayette (Women's)
+Product Link: /product/naturalizer-lafayette-women-s-/1282048-2
+Rating Count: 5
+Product ID: 1282048-2
+Product Title: Skechers Performance Slip-Ins: Go Walk Flex 216491 (Men's)
+Product Link: /product/skechers-performance-slip-ins-go-walk-flex-216491-men-s-/1322951-3
+Rating Count: 5
+Product ID: 1322951-3
+Product Title: Skechers Performance Go Walk Arch Fit-Grateful Casual Slip-On (Women's)
+Product Link: /product/skechers-performance-go-walk-arch-fit-grateful-women-s-/1273103-5
+Price: $59.97
+Rating Count: 5
+Product ID: 1273103-5
+Product Title: Skechers Performance Slip-Ins: Go Walk Flex-Relish (Women's)
+Product Link: /product/skechers-performance-slip-ins-go-walk-flex-relish-women-s-/1323774-4
+Rating Count: 5
+Product ID: 1323774-4
