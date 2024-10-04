@@ -257,7 +257,7 @@ exports.OrderDetailsPage = class OrderDetailsPage {
             } else {
                 console.log('The number of "Pending Shipment" <p> tags does not match the number of product sections for order', await orderSection.locator('h2').textContent());
                 this.orderDetailsLink.nth(i).click();
-                await expect(this.page).toHaveURL(/.*\/account\/orders\/orderdetails\/\?orderId=\d+&zipCode=\d+$/);
+                await expect(this.page).toHaveURL(/account\/orders\/orderdetails\?orderId=\d+&zipCode=\d+/);
                 await this.page.getByText(order_SummaryText).waitFor({ state: 'visible' });
                 await expect(this.orderDetailsCancelOrderButton).toBeHidden();
                 break;

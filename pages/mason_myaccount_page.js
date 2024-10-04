@@ -1689,10 +1689,10 @@ exports.MyAccountPage = class MyAccountPage {
             console.log('Address updated successfully!');
 
             // Check if the input fields retain the entered data
-            const firstNameValue = await this.page.locator('strong').filter({ hasText: firstName }).textContent();
+            const firstNameValue = await this.page.locator('strong').filter({ hasText: firstName }).first().textContent();
             //expect(firstNameValue).toMatch(firstName);
             expect(firstNameValue).toBeTruthy();
-            const lastNameValue = await this.page.locator('strong').filter({ hasText: lastName }).textContent();
+            const lastNameValue = await this.page.locator('strong').filter({ hasText: lastName }).first().textContent();
             //expect(lastNameValue).toMatch(lastName);
             expect(lastNameValue).toBeTruthy();
             const addressValue = await this.page.locator('p').filter({ hasText: address }).first().textContent();

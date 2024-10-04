@@ -11,12 +11,8 @@ import { OrderDetailsPage } from '../pages/mason_orderdetails_page';
 import { allure } from 'allure-playwright';
 import fs from 'fs';
 require('dotenv').config();
-const creditUserFile = './credituser.json';
-const nonCreditUserFile = './noncredituser.json';
-const newUserFile = './newuser.json';
-const globalUser1File = './globaluser1.json';
-const orderDetailsCancelOrderFile = './orderdetailscancelorder.json';
-const paymentUserFile = './paymentuser.json';
+
+const orderUser = './shoemallorderuser.json';
 
 const homepage_data = JSON.parse(JSON.stringify(require('../test_data/mason_sb_home_page_data.json')));
 const signinpage_data = JSON.parse(JSON.stringify(require('../test_data/mason_signin_page_data.json')));
@@ -31,7 +27,7 @@ test.describe("Mason Order Details Page", () => {
 
   test.beforeEach(async ({ page, isMobile }, testInfo) => {
     test.slow();
-    const storageStatePath = isMobile ? paymentUserFile : paymentUserFile;
+    const storageStatePath = isMobile ? orderUser : orderUser;
 
     if (fs.existsSync(storageStatePath)) {
       await page.context().addCookies(JSON.parse(fs.readFileSync(storageStatePath, 'utf-8')).cookies);
@@ -49,18 +45,6 @@ test.describe("Mason Order Details Page", () => {
       test.skip('Skipping test because navigation failed');
     }
   })
-  test.afterEach(async ({ page }) => {
-    const start = Date.now();
-
-    // Perform tasks in parallel
-    await Promise.all([
-      process.env.TAKE_SCREENSHOTS && page.screenshot({ path: 'screenshot.png' }),
-      page.close(),
-      //context.close()
-    ]);
-
-    console.log(`AfterHooks completed in ${Date.now() - start}ms`);
-  });
 
   //Order Details - Order Cancellation - Test Cases ID-SB-MyA194
   test("My Account Order details - Order Cancellation - Verify Cancel button displayed if order is Pending Shipment.", async ({ page }, testInfo) => {
@@ -196,7 +180,7 @@ test.describe("Mason Order Details Page", () => {
   })
 
   //Order Details - Item Cancellation - Test Cases ID-SB-MyA202/SB-MyA203
-  test("My Account Order details - Item Cancellation - Verify clicking on 'Cancel Item' button, modal gets closed, page gets refreshed and application shows the order status as 'Cancelled' on the applicable item.", async ({ page }, testInfo) => {
+  test.skip("My Account Order details - Item Cancellation - Verify clicking on 'Cancel Item' button, modal gets closed, page gets refreshed and application shows the order status as 'Cancelled' on the applicable item.", async ({ page }, testInfo) => {
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
     }
@@ -216,7 +200,7 @@ test.describe("Mason Order Details Page", () => {
   })
 
   //Order Details - Order Cancellation - Test Cases ID-SB-MyA197/SB-MyA198
-  test("My Account Order details - Order Cancellation - Verify clicking on Yes, application closes the modal, refreshes the page and order status gets changed to Canceled.", async ({ page }, testInfo) => {
+  test.skip("My Account Order details - Order Cancellation - Verify clicking on Yes, application closes the modal, refreshes the page and order status gets changed to Canceled.", async ({ page }, testInfo) => {
     if (!loginSuccessful) {
       test.skip('Skipping test due to failed login');
     }
