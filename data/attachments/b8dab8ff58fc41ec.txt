@@ -1,0 +1,68 @@
+All Kids
+Product clicked successfully
+Number of similar items: 15
+Product Title: Better Brella Umbrella
+Product Link: /product/better-brella-umbrella/1072291-3
+Rating Count: 5
+Product ID: 1072291-3
+Product Title: Under Armour Women's Hipster 3-Pack
+Product Link: /product/under-armour-women-s-hipster-3-pack/1107480-1
+Rating Count: 5
+Product ID: 1107480-1
+Product Title: J. Renee Marteena (Women's)
+Product Link: /product/j-renee-marteena-women-s-/1369133-1
+Price: $84.99
+Rating Count: 0
+Product ID: 1369133-1
+Product Title: The North Face Men's SS Brand Proud Tee
+Product Link: /product/the-north-face-men-s-ss-brand-proud-tee/1374814-1
+Rating Count: 0
+Product ID: 1374814-1
+Product Title: PUMA Men's Ess 2 Color Logo Tee
+Product Link: /product/puma-men-s-ess-2-color-logo-tee/1282581-4
+Price: $21.97
+Rating Count: 0
+Product ID: 1282581-4
+Product Title: PUMA Women's Run Favorite Woven 3" Shorts
+Product Link: /product/puma-women-s-run-favorite-woven-3-shorts/1321918-3
+Price: $25.97
+Rating Count: 5
+Product ID: 1321918-3
+Product Title: The North Face Men's Half Dome Short Sleeve Tee
+Product Link: /product/the-north-face-men-s-half-dome-ss-tee/1321674-11
+Rating Count: 5
+Product ID: 1321674-11
+Product Title: Western Chief Girls' Wonder Woman Rain Coat
+Product Link: /product/western-chief-girls-wonder-woman-rain-coat/1139423-1
+Price: $37.99
+Rating Count: 5
+Product ID: 1139423-1
+Product Title: Cherokee Medical Uniforms Workwear Stretch Zip Warm-Up Jacket
+Product Link: /product/cherokee-medical-uniforms-workwear-stretch-zip-warm-up-jacket/1091966-2
+Rating Count: 0
+Product ID: 1091966-2
+Product Title: Under Armour Girls' Tech BL Solid Body Short Sleeve
+Product Link: /product/under-armour-girls-tech-bl-solid-body-short-sleeve/1284644-6
+Rating Count: 5
+Product ID: 1284644-6
+Product Title: PUMA Essentials Relaxed Small Logo Fleece Crew
+Product Link: /product/essentials-relaxed-small-logo-fleece-crew/1365310-2
+Rating Count: 0
+Product ID: 1365310-2
+Product Title: Western Chief Boys' Lightning McQueen Umbrella
+Product Link: /product/western-chief-boys-lightning-mcqueen-umbrella/1255696-1
+Rating Count: 0
+Product ID: 1255696-1
+Product Title: The North Face Men's SS Box NSE Tee
+Product Link: /product/the-north-face-men-s-ss-box-nse-tee/1374755-5
+Rating Count: 5
+Product ID: 1374755-5
+Product Title: Billabong Men's Range SS Tee
+Product Link: /product/billabong-men-s-range-ss-tee/1365668-1
+Price: $28.97
+Rating Count: 0
+Product ID: 1365668-1
+Product Title: Bellini Flick Mule (Women's)
+Product Link: /product/bellini-flick-women-s-/1319198-3
+Rating Count: 5
+Product ID: 1319198-3
