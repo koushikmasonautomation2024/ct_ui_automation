@@ -18,7 +18,7 @@
     "forgot_emailaddress_textbox" : "#forgotEmail",
     "sign_out_button": "Sign Out",
     "sign_in_loader":"//div[contains(@class,'animate-spin')]",
-    "failed_message":"#sectionLoginTop",
+    "failed_message":"sectionLoginTop",
     "signin_password_show_link":"Show",
     "signin_password_hide_link":"Hide"
     

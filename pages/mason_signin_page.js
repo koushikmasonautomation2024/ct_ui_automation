@@ -22,7 +22,8 @@ exports.SignInPage = class SignInPage{
         this.sign_out_button=page.getByRole('button',{name: signinpage_locator.sign_out_button});
        // this.create_an_account_button=page.getByRole('button',{name: signinpage_locator.create_an_account_button});
 
-       this.failed_message=page.locator(signinpage_locator.failed_message);
+       //this.failed_message=page.locator(signinpage_locator.failed_message);
+       this.failed_message=page.getByText('The supplied email address or');
        this.signin_password_show_link=page.getByRole('link', { name: signinpage_locator.signin_password_show_link });
        this.signin_password_hide_link=page.getByRole('link', { name: signinpage_locator.signin_password_hide_link });
     }

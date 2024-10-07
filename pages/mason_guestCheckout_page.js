@@ -1319,7 +1319,31 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     await button.click();
   }
 
+  // async paypalPayment(paypalID, password) {
+  //   await this.checkoutpaypaloption.click();
+  //   await this.paypalpageheader.waitFor({ state: 'visible' });
+  //   await this.paypalemailplaceholder.fill(paypalID);
+  //   await this.paypalnextbutton.click();
+  //   await this.paypalpassword.fill(password);
+  //   await this.paypalloginbutton.click();
+  //   await this.submitpaypalbutton.waitFor({ state: 'visible' });
+  //   await this.submitpaypalbutton.click();
+  //   await this.paypalpaymentmethod.waitFor({ state: 'visible' });
+
+  // }
+
   async paypalPayment(paypalID, password) {
+    // Check if the 'Place Order' button is visible
+    const placeOrderButtonVisible = await this.page.getByRole('button', { name: 'Place Order' }).first().isVisible();
+
+    // If 'Place Order' button is visible, click it and return from the function
+    if (placeOrderButtonVisible) {
+      await this.page.getByRole('button', { name: 'Place Order' }).first().click();
+      console.log('Place Order button clicked');
+      return; // Exit the function after clicking 'Place Order'
+    }
+
+    // If 'Place Order' button is not visible, proceed with PayPal payment flow
     await this.checkoutpaypaloption.click();
     await this.paypalpageheader.waitFor({ state: 'visible' });
     await this.paypalemailplaceholder.fill(paypalID);
@@ -1330,7 +1354,9 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     await this.submitpaypalbutton.click();
     await this.paypalpaymentmethod.waitFor({ state: 'visible' });
 
+    console.log('PayPal payment completed');
   }
+
 
 
 }
