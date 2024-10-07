@@ -1,0 +1,62 @@
+Clicked enabled button with index: 0 in section: 0
+Add to Cart button is enabled.
+Product Name: Under Armour Men's Storm Insulate Hooded Jacket
+Product image is visible
+Detail: Black/Pitch Grey
+Detail: S
+Detail: 
+Detail: $95.97 $119.95
+Product Name: Under Armour Men's Storm Insulate Hooded Jacket
+Product image is visible
+Detail: Black/Pitch Grey
+Detail: XXXL
+Detail: 
+Detail: $95.97 $119.95
+Product Name: Under Armour Men's Storm Insulate Hooded Jacket
+Product image is visible
+Detail: Black/Pitch Grey
+Detail: XXL
+Detail: 
+Detail: $95.97 $119.95
+Product Name: Under Armour Men's Storm Insulate Hooded Jacket
+Product image is visible
+Detail: Black/Pitch Grey
+Detail: XL
+Detail: 
+Detail: $95.97 $119.95
+Product Name: BEARPAW Shorty Youth (Girls' Toddler-Youth)
+Product image is visible
+Detail: Black/Black
+Detail: 1 Youth
+Detail: M   Medium
+Detail: $64.95
+Product Name: BEARPAW Shorty Youth (Girls' Toddler-Youth)
+Product image is visible
+Detail: Black/Black
+Detail: 4 Youth
+Detail: M   Medium
+Detail: $64.95
+Product Name: BEARPAW Shorty Youth (Girls' Toddler-Youth)
+Product image is visible
+Detail: Black/Black
+Detail: 5 Youth
+Detail: M   Medium
+Detail: $64.95
+Product Name: BEARPAW Shorty Youth (Girls' Toddler-Youth)
+Product image is visible
+Detail: Black/Black
+Detail: 3 Youth
+Detail: M   Medium
+Detail: $64.95
+Product Name: BEARPAW Shorty Youth (Girls' Toddler-Youth)
+Product image is visible
+Detail: Black/Black
+Detail: 2 Youth
+Detail: M   Medium
+Detail: $64.95
+Product Name: BEARPAW Shorty Youth (Girls' Toddler-Youth)
+Product image is visible
+Detail: Black/Black
+Detail: 13 Toddler
+Detail: M   Medium
+Detail: $64.95

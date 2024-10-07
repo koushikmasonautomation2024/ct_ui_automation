@@ -1,0 +1,3 @@
+Alphabet 'X' is not present.
+Selected Link: JSHandle@<a title="AdTec" href="/brands/adtec"> AdTec</a>
+Selected Brand: AdTec
