@@ -406,7 +406,7 @@ exports.PDPPage = class PDPPage {
     }
 
     async clickOnMultiplePDPSizeVariantButton() {
-        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForTimeout(5000);
         await this.page.locator('section.flex.flex-wrap.items-center.gap-2\\.5.pt-4').first().waitFor({ state: 'visible' });
         // Locate all sections that contain the size variants
         const sections = await this.page.locator('section.flex.flex-wrap.items-center.gap-2\\.5.pt-4');

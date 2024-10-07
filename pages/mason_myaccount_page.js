@@ -741,6 +741,7 @@ exports.MyAccountPage = class MyAccountPage {
 
     async clickSaveCardButton() {
         await this.myaccount_cc_savecard_button.click();
+        //await this.page.waitForURL('**account/savedcreditcard');
         await this.updateCreditCardSuccessMessage();
     }
 
@@ -1901,8 +1902,8 @@ exports.MyAccountPage = class MyAccountPage {
 
             // Click on the first "Set as Default" button
             await this.page.getByRole('button', { name: 'Set as Default' }).first().click();
-            await this.page.getByText('Primary card updated successfully').waitFor({ state: 'visible' });
-            await expect(this.page.getByText('Primary card updated successfully')).toBeVisible();
+            await this.page.getByText('Your default credit card was successfully updated').waitFor({ state: 'visible' });
+            await expect(this.page.getByText('Your default credit card was successfully updated')).toBeVisible();
             await expect(this.page.getByText('Default Credit Card')).toBeVisible();
             await this.page.reload();
             await this.page.locator('section.m-4.rounded-md p.font-semibold').first().waitFor({ state: 'visible' });
@@ -2000,31 +2001,26 @@ exports.MyAccountPage = class MyAccountPage {
         await this.page.type('#phoneNumber', phoneNumber);
     }
 
-    // async updateCreditCardSuccessMessage() {
-    //     await this.page.waitForSelector('div[role="dialog"]', { timeout: 15000 });
-    //     const addressModalVisible = await this.page.locator('div[role="dialog"][data-state="open"]').isVisible();
-
-    //     //console.log('modal visible' + addressModalVisible);
-    //     if (addressModalVisible) {
-    //         await this.page.getByLabel('Use Original Address').click();
-    //         await this.page.getByRole('button', { name: 'Continue' }).click();
-    //         await this.page.getByText('Card details have been updated successfully').waitFor({ state: 'visible' });
-    //         await expect(this.page.getByText('Card details have been updated successfully')).toBeVisible();
-    //     } else {
-    //         // Address suggestion modal is not visible, verify the success message and then proceed
-    //         await this.page.getByText('Card details have been updated successfully').waitFor({ state: 'visible' });
-    //         await expect(this.page.getByText('Card details have been updated successfully')).toBeVisible();
-    //     }
-    // }
 
     async updateCreditCardSuccessMessage() {
-        const successMessageText = 'Card details have been updated successfully';
+        const successMessages = [
+            'Card details have been updated successfully',
+            'Credit card added successfully'
+        ];
 
         try {
-            // Check if the success message is visible
-            await this.page.getByText(successMessageText).waitFor({ state: 'visible' });
-            // If the message is visible, validate it
-            await expect(this.page.getByText(successMessageText)).toBeVisible();
+            // Create an array of promises to check for each success message's visibility
+            const messagePromises = successMessages.map(async (message) => {
+                const messageLocator = this.page.getByText(message);
+                await messageLocator.waitFor({ state: 'visible' });
+                return messageLocator;
+            });
+
+            // Use Promise.any to wait for any one of the success messages to be visible
+            const successMessageLocator = await Promise.any(messagePromises);
+
+            // Validate that the visible success message is indeed visible
+            await expect(successMessageLocator).toBeVisible();
         } catch (error) {
             // If the success message is not found within the timeout period, check for the modal
             console.log('Success message not found, checking for the modal');
@@ -2039,8 +2035,14 @@ exports.MyAccountPage = class MyAccountPage {
                 await this.page.getByRole('button', { name: 'Continue' }).click();
 
                 // After interacting with the modal, check for the success message again
-                await this.page.getByText(successMessageText).waitFor({ state: 'visible' });
-                await expect(this.page.getByText(successMessageText)).toBeVisible();
+                const messagePromises = successMessages.map(async (message) => {
+                    const messageLocator = this.page.getByText(message);
+                    await messageLocator.waitFor({ state: 'visible' });
+                    return messageLocator;
+                });
+
+                const successMessageLocator = await Promise.any(messagePromises);
+                await expect(successMessageLocator).toBeVisible();
             } else {
                 // If the modal is not visible, log an error or handle the case as needed
                 throw new Error('Success message not found and address modal not visible');

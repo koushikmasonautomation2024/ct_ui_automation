@@ -19,6 +19,10 @@ exports.HomePageNew = class HomePageNew {
         this.footer_signup_button = page.getByRole('button', { name: homepage_locator.footer_signup_button });
         this.StoneberryLogo = page.locator('a[title="ShoeMall"] img[alt="ShoeMall"]').first();
         this.videoBanner = page.locator('div[id="player"]');
+        this.minicartContinueShoppingButton = page.getByRole('button', { name: 'Continue Shopping' });
+        this.minicartSignInButton = page.getByRole('button', { name: 'Sign In', exact: true });
+        this.miniCartEmptyCartMessage = page.getByText('Your shopping bag is empty.');
+        this.miniCartEmptyGuestUser = page.getByRole('button', { name: 'Have an account? Sign in' });
 
     }
 
@@ -118,7 +122,7 @@ exports.HomePageNew = class HomePageNew {
 
     async staticPageNavigation(staticPageUrl) {
         await this.page.goto(staticPageUrl);
-        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForTimeout(5000);
     }
 
     // async pageScrollBy() {
@@ -233,9 +237,17 @@ exports.HomePageNew = class HomePageNew {
 
     async validatedEmptyMiniCartDrawer() {
         await expect(this.minicart_drawer_heading).toBeVisible();
-        await expect(this.minicart_drawer_subtotalsection).toBeVisible();
         await expect(this.minicart_drawer_viewcart_button).toBeVisible();
-        await expect(this.minicart_drawer_checkout_button).toBeVisible();
+        await expect(this.minicartContinueShoppingButton).toBeVisible();
+        await expect(this.miniCartEmptyCartMessage).toBeVisible();
+    }
+
+    async validatedEmptyMiniCartDrawerGuest() {
+        await expect(this.minicart_drawer_heading).toBeVisible();
+        await expect(this.minicart_drawer_viewcart_button).toBeVisible();
+        await expect(this.minicartSignInButton).toBeVisible();
+        await expect(this.miniCartEmptyCartMessage).toBeVisible();
+        await expect(this.miniCartEmptyGuestUser).toBeVisible();
     }
 
     async enterFooterEmailNewsLetter(newsLetterEmail) {

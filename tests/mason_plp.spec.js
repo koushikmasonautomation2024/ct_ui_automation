@@ -253,7 +253,7 @@ test.describe("Mason PLP Scenarios", () => {
     await plpPage.validateItemCount();
     await plpPage.validatePresenceOfFilter();
     await plpPage.clickQuickView();
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await plpPage.validateChooseOptionDrawer();
     await pdpPage.clickOnMultiplePDPSizeVariantButton();
     await plpPage.clickOnViewMoreDetails();

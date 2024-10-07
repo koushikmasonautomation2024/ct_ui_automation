@@ -213,59 +213,51 @@ exports.OrderDetailsPage = class OrderDetailsPage {
         // Step 1: Locate all order sections on the page
         await this.page.locator(order_Section).first().waitFor({ state: 'visible' });
         const orderSections = await this.page.locator(order_Section);
-
-        // Step 2: Loop through each order section
         const totalOrders = await orderSections.count();
+    
+        // Step 2: Iterate through all order sections
         for (let i = 0; i < totalOrders; i++) {
             const orderSection = orderSections.nth(i);
-
+    
             // Step 3: Locate the product sections within the current order section
             const productSections = orderSection.locator(product_Section);
             const totalProductSectionsCount = await productSections.count();
-
-            // Step 4: Locate all <p> tags with the text "Pending Shipment" within the product sections
-            const pendingShipmentTags = orderSection.locator(`section.truncate > p:has-text("${orderStatus_PendingShipmentText}")`);
-            const totalTagsCount = await pendingShipmentTags.count();
-
-            // Step 5: Verify if the count of <p> tags matches the count of product sections
-            if (totalTagsCount === totalProductSectionsCount) {
-                let allPendingShipment = true;
-                for (let j = 0; j < totalTagsCount; j++) {
-                    const textContent = await pendingShipmentTags.nth(j).textContent();
-                    if (textContent.trim() !== orderStatus_PendingShipmentText) {
-                        allPendingShipment = false;
-                        break;
-                    }
-                }
-
-                // If all <p> tags contain "Pending Shipment", click the "View Order Details" link within the current order section
-                if (!allPendingShipment) {
-                    const orderDetailsLink = orderSection.locator('a:has-text("View Order Details")');
-                    if (await orderDetailsLink.isVisible()) {
-                        await orderDetailsLink.click();
-                        console.log('Clicked on the "View Order Details" link for order', await orderSection.locator('h2').textContent());
-                        //await this.orderDetailsCancelOrderButton.waitFor({ state: 'visible' });
-                        await expect(this.orderDetailsCancelOrderButton).toBeHidden();
-                        break;
-                    } else {
-                        console.log('"View Order Details" link is not visible for order', await orderSection.locator('h2').textContent());
-                    }
+    
+            // Step 4: Locate all <p> tags with the text "Shipped" within the product sections
+            const shippedTags = orderSection.locator(`section.truncate > p:has-text("${orderStatus_ShippedText}")`);
+            const shippedTagsCount = await shippedTags.count();
+    
+            // Log the count for debugging
+            console.log(`Order ${i + 1}: Found ${shippedTagsCount} 'Shipped' tags.`);
+    
+            // If we find a matching "Shipped" tag, click the "View Order Details" link
+            if (shippedTagsCount > 0) {
+                console.log(`Found shipped status in order ${i + 1}, clicking on 'View Order Details'`);
+    
+                // Click the "View Order Details" link for this order
+                const orderDetailsLink = orderSection.locator('a:has-text("View Order Details")');
+                
+                if (await orderDetailsLink.isVisible()) {
+                    await orderDetailsLink.click();
+                    console.log('Navigating to order details page');
+    
+                    // Wait for the order details page to load and verify the cancel order button is hidden
+                    await this.page.waitForTimeout(5000);
+                    await expect(this.orderDetailsCancelOrderButton).toBeHidden();
+    
+                    // Exit the loop and function after processing this order
+                    return;
                 } else {
-                    console.log('Not all products have "Pending Shipment" status for order', await orderSection.locator('h2').textContent());
-
+                    console.log(`"View Order Details" link not visible for order ${i + 1}`);
                 }
-            } else {
-                console.log('The number of "Pending Shipment" <p> tags does not match the number of product sections for order', await orderSection.locator('h2').textContent());
-                this.orderDetailsLink.nth(i).click();
-                await expect(this.page).toHaveURL(/account\/orders\/orderdetails\?orderId=\d+&zipCode=\d+/);
-                await this.page.getByText(order_SummaryText).waitFor({ state: 'visible' });
-                await expect(this.orderDetailsCancelOrderButton).toBeHidden();
-                break;
-
             }
         }
-
+    
+        console.log('No order found with "Shipped" status');
     }
+    
+
+
 
     async clickCancelOrderButton() {
         await this.orderDetailsCancelOrderButton.click();

@@ -320,10 +320,10 @@ test.describe("Mason Commerce Tool Site", () => {
     const search_value = "dress";
     const mySearchPage = new SearchPage(page);
     await mySearchPage.validateSearchField(search_value);
-    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(5000);
     await mySearchPage.validateValidSearchPageTitle(search_value);
     await mySearchPage.validateSearchBreadCrumb(search_value);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await mySearchPage.checkItemCountBeforeRunningTest();
   })
 

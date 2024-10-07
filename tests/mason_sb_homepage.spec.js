@@ -95,7 +95,7 @@ test.describe("Mason Guest User Home Page", () => {
     const homePage = new HomePageNew(page);
     await homePage.displayMiniCartIcon();
     await homePage.clickMiniCartIcon();
-    await homePage.validatedEmptyMiniCartDrawer();
+    await homePage.validatedEmptyMiniCartDrawerGuest();
     await homePage.emptyMiniCartDrawerSection();
     //console.log(testInfo.status);
 

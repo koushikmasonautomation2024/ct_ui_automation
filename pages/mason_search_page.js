@@ -16,7 +16,7 @@ const item_count = "Items";
 const popular_searches = "Popular Searches";
 const popular_search_container = "div.m-2.flex.flex-wrap.gap-2\\.5";
 const popular_search_terms = "div.flex.gap-1\\.5.rounded-md.border.border-foggyGray.p-2";
-const auto_suggestion_container = "ul.m-2\\.5 li"
+const auto_suggestion_container = "ul.m-2\\.5 > li > li";
 
 exports.SearchPage = class SearchPage {
     constructor(page) {
