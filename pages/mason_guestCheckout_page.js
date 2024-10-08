@@ -585,6 +585,7 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
 
   async validateShippingSectionAbovePaymentSection() {
     await this.page.waitForSelector(`//h1[contains(text(), "${shipping}")]`, { visible: true });
+    await this.page.waitForSelector(`//h1[contains(text(), "${payment}")]`, { visible: true });
     const shippingSection = await this.page.$(`//h1[contains(text(), "${shipping}")]`);
     const paymentForm = await this.page.$(`//h1[contains(text(), "${payment}")]`);
 
@@ -1121,8 +1122,9 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     await expect(this.page.locator('li').filter({ hasText: 'Estimated Sales Tax:$' }).getByLabel('tooltip')).toBeVisible();
 
     // Validate the presence of the "Apply Promo Code" button and close button
-    await expect(this.page.getByRole('button', { name: 'Apply Promo Code (optional)' })).toBeVisible();
+    //await expect(this.page.getByRole('button', { name: 'Apply Promo Code (optional)' })).toBeVisible();
     //await expect(this.page.locator('.absolute > button')).toBeVisible();
+    await this.validatePromoCodeSection();
   }
 
 

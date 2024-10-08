@@ -176,6 +176,7 @@ exports.SearchPage = class SearchPage {
 
     async validatePopularSearch() {
         await this.search_placeholder.click();
+        await this.page.waitForTimeout(3000);
         await this.popular_searches.waitFor({state:'visible'});
         await expect(this.popular_searches).toBeVisible();
 

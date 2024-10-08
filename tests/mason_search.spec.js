@@ -48,7 +48,7 @@ test.describe("Mason Commerce Tool Site", () => {
     const search_value = [...Array(6)].map(() => String.fromCharCode(Math.random() * 26 + 97 | 0)).join('') + String.fromCharCode(Math.random() * 26 + 65 | 0) + (Math.random() * 10 | 0);
     const mySearchPage = new SearchPage(page);
     await mySearchPage.validateSearchField(search_value);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await mySearchPage.validateWrongSearchPageTitle(search_value);
     await mySearchPage.validateSearchTips();
   })
@@ -58,7 +58,7 @@ test.describe("Mason Commerce Tool Site", () => {
     const search_value = [...Array(6)].map(() => String.fromCharCode(Math.random() * 26 + 97 | 0)).join('') + String.fromCharCode(Math.random() * 26 + 65 | 0) + (Math.random() * 10 | 0);
     const mySearchPage = new SearchPage(page);
     await mySearchPage.validateSearchField(search_value);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await mySearchPage.validateWrongSearchPageTitle(search_value);
     await mySearchPage.validateSearchTips();
     await mySearchPage.validateNeedHelpsection();
@@ -70,7 +70,7 @@ test.describe("Mason Commerce Tool Site", () => {
     const search_value = [...Array(6)].map(() => String.fromCharCode(Math.random() * 26 + 97 | 0)).join('') + String.fromCharCode(Math.random() * 26 + 65 | 0) + (Math.random() * 10 | 0);
     const mySearchPage = new SearchPage(page);
     await mySearchPage.validateSearchField(search_value);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await mySearchPage.validateWrongSearchPageTitle(search_value);
     await mySearchPage.validateSearchTips();
     await mySearchPage.validateNeedHelpsection();
@@ -82,7 +82,7 @@ test.describe("Mason Commerce Tool Site", () => {
     const search_value = [...Array(6)].map(() => String.fromCharCode(Math.random() * 26 + 97 | 0)).join('') + String.fromCharCode(Math.random() * 26 + 65 | 0) + (Math.random() * 10 | 0);
     const mySearchPage = new SearchPage(page);
     await mySearchPage.validateSearchField(search_value);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await mySearchPage.validateWrongSearchPageTitle(search_value);
     await mySearchPage.validateSearchTips();
     await mySearchPage.validateNeedHelpsection();
@@ -94,7 +94,7 @@ test.describe("Mason Commerce Tool Site", () => {
     const search_value = [...Array(6)].map(() => String.fromCharCode(Math.random() * 26 + 97 | 0)).join('') + String.fromCharCode(Math.random() * 26 + 65 | 0) + (Math.random() * 10 | 0);
     const mySearchPage = new SearchPage(page);
     await mySearchPage.validateSearchField(search_value);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await mySearchPage.validateWrongSearchPageTitle(search_value);
     await mySearchPage.validateSearchTips();
     await mySearchPage.validateNeedHelpsection();
@@ -106,7 +106,7 @@ test.describe("Mason Commerce Tool Site", () => {
     const search_value = [...Array(6)].map(() => String.fromCharCode(Math.random() * 26 + 97 | 0)).join('') + String.fromCharCode(Math.random() * 26 + 65 | 0) + (Math.random() * 10 | 0);
     const mySearchPage = new SearchPage(page);
     await mySearchPage.validateSearchField(search_value);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await mySearchPage.validateWrongSearchPageTitle(search_value);
     await mySearchPage.validateSearchTips();
     await mySearchPage.validateNeedHelpsection();
@@ -118,7 +118,7 @@ test.describe("Mason Commerce Tool Site", () => {
     const search_value = [...Array(6)].map(() => String.fromCharCode(Math.random() * 26 + 97 | 0)).join('') + String.fromCharCode(Math.random() * 26 + 65 | 0) + (Math.random() * 10 | 0);
     const mySearchPage = new SearchPage(page);
     await mySearchPage.validateSearchField(search_value);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await mySearchPage.validateWrongSearchPageTitle(search_value);
     await mySearchPage.validateSearchTips();
     await mySearchPage.validateNeedHelpsection();
@@ -131,7 +131,7 @@ test.describe("Mason Commerce Tool Site", () => {
     const search_value = "jeans";
     const mySearchPage = new SearchPage(page);
     await mySearchPage.validateSearchField(search_value);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await mySearchPage.validateValidSearchPageTitle(search_value);
   })
 
@@ -141,7 +141,7 @@ test.describe("Mason Commerce Tool Site", () => {
     const search_value = "jeans";
     const mySearchPage = new SearchPage(page);
     await mySearchPage.validateSearchField(search_value);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await mySearchPage.validateValidSearchPageTitle(search_value);
     await mySearchPage.validateItemCount();
 
@@ -153,7 +153,7 @@ test.describe("Mason Commerce Tool Site", () => {
     const search_value = "jeans";
     const mySearchPage = new SearchPage(page);
     await mySearchPage.validateSearchField(search_value);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await mySearchPage.validateValidSearchPageTitle(search_value);
   })
 
@@ -169,7 +169,7 @@ test.describe("Mason Commerce Tool Site", () => {
     const search_value = [...Array(6)].map(() => String.fromCharCode(Math.random() * 26 + 97 | 0)).join('') + String.fromCharCode(Math.random() * 26 + 65 | 0) + (Math.random() * 10 | 0);
     const mySearchPage = new SearchPage(page);
     await mySearchPage.validateSearchField(search_value);
-    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(5000);
     await mySearchPage.validateWrongSearchPageTitle(search_value);
     await mySearchPage.validateSearchTips();
     await mySearchPage.validateNeedHelpsection();
@@ -197,8 +197,8 @@ test.describe("Mason Commerce Tool Site", () => {
 
       // Validate the search field with the generated search value
       await mySearchPage.validateSearchField(searchValue);
-      await page.waitForLoadState('networkidle');
-      //  await page.waitForTimeout(100000);
+      await page.waitForTimeout(5000);
+      
     }
 
     // Validate recent searches for all 5 search values
@@ -310,7 +310,7 @@ test.describe("Mason Commerce Tool Site", () => {
     const search_value = "dress";
     const mySearchPage = new SearchPage(page);
     await mySearchPage.validateSearchField(search_value);
-    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(5000);
     await mySearchPage.validateValidSearchPageTitle(search_value);
     await mySearchPage.validateSearchBreadCrumb(search_value);
   })

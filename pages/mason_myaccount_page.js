@@ -198,6 +198,7 @@ exports.MyAccountPage = class MyAccountPage {
     async clickMyAccountWishListLink() {
         await this.myaccount_wishlist_link.click();
         await this.page.waitForURL(/.*wishlist/);
+        await this.page.waitForTimeout(5000);
     }
     async clickMyAccountNeedHelpLink() {
         await this.myaccount_needhelp_link.click();
@@ -231,6 +232,7 @@ exports.MyAccountPage = class MyAccountPage {
     }
     async clickMyAccountViewWishListLink() {
         await this.myaccount_viewwishlist_link.click();
+        await this.page.waitForTimeout(5000);
         await this.page.waitForURL('**/account/wishlist');
         await expect(this.page).toHaveURL(/.*\/account\/wishlist/);
     }
@@ -804,8 +806,8 @@ exports.MyAccountPage = class MyAccountPage {
     async clickAndVerifyHighlightedLink() {
         const locators = this.page.locator('nav section nav a').first();
         await locators.click();
-        await expect(this.page.locator('a.text-shoemall-highlightColor')).toBeVisible();
-        const isHighlighted = await locators.evaluate(link => link.classList.contains('a.text-shoemall-highlightColor'));
+        await expect(this.page.locator('a.highlightSMColor')).toBeVisible();
+        const isHighlighted = await locators.evaluate(link => link.classList.contains('a.highlightSMColor'));
         //console.log(`Is Highlighted: ${isHighlighted}`);
     }
 
@@ -1904,7 +1906,7 @@ exports.MyAccountPage = class MyAccountPage {
             await this.page.getByRole('button', { name: 'Set as Default' }).first().click();
             await this.page.getByText('Your default credit card was successfully updated').waitFor({ state: 'visible' });
             await expect(this.page.getByText('Your default credit card was successfully updated')).toBeVisible();
-            await expect(this.page.getByText('Default Credit Card')).toBeVisible();
+            await expect(this.page.getByText('Default Credit Card', { exact: true })).toBeVisible();
             await this.page.reload();
             await this.page.locator('section.m-4.rounded-md p.font-semibold').first().waitFor({ state: 'visible' });
             const setDefaultCreditCardNumber = await this.page.locator('section.m-4.rounded-md p.font-semibold').nth(0).textContent();
