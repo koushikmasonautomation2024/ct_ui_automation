@@ -1,0 +1,63 @@
+Ankle Boots
+Product clicked successfully
+Number of similar items: 15
+Product Title: Easy Spirit Larime (Women's)
+Product Link: /product/easy-spirit-larime-women-s-/1375566-1
+Rating Count: 5
+Product ID: 1375566-1
+Product Title: David Tate Simplicity (Women's)
+Product Link: /product/david-tate-simplicity-women-s-/1033799-1
+Rating Count: 5
+Product ID: 1033799-1
+Product Title: Crevo Evelyne (Women's)
+Product Link: /product/crevo-evelyne-women-s-/1106555-1
+Rating Count: 5
+Product ID: 1106555-1
+Product Title: Dr. Scholl's Graham Boot (Men's)
+Product Link: /product/dr-scholl-s-graham-men-s-/1324218-1
+Rating Count: 5
+Product ID: 1324218-1
+Product Title: Dr. Scholl's Teammate (Women's)
+Product Link: /product/dr-scholl-s-teammate-women-s-/1221173-2
+Rating Count: 5
+Product ID: 1221173-2
+Product Title: David Tate Damila (Women's)
+Product Link: /product/david-tate-damila-women-s-/1376385-1
+Rating Count: 0
+Product ID: 1376385-1
+Product Title: Tommy Hilfiger Imiera (Women's)
+Product Link: /product/tommy-hilfiger-imiera-women-s-/1321127-2
+Rating Count: 5
+Product ID: 1321127-2
+Product Title: David Tate Lago (Women's)
+Product Link: /product/david-tate-lago-women-s-/1375863-1
+Rating Count: 0
+Product ID: 1375863-1
+Product Title: Rockport Carly Bootie (Women's)
+Product Link: /product/rockport-carly-bootie-women-s-/1262897-1
+Rating Count: 5
+Product ID: 1262897-1
+Product Title: Bed:Stu Yurisa (Women's)
+Product Link: /product/bed-stu-yurisa-women-s-/1259734-4
+Rating Count: 5
+Product ID: 1259734-4
+Product Title: David Tate Ania (Women's)
+Product Link: /product/david-tate-ania-women-s-/1376378-1
+Rating Count: 0
+Product ID: 1376378-1
+Product Title: Bed:Stu Nando (Men's)
+Product Link: /product/bed-stu-nando-men-s-/1375996-1
+Rating Count: 0
+Product ID: 1375996-1
+Product Title: Fin & Feather Men's 7" Twin-Zip
+Product Link: /product/fin-feather-men-s-7-twin-zip-boot/1008264-1
+Rating Count: 5
+Product ID: 1008264-1
+Product Title: UGG® Hapsburg Chelsea (Women's)
+Product Link: /product/ugg-hapsburg-chelsea-women-s-/1366026-1
+Rating Count: 0
+Product ID: 1366026-1
+Product Title: Ros Hommerson Ezra (Women's)
+Product Link: /product/ros-hommerson-ezra-women-s-/1376729-2
+Rating Count: 0
+Product ID: 1376729-2

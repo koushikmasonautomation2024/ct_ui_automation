@@ -1,0 +1,11 @@
+Coats + Jackets
+Clicked button with index: 0
+Clicked enabled button with index: 2 in section: 0
+Add to Cart button is enabled.
+Product Name: K Jordan Quilted Velvet Bomber Jacket
+Product image is visible
+Detail: Peacock Teal/Abstract
+Detail: L
+Detail: 
+Detail: $32.97 $59.95
+Item added to cart successfully
