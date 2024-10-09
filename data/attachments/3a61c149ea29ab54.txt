@@ -1,0 +1,12 @@
+Dresses
+Clicked button with index: 0
+Clicked enabled button with index: 2 in section: 0
+Clicked enabled button with index: 2 in section: 0
+Add to Cart button is enabled.
+Product Name: Masseys Embellished Peplum Skirt Suit
+Product image is visible
+Detail: Vintage Plum
+Detail: 24W
+Detail: 
+Detail: $119.97 $149.99
+Item added to cart successfully

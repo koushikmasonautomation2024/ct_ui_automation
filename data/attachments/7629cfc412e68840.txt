@@ -1,0 +1,11 @@
+Address Element Value: 234 Astrid St
+City Element Value: Smithfield
+State Element Value: VA
+ZipCode Element Value: 23430-1301
+PhoneNumber Element Value: (234) 234-2342
+Address verification modal did not appear or is not open.
+Address updated successfully!
+First Name: Reyes Mertz
+Last Name: Reyes Mertz
+Address: 7 Yo Yo Rd 
+City: Cana,  VA 24317-3987

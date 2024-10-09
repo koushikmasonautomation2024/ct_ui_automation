@@ -1,0 +1,17 @@
+All Women's Clothing
+Clicked button with index: 0
+Clicked enabled button with index: 2 in section: 0
+Add to Cart button is enabled.
+Product Name: Free People Women's Perfect Storm Midi
+Product image is visible
+Detail: Infinity
+Detail: M
+Detail: 
+Detail: $168.00
+Item added to cart successfully
+Product Name: Free People Women's Perfect Storm Midi
+Product image is visible
+Detail: Infinity
+Detail: M
+Detail: 
+Detail: $168.00

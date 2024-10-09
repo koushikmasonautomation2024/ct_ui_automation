@@ -1,0 +1,4 @@
+WishList | Shoemall
+3
+Total product items: 3
+$144.95

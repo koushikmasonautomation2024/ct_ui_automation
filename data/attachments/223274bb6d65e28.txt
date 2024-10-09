@@ -1,0 +1,67 @@
+Western Boots
+Product clicked successfully
+Number of similar items: 15
+Product Title: Free People New Frontier Western Boot (Women's)
+Product Link: /product/free-people-new-frontier-western-boot-women-s-/1242124-5
+Price: $88.97
+Rating Count: 5
+Product ID: 1242124-5
+Product Title: Rocky Western Worksmart Waterproof Composite Toe (Men's)
+Product Link: /product/rocky-western-worksmart-ct-wp-men-s-/1216211-2
+Rating Count: 5
+Product ID: 1216211-2
+Product Title: Free People Borderline Western Boot (Women's)
+Product Link: /product/free-people-borderline-western-boot-women-s-/1373640-1
+Rating Count: 0
+Product ID: 1373640-1
+Product Title: Western Work Men's 12" Waterproof
+Product Link: /product/western-work-men-s-12-waterproof-boot/1007597-3
+Rating Count: 5
+Product ID: 1007597-3
+Product Title: Stacy Adams Santos (Men's)
+Product Link: /product/stacy-adams-santos-men-s-/1031083-1
+Rating Count: 5
+Product ID: 1031083-1
+Product Title: Corkys Rowdy (Women's)
+Product Link: /product/corkys-rowdy-women-s-/1370435-3
+Rating Count: 0
+Product ID: 1370435-3
+Product Title: Western Work Men's 12"
+Product Link: /product/western-work-men-s-12-boot/1007668-1
+Rating Count: 5
+Product ID: 1007668-1
+Product Title: David Tate Basil (Women's)
+Product Link: /product/david-tate-basil-women-s-/1376380-1
+Rating Count: 5
+Product ID: 1376380-1
+Product Title: Free People Gigi Ankle Boot (Women's)
+Product Link: /product/free-people-gigi-ankle-boot-women-s-/1319972-1
+Price: $136.97
+Rating Count: 0
+Product ID: 1319972-1
+Product Title: MIA Rachell (Women's)
+Product Link: /product/mia-rachell-women-s-/1375749-4
+Price: $71.97
+Rating Count: 0
+Product ID: 1375749-4
+Product Title: Florsheim Norwalk Side Zip Boot (Men's)
+Product Link: /product/florsheim-norwalk-side-zip-boot-men-s-/1331058-3
+Rating Count: 5
+Product ID: 1331058-3
+Product Title: Toe Warmers Women's Michelle 7-1/2"
+Product Link: /product/toe-warmers-women-s-michelle-7-1-2-boot/1008579-1
+Rating Count: 5
+Product ID: 1008579-1
+Product Title: Ariat Downtown (Men's)
+Product Link: /product/ariat-downtown-men-s-/1321778-1
+Rating Count: 5
+Product ID: 1321778-1
+Product Title: Sofft Sharnell Low (Women's)
+Product Link: /product/sofft-sharnell-low-women-s-/1260170-4
+Rating Count: 5
+Product ID: 1260170-4
+Product Title: Wanderlust Carol (Women's)
+Product Link: /product/wanderlust-carol-women-s-/1368583-3
+Price: $79.97
+Rating Count: 5
+Product ID: 1368583-3

@@ -1,0 +1,39 @@
+Error clicking on Credit/Debit Card button: elementHandle.click: Element is not attached to the DOM
+Call log:
+  - attempting click action
+  -   waiting for element to be visible, enabled and stable
+
+    at GuestCheckOutPage.clickCreditCard (/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_guestCheckout_page.js:707:20)
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_CheckoutScenarios.auth.spec.js:183:7 {
+  name: 'Error',
+  [Symbol(step)]: {
+    stepId: 'pw:api@71',
+    location: {
+      file: '/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_guestCheckout_page.js',
+      line: 707,
+      column: 20,
+      function: 'GuestCheckOutPage.clickCreditCard'
+    },
+    category: 'pw:api',
+    title: 'elementHandle.click',
+    apiName: 'elementHandle.click',
+    params: {},
+    boxedStack: undefined,
+    steps: [],
+    complete: [Function: complete],
+    endWallTime: 1728467585378,
+    error: {
+      message: 'Error: elementHandle.click: Element is not attached to the DOM\n' +
+        'Call log:\n' +
+        '  \x1B[2m- attempting click action\x1B[22m\n' +
+        '\x1B[2m  -   waiting for element to be visible, enabled and stable\x1B[22m\n',
+      stack: 'Error: elementHandle.click: Element is not attached to the DOM\n' +
+        'Call log:\n' +
+        '  \x1B[2m- attempting click action\x1B[22m\n' +
+        '\x1B[2m  -   waiting for element to be visible, enabled and stable\x1B[22m\n' +
+        '\n' +
+        '    at GuestCheckOutPage.clickCreditCard (/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_guestCheckout_page.js:707:20)\n' +
+        '    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_CheckoutScenarios.auth.spec.js:183:7'
+    }
+  }
+}
