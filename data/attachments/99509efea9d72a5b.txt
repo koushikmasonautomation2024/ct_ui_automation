@@ -1,0 +1,111 @@
+Clicked button with index: 0
+Clicked enabled button with index: 3 in section: 0
+Add to Cart button is enabled.
+Product Name: Under Armour Men's Storm Insulate Hooded Jacket
+Product image is visible
+Detail: Black/Pitch Grey
+Detail: XL
+Detail: 
+Detail: $95.97 $119.95
+Product Name: Under Armour Men's Storm Insulate Hooded Jacket
+Product image is visible
+Detail: Black/Pitch Grey
+Detail: XL
+Detail: 
+Detail: $95.97 $119.95
+Product Name: Under Armour Men's Storm Insulate Hooded Jacket
+Product image is visible
+Detail: Black/Pitch Grey
+Detail: XXXL
+Detail: 
+Detail: $95.97 $119.95
+Product Name: Under Armour Men's Storm Insulate Hooded Jacket
+Product image is visible
+Detail: Black/Pitch Grey
+Detail: M
+Detail: 
+Detail: $95.97 $119.95
+Product Name: Under Armour Men's Storm Insulate Hooded Jacket
+Product image is visible
+Detail: Black/Pitch Grey
+Detail: XXXL
+Detail: 
+Detail: $95.97 $119.95
+Product Name: Under Armour Men's Storm Insulate Hooded Jacket
+Product image is visible
+Detail: Black/Pitch Grey
+Detail: M
+Detail: 
+Detail: $95.97 $119.95
+Product Name: Under Armour Men's Storm Insulate Hooded Jacket
+Product image is visible
+Detail: Black/Pitch Grey
+Detail: S
+Detail: 
+Detail: $95.97 $119.95
+Product Name: Under Armour Men's Storm Insulate Hooded Jacket
+Product image is visible
+Detail: Black/Pitch Grey
+Detail: M
+Detail: 
+Detail: $95.97 $119.95
+Product Name: Under Armour Men's Storm Insulate Hooded Jacket
+Product image is visible
+Detail: Black/Pitch Grey
+Detail: M
+Detail: 
+Detail: $95.97 $119.95
+Product Name: Under Armour Men's Storm Insulate Hooded Jacket
+Product image is visible
+Detail: Black/Pitch Grey
+Detail: S
+Detail: 
+Detail: $95.97 $119.95
+Product Name: Under Armour Men's Storm Insulate Hooded Jacket
+Product image is visible
+Detail: Black/Pitch Grey
+Detail: XXXL
+Detail: 
+Detail: $95.97 $119.95
+Product Name: Under Armour Men's Storm Insulate Hooded Jacket
+Product image is visible
+Detail: Black/Pitch Grey
+Detail: L
+Detail: 
+Detail: $95.97 $119.95
+Product Name: Under Armour Men's Storm Insulate Hooded Jacket
+Product image is visible
+Detail: Black/Pitch Grey
+Detail: XXL
+Detail: 
+Detail: $95.97 $119.95
+Product Name: Family ChristmasToddler 2-Piece Pajama Set
+Product image is visible
+Detail: Red-Black/Heather Grey
+Detail: 4T
+Detail: 
+Detail: $24.99
+Product Name: Family ChristmasToddler 2-Piece Pajama Set
+Product image is visible
+Detail: Red-Black/Heather Grey
+Detail: 2T
+Detail: 
+Detail: $24.99
+2
+[ '', 'Visa **** 7777' ]
+Selected option: Visa **** 7777
+Visa **** 7777
+Clicked on Credit/Debit Card button.
+*First Name is prepopulated.
+*First Name text content (value): shoemall13
+*Last Name is prepopulated.
+*Last Name text content (value): Bond
+*Address Line 1 is prepopulated.
+*Address Line 1 text content (value): 12 Barry Ln
+*City is prepopulated.
+*City text content (value): Accord
+*Zip Code is prepopulated.
+*Zip Code text content (value): 12404-5800
+*Phone Number is prepopulated.
+*Phone Number text content (value): (435) 534-3453
+Billing address details verification passed.

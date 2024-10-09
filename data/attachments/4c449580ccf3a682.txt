@@ -1,7 +1,0 @@
-WishList | Shoemall
-4
-Total product items: 4
-Path fill attribute for product 0: currentColor
-Path fill attribute for product 1: currentColor
-Path fill attribute for product 2: currentColor
-Path fill attribute for product 3: currentColor

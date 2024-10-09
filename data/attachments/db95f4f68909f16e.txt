@@ -1,3 +1,0 @@
-Alphabet 'X' is not present.
-Selected Link: JSHandle@<a title="Ray-Ban" href="/brands/ray-ban"> Ray-Ban</a>
-Selected Brand: Ray-Ban

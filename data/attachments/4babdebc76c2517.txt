@@ -1,4 +1,0 @@
-Clicked on the "View Order Details" link for order: Order #99563910
-The "Cancel item" button is displayed for product Stacy Adams Santos (Men's)
-The "Cancel item" button is displayed for product Cole Haan 2.ZEROGRAND Laser Wingtip Oxford (Men's)
-The "Cancel item" button is displayed for product Florsheim Postino Cap Toe Oxford (Men's)

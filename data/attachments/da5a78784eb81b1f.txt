@@ -1,1 +1,0 @@
-An error occurred during order placement: Order failed with message: Error: Cannot read properties of null (reading 'email')

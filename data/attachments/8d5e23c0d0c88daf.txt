@@ -1,1 +1,0 @@
-An error occurred during order placement: Order failed with message: Error: The line item '497eae75-d4d9-46f0-91b3-7a08f9086b51' is missing an external tax amount and rate.

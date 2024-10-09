@@ -1,4 +1,0 @@
-WishList | Stoneberry
-0
-WishList | Stoneberry
-Wishlist is empty. Skipping removal validation.

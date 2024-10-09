@@ -1,3 +1,0 @@
-Alphabet 'X' is not present.
-Selected Link: JSHandle@<a title="Remonte" href="/brands/remonte"> Remonte</a>
-Selected Brand: Remonte

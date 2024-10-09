@@ -1,3 +1,0 @@
-Payment method SVG is visible.
-Card number text is not visible.
-AfterHooks completed in 20ms

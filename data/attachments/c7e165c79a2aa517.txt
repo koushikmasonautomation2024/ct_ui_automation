@@ -1,2 +1,0 @@
-All Kids
-Clicked button with index: 1

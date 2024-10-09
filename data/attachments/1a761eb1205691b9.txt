@@ -1,3 +1,0 @@
-Alphabet 'X' is not present.
-Selected Link: JSHandle@<a title="UGG®" href="/brands/ugg"> UGG®</a>
-Selected Brand: UGG®

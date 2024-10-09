@@ -1,3 +1,0 @@
-Alphabet 'X' is not present.
-Selected Link: JSHandle@<a title="Johnston & Murphy" href="/brands/johnston-murphy"> Johnston & Murphy</a>
-Selected Brand: Johnston & Murphy

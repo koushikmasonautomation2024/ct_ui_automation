@@ -1,4 +1,0 @@
-WishList | Shoemall
-4
-WishList | Shoemall
-Wishlist is empty. Skipping removal validation.

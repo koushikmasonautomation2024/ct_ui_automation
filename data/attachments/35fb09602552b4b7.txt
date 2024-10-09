@@ -1,2 +1,0 @@
-Label for checkbox with id Sports Team-Miami Dolphins not found.
-Label for checkbox with id Review Ratings-1 Stars and Up not found.

@@ -1,2 +1,0 @@
-Shorts
-Clicked button with index: 3

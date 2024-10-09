@@ -1,4 +1,0 @@
-Total Saved Address Count: 14
-Total Delete Address Count: 13
-Address deleted successfully!
-Address deleted Count!13

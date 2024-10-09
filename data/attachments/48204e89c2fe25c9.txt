@@ -1,6 +1,0 @@
-Address verification modal did not appear or is not open.
-Address added successfully!
-First Name: Jarred Bogisich
-Last Name: Jarred Bogisich
-Address: 7 Yo Yo Rd 
-City: Cana,  VA 24317-3987

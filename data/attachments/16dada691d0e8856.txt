@@ -1,0 +1,17 @@
+Casual Boots
+Clicked button with index: 1
+Clicked enabled button with index: 7 in section: 0
+Add to Cart button is enabled.
+Product Name: Roxy Lorena II (Women's)
+Product image is visible
+Detail: Black
+Detail: 9.5
+Detail: M   Medium
+Detail: $99.00
+Item added to cart successfully
+Product Name: Roxy Lorena II (Women's)
+Product image is visible
+Detail: Black
+Detail: 9.5
+Detail: M   Medium
+Detail: $99.00

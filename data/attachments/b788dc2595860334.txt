@@ -1,6 +1,0 @@
-Address Element Value: 11 Falmouth Pl
-City Element Value: Albertson
-State Element Value: NY
-ZipCode Element Value: 11507-2003
-PhoneNumber Element Value: (186) 057-7324
-Address verification modal did not appear or is not open.

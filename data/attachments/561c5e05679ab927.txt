@@ -1,6 +1,0 @@
-Address Element Value: 100 Irish Ivy Ct
-City Element Value: Boyd
-State Element Value: TX
-ZipCode Element Value: 76023-4067
-PhoneNumber Element Value: (144) 525-9938
-Address verification modal did not appear or is not open.

@@ -1,1 +1,0 @@
-First <li> item is not bold when hovered.

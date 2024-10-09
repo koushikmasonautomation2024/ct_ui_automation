@@ -1,7 +1,0 @@
-2
-Number of div elements containing 'Best-Seller': 0
-Regular Price - '$39.95'
-Regular Price - '$79.95'
-Regular Price - '$84.95'
-Regular Price - '$64.95'
-Regular Price - '$32.95'

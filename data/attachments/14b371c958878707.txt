@@ -1,5 +1,0 @@
-17 items
-Add to Cart or Personalize button found.
-Clicked button with index: 0
-Clicked button with index: 4
-Add to Cart button is enabled.

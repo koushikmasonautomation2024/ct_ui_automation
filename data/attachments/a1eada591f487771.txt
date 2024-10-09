@@ -1,1 +1,0 @@
-Label for checkbox with id Size-L not found.
