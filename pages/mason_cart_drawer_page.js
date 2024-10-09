@@ -355,7 +355,7 @@ exports.CartDrawerPage = class CartDrawerPage {
     }
 
     async miniCartGetTotalItemsCount() {
-        const miniCartItems = this.miniCartSubTotal.locator('xpath=following-sibling::p[1]');
+        const miniCartItems = await this.page.locator('section:has(strong:text("Subtotal")) + section span');
         const miniCartItemsCount = await miniCartItems.textContent();
         return miniCartItemsCount;
 
@@ -363,6 +363,7 @@ exports.CartDrawerPage = class CartDrawerPage {
 
     async miniCartClickViewCartButton() {
         await this.miniCartViewCartButton.click();
+        await this.page.waitForTimeout(5000);
         await this.page.waitForURL(/.*cart/);
     }
 

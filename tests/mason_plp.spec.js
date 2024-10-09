@@ -22,13 +22,13 @@ const editAddress = myaccountpage_data.myaccount_editaddress_firstname + " " + m
 
 
 test.describe("Mason PLP Scenarios", () => {
-  test.setTimeout(40000);
+  //test.setTimeout(40000);
   test.beforeEach(async ({ page, isMobile }, testInfo) => {
     test.slow();
     try {
       //await page.goto(process.env.WEB_URL);
       await page.goto(process.env.WEB_URL);
-      await page.waitForLoadState('networkidle');
+      await page.waitForTimeout(3000);
     } catch (error) {
       // Handle the error here
       console.error("An error occurred in test.beforeEach:", error);
@@ -94,7 +94,7 @@ test.describe("Mason PLP Scenarios", () => {
     const plpPage = new MasonPLPPage(page);
     const homePageNew = new HomePageNew(page);
     await page.goto(plp_data.plp_url_with_size_color);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await plpPage.validateItemCount();
     await plpPage.validatePresenceOfFilter();
     await plpPage.validateFiltersForAllTypes();
@@ -116,7 +116,7 @@ test.describe("Mason PLP Scenarios", () => {
     const plpPage = new MasonPLPPage(page);
     const homePageNew = new HomePageNew(page);
     await page.goto(plp_data.plp_url_with_size_color);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await plpPage.validateItemCount();
     await plpPage.validateFilterExpandClose();
   })
@@ -139,7 +139,7 @@ test.describe("Mason PLP Scenarios", () => {
     const plpPage = new MasonPLPPage(page);
     const homePageNew = new HomePageNew(page);
     await page.goto(plp_data.plp_url_with_size_color);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await plpPage.validateItemCount();
     await plpPage.validatePresenceOfFilter();
     await plpPage.validateSortBy();
@@ -157,11 +157,11 @@ test.describe("Mason PLP Scenarios", () => {
     const plpPage = new MasonPLPPage(page);
     const homePageNew = new HomePageNew(page);
     await page.goto(plp_data.plp_url_with_size_color);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await plpPage.validateItemCount();
     await plpPage.validatePresenceOfFilter();
     await plpPage.clickQuickView();
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await plpPage.validateChooseOptionDrawer();
 
   })
@@ -173,11 +173,11 @@ test.describe("Mason PLP Scenarios", () => {
     const plpPage = new MasonPLPPage(page);
     const homePageNew = new HomePageNew(page);
     await page.goto(plp_data.plp_url_with_size_color);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await plpPage.validateItemCount();
     await plpPage.validatePresenceOfFilter();
     await plpPage.clickQuickView();
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await plpPage.validateChooseOptionDrawer();
     await plpPage.validateImageInChooseOptionDrawer();
     //await plpPage.validateNavigationArrows();
@@ -191,11 +191,11 @@ test.describe("Mason PLP Scenarios", () => {
     const plpPage = new MasonPLPPage(page);
     const homePageNew = new HomePageNew(page);
     await page.goto(plp_data.plp_url_with_size_color);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await plpPage.validateItemCount();
     await plpPage.validatePresenceOfFilter();
     await plpPage.clickQuickView();
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await plpPage.validateChooseOptionDrawer();
     await plpPage.closeChooseOptionDrawer();
   })
@@ -209,11 +209,11 @@ test.describe("Mason PLP Scenarios", () => {
     const homePageNew = new HomePageNew(page);
     const pdpPage = new PDPPage(page);
     await page.goto(plp_data.plp_url_with_size_color);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await plpPage.validateItemCount();
     await plpPage.validatePresenceOfFilter();
     await plpPage.clickQuickView();
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await plpPage.validateChooseOptionDrawer();
     await pdpPage.validateSelectColorValue();
     await pdpPage.validateSelectSizeValue();
@@ -230,11 +230,11 @@ test.describe("Mason PLP Scenarios", () => {
     const homePageNew = new HomePageNew(page);
     const pdpPage = new PDPPage(page);
     await page.goto(plp_data.plp_url_with_size_color);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await plpPage.validateItemCount();
     await plpPage.validatePresenceOfFilter();
     await plpPage.clickQuickView();
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await plpPage.validateChooseOptionDrawer();
     await pdpPage.clickOnPDPSizeVariantButton();
     await plpPage.clickAddToCartInChooseOptionDrawer();
@@ -249,11 +249,11 @@ test.describe("Mason PLP Scenarios", () => {
     const homePageNew = new HomePageNew(page);
     const pdpPage = new PDPPage(page);
     await page.goto(plp_data.plp_url_with_size_color);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await plpPage.validateItemCount();
     await plpPage.validatePresenceOfFilter();
     await plpPage.clickQuickView();
-    //await page.waitForLoadState('networkidle');
+    ////await page.waitForLoadState('networkidle');
     await plpPage.validateChooseOptionDrawer();
     await pdpPage.clickOnMultiplePDPSizeVariantButton();
     await plpPage.clickOnViewMoreDetails();
@@ -268,7 +268,7 @@ test.describe("Mason PLP Scenarios", () => {
     const homePageNew = new HomePageNew(page);
     const pdpPage = new PDPPage(page);
     await page.goto(plp_data.stg2_plp_url);
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     // await homePageNew.selectSubCategoryFromMegaMenu(expectedCategories);
     await plpPage.validateItemCount();
     await plpPage.validatePresenceOfFilter();
@@ -291,12 +291,12 @@ test.describe("Mason PLP Scenarios", () => {
     const plpPage = new MasonPLPPage(page);
     const homePageNew = new HomePageNew(page);
     const pdpPage = new PDPPage(page);
-    await page.goto(plp_data.plp_url);
-    await page.waitForLoadState('networkidle');
+    await page.goto(plp_data.plp_url_with_size_color);
+    //await page.waitForLoadState('networkidle');
     await plpPage.validateItemCount();
     await plpPage.validatePresenceOfFilter();
     await plpPage.clickQuickView();
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     //await plpPage.validateChooseOptionDrawer();
     await plpPage.validateProductQTYSection();
     await pdpPage.validateProductAvailabilityMessage();
@@ -308,10 +308,10 @@ test.describe("Mason PLP Scenarios", () => {
     const plpPage = new MasonPLPPage(page);
     const homePageNew = new HomePageNew(page);
     await homePageNew.selectRandomSubCategory();;
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await plpPage.validateItemCount();
     await plpPage.validatePresenceOfFilter();
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     await plpPage.checkItemCountBeforeRunningTest();
   })
 

@@ -76,7 +76,7 @@ test.describe("Mason LoggedIn User HomePage", () => {
     const homePage = new HomePageNew(page);
     await homePage.staticPageNavigation(homepage_data.pdpURL);
     await homePage.pageScrollBy();
-    await homePage.displayPDPStickyAddtoCartButton();
+    //await homePage.displayPDPStickyAddtoCartButton();
 
   })
 

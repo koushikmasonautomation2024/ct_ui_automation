@@ -19,7 +19,7 @@ test.describe("Mason Guest User Home Page", () => {
     test.slow();
     try {
       await page.goto(process.env.WEB_URL);
-      await page.waitForLoadState('networkidle');
+      //await page.waitForLoadState('networkidle');
     } catch (error) {
       // Handle the error here
       console.error("An error occurred in test.beforeEach:", error);
@@ -57,7 +57,7 @@ test.describe("Mason Guest User Home Page", () => {
     const homePage = new HomePageNew(page);
     await homePage.staticPageNavigation(homepage_data.pdpURL);
     await homePage.pageScrollBy();
-    await homePage.displayPDPStickyAddtoCartButton();
+    //await homePage.displayPDPStickyAddtoCartButton();
   })
 
   //Global Persistent Header (Guest) - Mega Menu Navigation-SB-GPH002

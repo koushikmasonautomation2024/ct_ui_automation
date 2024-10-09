@@ -125,25 +125,6 @@ exports.HomePageNew = class HomePageNew {
         await this.page.waitForTimeout(5000);
     }
 
-    // async pageScrollBy() {
-    //     await this.page.evaluate(() => {
-    //         window.scrollTo(0, document.body.scrollHeight);
-    //     });
-
-    //     // Wait for a moment to observe the scroll action (optional)
-    //     await this.page.waitForTimeout(5000);
-
-    //     // Scroll up to the middle of the page
-    //     await this.page.evaluate(() => {
-    //         const middleOfPage = document.body.scrollHeight / 2;
-    //         window.scrollTo(0, middleOfPage);
-    //     });
-
-    //     // Wait again to observe the scroll action (optional)
-    //     await this.page.waitForTimeout(5000);
-
-    // }
-
     async pageScrollBy() {
         // Define a helper function for smooth scrolling
         const smoothScroll = async (targetY, duration) => {
@@ -152,11 +133,10 @@ exports.HomePageNew = class HomePageNew {
                 const distance = targetY - startY;
                 const startTime = Date.now();
 
-                const easeInOutQuad = (t) => t < 0.5
-                    ? 2 * t * t
-                    : -1 + (4 - 2 * t) * t;
+                const easeInOutQuad = (t) =>
+                    t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
 
-                return new Promise(resolve => {
+                return new Promise((resolve) => {
                     const scroll = () => {
                         const elapsedTime = Date.now() - startTime;
                         const progress = Math.min(elapsedTime / duration, 1);
@@ -176,27 +156,27 @@ exports.HomePageNew = class HomePageNew {
             }, { targetY, duration });
         };
 
-        // Get the total height of the page and middle position
-        const [totalHeight, middleOfPage] = await Promise.all([
+        // Get the total height of the page and calculate the 2/3 height position
+        const [totalHeight, twoThirdsOfPage] = await Promise.all([
             this.page.evaluate(() => document.body.scrollHeight),
-            this.page.evaluate(() => document.body.scrollHeight / 2)
+            this.page.evaluate(() => (document.body.scrollHeight / 3) * 2),
         ]);
 
         // Scroll down to the bottom of the page smoothly
-        await smoothScroll(totalHeight, 1000); // Duration in ms
+        await smoothScroll(totalHeight, 2000); // Duration in ms
 
         // Optional wait to observe the scroll action
         await this.page.waitForTimeout(5000);
 
-        // Scroll up to the middle of the page smoothly
-        await smoothScroll(middleOfPage, 1000); // Duration in ms
-
+        // Scroll up to two-thirds of the page smoothly
+        await smoothScroll(twoThirdsOfPage, 2000); // Duration in ms
+        await this.page.locator('section.grid.w-3\\/4.grid-cols-2').waitFor({state:'visible'});
+        await expect(this.page.locator('section.grid.w-3\\/4.grid-cols-2')).toBeVisible();
         // Optional wait to observe the scroll action
-        await this.page.waitForTimeout(5000);
+       // await this.page.waitForTimeout(2000);
     }
 
-
-
+   
     async displayPDPStickyAddtoCartButton() {
         await this.page.waitForSelector('section.grid.w-3\\/4.grid-cols-2');
         await expect(this.page.locator('section.grid.w-3\\/4.grid-cols-2')).toBeVisible();

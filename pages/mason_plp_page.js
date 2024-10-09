@@ -30,8 +30,8 @@ exports.MasonPLPPage = class MasonPLPPage {
         this.qtyText = page.getByText('Qty:');
         this.qtyInputTextBox = page.locator('input.numberInputCounter');
         this.itemCountElement = page.locator(`section.mt-4 p:has-text("${item_count}")`);
-       // this.qtyMinusButton = page.locator('section.flex.items-center.gap-2 > div > button:nth-of-type(1)')
-       this.qtyMinusButton = page.getByRole('button', { name: 'Decrease quantity' });
+        // this.qtyMinusButton = page.locator('section.flex.items-center.gap-2 > div > button:nth-of-type(1)')
+        this.qtyMinusButton = page.getByRole('button', { name: 'Decrease quantity' });
         this.qtyPlusButton = page.getByRole('button', { name: 'Increase quantity' });
         //this.qtyPlusButton = page.locator('section.flex.items-center.gap-2 > div > button:nth-of-type(2)');
 
@@ -45,6 +45,8 @@ exports.MasonPLPPage = class MasonPLPPage {
 
 
     async validateItemCount() {
+        //await this.page.waitForTimeout(3000);
+        await this.itemCountElement.waitFor({ state: 'visible' });
         await expect(this.itemCountElement).toBeVisible();
         const regex = /(\d+) items/i;
 
@@ -206,29 +208,29 @@ exports.MasonPLPPage = class MasonPLPPage {
     async randomlySelectFilterCheckbox(numberOfFiltersToSelect) {
         // Wait for the checkboxes to be visible
         await this.page.waitForSelector('input.custom-checkbox');
-    
+
         // Get all checkbox elements
         const checkboxes = await this.page.$$('input.custom-checkbox');
-    
+
         // Ensure the number of filters to select is within the available filters
         const filtersToSelectCount = Math.min(numberOfFiltersToSelect, checkboxes.length);
-    
+
         // Shuffle the array of checkboxes to select randomly
         const shuffledCheckboxes = checkboxes.sort(() => Math.random() - 0.5);
-    
+
         // Array to hold the text content of the selected filters
         const selectedFilterTexts = [];
-    
+
         // Select the required number of checkboxes
         for (let i = 0; i < filtersToSelectCount; i++) {
             const checkbox = shuffledCheckboxes[i];
-    
+
             // Ensure the checkbox is visible and scroll it into view if necessary
             await this.page.evaluate(el => el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' }), checkbox);
-    
+
             // Click the checkbox
             await checkbox.click();
-    
+
             // Try to get the associated label by searching for a label element that matches the checkbox's id
             const checkboxId = await checkbox.getAttribute('id');
             if (checkboxId) {
@@ -245,11 +247,11 @@ exports.MasonPLPPage = class MasonPLPPage {
                 console.warn('Checkbox does not have an id attribute.');
             }
         }
-    
+
         // Return the text content of the selected filters
         return selectedFilterTexts;
     }
-    
+
 
 
     async randomlySelectMultipleFiltersOptions(numOptionsPerCategory) {
