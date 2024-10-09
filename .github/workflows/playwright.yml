@@ -22,7 +22,16 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Install Allure Playwright
-        run: npm i -D @playwright/test allure-playwright  
+        run: npm i -D @playwright/test allure-playwright
+        
+      - name: Clear cache and free disk space
+        run: |
+          sudo rm -rf /tmp/*
+          sudo rm -rf /home/runner/work/_temp/*
+          sudo rm -rf /home/runner/_work/_temp/*
+          sudo rm -rf /home/runner/_work/_tool/*
+          sudo rm -rf /home/runner/_work/_actions/*
+        continue-on-error: true  
 
       - name: Run Playwright tests
         run: npx playwright test --reporter=line,allure-playwright
@@ -40,4 +49,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-report
-          keep_files: true
