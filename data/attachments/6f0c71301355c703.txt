@@ -1,0 +1,11 @@
+Ankle Boots
+Clicked button with index: 1
+Clicked enabled button with index: 2 in section: 0
+Add to Cart button is enabled.
+Product Name: Hey Dude Wendy Fold (Women's)
+Product image is visible
+Detail: Nut
+Detail: 8
+Detail: M   Medium
+Detail: $64.95
+Item added to cart successfully
