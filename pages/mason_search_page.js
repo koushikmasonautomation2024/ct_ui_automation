@@ -42,7 +42,7 @@ exports.SearchPage = class SearchPage {
         await this.search_placeholder.fill(search_value);
         await (this.searchicon).waitFor({ state: 'visible' });
         await this.searchicon.click();
-        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForTimeout(2000);
         // // Wait for the URL to match either a search results page or a no-result page
         // await Promise.race([
         //     this.page.waitForNavigation({ timeout: 120000 }), // Increase timeout if needed

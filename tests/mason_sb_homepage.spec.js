@@ -19,7 +19,7 @@ test.describe("Mason Guest User Home Page", () => {
     test.slow();
     try {
       await page.goto(process.env.WEB_URL);
-      //await page.waitForLoadState('networkidle');
+      await page.waitForTimeout(3000);
     } catch (error) {
       // Handle the error here
       console.error("An error occurred in test.beforeEach:", error);
@@ -163,7 +163,6 @@ test.describe("Mason Guest User Home Page", () => {
   test("HP-Category Image Tiles - Verify the display and functionality of category image tiles, including image, title, and hyperlinks", async ({ page }, testInfo) => {
     //test.slow();
     const homePage = new HomePageNew(page);
-    await homePage.pageScrollBy(homepage_data.scrollXAxis, homepage_data.scrollYAxis);
     await homePage.getCategoryImageTilesCount();
     await homePage.validateCategoryProductImages();
   })

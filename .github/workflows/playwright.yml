@@ -23,7 +23,7 @@ jobs:
         run: npx playwright install --with-deps
       - name: Install Allure Playwright
         run: npm i -D @playwright/test allure-playwright
-        
+
       - name: Clear cache and free disk space
         run: |
           sudo rm -rf /tmp/*

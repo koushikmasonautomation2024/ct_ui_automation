@@ -35,7 +35,7 @@ test.describe("Mason MyAccount Wishlist", () => {
 
     try {
       await page.goto(process.env.WEB_URL);
-      await page.waitForLoadState('networkidle');
+      await page.waitForTimeout(3000);
     } catch (error) {
       console.error("Navigation failed:", error);
       test.skip('Skipping test because navigation failed');
@@ -126,18 +126,18 @@ test.describe("Mason MyAccount Wishlist", () => {
     await myaccountWishListPage.validateRemoveItemFromWishList();
   })
 
-  //SB-MyA357, //SB-MyA326
-  test.skip("Validate user should be able to navigate to WishList Page in My account", async ({ page }, testInfo) => {
-    const myaccountPage = new MyAccountPage(page);
-    await myaccountPage.redirectToMyAccount();
-    const myaccountWishListPage = new MyAccountWishListPage(page);
-    await myaccountPage.displayMyAccountLeftNavigationLink();
-    await myaccountPage.clickMyAccountWishListLink();
-    await myaccountWishListPage.validateWishListPage();
-    await myaccountWishListPage.noWishListMessageForNewUser();
+  // //SB-MyA357, //SB-MyA326
+  // test.skip("Validate user should be able to navigate to WishList Page in My account", async ({ page }, testInfo) => {
+  //   const myaccountPage = new MyAccountPage(page);
+  //   await myaccountPage.redirectToMyAccount();
+  //   const myaccountWishListPage = new MyAccountWishListPage(page);
+  //   await myaccountPage.displayMyAccountLeftNavigationLink();
+  //   await myaccountPage.clickMyAccountWishListLink();
+  //   await myaccountWishListPage.validateWishListPage();
+  //   await myaccountWishListPage.noWishListMessageForNewUser();
 
 
-  })
+  // })
 
   //SB-MyA332
   test("Validate navigation to PDP from image in wishList page", async ({ page }, testInfo) => {

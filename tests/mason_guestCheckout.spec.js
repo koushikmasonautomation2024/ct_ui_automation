@@ -24,7 +24,7 @@ test.describe("Mason Checkout - Guest Users - Scenarios", () => {
     test.slow();
     try {
       await page.goto(process.env.WEB_URL);
-      await page.waitForLoadState('networkidle');
+      await page.waitForTimeout(3000);
       await page.goto(checkout_data.add_to_cart_pdp_url);
     } catch (error) {
       // Handle the error here

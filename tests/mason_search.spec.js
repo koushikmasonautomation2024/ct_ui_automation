@@ -21,20 +21,7 @@ test.describe("Mason Commerce Tool Site", () => {
     test.slow();
     try {
       await page.goto(process.env.WEB_URL);
-      await page.waitForLoadState('networkidle');
-      if (isMobile == true) {
-        const signinPage = new SignInPage(page);
-        await signinPage.clickSignInImage();
-        await signinPage.clickSignIn();
-        await signinPage.validateSignInDialog();
-        await signinPage.login(process.env.USERNAME, process.env.PASSWORD);
-        await signinPage.clickSignIn();
-      } else {
-
-      }
-      const masonHomePageScreenshot = await page.screenshot();
-      await testInfo.attach('screenshot', { body: masonHomePageScreenshot, contentType: 'image/png' });
-      //await page.screenshot({ path: './screenshots/MasonHomePage.png', fullPage: true });
+      await page.waitForTimeout(3000);
     } catch (error) {
       // Handle the error here
       console.error("An error occurred in test.beforeEach:", error);
@@ -179,7 +166,7 @@ test.describe("Mason Commerce Tool Site", () => {
   })
 
   //SB-Search004
-  test.skip("Validate the 5 most recent search products as selectable text links along with X is displayed based on CT configuration", async ({ page }, testInfo) => {
+  test("Validate the 5 most recent search products as selectable text links along with X is displayed based on CT configuration", async ({ page }, testInfo) => {
     const mySearchPage = new SearchPage(page);
     const searchValues = [];
 

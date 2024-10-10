@@ -31,7 +31,7 @@ test.describe("Mason MyAccount Orders - Standard With Orders", () => {
 
     try {
       await page.goto(process.env.WEB_URL);
-      await page.waitForLoadState('networkidle');
+      await page.waitForTimeout(3000);
     } catch (error) {
       console.error("Navigation failed:", error);
       test.skip('Skipping test because navigation failed');

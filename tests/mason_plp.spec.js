@@ -260,29 +260,29 @@ test.describe("Mason PLP Scenarios", () => {
 
   })
 
-  //SB-PLPADC0035
-  test.skip("Validate Credit Text in Choose Options drawer in PLP", async ({ page }) => {
-    //test.slow();
-    //const homePage = new HomePage(page);
-    const plpPage = new MasonPLPPage(page);
-    const homePageNew = new HomePageNew(page);
-    const pdpPage = new PDPPage(page);
-    await page.goto(plp_data.stg2_plp_url);
-    //await page.waitForLoadState('networkidle');
-    // await homePageNew.selectSubCategoryFromMegaMenu(expectedCategories);
-    await plpPage.validateItemCount();
-    await plpPage.validatePresenceOfFilter();
-    await plpPage.validateSortBy();
-    await plpPage.clickSortBy();
-    await plpPage.validateFeatureIsDefaultSort();
-    await plpPage.validateSortOptions();
-    // await plpPage.selectSortOption();
-    await plpPage.clickAddToCart();
-    await plpPage.validateChooseOptionDrawer();
-    await plpPage.validateCreditText();
-    await plpPage.clickGetStartedLink();
+  // //SB-PLPADC0035
+  // test.skip("Validate Credit Text in Choose Options drawer in PLP", async ({ page }) => {
+  //   //test.slow();
+  //   //const homePage = new HomePage(page);
+  //   const plpPage = new MasonPLPPage(page);
+  //   const homePageNew = new HomePageNew(page);
+  //   const pdpPage = new PDPPage(page);
+  //   await page.goto(plp_data.stg2_plp_url);
+  //   //await page.waitForLoadState('networkidle');
+  //   // await homePageNew.selectSubCategoryFromMegaMenu(expectedCategories);
+  //   await plpPage.validateItemCount();
+  //   await plpPage.validatePresenceOfFilter();
+  //   await plpPage.validateSortBy();
+  //   await plpPage.clickSortBy();
+  //   await plpPage.validateFeatureIsDefaultSort();
+  //   await plpPage.validateSortOptions();
+  //   // await plpPage.selectSortOption();
+  //   await plpPage.clickAddToCart();
+  //   await plpPage.validateChooseOptionDrawer();
+  //   await plpPage.validateCreditText();
+  //   await plpPage.clickGetStartedLink();
 
-  })
+  // })
 
   //SB-PLPADC0017
   test("Validate Quantity Option in Choose Options drawer in PLP", async ({ page }) => {

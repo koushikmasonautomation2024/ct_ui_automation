@@ -36,7 +36,7 @@ test.describe("Mason MyAccount MyProfile", () => {
 
     try {
       await page.goto(process.env.WEB_URL);
-      await page.waitForLoadState('networkidle');
+      await page.waitForTimeout(3000);
     } catch (error) {
       console.error("Navigation failed:", error);
       test.skip('Skipping test because navigation failed');
@@ -219,98 +219,98 @@ test.describe("Mason MyAccount MyProfile", () => {
     await myAccountMyProfilePage.validateCancelOnEmailChangeModal();
   })
 
-  //SB-MyA277 //SB-My287 //SB-MyA290
-  test.skip("Validate Change Password Button is enabled on meeting the New Password criteria", async ({ page }, testInfo) => {
-    if (!loginSuccessful) {
-      test.skip('Skipping test due to failed login');
-    }
-    const generateRandomString = (length) => {
-      const getRandomChar = (base, range) => String.fromCharCode(base + Math.floor(Math.random() * range));
-      return getRandomChar(65, 26) + Array.from({ length: length - 1 }, () => getRandomChar(97, 26)).join('');
-    };
+  // //SB-MyA277 //SB-My287 //SB-MyA290
+  // test.skip("Validate Change Password Button is enabled on meeting the New Password criteria", async ({ page }, testInfo) => {
+  //   if (!loginSuccessful) {
+  //     test.skip('Skipping test due to failed login');
+  //   }
+  //   const generateRandomString = (length) => {
+  //     const getRandomChar = (base, range) => String.fromCharCode(base + Math.floor(Math.random() * range));
+  //     return getRandomChar(65, 26) + Array.from({ length: length - 1 }, () => getRandomChar(97, 26)).join('');
+  //   };
 
-    const generateRandomPassword = () => {
-      const getRandomChar = (base, range) => String.fromCharCode(base + Math.floor(Math.random() * range));
-      const lowerCase = Array.from({ length: 6 }, () => getRandomChar(97, 26)).join('');
-      const upperCase = getRandomChar(65, 26);
-      const number = Math.floor(Math.random() * 10);
-      return lowerCase + upperCase + number;
-    };
+  //   const generateRandomPassword = () => {
+  //     const getRandomChar = (base, range) => String.fromCharCode(base + Math.floor(Math.random() * range));
+  //     const lowerCase = Array.from({ length: 6 }, () => getRandomChar(97, 26)).join('');
+  //     const upperCase = getRandomChar(65, 26);
+  //     const number = Math.floor(Math.random() * 10);
+  //     return lowerCase + upperCase + number;
+  //   };
 
-    const firstname = generateRandomString(10);
-    const lastname = generateRandomString(10);
-    const email = `${firstname.toLowerCase()}.${lastname.toLowerCase()}@automation.com`;
-    const password = generateRandomPassword();
+  //   const firstname = generateRandomString(10);
+  //   const lastname = generateRandomString(10);
+  //   const email = `${firstname.toLowerCase()}.${lastname.toLowerCase()}@automation.com`;
+  //   const password = generateRandomPassword();
 
-    const myaccountPage = new MyAccountPage(page);
-    await myaccountPage.redirectToMyAccount();
-    const myAccountMyProfilePage = new MyAccountMyProfilePage(page);
+  //   const myaccountPage = new MyAccountPage(page);
+  //   await myaccountPage.redirectToMyAccount();
+  //   const myAccountMyProfilePage = new MyAccountMyProfilePage(page);
 
-    //await myaccountPage.clickOnMyAccountLink();
-    await myaccountPage.clickMyAccountMyProfileLink();
+  //   //await myaccountPage.clickOnMyAccountLink();
+  //   await myaccountPage.clickMyAccountMyProfileLink();
 
-    const changePassword = async (currentPassword, newPassword) => {
-      await myAccountMyProfilePage.enterNewPasswordOnMyProfile(newPassword);
-      await myAccountMyProfilePage.enterCurrentPasswordOnMyProfile(currentPassword);
-      await myAccountMyProfilePage.validateThePasswordCriteria();
-      await myAccountMyProfilePage.updatePasswordonMyProfile();
-    };
+  //   const changePassword = async (currentPassword, newPassword) => {
+  //     await myAccountMyProfilePage.enterNewPasswordOnMyProfile(newPassword);
+  //     await myAccountMyProfilePage.enterCurrentPasswordOnMyProfile(currentPassword);
+  //     await myAccountMyProfilePage.validateThePasswordCriteria();
+  //     await myAccountMyProfilePage.updatePasswordonMyProfile();
+  //   };
 
-    await changePassword(process.env.PROFILE_PASSWORD, password);
-    await page.waitForTimeout(1000);
-    await myAccountMyProfilePage.enterFirstName(firstname);
-    await myAccountMyProfilePage.enterLastName(myaccountpage_data.myaccount_myprofile_updatedlastname);
-    await myAccountMyProfilePage.clickMyProfileSaveChangesButton();
-    await myAccountMyProfilePage.validateFirstName(firstname);
-    // console.log(`Temporary password used for testing: ${password}`);
-    await page.waitForTimeout(1000);
-    await changePassword(password, process.env.PROFILE_PASSWORD);
-    await page.waitForTimeout(2000);
-    await myAccountMyProfilePage.enterFirstName(firstname);
-    await myAccountMyProfilePage.enterLastName(myaccountpage_data.myaccount_myprofile_updatedlastname);
-    await myAccountMyProfilePage.clickMyProfileSaveChangesButton();
-    await myAccountMyProfilePage.validateFirstName(firstname);
-    await page.waitForTimeout(1000);
-    console.log(`Temporary password used for testing: ${password}`);
-  })
+  //   await changePassword(process.env.PROFILE_PASSWORD, password);
+  //   await page.waitForTimeout(1000);
+  //   await myAccountMyProfilePage.enterFirstName(firstname);
+  //   await myAccountMyProfilePage.enterLastName(myaccountpage_data.myaccount_myprofile_updatedlastname);
+  //   await myAccountMyProfilePage.clickMyProfileSaveChangesButton();
+  //   await myAccountMyProfilePage.validateFirstName(firstname);
+  //   // console.log(`Temporary password used for testing: ${password}`);
+  //   await page.waitForTimeout(1000);
+  //   await changePassword(password, process.env.PROFILE_PASSWORD);
+  //   await page.waitForTimeout(2000);
+  //   await myAccountMyProfilePage.enterFirstName(firstname);
+  //   await myAccountMyProfilePage.enterLastName(myaccountpage_data.myaccount_myprofile_updatedlastname);
+  //   await myAccountMyProfilePage.clickMyProfileSaveChangesButton();
+  //   await myAccountMyProfilePage.validateFirstName(firstname);
+  //   await page.waitForTimeout(1000);
+  //   console.log(`Temporary password used for testing: ${password}`);
+  // })
 
 
-  //SB-MyA278
-  test.skip("Validate Change of email in Email Address modal in My Profile page", async ({ page }, testInfo) => {
-    if (!loginSuccessful) {
-      test.skip('Skipping test due to failed login');
-    }
-    const generateRandomString = (length) => {
-      const getRandomChar = (base, range) => String.fromCharCode(base + Math.floor(Math.random() * range));
-      return getRandomChar(65, 26) + Array.from({ length: length - 1 }, () => getRandomChar(97, 26)).join('');
-    };
+  // //SB-MyA278
+  // test.skip("Validate Change of email in Email Address modal in My Profile page", async ({ page }, testInfo) => {
+  //   if (!loginSuccessful) {
+  //     test.skip('Skipping test due to failed login');
+  //   }
+  //   const generateRandomString = (length) => {
+  //     const getRandomChar = (base, range) => String.fromCharCode(base + Math.floor(Math.random() * range));
+  //     return getRandomChar(65, 26) + Array.from({ length: length - 1 }, () => getRandomChar(97, 26)).join('');
+  //   };
 
-    const firstname = generateRandomString(10);
-    const lastname = generateRandomString(10);
-    const email = `${firstname.toLowerCase()}.${lastname.toLowerCase()}@automation.com`;
+  //   const firstname = generateRandomString(10);
+  //   const lastname = generateRandomString(10);
+  //   const email = `${firstname.toLowerCase()}.${lastname.toLowerCase()}@automation.com`;
 
-    const myaccountPage = new MyAccountPage(page);
-    await myaccountPage.redirectToMyAccount();
-    const myAccountMyProfilePage = new MyAccountMyProfilePage(page);
+  //   const myaccountPage = new MyAccountPage(page);
+  //   await myaccountPage.redirectToMyAccount();
+  //   const myAccountMyProfilePage = new MyAccountMyProfilePage(page);
 
-    const changeEmail = async (newEmail) => {
-      await myAccountMyProfilePage.enterEmailtoChange(newEmail);
-      await myAccountMyProfilePage.enterPasswordOnEmailModal(process.env.PROFILE_PASSWORD);
-      await myAccountMyProfilePage.clickSaveChangesOnEmailModal();
-      await myAccountMyProfilePage.validateEmailUpdateSuccessMessage();
-      await page.waitForTimeout(2000);
-    };
+  //   const changeEmail = async (newEmail) => {
+  //     await myAccountMyProfilePage.enterEmailtoChange(newEmail);
+  //     await myAccountMyProfilePage.enterPasswordOnEmailModal(process.env.PROFILE_PASSWORD);
+  //     await myAccountMyProfilePage.clickSaveChangesOnEmailModal();
+  //     await myAccountMyProfilePage.validateEmailUpdateSuccessMessage();
+  //     await page.waitForTimeout(2000);
+  //   };
 
-    await myaccountPage.clickOnMyAccountLink();
-    await myaccountPage.clickMyAccountMyProfileLink();
+  //   await myaccountPage.clickOnMyAccountLink();
+  //   await myaccountPage.clickMyAccountMyProfileLink();
 
-    await changeEmail(email);
-    //await myAccountMyProfilePage.validateChangeEmailModal(process.env.USERNAME);
+  //   await changeEmail(email);
+  //   //await myAccountMyProfilePage.validateChangeEmailModal(process.env.USERNAME);
 
-    await changeEmail(process.env.MY_PROFILE_USER);
+  //   await changeEmail(process.env.MY_PROFILE_USER);
 
-    console.log(`Temporary email used for testing: ${email}`);
-  })
+  //   console.log(`Temporary email used for testing: ${email}`);
+  // })
 
   //SB-MyA274
   test("Validate Close Email Address modal in My Profile page", async ({ page }, testInfo) => {

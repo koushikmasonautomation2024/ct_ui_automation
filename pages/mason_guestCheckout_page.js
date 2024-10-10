@@ -1347,7 +1347,7 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
 
     // If 'Place Order' button is not visible, proceed with PayPal payment flow
     await this.checkoutpaypaloption.click();
-    await this.paypalpageheader.waitFor({ state: 'visible' });
+    //await this.paypalpageheader.waitFor({ state: 'visible' });
     await this.paypalemailplaceholder.fill(paypalID);
     await this.paypalnextbutton.click();
     await this.paypalpassword.fill(password);

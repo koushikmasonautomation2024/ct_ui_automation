@@ -22,7 +22,7 @@ test.describe("Mason MyAccount Single Order lookup", () => {
     test.slow();
     try {
       await page.goto(process.env.WEB_URL);
-      await page.waitForLoadState('networkidle');
+      await page.waitForTimeout(3000);
     } catch (error) {
       // Handle the error here
       console.error("An error occurred in test.beforeEach:", error);

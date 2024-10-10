@@ -39,7 +39,7 @@ test.describe("Mason Order Details Page", () => {
 
     try {
       await page.goto(process.env.WEB_URL);
-      //await page.waitForLoadState('networkidle');
+      await page.waitForTimeout(3000);
     } catch (error) {
       console.error("Navigation failed:", error);
       test.skip('Skipping test because navigation failed');
@@ -179,42 +179,42 @@ test.describe("Mason Order Details Page", () => {
 
   })
 
-  //Order Details - Item Cancellation - Test Cases ID-SB-MyA202/SB-MyA203
-  test.skip("My Account Order details - Item Cancellation - Verify clicking on 'Cancel Item' button, modal gets closed, page gets refreshed and application shows the order status as 'Cancelled' on the applicable item.", async ({ page }, testInfo) => {
-    if (!loginSuccessful) {
-      test.skip('Skipping test due to failed login');
-    }
-    const myaccountPage = new MyAccountPage(page);
-    await myaccountPage.redirectToMyAccount();
-    await myaccountPage.clickMyAccountOrderLink();
-    const orderDetailsPage = new OrderDetailsPage(page);
-    //await orderDetailsPage.validateCancelOrderInOrderDetails();
-    //await orderDetailsPage.validateCanceledItem();
-    const isPendingShipmentOrderFound = await orderDetailsPage.validateCancelOrderInOrderDetails();
-    if (isPendingShipmentOrderFound) {
-      await orderDetailsPage.validateCanceledItem();
-    } else {
-      console.log('No order with "Pending Shipment" status found. Skipping Cancel item.');
-    }
+  // //Order Details - Item Cancellation - Test Cases ID-SB-MyA202/SB-MyA203 //Commenting this test cases as it will cancelled the order and for that we need many orders so avoiding this scenarios.
+  // test.skip("My Account Order details - Item Cancellation - Verify clicking on 'Cancel Item' button, modal gets closed, page gets refreshed and application shows the order status as 'Cancelled' on the applicable item.", async ({ page }, testInfo) => {
+  //   if (!loginSuccessful) {
+  //     test.skip('Skipping test due to failed login');
+  //   }
+  //   const myaccountPage = new MyAccountPage(page);
+  //   await myaccountPage.redirectToMyAccount();
+  //   await myaccountPage.clickMyAccountOrderLink();
+  //   const orderDetailsPage = new OrderDetailsPage(page);
+  //   //await orderDetailsPage.validateCancelOrderInOrderDetails();
+  //   //await orderDetailsPage.validateCanceledItem();
+  //   const isPendingShipmentOrderFound = await orderDetailsPage.validateCancelOrderInOrderDetails();
+  //   if (isPendingShipmentOrderFound) {
+  //     await orderDetailsPage.validateCanceledItem();
+  //   } else {
+  //     console.log('No order with "Pending Shipment" status found. Skipping Cancel item.');
+  //   }
 
-  })
+  // })
 
-  //Order Details - Order Cancellation - Test Cases ID-SB-MyA197/SB-MyA198
-  test.skip("My Account Order details - Order Cancellation - Verify clicking on Yes, application closes the modal, refreshes the page and order status gets changed to Canceled.", async ({ page }, testInfo) => {
-    if (!loginSuccessful) {
-      test.skip('Skipping test due to failed login');
-    }
-    const myaccountPage = new MyAccountPage(page);
-    await myaccountPage.redirectToMyAccount();
-    await myaccountPage.clickMyAccountOrderLink();
-    const orderDetailsPage = new OrderDetailsPage(page);
-    await orderDetailsPage.validateCancelOrderInOrderDetails();
-    const orderID = await orderDetailsPage.getOrderNumberInOrderDetails();
-    const orderIDWithOutHash = orderID.replace('#', '');
-    await orderDetailsPage.clickCancelOrderButton();
-    await orderDetailsPage.validatedCanceledOrder(orderIDWithOutHash);
+  // //Order Details - Order Cancellation - Test Cases ID-SB-MyA197/SB-MyA198 //Commenting this test cases as it will cancelled the order and for that we need many orders so avoiding this scenarios.
+  // test.skip("My Account Order details - Order Cancellation - Verify clicking on Yes, application closes the modal, refreshes the page and order status gets changed to Canceled.", async ({ page }, testInfo) => {
+  //   if (!loginSuccessful) {
+  //     test.skip('Skipping test due to failed login');
+  //   }
+  //   const myaccountPage = new MyAccountPage(page);
+  //   await myaccountPage.redirectToMyAccount();
+  //   await myaccountPage.clickMyAccountOrderLink();
+  //   const orderDetailsPage = new OrderDetailsPage(page);
+  //   await orderDetailsPage.validateCancelOrderInOrderDetails();
+  //   const orderID = await orderDetailsPage.getOrderNumberInOrderDetails();
+  //   const orderIDWithOutHash = orderID.replace('#', '');
+  //   await orderDetailsPage.clickCancelOrderButton();
+  //   await orderDetailsPage.validatedCanceledOrder(orderIDWithOutHash);
 
-  })
+  // })
 
   //Order Details - Order Summary - Test Cases ID-SB-MyA204
   test("My Account Order details - Order Summary - Verify Order Summary shows following fields:- Subtotal- Shipping with ? icon- Shipping Surcharge (when applicable) - with ? icon- Sales Tax - with ? icon- Order total.", async ({ page }, testInfo) => {

@@ -33,7 +33,7 @@ test.describe("Mason Order Confirmation Guest User Page", () => {
     test.slow();
        try {
            await page.goto(process.env.WEB_URL);
-           //await page.waitForLoadState('networkidle');
+           await page.waitForTimeout(3000);
        } catch (error) {
            // Handle the error here
            console.error("An error occurred in test.beforeEach:", error);

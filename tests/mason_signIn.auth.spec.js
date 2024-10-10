@@ -1,29 +1,17 @@
 const { chromium } = require('playwright');
-import { test, expect } from '@playwright/test';
-import { HomePage } from '../pages/mason_home_page';
+import { test } from '@playwright/test';
 import { SignInPage } from '../pages/mason_signin_page';
-import { ResetPage } from '../pages/mason_reset_page';
-import { MyAccountPage } from '../pages/mason_myaccount_page';
 import { allure } from 'allure-playwright';
-import { sign } from 'crypto';
-import fs from 'fs';
 require('dotenv').config();
 
 
-const homepage_data = JSON.parse(JSON.stringify(require('../test_data/mason_sb_home_page_data.json')));
-const resetpage_data = JSON.parse(JSON.stringify(require('../test_data/mason_reset_page_data.json')));
-const signinpage_data = JSON.parse(JSON.stringify(require('../test_data/mason_signin_page_data.json')));
-const myaccountpage_data = JSON.parse(JSON.stringify(require('../test_data/mason_sb_myaccount_page_data.json')));
-const savedAddress = myaccountpage_data.myaccount_newaddress_firstname + " " + myaccountpage_data.myaccount_newaddress_lastname + " " + myaccountpage_data.myaccount_newaddress_addressline1;
-const editAddress = myaccountpage_data.myaccount_editaddress_firstname + " " + myaccountpage_data.myaccount_editaddress_lastname + " " + myaccountpage_data.myaccount_editaddress_addressline1;
-let loginSuccessful = false;
 test.describe("Mason SignIn Scenarios", () => {
 
-  test.beforeEach(async ({ page, isMobile }, testInfo) => {
+  test.beforeEach(async ({ page }) => {
     test.slow();
     try {
       await page.goto(process.env.WEB_URL);
-      await page.waitForLoadState('networkidle');
+      await page.waitForTimeout(3000);
     } catch (error) {
       // Handle the error here
       console.error("An error occurred in test.beforeEach:", error);
@@ -31,17 +19,17 @@ test.describe("Mason SignIn Scenarios", () => {
   })
 
 
-  //SB-LOGREG009, this test case is NA now as loader icon has been removed.
-  test.skip("Account - SignIn - Validate the Loader icon when user tries to sign-in", async ({ page }) => {
-    const signinPage = new SignInPage(page);
-    await signinPage.clickSignInImage();
-    await signinPage.clickSignIn();
-    //await signinPage.validateSignInDialog();
-    await signinPage.login(process.env.MY_PROFILE_USER, process.env.PROFILE_PASSWORD);
-    await signinPage.clickSignIn();
-    await signinPage.checkLoaderwhileSignIn();
+  // //SB-LOGREG009, this test case is NA now as loader icon has been removed.
+  // test.skip("Account - SignIn - Validate the Loader icon when user tries to sign-in", async ({ page }) => {
+  //   const signinPage = new SignInPage(page);
+  //   await signinPage.clickSignInImage();
+  //   await signinPage.clickSignIn();
+  //   //await signinPage.validateSignInDialog();
+  //   await signinPage.login(process.env.MY_PROFILE_USER, process.env.PROFILE_PASSWORD);
+  //   await signinPage.clickSignIn();
+  //   await signinPage.checkLoaderwhileSignIn();
 
-  })
+  // })
 
 
   //SB-LOGREG012
@@ -86,10 +74,6 @@ test.describe("Mason SignIn Scenarios", () => {
 
   //SB-LOGREG036
   test("Account - Sign In (Drawer)/Sign In Page - Validate the Error message for null or invalid email", async ({ page }) => {
-    //test.slow();
-    // const homePage = new HomePage(page);
-    // await homePage.clickOnHomePageSignIn();
-
     const signinPage = new SignInPage(page);
     await signinPage.clickSignInImage();
     await signinPage.clickSignIn();
@@ -106,7 +90,6 @@ test.describe("Mason SignIn Scenarios", () => {
     await signinPage.clickSignInImage();
     //const createAccountPage = new CreateAccountPage(page);
     //await signinPage.clickCreateAnAccount();
-    const password = [...Array(6)].map(() => String.fromCharCode(Math.random() * 26 + 97 | 0)).join('') + String.fromCharCode(Math.random() * 26 + 65 | 0) + (Math.random() * 10 | 0);
     //await signinPage.enterPasswordOnCreateAccountPage(password);
     await signinPage.clickSignIn();
     await signinPage.login(process.env.MY_PROFILE_USER, process.env.PROFILE_PASSWORD);
