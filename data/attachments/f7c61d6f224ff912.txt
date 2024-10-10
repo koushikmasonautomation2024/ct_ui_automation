@@ -1,3 +1,0 @@
-Alphabet 'X' is not present.
-Selected Link: JSHandle@<a title="ARRAY" href="/brands/array"> ARRAY</a>
-Selected Brand: ARRAY

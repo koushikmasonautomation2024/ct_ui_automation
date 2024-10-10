@@ -1,0 +1,11 @@
+Address Element Value: 2 JJ Rd
+City Element Value: Charlotte
+State Element Value: AR
+ZipCode Element Value: 72522-9645
+PhoneNumber Element Value: (587) 754-6704
+Address verification modal did not appear or is not open.
+Address updated successfully!
+First Name: Emma McClure
+Last Name: Emma McClure
+Address: 7 Yo Yo Rd 
+City: Cana,  VA 24317-3987

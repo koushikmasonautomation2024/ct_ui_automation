@@ -1,0 +1,74 @@
+An error occurred during order placement: Order failed with message: Error: extension failure
+Error during test execution: ExpectError: Timed out 5000ms waiting for expect(locator).toBeVisible()
+
+Locator: getByText(/A confirmation email was sent to ([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}) with your order information\./)
+Expected: visible
+Received: <element(s) not found>
+Call log:
+  - expect.toBeVisible with timeout 5000ms
+  - waiting for getByText(/A confirmation email was sent to ([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}) with your order information\./)
+
+    at OrderConfirmationPage.validateOrderConfOrderDetails (/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_order_confirmation_page.js:352:47)
+    at action (/home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_CheckoutScenarios.auth.spec.js:112:31)
+    at expectWithTimeoutHandling (/home/runner/work/ct_ui_automation/ct_ui_automation/utils/errorHandling.js:7:11)
+    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_CheckoutScenarios.auth.spec.js:111:40 {
+  matcherResult: {
+    message: '\x1B[31mTimed out 5000ms waiting for \x1B[39m\x1B[2mexpect(\x1B[22m\x1B[31mlocator\x1B[39m\x1B[2m).\x1B[22mtoBeVisible\x1B[2m()\x1B[22m\n' +
+      '\n' +
+      'Locator: getByText(/A confirmation email was sent to ([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}) with your order information\\./)\n' +
+      'Expected: visible\n' +
+      'Received: <element(s) not found>\n' +
+      'Call log:\n' +
+      '  \x1B[2m- expect.toBeVisible with timeout 5000ms\x1B[22m\n' +
+      '\x1B[2m  - waiting for getByText(/A confirmation email was sent to ([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}) with your order information\\./)\x1B[22m\n',
+    pass: false,
+    actual: 'hidden',
+    name: 'toBeVisible',
+    expected: 'visible',
+    log: [
+      'expect.toBeVisible with timeout 5000ms',
+      'waiting for getByText(/A confirmation email was sent to ([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}) with your order information\\./)'
+    ],
+    timeout: 5000
+  },
+  [Symbol(step)]: {
+    stepId: 'expect@99',
+    category: 'expect',
+    title: 'expect.toBeVisible',
+    params: undefined,
+    infectParentStepsWithError: undefined,
+    boxedStack: undefined,
+    location: {
+      file: '/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_order_confirmation_page.js',
+      line: 352,
+      column: 47,
+      function: 'OrderConfirmationPage.validateOrderConfOrderDetails'
+    },
+    steps: [],
+    complete: [Function: complete],
+    endWallTime: 1728549770222,
+    error: {
+      message: 'Error: \x1B[31mTimed out 5000ms waiting for \x1B[39m\x1B[2mexpect(\x1B[22m\x1B[31mlocator\x1B[39m\x1B[2m).\x1B[22mtoBeVisible\x1B[2m()\x1B[22m\n' +
+        '\n' +
+        'Locator: getByText(/A confirmation email was sent to ([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}) with your order information\\./)\n' +
+        'Expected: visible\n' +
+        'Received: <element(s) not found>\n' +
+        'Call log:\n' +
+        '  \x1B[2m- expect.toBeVisible with timeout 5000ms\x1B[22m\n' +
+        '\x1B[2m  - waiting for getByText(/A confirmation email was sent to ([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}) with your order information\\./)\x1B[22m\n',
+      stack: 'Error: \x1B[31mTimed out 5000ms waiting for \x1B[39m\x1B[2mexpect(\x1B[22m\x1B[31mlocator\x1B[39m\x1B[2m).\x1B[22mtoBeVisible\x1B[2m()\x1B[22m\n' +
+        '\n' +
+        'Locator: getByText(/A confirmation email was sent to ([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}) with your order information\\./)\n' +
+        'Expected: visible\n' +
+        'Received: <element(s) not found>\n' +
+        'Call log:\n' +
+        '  \x1B[2m- expect.toBeVisible with timeout 5000ms\x1B[22m\n' +
+        '\x1B[2m  - waiting for getByText(/A confirmation email was sent to ([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}) with your order information\\./)\x1B[22m\n' +
+        '\n' +
+        '    at OrderConfirmationPage.validateOrderConfOrderDetails (/home/runner/work/ct_ui_automation/ct_ui_automation/pages/mason_order_confirmation_page.js:352:47)\n' +
+        '    at action (/home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_CheckoutScenarios.auth.spec.js:112:31)\n' +
+        '    at expectWithTimeoutHandling (/home/runner/work/ct_ui_automation/ct_ui_automation/utils/errorHandling.js:7:11)\n' +
+        '    at /home/runner/work/ct_ui_automation/ct_ui_automation/tests/mason_CheckoutScenarios.auth.spec.js:111:40'
+    }
+  }
+}
