@@ -1,4 +1,0 @@
-Retro Sneakers
-Clicked button with index: 1
-Clicked enabled button with index: 1 in section: 0
-Add to Cart button is enabled.

@@ -1,0 +1,63 @@
+Outdoor Shoes
+Product clicked successfully
+Number of similar items: 15
+Product Title: Teva Tirra (Women's)
+Product Link: /product/teva-tirra-women-s-/1018624-26
+Rating Count: 5
+Product ID: 1018624-26
+Product Title: Teva Hurricane XLT2 (Women's)
+Product Link: /product/teva-hurricane-xlt2-women-s-/1087104-8
+Rating Count: 5
+Product ID: 1087104-8
+Product Title: Easy Spirit Lake (Women's)
+Product Link: /product/easy-spirit-lake-women-s-/1254539-5
+Rating Count: 5
+Product ID: 1254539-5
+Product Title: Drew Sawyer (Women's)
+Product Link: /product/drew-sawyer-women-s-/1315600-1
+Rating Count: 0
+Product ID: 1315600-1
+Product Title: Teva Hurricane XLT2 (Men's)
+Product Link: /product/teva-hurricane-xlt2-men-s-/1086947-2
+Rating Count: 5
+Product ID: 1086947-2
+Product Title: Teva TIRRA (Girls' Toddler-Youth)
+Product Link: /product/teva-tirra-girls-toddler-youth-/1018516-13
+Rating Count: 5
+Product ID: 1018516-13
+Product Title: Easy Spirit Hartwell (Women's)
+Product Link: /product/easy-spirit-hartwell-women-s-/1017969-5
+Rating Count: 5
+Product ID: 1017969-5
+Product Title: ARRAY Cascade (Women's)
+Product Link: /product/array-cascade-women-s-/1301991-2
+Rating Count: 5
+Product ID: 1301991-2
+Product Title: Jambu Helena (Women's)
+Product Link: /product/jambu-helena-women-s-/1375902-1
+Rating Count: 0
+Product ID: 1375902-1
+Product Title: Skechers Performance Go Golf 600 Sandal (Men's)
+Product Link: /product/skechers-performance-go-golf-600-sandal-men-s-/1307918-1
+Rating Count: 5
+Product ID: 1307918-1
+Product Title: Teva Zymic Sandal (Men's)
+Product Link: /product/teva-zymic-men-s-/1306543-1
+Rating Count: 5
+Product ID: 1306543-1
+Product Title: Teva Hudson (Men's)
+Product Link: /product/teva-hudson-men-s-/1226934-3
+Rating Count: 5
+Product ID: 1226934-3
+Product Title: Lugz Clipper (Women's)
+Product Link: /product/lugz-clipper-women-s-/1224675-16
+Rating Count: 5
+Product ID: 1224675-16
+Product Title: Bella Vita Seble (Women's)
+Product Link: /product/bella-vita-seble-women-s-/1378803-1
+Rating Count: 0
+Product ID: 1378803-1
+Product Title: Drew Serenity (Women's)
+Product Link: /product/drew-serenity-women-s-/1315602-1
+Rating Count: 0
+Product ID: 1315602-1
