@@ -504,7 +504,7 @@ exports.CLPPage = class CLPPage {
     // this.page.locator('section').filter({ hasText: /^Style FinderWomenAll CategoriesAll WidthsAll ColorsAll SizesFind Now$/ }).getByRole('img').first().click();
     await this.page.locator('section').filter({ hasText: /^Blue$/ }).click();
     await this.page.getByRole('button', { name: 'Find Now' }).click();
-    await this.page.waitForURL(/[\?&]filters=/, { timeout: 15000 });
+    await this.page.waitForURL(/[\?&](filters=|facet=)/, { timeout: 15000 });
   }
 
 }

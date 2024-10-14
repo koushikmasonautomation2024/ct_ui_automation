@@ -128,6 +128,7 @@ exports.MyAccountPage = class MyAccountPage {
         this.myaccount_sbc_creditstatement_canceladdressbutton = page.getByRole('button', { name: myaccountpage_locator.myaccount_sbc_creditstatement_canceladdressbutton });
         this.myaccount_orderStatus_link = page.getByRole('link', { name: myaccountpage_locator.myaccount_orderStatus_link, exact: true });
         this.myaccount_myprofile_contactinformation = page.getByText('Contact Information');
+        this.myaccount_signin_button = page.getByRole('button', { name: 'My Account Sign In' });
 
     }
 
@@ -2108,6 +2109,14 @@ exports.MyAccountPage = class MyAccountPage {
     async clickMyAccountOrderStatusLink() {
         await this.myaccount_orderStatus_link.click();
     }
+
+    async clickOrderStatusLinkGuest(){
+        await this.myaccount_signin_button.click();
+        await this.myaccount_orderStatus_link.waitFor({state:'visible'});
+        await this.myaccount_orderStatus_link.click();
+
+    }
+
 
 
 

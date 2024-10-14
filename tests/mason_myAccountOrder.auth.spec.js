@@ -38,8 +38,8 @@ test.describe("Mason MyAccount Single Order lookup", () => {
     const myaccountOrderPage = new MyAccountOrderPage(page);
     //await myaccountPage.displayMyAccountLeftNavigationLink();
     // await myaccountPage.clickOnMyAccountLink();
-    await myaccountPage.clickMyAccountOrderStatusLink();
-    await page.waitForLoadState('networkidle');
+    await myaccountPage.clickOrderStatusLinkGuest();
+    ////await page.waitForLoadState('networkidle');
     await myaccountOrderPage.validateSingleOrderLookupSection();
     await myaccountOrderPage.enterOrderNumber('');
     await myaccountOrderPage.enterZipCode('');
@@ -56,8 +56,8 @@ test.describe("Mason MyAccount Single Order lookup", () => {
     const myaccountOrderPage = new MyAccountOrderPage(page);
     //await myaccountPage.displayMyAccountLeftNavigationLink();
     // await myaccountPage.clickOnMyAccountLink();
-    await myaccountPage.clickMyAccountOrderStatusLink();
-    await page.waitForLoadState('networkidle');
+    await myaccountPage.clickOrderStatusLinkGuest();
+    //await page.waitForLoadState('networkidle');
     await myaccountOrderPage.validateSingleOrderLookupSection();
 
   })
@@ -70,8 +70,8 @@ test.describe("Mason MyAccount Single Order lookup", () => {
     const myaccountOrderPage = new MyAccountOrderPage(page);
     //await myaccountPage.displayMyAccountLeftNavigationLink();
     // await myaccountPage.clickOnMyAccountLink();
-    await myaccountPage.clickMyAccountOrderStatusLink();
-    await page.waitForLoadState('networkidle');
+    await myaccountPage.clickOrderStatusLinkGuest();
+    //await page.waitForLoadState('networkidle');
     await myaccountOrderPage.validateSingleOrderLookupSection();
     await myaccountOrderPage.enterOrderNumber('123');
     await myaccountOrderPage.enterZipCode('11111');
@@ -88,8 +88,8 @@ test.describe("Mason MyAccount Single Order lookup", () => {
     const myaccountOrderPage = new MyAccountOrderPage(page);
     //await myaccountPage.displayMyAccountLeftNavigationLink();
     // await myaccountPage.clickOnMyAccountLink();
-    await myaccountPage.clickMyAccountOrderStatusLink();
-    await page.waitForLoadState('networkidle');
+    await myaccountPage.clickOrderStatusLinkGuest();
+    //await page.waitForLoadState('networkidle');
     await myaccountOrderPage.validateSingleOrderLookupSection();
     await myaccountOrderPage.enterOrderNumber('123');
     await myaccountOrderPage.enterZipCode('11111');
@@ -104,13 +104,13 @@ test.describe("Mason MyAccount Single Order lookup", () => {
     const myaccountPage = new MyAccountPage(page);
     const myaccountOrderPage = new MyAccountOrderPage(page);
     const orderDetailsPage = new OrderDetailsPage(page);
-    await myaccountPage.clickMyAccountOrderStatusLink();
-    await page.waitForLoadState('networkidle');
+    await myaccountPage.clickOrderStatusLinkGuest();
+    //await page.waitForLoadState('networkidle');
     await myaccountOrderPage.validateSingleOrderLookupSection();
     await myaccountOrderPage.enterOrderNumber(myaccountpage_data.valid_order);
     await myaccountOrderPage.enterZipCode(myaccountpage_data.valid_zip);
     await myaccountOrderPage.clickOnViewOrderButton();
-    await page.waitForLoadState('networkidle');
+    //await page.waitForLoadState('networkidle');
     const order_number = await orderDetailsPage.getOrderNumberInOrderDetails();
     console.log(order_number);
   })
