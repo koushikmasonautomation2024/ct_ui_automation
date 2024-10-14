@@ -1,6 +1,0 @@
-WishList | Shoemall
-1
-Clicked the first "Move to Bag" button.
-Choose Option drawer is visible. Product has variants.
-Variants are present.
-Clicked the "View More Details" button.

@@ -1,0 +1,17 @@
+Slip-On Sneakers
+Clicked button with index: 1
+Clicked enabled button with index: 8 in section: 0
+Add to Cart button is enabled.
+Product Name: Skechers Street Uno Slip-In Air (Women's)
+Product image is visible
+Detail: Black/Black
+Detail: 11
+Detail: M   Medium
+Detail: $94.95
+Item added to cart successfully
+Product Name: Skechers Street Uno Slip-In Air (Women's)
+Product image is visible
+Detail: Black/Black
+Detail: 11
+Detail: M   Medium
+Detail: $94.95

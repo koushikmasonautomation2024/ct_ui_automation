@@ -1,0 +1,3 @@
+Alphabet 'X' is not present.
+Selected Link: JSHandle@<a title="Etnies" href="/brands/etnies"> Etnies</a>
+Selected Brand: Etnies

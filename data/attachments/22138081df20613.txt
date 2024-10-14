@@ -1,0 +1,68 @@
+Western Boots
+Product clicked successfully
+Number of similar items: 15
+Product Title: Betsey Johnson Diva Boot (Women's)
+Product Link: /product/betsey-johnson-diva-women-s-/1316822-5
+Rating Count: 0
+Product ID: 1316822-5
+Product Title: Very G Kady Denim (Women's)
+Product Link: /product/very-g-kady-denim-women-s-/1370322-1
+Price: $80.97
+Rating Count: 5
+Product ID: 1370322-1
+Product Title: Very G Kady Pearl (Women's)
+Product Link: /product/very-g-kady-pearl-women-s-/1370324-1
+Rating Count: 0
+Product ID: 1370324-1
+Product Title: Bzees Domino (Women's)
+Product Link: /product/bzees-domino-women-s-/1276773-2
+Rating Count: 5
+Product ID: 1276773-2
+Product Title: Corkys Potion (Women's)
+Product Link: /product/corkys-potion-women-s-/1370434-1
+Rating Count: 0
+Product ID: 1370434-1
+Product Title: Betsey Johnson Cady (Women's)
+Product Link: /product/blue-by-betsey-johnson-cady-women-s-/1215865-13
+Rating Count: 5
+Product ID: 1215865-13
+Product Title: DV by Dolce Vita Karyn (Women's)
+Product Link: /product/dv-by-dolce-vita-karyn-women-s-/1322655-2
+Price: $71.97
+Rating Count: 5
+Product ID: 1322655-2
+Product Title: Stacy Adams Gabriel (Men's)
+Product Link: /product/stacy-adams-gabriel-men-s-/1366375-2
+Rating Count: 5
+Product ID: 1366375-2
+Product Title: Very G Austin (Women's)
+Product Link: /product/very-g-austin-women-s-/1369316-3
+Price: $79.97
+Rating Count: 5
+Product ID: 1369316-3
+Product Title: Very G Kady (Women's)
+Product Link: /product/very-g-kady-women-s-/1320476-1
+Rating Count: 0
+Product ID: 1320476-1
+Product Title: Corral Circle G Q5019 (Women's)
+Product Link: /product/corral-circle-g-q5019-women-s-/1260036-1
+Rating Count: 0
+Product ID: 1260036-1
+Product Title: Steve Madden Leopold (Women's)
+Product Link: /product/steve-madden-leopold-women-s-/1304879-5
+Price: $89.97
+Rating Count: 0
+Product ID: 1304879-5
+Product Title: Stacy Adams Sandoval (Men's)
+Product Link: /product/stacy-adams-sandoval-men-s-/1366381-4
+Rating Count: 5
+Product ID: 1366381-4
+Product Title: Comfortiva Rawnie (Women's)
+Product Link: /product/comfortiva-rawnie-women-s-/1263865-2
+Price: $101.97
+Rating Count: 5
+Product ID: 1263865-2
+Product Title: Yellow Box Velta (Women's)
+Product Link: /product/yellow-box-velta-women-s-/1370341-1
+Rating Count: 0
+Product ID: 1370341-1

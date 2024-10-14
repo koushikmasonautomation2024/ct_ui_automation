@@ -1,0 +1,11 @@
+Clogs
+Clicked button with index: 1
+Clicked enabled button with index: 1 in section: 0
+Add to Cart button is enabled.
+Product Name: Cougar Sven (Women's)
+Product image is visible
+Detail: Sand
+Detail: 10
+Detail: M   Medium
+Detail: $45.00
+Item added to cart successfully
