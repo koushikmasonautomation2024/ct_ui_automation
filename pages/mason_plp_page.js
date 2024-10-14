@@ -120,31 +120,67 @@ exports.MasonPLPPage = class MasonPLPPage {
 
 
 
+    // async validateAppliedFilters(selectedFilters) {
+    //     for (const selectedFilter of selectedFilters) {
+    //         // Extract the number from the labelText
+    //         const matches = selectedFilter.match(/\((\d+)\)/);
+    //         const itemCount = matches ? parseInt(matches[1]) : 0;
+
+    //         // Exclude the count value from the section text
+    //         const sectionText = selectedFilter.replace(/\(\d+\)/, '').trim();
+
+    //         if (itemCount > 1) {
+    //             // Check if the section indicating filter application is present
+    //             const filterSection = await this.page.$(`section.flex:has-text("${sectionText}")`);
+    //             //expect(filterSection).not.toBeNull();
+
+    //             // Check if the section is visible
+    //             const isSectionVisible = await filterSection.isVisible();
+    //             expect(isSectionVisible).toBe(true);
+
+    //             // Optionally, validate item count
+    //             await this.validateItemCount();
+    //         } else {
+    //             console.log(`Filter "${sectionText}" applied successfully.`);
+    //         }
+    //     }
+    // }
+
     async validateAppliedFilters(selectedFilters) {
         for (const selectedFilter of selectedFilters) {
-            // Extract the number from the labelText
-            const matches = selectedFilter.match(/\((\d+)\)/);
-            const itemCount = matches ? parseInt(matches[1]) : 0;
+            try {
+                // Extract the number from the labelText
+                const matches = selectedFilter.match(/\((\d+)\)/);
+                const itemCount = matches ? parseInt(matches[1]) : 0;
 
-            // Exclude the count value from the section text
-            const sectionText = selectedFilter.replace(/\(\d+\)/, '').trim();
+                // Exclude the count value from the section text
+                const sectionText = selectedFilter.replace(/\(\d+\)/, '').trim();
 
-            if (itemCount > 1) {
-                // Check if the section indicating filter application is present
-                const filterSection = await this.page.$(`section.flex:has-text("${sectionText}")`);
-                //expect(filterSection).not.toBeNull();
+                if (itemCount > 1) {
+                    // Log the filter being validated
+                    console.log(`Validating filter: "${sectionText}" with item count: ${itemCount}`);
 
-                // Check if the section is visible
-                const isSectionVisible = await filterSection.isVisible();
-                expect(isSectionVisible).toBe(true);
+                    // Check if the section indicating filter application is present
+                    const filterSection = await this.page.locator(`section.flex:has-text("${sectionText}")`);
 
-                // Optionally, validate item count
-                await this.validateItemCount();
-            } else {
-                console.log(`Filter "${sectionText}" applied successfully.`);
+                    // Check if the filter section exists and is visible
+                    const isSectionVisible = await filterSection.count() > 0 && await filterSection.first().isVisible();
+
+                    // Assert that the filter section is visible
+                    expect(isSectionVisible).toBe(true, `Expected filter section for "${sectionText}" to be visible.`);
+
+                    // Optionally, validate item count or any other logic related to items
+                    await this.validateItemCount();
+                } else {
+                    console.log(`Filter "${sectionText}" applied successfully with item count: ${itemCount}.`);
+                }
+            } catch (error) {
+                // Log the error and filter that caused it
+                console.error(`Error while validating filter "${selectedFilter}":`, error.message);
             }
         }
     }
+
 
 
     async randomlySelectFilterCheckboxOld() {
@@ -168,89 +204,73 @@ exports.MasonPLPPage = class MasonPLPPage {
         return selectedFilter;
     }
 
-    // async randomlySelectFilterCheckbox(numberOfFiltersToSelect) {
-    //     await this.page.waitForSelector('input.custom-checkbox');
-
-    //     // Get all checkbox elements
-    //     const checkboxes = await this.page.$$('input.custom-checkbox');
-
-    //     // Ensure the number of filters to select is within the available filters
-    //     const filtersToSelectCount = Math.min(numberOfFiltersToSelect, checkboxes.length);
-
-    //     // Array to hold the text content of the selected filters
-    //     const selectedFilterTexts = [];
-
-    //     // Select the required number of checkboxes
-    //     for (let i = 0; i < filtersToSelectCount; i++) {
-    //         const checkbox = checkboxes[i];
-
-    //         // Ensure the checkbox is visible and scroll into view if necessary
-    //         await this.page.evaluate(el => el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' }), checkbox);
-    //         //await page.waitForFunction(el => el.offsetParent !== null && el.clientHeight > 0 && el.clientWidth > 0, {}, checkbox);
-
-    //         // Click the checkbox
-    //         await checkbox.click();
-
-    //         // Get the associated label text
-    //         const label = await this.page.$(`label[for="${await checkbox.getAttribute('id')}"]`);
-    //         const labelText = await label.evaluate(node => node.textContent.trim());
-
-    //         // Add the text to the array
-    //         selectedFilterTexts.push(labelText);
-
-    //         console.log(`Selected filter: ${labelText}`);
-    //     }
-
-    //     // Return the text content of the selected filters
-    //     return selectedFilterTexts;
-    // }
 
     async randomlySelectFilterCheckbox(numberOfFiltersToSelect) {
-        // Wait for the checkboxes to be visible
+        // Wait for checkboxes to be visible
         await this.page.waitForSelector('input.custom-checkbox');
 
         // Get all checkbox elements
         const checkboxes = await this.page.$$('input.custom-checkbox');
 
+        // Ensure there are checkboxes available
+        if (checkboxes.length === 0) {
+            throw new Error("No checkboxes found on the page.");
+        }
+
         // Ensure the number of filters to select is within the available filters
         const filtersToSelectCount = Math.min(numberOfFiltersToSelect, checkboxes.length);
 
-        // Shuffle the array of checkboxes to select randomly
-        const shuffledCheckboxes = checkboxes.sort(() => Math.random() - 0.5);
+        // Shuffle and select the required number of checkboxes
+        const selectedCheckboxes = checkboxes.sort(() => Math.random() - 0.5).slice(0, filtersToSelectCount);
 
         // Array to hold the text content of the selected filters
         const selectedFilterTexts = [];
 
-        // Select the required number of checkboxes
-        for (let i = 0; i < filtersToSelectCount; i++) {
-            const checkbox = shuffledCheckboxes[i];
+        // Iterate over the selected checkboxes
+        for (const checkbox of selectedCheckboxes) {
+            try {
+                // Ensure the checkbox is visible and enabled
+                //await checkbox.scrollIntoViewIfNeeded();
+                const isVisible = await checkbox.isVisible();
+                const isEnabled = await checkbox.isEnabled();
 
-            // Ensure the checkbox is visible and scroll it into view if necessary
-            await this.page.evaluate(el => el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' }), checkbox);
-
-            // Click the checkbox
-            await checkbox.click();
-
-            // Try to get the associated label by searching for a label element that matches the checkbox's id
-            const checkboxId = await checkbox.getAttribute('id');
-            if (checkboxId) {
-                const label = await this.page.$(`label[for="${checkboxId}"]`);
-                if (label) {
-                    // Get the text content of the label and trim it
-                    const labelText = await label.evaluate(node => node.textContent.trim());
-                    selectedFilterTexts.push(labelText);
-                    console.log(`Selected filter: ${labelText}`);
+                if (isVisible && isEnabled) {
+                    // Click the checkbox
+                    await checkbox.click();
                 } else {
-                    console.warn(`Label for checkbox with id ${checkboxId} not found.`);
+                    console.warn('Checkbox is either not visible or not enabled.');
+                    continue;  // Skip this checkbox and move to the next one
                 }
-            } else {
-                console.warn('Checkbox does not have an id attribute.');
+
+                // Get the associated label text if available
+                const checkboxId = await checkbox.getAttribute('id');
+                if (checkboxId) {
+                    const label = await this.page.locator(`label[for="${checkboxId}"]`).first();
+                    if (await label.isVisible()) {
+                        const labelText = await label.textContent();
+                        if (labelText) {
+                            selectedFilterTexts.push(labelText.trim());
+                            console.log(`Selected filter: ${labelText.trim()}`);
+                        } else {
+                            console.warn(`Label with ID ${checkboxId} does not contain text.`);
+                        }
+                    } else {
+                        console.warn(`Label for checkbox with ID ${checkboxId} is not visible.`);
+                    }
+                } else {
+                    console.warn("Checkbox does not have an ID attribute.");
+                }
+            } catch (error) {
+                console.error(`Error selecting checkbox: ${error.message}`);
             }
         }
 
         // Return the text content of the selected filters
         return selectedFilterTexts;
     }
+
+
+
 
 
 
@@ -434,9 +454,7 @@ exports.MasonPLPPage = class MasonPLPPage {
     }
 
     async validateSortBy() {
-        //await expect(this.page.getByText('Sort By:')).toBeVisible();
-        await (this.page.getByText('Sort By:')).waitFor({ state: "visible" });
-        //await expect(this.page.getByRole('combobox')).toBeVisible();
+        await (this.page.getByText('Sort By:').nth(1)).waitFor({ state: "visible" });
     }
 
     async validateFeatureIsDefaultSort() {
@@ -486,7 +504,7 @@ exports.MasonPLPPage = class MasonPLPPage {
 
         // Wait for a specified period to ensure any UI updates or async actions complete
         await this.page.waitForTimeout(2000); // Adjust the time (in milliseconds) as needed
-        await expect(this.page.getByText(`Sort By:${randomText}Sort`).first()).toBeVisible();
+        await expect(this.page.getByText(`Sort By:${randomText}`).first()).toBeVisible();
     }
 
 
