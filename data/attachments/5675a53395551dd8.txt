@@ -1,0 +1,5 @@
+Error selecting checkbox: elementHandle.isEnabled: Element is not attached to the DOM
+Call log:
+  - waiting for locator(':scope')
+  -   locator resolved to <input type="checkbox" id="Sleeve Length-Long Sleeve" aria-label="Sleeve Length-Long Sleeve" class="custom-checkbox focus:shadow:none mt-[1px] h-4 w-4 shadow-none hover:cursor-pointer focus:outline-none focus:ring-0"/>
+
