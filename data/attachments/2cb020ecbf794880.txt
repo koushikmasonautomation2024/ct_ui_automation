@@ -1,3 +1,0 @@
-WishList | Shoemall
-3
-Expected PDP URL: https://www-stg2.shoemall.com/product/hideaways-by-lb-evans-roderic-men-s-/1204932-1

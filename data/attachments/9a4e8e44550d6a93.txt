@@ -1,3 +1,0 @@
-Alphabet 'X' is not present.
-Selected Link: JSHandle@<a title="Justin Boots" href="/brands/justin-boots"> Justin Boots</a>
-Selected Brand: Justin Boots

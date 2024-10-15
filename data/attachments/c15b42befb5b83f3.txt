@@ -1,0 +1,4 @@
+Dress Boots
+Clicked button with index: 0
+Clicked enabled button with index: 9 in section: 0
+Add to Cart button is enabled.
