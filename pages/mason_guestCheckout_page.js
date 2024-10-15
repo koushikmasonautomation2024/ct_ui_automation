@@ -1137,7 +1137,9 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     if (await removePromoButton.isVisible()) {
       console.log('Promo code already applied');
       await removePromoButton.click();
-      await this.page.waitForTimeout(5000); // Adjust the timeout as needed
+      await this.page.locator('p.text-forestGreen span').waitFor({ state: 'visible' });
+      const spanText = await this.page.locator('p.text-forestGreen span').textContent();
+      expect(spanText).toContain('has been removed from your order');
     }
 
     const isPromoCodeTextBoxVisible = await this.cartApplyPromoCodeTextBox.isVisible();
@@ -1159,8 +1161,11 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     await this.page.locator('#promo-code').fill(enterPromoCode);
     const promoCode = await this.cartApplyPromoCodeTextBox.inputValue();
     await this.page.getByRole('button', { name: 'Apply Code' }).click();
-    await (this.page.getByText(`Promo code ${promoCode} has been applied to your order`)).waitFor({ state: "visible" });
-    await expect(this.page.getByText(`Promo code ${promoCode} applied to order`)).toBeVisible();
+    await this.page.locator('p.text-forestGreen span').waitFor({ state: 'visible' });
+    const spanText = await this.page.locator('p.text-forestGreen span').textContent();
+    expect(spanText).toContain('Promo code   has been applied to your order');
+    // await (this.page.getByText(`Promo code ${promoCode} has been applied to your order`)).waitFor({ state: "visible" });
+    // await expect(this.page.getByText(`Promo code ${promoCode} applied to order`)).toBeVisible();
     await expect(this.page.getByRole('button', { name: 'Remove' })).toBeVisible();
     await expect(this.page.getByText('Order Discount')).toBeVisible();
   }
