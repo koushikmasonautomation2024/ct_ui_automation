@@ -1,6 +1,7 @@
 import test, { expect } from 'playwright/test';
 const myaccountpage_locator =JSON.parse(JSON.stringify(require('../object_repositories/mason_myaccount_page_repo.json')));
 const accountpage_data =JSON.parse(JSON.stringify(require('../test_data/mason_sb_myaccount_page_data.json')));
+const expectedMessage = 'There are no recent orders in your account, but let’s see if we can find the order you’re looking for.';   
 
 exports.MyAccountOrderPage = class MyAccountOrderPage{
     constructor(page){
@@ -13,6 +14,7 @@ exports.MyAccountOrderPage = class MyAccountOrderPage{
 
     
     async validateSingleOrderLookupSection(){
+        await this.myaccount_orders_singleorderlookup.waitFor({state:'visible'});
         await expect(this.myaccount_orders_singleorderlookup).toBeVisible();
         await expect(this.myaccount_singleorder_ordernumbertextbox).toBeVisible();
         await expect(this.myaccount_singleorder_billingzipcodetextbox).toBeVisible();
@@ -47,12 +49,18 @@ exports.MyAccountOrderPage = class MyAccountOrderPage{
 
     async clickOncontactUs(){
         await this.page.locator(myaccountpage_locator.no_Order_contactUs_link).click();
-        await expect(this.page).toHaveURL(/.*contactus/);
+        await expect(this.page).toHaveURL(/.*contact-us/);
 
     }
 
     async validateSingleOrderNavigation(){
         await expect(this.page).toHaveURL(/.*orderstatus/);
+    }
+
+    async validateNoOrderMessage(){
+        const messageElement = this.page.locator('p.my-6');
+        const messageText = await messageElement.textContent();
+        expect(messageText.trim()).toBe(expectedMessage);
     }
 
     

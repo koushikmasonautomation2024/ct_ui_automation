@@ -22,7 +22,8 @@ exports.SignInPage = class SignInPage{
         this.sign_out_button=page.getByRole('button',{name: signinpage_locator.sign_out_button});
        // this.create_an_account_button=page.getByRole('button',{name: signinpage_locator.create_an_account_button});
 
-       this.failed_message=page.locator(signinpage_locator.failed_message);
+       //this.failed_message=page.locator(signinpage_locator.failed_message);
+       this.failed_message=page.getByText('The supplied email address or');
        this.signin_password_show_link=page.getByRole('link', { name: signinpage_locator.signin_password_show_link });
        this.signin_password_hide_link=page.getByRole('link', { name: signinpage_locator.signin_password_hide_link });
     }
@@ -52,10 +53,12 @@ exports.SignInPage = class SignInPage{
 
     async clickSignIn(){
         await this.signin_button_name.click();
+        await this.signin_emailaddress_textbox.waitFor({state:'visible'});
     }
 
     async clickSignInImage(){
         await this.signin_img_button.click();
+        await this.create_an_account_button.waitFor({state:'visible'});
     }
 
     async validateSignedInMessage(SignedInMessage){
@@ -75,15 +78,18 @@ exports.SignInPage = class SignInPage{
     }
 
     async closeSignIsSuccessMessage(){
-        await this.page.getByRole('button', { name: '✕' }).click();
+        //await this.page.getByRole('button', { name: '✕' }).click();
+        await this.page.getByRole('button').nth(4).click();
     }
 
     async loginFailMessage(){
+        await this.failed_message.waitFor({state:'visible'});
         await expect(this.failed_message).toContainText(signinpage_data.login_fail_message);
     }
 
     //Account - Reset/Forgot Password : SB-LOGREG024
     async clickOnForgotPassword(){
+        await this.forgot_password_button.waitFor({state:'visible'});
         await expect(this.forgot_password_button).toBeVisible();
         await this.forgot_password_button.click();
     }
@@ -104,7 +110,7 @@ exports.SignInPage = class SignInPage{
         // await this.forgot_emailaddress_textbox.click();
         // await this.forgot_emailaddress_textbox.fill(  );
         await (this.submit_forgot_password).click();
-        await expect(this.page.getByText(signinpage_data.invalid_email)).toBeVisible(); 
+        await expect(this.page.getByText(signinpage_data.null_email_message)).toBeVisible(); 
     }
 
     async validateInvalidEmailAddressOnForgotPassword() {
@@ -130,6 +136,7 @@ exports.SignInPage = class SignInPage{
     }
 
     async clickCreateAnAccount(){
+        await this.create_an_account_button.waitFor({state:'visible'});
         await expect(this.create_an_account_button).toBeVisible();
         await this.create_an_account_button.click();
     }

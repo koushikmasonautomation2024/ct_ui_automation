@@ -12,20 +12,21 @@ export default defineConfig({
   // Look for test files in the "tests" directory, relative to this configuration file.
   testDir: 'tests',
   outputDir: 'test-results',
-  globalSetup: 'utils/globalSetup.js',
+  //globalSetup: 'utils/globalSetup.js',
 
   
   // Run all tests in parallel.
   fullyParallel: true,
+  workers: 3,
 
   // Fail the build on CI if you accidentally left test.only in the source code.
   //forbidOnly: !!process.env.CI,
 
   // Retry on CI only.
-  //retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 1 : 1,
 
   // Opt out of parallel tests on CI.
-  //workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 3 : 3,
 
   // Reporter to use
   //reporter: 'html',
@@ -47,14 +48,14 @@ export default defineConfig({
 
     // Collect trace when retrying the failed test.
     trace: 'on-first-retry',
-    screenshot: 'on',
-    video: 'on',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
     acceptDownloads: true,
     },
   // Configure projects for major browsers.
   projects: [
     {
-      name: 'Mason Commerce Tool Site - Chrome Browser',
+      name: 'Mason',
       use: {
         ...devices['Desktop Chrome'],
         //viewport: { width: 1920, height: 1080 },

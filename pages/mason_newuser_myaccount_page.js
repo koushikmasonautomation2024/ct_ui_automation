@@ -65,11 +65,11 @@ exports.NewUserMyAccountPage = class NewUserMyAccountPage{
 
     async validateNewUserStoneBerryCreditSection(firstLinkName,secondLinkName){
         // Verify Stoneberry logo display
-        const logo = await this.page.$('section.h-9.w-72 img[alt="Stoneberry Logo"]');
+        const logo = await this.page.$('section.h-9.w-72 img[alt="Credit Logo"]');
         expect(logo).not.toBeNull();
 
         const logoSrc = await logo.getAttribute('src');
-        expect(logoSrc).toContain('StoneberryCreditLogo');
+        expect(logoSrc).toContain('ZBSite-creditPaymentLogo');
 
         // Verify "Get Pre-Qualified" link display and redirection
         const getPreQualifiedLink = await this.page.$('a[href="/credit-limit-prequalification/"]');
@@ -97,7 +97,7 @@ exports.NewUserMyAccountPage = class NewUserMyAccountPage{
         // Verify "Learn More" button navigation
         await learnMoreButton.click();
         await this.page.waitForNavigation();
-        expect(this.page).toHaveURL(/.*buynowpaylater/);
+        expect(this.page).toHaveURL(/.*buy-now-pay-later/);
     }
 
     async enterCustomerAccountNumber(enterCustomerAccountNumber){
@@ -187,6 +187,13 @@ exports.NewUserMyAccountPage = class NewUserMyAccountPage{
         await expect(this.newuser_myaccount_wishlistpage_headertext).toBeVisible();
         await expect(this.newuser_myaccount_wishlistpage_norecentcctext).toBeVisible();
         await expect(this.newuser_myaccount_wishlistpage_wishlistimgicon).toBeVisible();
+    }
+
+    async redirectToMyAccount() {
+        await this.page.locator("//img[@alt='My Account']").click();
+        await this.page.getByRole('link', { name: 'My Account' }).click({});
+        await this.page.waitForSelector('h1.ml-2\\.5');
+        await expect(this.page.getByRole('heading', { name: 'My Account' })).toBeVisible();
     }
 
 }
