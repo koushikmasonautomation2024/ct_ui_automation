@@ -797,7 +797,8 @@ exports.PDPPage = class PDPPage {
 
     async addtoCart() {
         await this.addtoCartButton.waitFor({ state: 'visible' });
-        await this.addtoCartButton.click({ timeout: 10000 });
+        await this.addtoCartButton.click();
+        await this.page.waitForTimeout(7000);
 
     }
 

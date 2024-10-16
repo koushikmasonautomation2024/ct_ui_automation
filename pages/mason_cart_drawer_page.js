@@ -285,6 +285,18 @@ exports.CartDrawerPage = class CartDrawerPage {
         await this.miniCartQtyInputTextBox.fill(productQtyLeft);
     }
 
+    async clickQtyIncreaseButton(){
+        await this.miniCartQtyPlusButton.waitFor({state:'visible'});
+        await this.page.evaluate(() => {
+            const button = document.querySelector('button[aria-label="Increase Quantity"]');
+            if (button) {
+                button.removeAttribute('disabled');
+            }
+        });
+        //await this.page.locator('button[aria-label="Increase Quantity"] svg').click();
+        await this.miniCartQtyPlusButton.click();
+    }
+
     async miniCartUpdateInStockQty() {
         // Wait for the section to be visible
         await this.miniCartLimitedStockMessage.waitFor({ state: 'visible' });

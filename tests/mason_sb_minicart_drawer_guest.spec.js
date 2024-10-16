@@ -118,6 +118,7 @@ test.describe("Mason Cart Drawer", () => {
     await page.goto(pdp_data.pdp_url_limitedStocks);
     await pdpPage.selectSize('S','1')
     await pdpPage.addtoCart();
+    await cartDrawerPage.clickQtyIncreaseButton();
     await cartDrawerPage.miniCartUpdateInStockQty();
     await pdpPage.closeMiniCartDrawer();
   })
