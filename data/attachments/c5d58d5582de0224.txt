@@ -1,0 +1,29 @@
+Card Number Text: ***7777
+Expiry Date Text: Expires  12/25
+Card Number Text: ***7777
+Expiry Date Text: Expires  12/25
+Card Number Text: ***7777
+Expiry Date Text: Expires  12/25
+Card Number Text: ***7777
+Expiry Date Text: Expires  12/25
+Card Number Text: ***7777
+Expiry Date Text: Expires  12/25
+Card Number Text: ***7777
+Expiry Date Text: Expires  12/25
+Card Number Text: ***7777
+Expiry Date Text: Expires  12/25
+Card Number Text: ***7777
+Expiry Date Text: Expires  12/25
+Card Number Text: ***7777
+Expiry Date Text: Expires  12/25
+Card Number Text: ***7777
+Expiry Date Text: Expires  12/25
+Card Number Text: ***7777
+Expiry Date Text: Expires  12/25
+Card Number Text: ***7777
+Expiry Date Text: Expires  12/25
+Card Number Text: ***7777
+Expiry Date Text: Expires  12/25
+Card Number Value: 
+Card Security Code Value: 
+Card Expiry Date Value: 12/25

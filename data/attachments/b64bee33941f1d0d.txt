@@ -1,0 +1,6 @@
+New Balance
+137 items
+Selected filter: Fabric Lining  (4)
+Validating filter: "Fabric Lining" with item count: 4
+4 items
+[ 'Fabric Lining  (4)' ]

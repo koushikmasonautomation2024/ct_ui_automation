@@ -1,0 +1,63 @@
+Outdoor + Hiking Boots
+Product clicked successfully
+Number of similar items: 15
+Product Title: KEEN Targhee III WP (Men's)
+Product Link: /product/keen-targhee-iii-wp-men-s-/1184119-4
+Rating Count: 5
+Product ID: 1184119-4
+Product Title: Keen Utility Flint II Mid (Men's)
+Product Link: /product/keen-utility-flint-ii-mid-men-s-/1318029-1
+Rating Count: 0
+Product ID: 1318029-1
+Product Title: Propet Ridge Walker (Men's)
+Product Link: /product/propet-ridge-walker-men-s-/1056731-3
+Rating Count: 5
+Product ID: 1056731-3
+Product Title: Vasque Talus AT Low UltraDry (Men's)
+Product Link: /product/vasque-talus-at-low-ultradry-men-s-/1215834-1
+Rating Count: 0
+Product ID: 1215834-1
+Product Title: Propet Ridge Walker Low (Men's)
+Product Link: /product/propet-ridge-walker-low-men-s-/1056733-3
+Rating Count: 5
+Product ID: 1056733-3
+Product Title: Propet Ridgewalker Force (Men's)
+Product Link: /product/propet-ridgewalker-force-men-s-/1323249-1
+Rating Count: 0
+Product ID: 1323249-1
+Product Title: Timberland Pro Powertrain Sport Mid AL (Men's)
+Product Link: /product/timberland-pro-powertrain-sport-mid-al-men-s-/1148960-1
+Rating Count: 5
+Product ID: 1148960-1
+Product Title: Timberland Pro 6" PowerWelt ST WP (Men's)
+Product Link: /product/timberland-pro-6-powerwelt-st-wp-men-s-/1148953-1
+Rating Count: 5
+Product ID: 1148953-1
+Product Title: New Balance 990v5 Men's Running Shoe
+Product Link: /product/new-balance-990v5-men-s-/1185024-3
+Rating Count: 5
+Product ID: 1185024-3
+Product Title: Skechers Active Graceful-Soft Soul (Women's)
+Product Link: /product/skechers-active-graceful-soft-soul-women-s-/1376009-1
+Rating Count: 5
+Product ID: 1376009-1
+Product Title: Wolverine Rev Durashck UltraSpring Mid CT (Men's)
+Product Link: /product/wolverine-rev-durashck-ultsprng-md-ct-men-s-/1299458-2
+Rating Count: 5
+Product ID: 1299458-2
+Product Title: Danner Lookout 8" (Men's)
+Product Link: /product/danner-lookout-8-men-s-/1081346-1
+Rating Count: 0
+Product ID: 1081346-1
+Product Title: Nautilus Light ESD Athletic CT (Men's)
+Product Link: /product/nautilus-light-esd-athletic-ct-men-s-/1065960-1
+Rating Count: 5
+Product ID: 1065960-1
+Product Title: BEARPAW Brock (Men's)
+Product Link: /product/bearpaw-brock-men-s-/1100468-3
+Rating Count: 5
+Product ID: 1100468-3
+Product Title: BEARPAW Olympus (Women's)
+Product Link: /product/bearpaw-olympus-women-s-/1232533-4
+Rating Count: 5
+Product ID: 1232533-4

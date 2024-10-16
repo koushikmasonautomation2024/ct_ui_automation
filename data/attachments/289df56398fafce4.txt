@@ -1,0 +1,17 @@
+Cozy Boots
+Clicked button with index: 1
+Clicked enabled button with index: 2 in section: 0
+Add to Cart button is enabled.
+Product Name: Koolaburra by UGG® Ryanna (Women's)
+Product image is visible
+Detail: Chestnut
+Detail: 8
+Detail: M   Medium
+Detail: $114.95
+Item added to cart successfully
+Product Name: Koolaburra by UGG® Ryanna (Women's)
+Product image is visible
+Detail: Chestnut
+Detail: 8
+Detail: M   Medium
+Detail: $114.95
