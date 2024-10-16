@@ -1163,7 +1163,7 @@ exports.GuestCheckOutPage = class GuestCheckOutPage {
     await this.page.getByRole('button', { name: 'Apply Code' }).click();
     await this.page.locator('p.text-forestGreen span').waitFor({ state: 'visible' });
     const spanText = await this.page.locator('p.text-forestGreen span').textContent();
-    expect(spanText).toContain(`Promo code ${promoCode} has been applied to your order`);
+    expect(spanText).toContain(`Promo code ${promoCode}  has been applied to your order`);
     // await (this.page.getByText(`Promo code ${promoCode} has been applied to your order`)).waitFor({ state: "visible" });
     // await expect(this.page.getByText(`Promo code ${promoCode} applied to order`)).toBeVisible();
     await expect(this.page.getByRole('button', { name: 'Remove' })).toBeVisible();
