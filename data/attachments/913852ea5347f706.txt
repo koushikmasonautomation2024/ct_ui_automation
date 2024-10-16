@@ -1,4 +1,0 @@
-Order Date Count :1
-Number of "Order #" elements: 1
-Order #99562667
-Order Date and Price:August 26, 2024 | $134.95
