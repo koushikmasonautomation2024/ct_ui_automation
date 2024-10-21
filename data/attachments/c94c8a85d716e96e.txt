@@ -1,0 +1,4 @@
+137 items
+Selected filter: Modal  (2)
+Validating filter: "Modal" with item count: 2
+2 items

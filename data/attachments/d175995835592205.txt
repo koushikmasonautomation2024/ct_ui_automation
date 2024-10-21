@@ -1,3 +1,0 @@
-Alphabet 'X' is not present.
-Selected Link: JSHandle@<a title="Mason Signature" href="/brands/mason-signature"> Mason Signature</a>
-Selected Brand: Mason Signature
