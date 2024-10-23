@@ -1,0 +1,7 @@
+137 items
+Selected filter: Misses  (127)
+Selected filter: Under $30  (17)
+Validating filter: "Misses" with item count: 127
+19 items
+Validating filter: "Under $30" with item count: 17
+19 items
