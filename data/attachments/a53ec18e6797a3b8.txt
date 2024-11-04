@@ -1,1 +1,0 @@
-Clicked enabled button with index: 5 in section: 0
