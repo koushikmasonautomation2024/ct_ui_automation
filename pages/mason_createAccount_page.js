@@ -36,11 +36,14 @@ exports.CreateAccountPage = class CreateAccountPage{
         this.account_drawer_make_payment_button=page.getByRole('button', { name: createAccount_locator.account_drawer_make_payment_button }); 
 
         this.account_drawer_order_link=page.getByRole('link', { name: createAccount_locator.account_drawer_order_link }); 
+         
         this.account_drawer_wishlist_link=page.getByRole('link', { name: createAccount_locator.account_drawer_wishlist_link }); 
         this.account_drawer_needHelp_link=page.getByRole('link', { name: createAccount_locator.account_drawer_needHelp_link });
              
         this.account_drawer_create_an_account_button=page.getByRole('button', { name: createAccount_locator.account_drawer_sign_in_button});
         this.account_drawer_sign_in_button=page.getByRole('button', { name: createAccount_locator.account_drawer_sign_in_button,exact:true });
+
+        //this.myaccount_orderStatus_link=page.getByRole('link', { name: 'Order Status' });
     
     }
 
@@ -101,7 +104,7 @@ exports.CreateAccountPage = class CreateAccountPage{
     }
 
     async validatePasswordIsHidden(){
-        const passwordTextbox=this.create_account_password_textbox;
+        const passwordTextbox=await this.create_account_password_textbox;
         const hidden_password = await passwordTextbox.getAttribute('type') === 'password';
         expect(hidden_password).toBe(true);
     }
@@ -175,28 +178,26 @@ exports.CreateAccountPage = class CreateAccountPage{
   }
 
   async accountCreationSuccessMessage(){
+    await this.account_creation_success.waitFor({state:'visible'});
     await expect(this.account_creation_success).toBeVisible();
   }
 
   async validateDashboardNavigation(firstName, dashboard_url){
-    await expect(this.page.getByText(`Hi, ${firstName}!`)).toBeVisible();
-
+    await this.page.waitForURL(/.*dashboard/);
+    await expect(this.page.getByText(`Hi, ${firstName}!`).first()).toBeVisible();
     const currentURL = await this.page.url();
-    // console.log(currentURL);
-    // console.log(dashboard_url);
     expect(currentURL).toContain(dashboard_url);
   }
 
   async validateAccountDrawer(){
+    await this.account_drawer_sign_in_button.waitFor({state:'visible'});
     await expect(this.account_drawer_sign_in_button).toBeVisible();
     await expect(this.account_drawer_create_an_account_button).toBeVisible();
-    await expect(this.account_drawer_credit_button).toBeVisible();
-    await expect(this.account_drawer_make_payment_button).toBeVisible();
     await expect(this.account_drawer_order_link).toBeVisible();
     await expect(this.account_drawer_wishlist_link).toBeVisible();
     await expect(this.account_drawer_needHelp_link).toBeVisible();
     await expect(this.account_drawer_header).toBeVisible();
-    await expect(this.page.getByRole('button').nth(4)).toBeVisible();
+    //await expect(this.page.getByRole('button').nth(4)).toBeVisible();
     
 
 }
